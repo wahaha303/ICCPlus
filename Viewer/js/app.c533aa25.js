@@ -2177,7 +2177,7 @@
 						{
                             for (var s = 0; s < t.scores.length; s++)
                                 for (var o = 0; o < this.app.pointTypes.length; o++) console.log(t.multipleUseVariable), this.app.pointTypes[o].id == t.scores[s].id && this.checkRequireds(t.scores[s]) && (this.app.pointTypes[o].startingSum += parseInt(t.scores[s].value));
-							if (t.isActive == !0 && t.selectedThisManyTimesProp == t.numMultipleTimesMinus) t.isActive = !0;
+							if (t.isActive == !0 && t.selectedThisManyTimesProp == t.numMultipleTimesMinus) t.isActive = !1;
 						}
                     },
                     cloneObject: function() {
@@ -3299,7 +3299,7 @@
 						{
                             for (var s = 0; s < t.scores.length; s++)
                                 for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == t.scores[s].id && this.checkRequireds(t.scores[s]) && (this.app.pointTypes[o].startingSum += parseInt(t.scores[s].value));
-							if (t.isActive == !0 && this.selectedThisManyTimesProp = t.numMultipleTimesMinus) t.isActive = !1;
+							if (t.isActive == !0 && this.selectedThisManyTimesProp == t.numMultipleTimesMinus) t.isActive = !1;
 						}
                     },
                     checkRequireds: function(t) {
