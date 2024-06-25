@@ -4071,7 +4071,7 @@
                                                     for (r = 0; r < t.app.rows[i].objects[e].scores.length; r++)
                                                         for (a = 0; a < t.app.pointTypes.length; a++) t.app.pointTypes[a].id == t.app.rows[i].objects[e].scores[r].id && this.getters.checkRequireds(t.app.rows[i].objects[e].scores[r]) && (t.app.pointTypes[a].startingSum += parseInt(t.app.rows[i].objects[e].scores[r].value))
                                             }
-                                    t.app.rows[i].objects[e].multipleUseVariable = 0
+                                    t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0
                                 }
 							for (i = 0; i < t.app.rows.length; i++) {
 								for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {
