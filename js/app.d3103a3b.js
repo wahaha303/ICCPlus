@@ -17807,8 +17807,13 @@
                     },
                     print: function() {
 						var e = this;
+						console.log(e.$refs.printThis);
+						if (e.app.styling.backgroundImage) {
+							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
+							e.$refs.printThis.style.backgroundRepeat = 'repeat';
+						}
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: e.app.styling.backgroundColor,
+							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
@@ -17820,6 +17825,7 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
+							if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 						}).catch(function(error) {
 							console.log('Fail to generate image, Segmenting and recreating the image...', error);
 							var maxLength = 6e6;
@@ -17865,6 +17871,7 @@
 									tempDiv.innerHTML = part;
 									e.$refs.printThis.appendChild(tempDiv);
 									htmlToImage.toBlob(tempDiv, {
+										backgroundImage: e.app.styling.backgroundImage,
 										backgroundColor: e.app.styling.backgroundColor,
 										type: "image/webp",
 										quality: 0.9
@@ -17878,13 +17885,15 @@
 										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 										s.dispatchEvent(i);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 									}).catch(function(error) {
 										console.log('Fail to generate image', error);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 									});
 								});
 							}
-						});	
+						});
 					}
                 }
             },
@@ -22387,7 +22396,10 @@
 						htmlToImage.toBlob(e.$refs.printThiss, {
 							backgroundColor: e.app.styling.backgroundColor,
 							type: "image/webp",
-							quality: 0.9
+							quality: 0.9,
+							filter: (node) => {
+								return node.nodeType !== Node.ELEMENT_NODE || !node.hasAttribute('data-html2canvas-ignore');
+							}
 						}).then(function(t) {
 							console.log(t);
 							var i = document.createEvent("MouseEvents"),
@@ -22444,7 +22456,10 @@
 									htmlToImage.toBlob(tempDiv, {
 										backgroundColor: e.app.styling.backgroundColor,
 										type: "image/webp",
-										quality: 0.9
+										quality: 0.9,
+										filter: (node) => {
+											return node.nodeType !== Node.ELEMENT_NODE || !node.hasAttribute('data-html2canvas-ignore');
+										}
 									}).then(function(t) {
 										console.log(t);
 										var i = document.createEvent("MouseEvents"),

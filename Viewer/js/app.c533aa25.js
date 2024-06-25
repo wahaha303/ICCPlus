@@ -3423,6 +3423,10 @@
                     },
                     print: function() {
 						var e = this;
+						if (e.app.styling.backgroundImage) {
+							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
+							e.$refs.printThis.style.backgroundRepeat = 'repeat';
+						}
 						htmlToImage.toBlob(e.$refs.printThis, {
 							backgroundColor: e.app.styling.backgroundColor,
 							type: "image/webp",
@@ -3436,6 +3440,7 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
+							if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 						}).catch(function(error) {
 							console.log('Fail to generate image, Segmenting and recreating the image...', error);
 							var maxLength = 6e6;
@@ -3494,9 +3499,11 @@
 										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 										s.dispatchEvent(i);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 									}).catch(function(error) {
 										console.log('Fail to generate image', error);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 									});
 								});
 							}
