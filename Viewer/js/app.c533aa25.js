@@ -4052,7 +4052,7 @@
                         t.app = e
                     },
                     cleanActivated: function(t) {
-                        var e, i, s, o, r, a, n;
+                        var e, i, s, o, r, a, n, ps, vv, f, b, ee;
                         for (t.app.activated.length = 0, i = 0; i < t.app.rows.length; i++)
                             for (t.app.rows[i].isEditModeOn = !1, t.app.rows[i].allowedChoicesChange > 0 && (t.app.rows[i].allowedChoices -= t.app.rows[i].allowedChoicesChange), e = 0; e < t.app.rows[i].objects.length; e++)
                                 if (t.app.rows[i].objects[e].isSelectableMultiple) {
@@ -4072,13 +4072,33 @@
                                                         for (a = 0; a < t.app.pointTypes.length; a++) t.app.pointTypes[a].id == t.app.rows[i].objects[e].scores[r].id && this.getters.checkRequireds(t.app.rows[i].objects[e].scores[r]) && (t.app.pointTypes[a].startingSum += parseInt(t.app.rows[i].objects[e].scores[r].value))
                                             }
                                     t.app.rows[i].objects[e].multipleUseVariable = 0
-                                } for (i = 0; i < t.app.rows.length; i++)
-                            for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++)
-                                if (t.app.rows[i].objects[e].isActive) {
-                                    t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
-                                    for (var c = 0; c < t.app.rows[i].objects[e].scores.length; c++)
-                                        for (var h = 0; h < t.app.pointTypes.length; h++) t.app.pointTypes[h].id == t.app.rows[i].objects[e].scores[c].id && ("undefined" !== typeof t.app.rows[i].objects[e].scores[c].requireds || t.app.rows[i].objects[e].scores[c].requireds > 0 ? t.app.rows[i].objects[e].scores[c].isActive && (t.app.rows[i].objects[e].scores[c].isActive = !1, t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value)) : t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value))
-                                } else t.app.rows[i].objects[e].isImageUpload && (t.app.rows[i].objects[e].image = "")
+                                }
+							for (i = 0; i < t.app.rows.length; i++) {
+								for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {
+									if (t.app.rows[i].objects[e].isActive) {
+										t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
+										if (t.app.rows[i].objects[e].activateOtherChoice && "undefined" !== typeof t.app.rows[i].objects[e].activateThisChoice) {
+											for (ps = t.app.rows[i].objects[e].activateThisChoice.split(","), vv = ps.length - 1; vv >= 0; vv--)
+												for (f = 0; f < t.app.rows.length; f++)
+													for (b = 0; b < t.app.rows[f].objects.length; b++)
+														if (t.app.rows[f].objects[b].isSelectableMultiple) {
+															if (t.app.rows[f].objects[b].id == ps[vv].split("/ON#")[0]) {
+																if (ee = ps[vv].split("/ON#")[1], ee > 0) {
+																	for (var nn = 0; nn < ee; nn++) 
+																		t.app.rows[f].objects[b].numMultipleTimesMinus--;
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++)
+																		t.app.rows[f].objects[b].numMultipleTimesMinus++;
+																}
+															}
+														}
+										}
+										t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
+										for (var c = 0; c < t.app.rows[i].objects[e].scores.length; c++)
+											for (var h = 0; h < t.app.pointTypes.length; h++) t.app.pointTypes[h].id == t.app.rows[i].objects[e].scores[c].id && ("undefined" !== typeof t.app.rows[i].objects[e].scores[c].requireds || t.app.rows[i].objects[e].scores[c].requireds > 0 ? t.app.rows[i].objects[e].scores[c].isActive && (t.app.rows[i].objects[e].scores[c].isActive = !1, t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value)) : t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value))
+									} else t.app.rows[i].objects[e].isImageUpload && (t.app.rows[i].objects[e].image = "")
+								}
+							}
                     },
                     addNewPointType: function(t, e) {
                         t.app.pointTypes.push({
