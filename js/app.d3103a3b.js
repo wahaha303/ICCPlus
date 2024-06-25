@@ -1860,7 +1860,8 @@
                     model: {
                         value: e.object.isMultipleUseVariable,
                         callback: function(t) {
-                            e.$set(e.object, "isMultipleUseVariable", t)
+                            e.$set(e.object, "isMultipleUseVariable", t),
+							e.$set(e.object, "multipleScoreId", "")
                         },
                         expression: "object.isMultipleUseVariable"
                     }
@@ -2292,7 +2293,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -2306,7 +2307,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.selectedOneMore(e.object);
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -2445,7 +2446,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -2538,6 +2539,7 @@
                     },
                     on: {
                         click: function(t) {
+							console.log(e);
                             return e.selectedOneLess(e.object)
                         }
                     }
@@ -2545,7 +2547,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -8991,7 +8993,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.selectedThisManyTimesProp = this.object.multipleUseVariable)
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.object.selectedThisManyTimesProp = this.object.multipleUseVariable)
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -9319,21 +9321,27 @@
                     },
                     selectedOneMore: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
+							if (e.isActive == !1 && e.selectedThisManyTimesProp > e.numMultipleTimesMinus) e.isActive = !0;
+						}
                     },
                     selectedOneLess: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
+						}
                     },
                     cloneObject: function() {
                         this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
@@ -10658,6 +10666,7 @@
                             isActive: !1,
                             isVisible: !0,
                             multipleUseVariable: 0,
+							selectedThisManyTimesProp: 0,
                             defaultAspectWidth: this.row.defaultAspectWidth,
                             defaultAspectHeight: this.row.defaultAspectHeight,
                             requireds: [],
@@ -15619,8 +15628,11 @@
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
+							if (e.isActive == !1 && this.selectedThisManyTimesProp > e.numMultipleTimesMinus) e.isActive = !0;
+						}
                     },
                     selectedOneLess: function(e) {
                         var t = !0;
@@ -15628,8 +15640,11 @@
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == this.object.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+							if (e.isActive == !0 && this.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
+						}
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -16074,7 +16089,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -16209,7 +16224,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -16309,7 +16324,7 @@
                     staticClass: "pa-0",
                     style: e.multiChoiceText,
                     domProps: {
-                        innerHTML: e._s(e.selectedThisManyTimesProp)
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
                     attrs: {
@@ -16859,7 +16874,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.selectedThisManyTimesProp = this.object.multipleUseVariable, this.multipleUseVariable = this.object.multipleUseVariable)
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.object.selectedThisManyTimesProp = this.object.multipleUseVariable, this.multipleUseVariable = this.object.multipleUseVariable)
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -17186,21 +17201,27 @@
                     },
                     selectedOneMore: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
+							if (e.isActive == !1 && e.selectedThisManyTimesProp > e.numMultipleTimesMinus) e.isActive = !0;
+						}
                     },
                     selectedOneLess: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
                         if (t)
-                            for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value))
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
+						}
                     },
                     cloneObject: function() {
                         this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
@@ -17439,6 +17460,7 @@
                             objectWidth: "",
                             isActive: !1,
                             isVisible: !0,
+							selectedThisManyTimesProp: 0,
                             defaultAspectWidth: this.row.defaultAspectWidth,
                             defaultAspectHeight: this.row.defaultAspectHeight,
                             requireds: [],
@@ -22578,7 +22600,7 @@
                     attrs: {
                         cols: "6"
                     }
-                }, [e._v(" Force and unselect functions on choices can now use the ID's of other choices like this: ID,ID,ID (No spaces). ")]), o("v-col", {
+                }, [e._v(" Force and unselect functions on choices can now use the ID's of other choices like this: ID,ID,ID/ON#2 (No spaces). ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "6"
@@ -23031,7 +23053,7 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM"
+                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
                     }
                 }, [e._v("New Viewer 1.0")]), o("br"), e._v(" https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM "), o("br")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
