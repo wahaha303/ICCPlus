@@ -1942,13 +1942,11 @@
                                                 if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                     if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
                                                         if (ee = p[v].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
@@ -1964,10 +1962,8 @@
 																if (this.app.rows[m].objects[v].isSelectableMultiple) {
 																	if (this.app.rows[m].objects[v].id == p[f].split("/ON#")[0]) {
 																		if (ee = p[f].split("/ON#")[1], ee > 0) {
-																			this.multipleUseVariable = 0;
 																			for (var n = 0; n < ee; n++) this.selectedOneMore(this.app.rows[m].objects[v])
 																		} else if (ee < 0) {
-																			this.multipleUseVariable = 0;
 																			for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(this.app.rows[m].objects[v])
 																		}
 																	}
@@ -2025,13 +2021,11 @@
                                                 if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                     if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
                                                         if (ee = y[v].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
@@ -2049,13 +2043,11 @@
                                                 if (this.app.rows[m].objects[v].isSelectableMultiple) {
                                                     if (this.app.rows[m].objects[v].id == y[f].split("/ON#")[0]) {
                                                         if (ee = y[f].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[m].objects[v].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[m].objects[v]);
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[m].objects[v]);
                                                                 this.app.rows[m].objects[v].numMultipleTimesMinus++;
@@ -2122,13 +2114,11 @@
                                             if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                 if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
                                                     if (ee = A[v].split("/ON#")[1], ee > 0) {
-                                                        this.multipleUseVariable = 0;
                                                         for (var n = 0; n < ee; n++) {
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                             this.selectedOneLess(this.app.rows[f].objects[b]);
                                                         }
                                                     } else if (ee < 0) {
-                                                        this.multipleUseVariable = 0;
                                                         for (var pp = 0; pp < -1 * ee; pp++) {
                                                             this.selectedOneMore(this.app.rows[f].objects[b]);
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus++;
@@ -2420,6 +2410,7 @@
                             objectWidth: "",
                             isActive: !1,
                             isVisible: !0,
+							selectedThisManyTimesProp: 0,
                             defaultAspectWidth: this.row.defaultAspectWidth,
                             defaultAspectHeight: this.row.defaultAspectHeight,
                             requireds: [],
@@ -2506,13 +2497,11 @@
                                                 if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                     if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
                                                         if (ee = p[v].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
@@ -2528,10 +2517,8 @@
 																if (this.app.rows[m].objects[v].isSelectableMultiple) {
 																	if (this.app.rows[m].objects[v].id == p[f].split("/ON#")[0]) {
 																		if (ee = p[f].split("/ON#")[1], ee > 0) {
-																			this.multipleUseVariable = 0;
 																			for (var n = 0; n < ee; n++) this.selectedOneMore(this.app.rows[m].objects[v])
 																		} else if (ee < 0) {
-																			this.multipleUseVariable = 0;
 																			for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(this.app.rows[m].objects[v])
 																		}
 																	}
@@ -2589,13 +2576,11 @@
                                                 if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                     if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
                                                         if (ee = y[v].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
@@ -2613,13 +2598,11 @@
                                                 if (this.app.rows[m].objects[v].isSelectableMultiple) {
                                                     if (this.app.rows[m].objects[v].id == y[f].split("/ON#")[0]) {
                                                         if (ee = y[f].split("/ON#")[1], ee > 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[m].objects[v].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[m].objects[v]);
                                                             }
                                                         } else if (ee < 0) {
-                                                            this.multipleUseVariable = 0;
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[m].objects[v]);
                                                                 this.app.rows[m].objects[v].numMultipleTimesMinus++;
@@ -2686,13 +2669,11 @@
                                             if (this.app.rows[f].objects[b].isSelectableMultiple) {
                                                 if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
                                                     if (ee = A[v].split("/ON#")[1], ee > 0) {
-                                                        this.multipleUseVariable = 0;
                                                         for (var n = 0; n < ee; n++) {
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                             this.selectedOneLess(this.app.rows[f].objects[b]);
                                                         }
                                                     } else if (ee < 0) {
-                                                        this.multipleUseVariable = 0;
                                                         for (var pp = 0; pp < -1 * ee; pp++) {
                                                             this.selectedOneMore(this.app.rows[f].objects[b]);
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus++;
@@ -3247,60 +3228,6 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         });
-                        var t = this.newActivated.split(","),
-                            e = 0;
-                        for (this.app.activated = t, o = 0; o < this.app.rows.length; o++)
-                            for (this.app.rows[o].isEditModeOn = !1, r = 0; r < this.app.rows[o].objects.length; r++)
-                                if (this.app.activated.includes(this.app.rows[o].objects[r].id)) {
-                                    this.app.rows[o].objects[r].isActive = !0, this.app.rows[o].currentChoices += 1;
-                                    for (var i = 0; i < this.app.rows[o].objects[r].scores.length; i++)
-                                        for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == this.app.rows[o].objects[r].scores[i].id && this.app.rows[o].objects[r].scores[i].requireds.length <= 0 && (this.app.rows[o].objects[r].scores[i].isActive = !0, this.app.pointTypes[s].startingSum -= parseInt(this.app.rows[o].objects[r].scores[i].value))
-                                } for (var o = 0; o < this.rows.length; o++)
-                            for (var r = 0; r < this.rows[o].objects.length; r++)
-                                if (this.rows[o].objects[r].isSelectableMultiple) {
-                                    for (var a = 0; a < t.length; a++)
-                                        if (this.rows[o].objects[r].id == t[a].split("/ON#")[0]) {
-                                            if (e = t[a].split("/ON#")[1], e > 0) {
-                                                this.multipleUseVariable = 0;
-                                                for (var n = 0; n < e; n++) this.selectedOneMore(this.rows[o].objects[r])
-                                            } else if (e < 0) {
-                                                this.multipleUseVariable = 0;
-                                                for (var p = 0; p < -1 * e; p++) this.selectedOneLess(this.rows[o].objects[r])
-                                            }
-                                            t.splice(a, 1)
-                                        }
-                                } else if (this.rows[o].objects[r].isImageUpload)
-                            for (var l = 0; l < t.length; l++) this.rows[o].objects[r].id == t[l].split("/IMG#")[0] && (this.rows[o].objects[r].image = t[l].split("/IMG#")[1].replaceAll("/CHAR#", ","), t.splice(l, 1));
-                        for (o = 0; o < this.app.rows.length; o++)
-                            for (this.app.rows[o].isEditModeOn = !1, r = 0; r < this.app.rows[o].objects.length; r++)
-                                if (this.app.activated.includes(this.app.rows[o].objects[r].id))
-                                    for (i = 0; i < this.app.rows[o].objects[r].scores.length; i++)
-                                        for (s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == this.app.rows[o].objects[r].scores[i].id && this.app.rows[o].objects[r].scores[i].requireds.length > 0 && this.checkRequireds(this.app.rows[o].objects[r].scores[i]) && (this.app.rows[o].objects[r].scores[i].isActive = !0, this.app.pointTypes[s].startingSum -= parseInt(this.app.rows[o].objects[r].scores[i].value));
-                        console.log(t)
-                    },
-                    selectedOneMore: function(t) {
-                        var e = !0;
-                        if (t.isMultipleUseVariable) t.numMultipleTimesPluss > this.multipleUseVariable ? (this.multipleUseVariable++, t.multipleUseVariable = this.multipleUseVariable, this.selectedThisManyTimesProp = this.multipleUseVariable) : e = !1;
-                        else
-                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.multipleScoreId && (t.numMultipleTimesPluss > this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum++, this.selectedThisManyTimesProp = this.app.pointTypes[i].startingSum) : e = !1);
-                        if (e)
-						{
-                            for (var s = 0; s < t.scores.length; s++)
-                                for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == t.scores[s].id && this.checkRequireds(t.scores[s]) && (this.app.pointTypes[o].startingSum -= parseInt(t.scores[s].value));
-							if (t.isActive == !1 && this.selectedThisManyTimesProp > t.numMultipleTimesMinus) t.isActive = !0;
-						}
-                    },
-                    selectedOneLess: function(t) {
-                        var e = !0;
-                        if (this.object.isMultipleUseVariable) this.object.numMultipleTimesMinus < this.multipleUseVariable ? (this.multipleUseVariable--, this.object.multipleUseVariable = this.multipleUseVariable, this.selectedThisManyTimesProp = this.multipleUseVariable) : e = !1;
-                        else
-                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.object.multipleScoreId && (t.numMultipleTimesMinus < this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum--, this.selectedThisManyTimesProp = this.app.pointTypes[i].startingSum) : e = !1);
-                        if (e)
-						{
-                            for (var s = 0; s < t.scores.length; s++)
-                                for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == t.scores[s].id && this.checkRequireds(t.scores[s]) && (this.app.pointTypes[o].startingSum += parseInt(t.scores[s].value));
-							if (t.isActive == !0 && this.selectedThisManyTimesProp == t.numMultipleTimesMinus) t.isActive = !1;
-						}
                     },
                     checkRequireds: function(t) {
                         return this.$store.getters.checkRequireds(t)
@@ -4073,32 +4000,32 @@
                                             }
                                     t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0
                                 }
-							for (i = 0; i < t.app.rows.length; i++) {
-								for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {
-									if (t.app.rows[i].objects[e].isActive) {
-										t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
-										if (t.app.rows[i].objects[e].activateOtherChoice && "undefined" !== typeof t.app.rows[i].objects[e].activateThisChoice) {
-											for (ps = t.app.rows[i].objects[e].activateThisChoice.split(","), vv = ps.length - 1; vv >= 0; vv--)
-												for (f = 0; f < t.app.rows.length; f++)
-													for (b = 0; b < t.app.rows[f].objects.length; b++)
-														if (t.app.rows[f].objects[b].isSelectableMultiple) {
-															if (t.app.rows[f].objects[b].id == ps[vv].split("/ON#")[0]) {
-																if (ee = ps[vv].split("/ON#")[1], ee > 0) {
-																	for (var nn = 0; nn < ee; nn++) 
-																		t.app.rows[f].objects[b].numMultipleTimesMinus--;
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++)
-																		t.app.rows[f].objects[b].numMultipleTimesMinus++;
-																}
+						for (i = 0; i < t.app.rows.length; i++) {
+							for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {
+								if (t.app.rows[i].objects[e].isActive) {
+									t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
+									if (t.app.rows[i].objects[e].activateOtherChoice && "undefined" !== typeof t.app.rows[i].objects[e].activateThisChoice) {
+										for (ps = t.app.rows[i].objects[e].activateThisChoice.split(","), vv = ps.length - 1; vv >= 0; vv--)
+											for (f = 0; f < t.app.rows.length; f++)
+												for (b = 0; b < t.app.rows[f].objects.length; b++)
+													if (t.app.rows[f].objects[b].isSelectableMultiple) {
+														if (t.app.rows[f].objects[b].id == ps[vv].split("/ON#")[0]) {
+															if (ee = ps[vv].split("/ON#")[1], ee > 0) {
+																for (var nn = 0; nn < ee; nn++) 
+																	t.app.rows[f].objects[b].numMultipleTimesMinus--;
+															} else if (ee < 0) {
+																for (var pp = 0; pp < -1 * ee; pp++)
+																	t.app.rows[f].objects[b].numMultipleTimesMinus++;
 															}
 														}
-										}
-										t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
-										for (var c = 0; c < t.app.rows[i].objects[e].scores.length; c++)
-											for (var h = 0; h < t.app.pointTypes.length; h++) t.app.pointTypes[h].id == t.app.rows[i].objects[e].scores[c].id && ("undefined" !== typeof t.app.rows[i].objects[e].scores[c].requireds || t.app.rows[i].objects[e].scores[c].requireds > 0 ? t.app.rows[i].objects[e].scores[c].isActive && (t.app.rows[i].objects[e].scores[c].isActive = !1, t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value)) : t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value))
-									} else t.app.rows[i].objects[e].isImageUpload && (t.app.rows[i].objects[e].image = "")
-								}
+													}
+									}
+									t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
+									for (var c = 0; c < t.app.rows[i].objects[e].scores.length; c++)
+										for (var h = 0; h < t.app.pointTypes.length; h++) t.app.pointTypes[h].id == t.app.rows[i].objects[e].scores[c].id && ("undefined" !== typeof t.app.rows[i].objects[e].scores[c].requireds || t.app.rows[i].objects[e].scores[c].requireds > 0 ? t.app.rows[i].objects[e].scores[c].isActive && (t.app.rows[i].objects[e].scores[c].isActive = !1, t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value)) : t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value))
+								} else t.app.rows[i].objects[e].isImageUpload && (t.app.rows[i].objects[e].image = "")
 							}
+						}
                     },
                     addNewPointType: function(t, e) {
                         t.app.pointTypes.push({
