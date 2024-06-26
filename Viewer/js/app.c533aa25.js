@@ -1944,11 +1944,13 @@
                                                         if (ee = p[v].split("/ON#")[1], ee > 0) {
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         }
@@ -2023,11 +2025,13 @@
                                                         if (ee = y[v].split("/ON#")[1], ee > 0) {
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         }
@@ -2116,11 +2120,13 @@
                                                     if (ee = A[v].split("/ON#")[1], ee > 0) {
                                                         for (var n = 0; n < ee; n++) {
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus--;
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.selectedOneLess(this.app.rows[f].objects[b]);
                                                         }
                                                     } else if (ee < 0) {
                                                         for (var pp = 0; pp < -1 * ee; pp++) {
                                                             this.selectedOneMore(this.app.rows[f].objects[b]);
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                         }
                                                     }
@@ -2167,7 +2173,7 @@
 						{
                             for (var s = 0; s < t.scores.length; s++)
                                 for (var o = 0; o < this.app.pointTypes.length; o++) console.log(t.multipleUseVariable), this.app.pointTypes[o].id == t.scores[s].id && this.checkRequireds(t.scores[s]) && (this.app.pointTypes[o].startingSum += parseInt(t.scores[s].value));
-							if (t.isActive == !0 && t.selectedThisManyTimesProp == t.numMultipleTimesMinus) t.isActive = !1;
+							if (t.isActive == !0 && t.selectedThisManyTimesProp == t.numMultipleTimesMinus && ("undefined" === typeof t.forcedActivated || t.forcedActivated == !1)) t.isActive = !1;
 						}
                     },
                     cloneObject: function() {
@@ -3205,7 +3211,7 @@
                     },
                     activated: function() {
                         for (var t = [], e = 0; e < this.rows.length; e++)
-                            for (var i = 0; i < this.rows[e].objects.length; i++) this.rows[e].objects[i].isActive ? t.push(this.rows[e].objects[i].id) : this.rows[e].objects[i].isSelectableMultiple && 0 !== this.rows[e].objects[i].multipleUseVariable ? t.push(this.rows[e].objects[i].id + "/ON#" + this.rows[e].objects[i].multipleUseVariable) : this.rows[e].objects[i].isImageUpload && this.rows[e].objects[i].image.length > 0 && t.push(this.rows[e].objects[i].id + "/IMG#" + this.rows[e].objects[i].image.replaceAll(",", "/CHAR#"));
+                            for (var i = 0; i < this.rows[e].objects.length; i++) (!this.rows[e].objects[i].isSelectableMultiple && this.rows[e].objects[i].isActive) ? t.push(this.rows[e].objects[i].id) : this.rows[e].objects[i].isSelectableMultiple && 0 !== this.rows[e].objects[i].multipleUseVariable ? t.push(this.rows[e].objects[i].id + "/ON#" + this.rows[e].objects[i].multipleUseVariable) : this.rows[e].objects[i].isImageUpload && this.rows[e].objects[i].image.length > 0 && t.push(this.rows[e].objects[i].id + "/IMG#" + this.rows[e].objects[i].image.replaceAll(",", "/CHAR#"));
                         return t
                     },
                     app: function() {
@@ -3219,7 +3225,7 @@
                     },
                     getSelectedObjectName: function() {
                         for (var t = [], e = 0; e < this.rows.length; e++)
-                            for (var i = 0; i < this.rows[e].objects.length; i++) this.rows[e].objects[i].isActive ? t.push((t.length > 0 ? " " : "") + this.rows[e].objects[i].title) : this.rows[e].objects[i].isSelectableMultiple && 0 !== this.rows[e].objects[i].multipleUseVariable && t.push((t.length > 0 ? " " : "") + this.rows[e].objects[i].title + "(Taken " + this.rows[e].objects[i].multipleUseVariable + " Times)");
+                            for (var i = 0; i < this.rows[e].objects.length; i++) (!this.rows[e].objects[i].isSelectableMultiple && this.rows[e].objects[i].isActive) ? t.push((t.length > 0 ? " " : "") + this.rows[e].objects[i].title) : this.rows[e].objects[i].isSelectableMultiple && 0 !== this.rows[e].objects[i].multipleUseVariable && t.push((t.length > 0 ? " " : "") + this.rows[e].objects[i].title + "(Taken " + this.rows[e].objects[i].multipleUseVariable + " Times)");
                         return t
                     }
                 },
@@ -3355,7 +3361,7 @@
 							e.$refs.printThis.style.backgroundRepeat = 'repeat';
 						}
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: e.app.styling.backgroundColor,
+							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
@@ -3998,7 +4004,7 @@
                                                     for (r = 0; r < t.app.rows[i].objects[e].scores.length; r++)
                                                         for (a = 0; a < t.app.pointTypes.length; a++) t.app.pointTypes[a].id == t.app.rows[i].objects[e].scores[r].id && this.getters.checkRequireds(t.app.rows[i].objects[e].scores[r]) && (t.app.pointTypes[a].startingSum += parseInt(t.app.rows[i].objects[e].scores[r].value))
                                             }
-                                    t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0
+                                    t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0, t.app.rows[i].objects[e].forcedActivated = 0
                                 }
 						for (i = 0; i < t.app.rows.length; i++) {
 							for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {

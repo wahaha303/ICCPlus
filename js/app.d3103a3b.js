@@ -226,38 +226,30 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 22.06.2024")]), o("v-col", {
+                }, [e._v("Update: 26.06.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+						color: "red"
+					},
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]),  o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Interactive CYOA Creator Plus First Release ")]), o("v-col", {
-                    staticClass: "pb-0",					
-					staticStyle: {
-                        color: "blue"
-                    },
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" New Feature: ")]), o("v-col", {
-                    staticClass: "pb-0",
-					staticStyle: {
-                        color: "red"
-                    },
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" Fixed: ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the highlighting didn't display when multi-select was selected. "), o("br"), e._v(" Fixed an issue where the subtract feature of multi-select was not working properly. "), o("br"), e._v(" Fixed an issue where the Background Image was not visible when downloading Backpack as an image. "), o("br"), e._v(" Fixed an issue where Clean Activated feature was not working properly. ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
-                }, [e._v(" Added a feature that automatically converts PNG or JPEG files larger than 500KB to WebP format upon set Choce/Row images. "), o("br"), e._v(" Added a feature to set Border-Image in Manage Choice/Row Design. "), o("br"), e._v(" Added a feature to download images of backpacks by splitting them if the size is too large for successful download. "), o("br"), e._v(" Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3). "), o("br"), e._v(" Added a loading animation to the viewer. ")]), o("v-col", {
-                    staticClass: "pb-0",
+                }, [e._v(" Download : New Viewer File "), o("a", {
                     attrs: {
-                        cols: "6"
+                        href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
+						target: "_blank"
                     }
-                }, [e._v(" Fixed an issue where background images were set for each row, obscuring the overall background image when 'private styling' was not enabled. "), o("br"), e._v(" Fixed an issue where choices would not appear when 'private styling' was enabled and the requirements were not met. "), o("br"), e._v(" Fixed an issue where choices activated by 'Force another choice active' feature could be deselected by clicking on them. "), o("br"), e._v(" Fixed an issue where Addons were not being removed when the 'Remove the text of the choices' feature was activated in Backpack. "), o("br"), e._v(" Fixed an issue where 'Point Comparison Requirements' could not be applied to points and addons. ")]), o("v-col", {
+                }, [e._v(" Ver 1.0.1 ")])]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -2539,7 +2531,6 @@
                     },
                     on: {
                         click: function(t) {
-							console.log(e);
                             return e.selectedOneLess(e.object)
                         }
                     }
@@ -9084,7 +9075,7 @@
 					checkPointsR: function(e) {
                         for (var t = !0, o = 0; o < e.scores.length; o++)
                             if (this.checkRequireds(e.scores[o]) && !e.scores[o].isActive)
-                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
+                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
                     activateObject: function(e, t) {
@@ -9108,11 +9099,13 @@
                                                         if (ee = p[v].split("/ON#")[1], ee > 0) {
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
+                                                                this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         }
@@ -9187,11 +9180,13 @@
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                             }
                                                         }
                                                     }
@@ -9279,12 +9274,14 @@
                                                     if (ee = A[v].split("/ON#")[1], ee > 0) {
                                                         for (var n = 0; n < ee; n++) {
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus--;
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.selectedOneLess(this.app.rows[f].objects[b]);
                                                         }
                                                     } else if (ee < 0) {
                                                         this.app.rows[f].object[b].multipleUseVariable = 0;
                                                         for (var pp = 0; pp < -1 * ee; pp++) {
                                                             this.selectedOneMore(this.app.rows[f].objects[b]);
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                         }
                                                     }
@@ -9330,8 +9327,8 @@
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1;
 						}
                     },
                     cloneObject: function() {
@@ -10724,7 +10721,7 @@
 					checkPointsR: function(e) {
                         for (var t = !0, o = 0; o < e.scores.length; o++)
                             if (this.checkRequireds(e.scores[o]) && !e.scores[o].isActive)
-                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
+                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
                     activateObject: function(e, t) {
@@ -15548,7 +15545,7 @@
                     },
                     activated: function() {
                         for (var e = [], t = 0; t < this.rows.length; t++)
-                            for (var o = 0; o < this.rows[t].objects.length; o++) this.rows[t].objects[o].isActive ? e.push(this.rows[t].objects[o].id) : this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable ? e.push(this.rows[t].objects[o].id + "/ON#" + this.rows[t].objects[o].multipleUseVariable) : this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image.length > 0 && e.push(this.rows[t].objects[o].id + "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#"));
+                            for (var o = 0; o < this.rows[t].objects.length; o++) (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) ? e.push(this.rows[t].objects[o].id) : this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable ? e.push(this.rows[t].objects[o].id + "/ON#" + this.rows[t].objects[o].multipleUseVariable) : this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image.length > 0 && e.push(this.rows[t].objects[o].id + "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#"));
                         return e
                     },
                     app: function() {
@@ -15562,7 +15559,7 @@
                     },
                     getSelectedObjectName: function() {
                         for (var e = [], t = 0; t < this.rows.length; t++)
-                            for (var o = 0; o < this.rows[t].objects.length; o++) this.rows[t].objects[o].isActive ? e.push((e.length > 0 ? " " : "") + this.rows[t].objects[o].title) : this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable && e.push((e.length > 0 ? " " : "") + this.rows[t].objects[o].title + "(Taken " + this.rows[t].objects[o].multipleUseVariable + " Times)");
+                            for (var o = 0; o < this.rows[t].objects.length; o++) (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) ? e.push((e.length > 0 ? " " : "") + this.rows[t].objects[o].title) : this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable && e.push((e.length > 0 ? " " : "") + this.rows[t].objects[o].title + "(Taken " + this.rows[t].objects[o].multipleUseVariable + " Times)");
                         return e
                     }
                 },
@@ -15571,59 +15568,6 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         });
-                        var e = this.newActivated.split(","),
-                            t = 0;
-                        for (this.app.activated = e, s = 0; s < this.app.rows.length; s++)
-                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
-                                if (this.app.activated.includes(this.app.rows[s].objects[r].id)) {
-                                    this.app.rows[s].objects[r].isActive = !0, this.app.rows[s].currentChoices += 1;
-                                    for (var o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
-                                        for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length <= 0 && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value))
-                                }
-                        for (var s = 0; s < this.rows.length; s++)
-                            for (var r = 0; r < this.rows[s].objects.length; r++)
-                                if (this.rows[s].objects[r].isSelectableMultiple) {
-                                    for (var a = 0; a < e.length; a++)
-                                        if (this.rows[s].objects[r].id == e[a].split("/ON#")[0]) {
-                                            if (t = e[a].split("/ON#")[1], t > 0) {
-                                                for (var n = 0; n < t; n++) this.selectedOneMore(this.rows[s].objects[r])
-                                            } else if (t < 0) {
-                                                for (var l = 0; l < -1 * t; l++) this.selectedOneLess(this.rows[s].objects[r])
-                                            }
-                                            e.splice(a, 1)
-                                        }
-                                } else if (this.rows[s].objects[r].isImageUpload)
-                            for (var c = 0; c < e.length; c++) this.rows[s].objects[r].id == e[c].split("/IMG#")[0] && (this.rows[s].objects[r].image = e[c].split("/IMG#")[1].replaceAll("/CHAR#", ","), e.splice(c, 1));
-						for (s = 0; s < this.app.rows.length; s++)
-                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
-                                if (this.app.activated.includes(this.app.rows[s].objects[r].id))
-                                    for (o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
-                                        for (i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length > 0 && this.checkRequireds(this.app.rows[s].objects[r].scores[o]) && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value));
-                        console.log(e)
-                    },
-                    selectedOneMore: function(e) {
-                        var t = !0;
-                        if (e.isMultipleUseVariable) e.numMultipleTimesPluss > this.multipleUseVariable ? (this.multipleUseVariable++, e.multipleUseVariable = this.multipleUseVariable, this.selectedThisManyTimesProp = this.multipleUseVariable) : t = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
-                        if (t)
-						{
-							for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-							if (e.isActive == !1 && this.selectedThisManyTimesProp > e.numMultipleTimesMinus) e.isActive = !0;
-						}
-                    },
-                    selectedOneLess: function(e) {
-                        var t = !0;
-                        if (this.object.isMultipleUseVariable) this.object.numMultipleTimesMinus < this.multipleUseVariable ? (this.multipleUseVariable--, this.object.multipleUseVariable = this.multipleUseVariable, this.selectedThisManyTimesProp = this.multipleUseVariable) : t = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == this.object.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
-                        if (t)
-						{
-							for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-							if (e.isActive == !0 && this.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
-						}
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -16967,11 +16911,13 @@
                                                         if (ee = p[v].split("/ON#")[1], ee > 0) {
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !1
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                             }
                                                         }
@@ -17045,11 +16991,14 @@
                                                         if (ee = y[v].split("/ON#")[1], ee > 0) {
                                                             for (var n = 0; n < ee; n++) {
                                                                 this.selectedOneMore(this.app.rows[f].objects[b]);
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus++;
+
                                                             }
                                                         } else if (ee < 0) {
                                                             for (var pp = 0; pp < -1 * ee; pp++) {
                                                                 this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																this.app.rows[f].objects[b].forcedActivated = !0
                                                                 this.selectedOneLess(this.app.rows[f].objects[b]);
                                                             }
                                                         }
@@ -17138,11 +17087,13 @@
                                                     if (ee = A[v].split("/ON#")[1], ee > 0) {
                                                         for (var n = 0; n < ee; n++) {
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus--;
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.selectedOneLess(this.app.rows[f].objects[b]);
                                                         }
                                                     } else if (ee < 0) {
                                                         for (var pp = 0; pp < -1 * ee; pp++) {
                                                             this.selectedOneMore(this.app.rows[f].objects[b]);
+															this.app.rows[f].objects[b].forcedActivated = !1
                                                             this.app.rows[f].objects[b].numMultipleTimesMinus++;
                                                         }
                                                     }
@@ -17188,8 +17139,8 @@
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
-                                for (var s = 0; s < this.app.pointTypes.length; s++) console.log(e.multipleUseVariable), this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus) e.isActive = !1;
+                                for (var s = 0; s < this.app.pointTypes.length; s++) this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+							if (e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1;
 						}
                     },
                     cloneObject: function() {
@@ -17494,7 +17445,7 @@
 					checkPointsR: function(e) {
                         for (var t = !0, o = 0; o < e.scores.length; o++)
                             if (this.checkRequireds(e.scores[o]) && !e.scores[o].isActive)
-                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
+                                for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
                     activateObject: function(e, t) {
@@ -22487,7 +22438,52 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("03.03.2021 / 28.02.2021")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("ICC Plus First Release : 22.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 22.06.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Interactive CYOA Creator Plus First Release ")]), o("v-col", {
+                    staticClass: "pb-0",					
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Feature: ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Added a feature that automatically converts PNG or JPEG files larger than 500KB to WebP format upon set Choce/Row images. "), o("br"), o("br"), e._v(" Added a feature to set Border-Image in Manage Choice/Row Design. "), o("br"), o("br"), e._v(" Added a feature to download images of backpacks by splitting them if the size is too large for successful download. "), o("br"), o("br"), e._v(" Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3). "), o("br"), o("br"), o("br"), e._v(" Added a loading animation to the viewer. ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where background images were set for each row, obscuring the overall background image when 'private styling' was not enabled. "), o("br"), o("br"), e._v(" Fixed an issue where choices would not appear when 'private styling' was enabled and the requirements were not met. "), o("br"), o("br"), e._v(" Fixed an issue where choices activated by 'Force another choice active' feature could be deselected by clicking on them. "), o("br"), o("br"), e._v(" Fixed an issue where Addons were not being removed when the 'Remove the text of the choices' feature was activated in Backpack. "), o("br"), o("br"), e._v(" Fixed an issue where 'Point Comparison Requirements' could not be applied to points and addons. ")])], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("03.03.2021 / 28.02.2021")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -23027,10 +23023,14 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
+                        href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.0")]), o("br"), e._v(" https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM "), o("br")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.0.1")]), o("br"), e._v(" https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0 "), o("br")]), o("p", [o("a", {
+                    attrs: {
+                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM"
+                    }
+                }, [e._v(" 1.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -23603,7 +23603,7 @@
                                                     for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++)
                                                         for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == e.app.rows[o].objects[t].scores[r].id && this.getters.checkRequireds(e.app.rows[o].objects[t].scores[r]) && (e.app.pointTypes[a].startingSum += parseInt(e.app.rows[o].objects[t].scores[r].value))
                                             }
-                                    e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0
+                                    e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].forcedActivated = 0
                                 }
 						for (o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, t = 0; t < e.app.rows[o].objects.length; t++) {
