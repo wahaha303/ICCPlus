@@ -573,7 +573,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneLess(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object)
                         }
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
@@ -594,7 +594,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneMore(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object)
                         }
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
@@ -708,7 +708,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneLess(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object)
                         }
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
@@ -729,7 +729,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneMore(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object)
                         }
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
@@ -808,7 +808,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneLess(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object)
                         }
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
@@ -829,7 +829,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.selectedOneMore(t.object)
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object)
                         }
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
@@ -1830,7 +1830,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.object.selectedThisManyTimesProp = this.object.multipleUseVariable, this.multipleUseVariable = this.object.multipleUseVariable)
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.$set(this.object, "selectedThisManyTimesProp", this.object.multipleUseVariable), this.multipleUseVariable = this.object.multipleUseVariable)
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -2154,9 +2154,9 @@
                     },
                     selectedOneMore: function(t) {
                         var e = !0;
-                        if (t.isMultipleUseVariable) t.numMultipleTimesPluss > t.multipleUseVariable && this.checkPoints(t) ? (t.multipleUseVariable++, t.selectedThisManyTimesProp = t.multipleUseVariable) : e = !1;
+                        if (t.isMultipleUseVariable) t.numMultipleTimesPluss > t.multipleUseVariable && this.checkPoints(t) ? (t.multipleUseVariable++, this.$set(t, "selectedThisManyTimesProp", t.multipleUseVariable)) : e = !1;
                         else
-                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.multipleScoreId && (t.numMultipleTimesPluss > this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum++, t.selectedThisManyTimesProp = this.app.pointTypes[i].startingSum) : e = !1);
+                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.multipleScoreId && (t.numMultipleTimesPluss > this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum++, this.$set(t, "selectedThisManyTimesProp", this.app.pointTypes[i].startingSum)) : e = !1);
                         if (e)
 						{
 							for (var s = 0; s < t.scores.length; s++)
@@ -2166,9 +2166,9 @@
                     },
                     selectedOneLess: function(t) {
                         var e = !0;
-                        if (t.isMultipleUseVariable) t.numMultipleTimesMinus < t.multipleUseVariable && this.checkPointsR(t) ? (t.multipleUseVariable--, t.selectedThisManyTimesProp = t.multipleUseVariable) : e = !1;
+                        if (t.isMultipleUseVariable) t.numMultipleTimesMinus < t.multipleUseVariable && this.checkPointsR(t) ? (t.multipleUseVariable--, this.$set(t, "selectedThisManyTimesProp", t.multipleUseVariable)) : e = !1;
                         else
-                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.multipleScoreId && (t.numMultipleTimesMinus < this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum--, t.selectedThisManyTimesProp = this.app.pointTypes[i].startingSum) : e = !1);
+                            for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == t.multipleScoreId && (t.numMultipleTimesMinus < this.app.pointTypes[i].startingSum ? (this.app.pointTypes[i].startingSum--, this.$set(t, "selectedThisManyTimesProp", this.app.pointTypes[i].startingSum)) : e = !1);
                         if (e)
 						{
                             for (var s = 0; s < t.scores.length; s++)
@@ -3934,8 +3934,9 @@
                                                                 if (5 == i.requireds[s].operator && i.requireds[s].reqPoints <= t.app.pointTypes[a].startingSum) return !1
                                                             }
                                             } else if ("or" == i.requireds[s].type) {
-                                                for (var p = !1, l = 0; l < i.requireds[s].orRequired.length; l++) t.app.activated.includes(i.requireds[s].orRequired[l].req) && "" != i.requireds[s].orRequired[l].req && (p = !0);
-                                                if (!p) return !1
+												i.requireds[s].orNum = "undefined" === typeof i.requireds[s].orNum ? 1 : i.requireds[s].orNum;
+                                                for (var p = 0, l = 0; l < i.requireds[s].orRequired.length; l++) t.app.activated.includes(i.requireds[s].orRequired[l].req) && "" != i.requireds[s].orRequired[l].req && p++;
+                                                if (p < i.requireds[s].orNum) return !1
                                             } else if ("pointCompare" == i.requireds[s].type) {
                                                 for (var c = void 0, h = void 0, d = 0; d < t.app.pointTypes.length; d++) i.requireds[s].reqId == t.app.pointTypes[d].id && (c = t.app.pointTypes[d].startingSum);
                                                 for (var u = 0; u < t.app.pointTypes.length; u++) i.requireds[s].reqId1 == t.app.pointTypes[u].id && (h = t.app.pointTypes[u].startingSum);
@@ -4004,7 +4005,7 @@
                                                     for (r = 0; r < t.app.rows[i].objects[e].scores.length; r++)
                                                         for (a = 0; a < t.app.pointTypes.length; a++) t.app.pointTypes[a].id == t.app.rows[i].objects[e].scores[r].id && this.getters.checkRequireds(t.app.rows[i].objects[e].scores[r]) && (t.app.pointTypes[a].startingSum += parseInt(t.app.rows[i].objects[e].scores[r].value))
                                             }
-                                    t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0, t.app.rows[i].objects[e].forcedActivated = 0
+                                    t.app.rows[i].objects[e].multipleUseVariable = 0, t.app.rows[i].objects[e].selectedThisManyTimesProp = 0, t.app.rows[i].objects[e].forcedActivated = !1
                                 }
 						for (i = 0; i < t.app.rows.length; i++) {
 							for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {

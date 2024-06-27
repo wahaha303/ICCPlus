@@ -244,7 +244,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Download : New Viewer File "), o("a", {
+                }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
                         href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
 						target: "_blank"
@@ -2278,7 +2278,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -2299,7 +2299,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object);
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -2431,7 +2431,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -2452,7 +2452,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -2531,7 +2531,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -2552,7 +2552,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -2902,7 +2902,22 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [e._l(t.orRequired, (function(i) {
+                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "N",
+						filled: "",
+						min: 1,
+						max: t.orRequired.length
+					},
+					model: {
+						value: t.orNum,
+						callback: function(o) {
+							e.$set(t, "orNum", o < 1 ? 1 : o > t.orRequired.length ? t.orRequired.length : o)
+						}
+					}
+				}), e._l(t.orRequired, (function(i) {
                         return o("span", {
                             key: i.index
                         }, [o("v-text-field", {
@@ -3180,7 +3195,7 @@
                             return e.addNewRequired(e.row.requireds, "or", !0, "")
                         }
                     }
-                }, [e._v("'One of these is selected' Requirement")])], 1), o("v-col", [o("v-btn", {
+                }, [e._v("'X of these is selected' Requirement")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
                         color: "black"
@@ -3261,7 +3276,8 @@
                             showRequired: !1,
                             operator: i,
                             afterText: this.app.defaultAfterReq,
-                            beforeText: this.app.defaultBeforeReq
+                            beforeText: this.app.defaultBeforeReq,
+							orNum: 1
                         })
                     }
                 }
@@ -4136,7 +4152,22 @@
                         },
                         expression: "required.afterText"
                     }
-                }), e._l(e.required.orRequired, (function(t) {
+                }), o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "X",
+						filled: "",
+						min: 1,
+						max: e.required.orRequired.length
+					},
+					model: {
+						value: e.required.orNum,
+						callback: function(t) {
+							e.$set(e.required, "orNum", t < 1 ? 1 : t > e.required.orRequired.length ? e.required.orRequired.length : t)
+						}
+					}
+				}), e._l(e.required.orRequired, (function(t) {
                     return o("span", {
                         key: t.index
                     }, [o("v-text-field", {
@@ -4281,7 +4312,22 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [e._l(t.orRequired, (function(i) {
+                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "N",
+						filled: "",
+						min: 1,
+						max: t.orRequired.length
+					},
+					model: {
+						value: t.orNum,
+						callback: function(o) {
+							e.$set(t, "orNum", o < 1 ? 1 : o > t.orRequired.length ? t.orRequired.length : o)
+						}
+					}
+				}), e._l(t.orRequired, (function(i) {
                         return o("span", {
                             key: i.index
                         }, [o("v-text-field", {
@@ -4641,7 +4687,22 @@
                                 return e.deleteEvent(i, e.score.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [e._l(t.orRequired, (function(i) {
+                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "N",
+						filled: "",
+						min: 1,
+						max: t.orRequired.length
+					},
+					model: {
+						value: t.orNum,
+						callback: function(o) {
+							e.$set(t, "orNum", o < 1 ? 1 : o > t.orRequired.length ? t.orRequired.length : o)
+						}
+					}
+				}), e._l(t.orRequired, (function(i) {
                         return o("span", {
                             key: i.index
                         }, [o("v-text-field", {
@@ -8984,7 +9045,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.object.selectedThisManyTimesProp = this.object.multipleUseVariable)
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.$set(this.object, "selectedThisManyTimesProp", this.object.multipleUseVariable))
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -9309,9 +9370,9 @@
                     },
                     selectedOneMore: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : t = !1);
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
@@ -9321,9 +9382,9 @@
                     },
                     selectedOneLess: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : t = !1);
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
@@ -16005,7 +16066,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -16026,7 +16087,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -16140,7 +16201,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -16161,7 +16222,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -16240,7 +16301,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneLess(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object)
                         }
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
@@ -16261,7 +16322,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.selectedOneMore(e.object)
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object)
                         }
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
@@ -16797,7 +16858,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.object.selectedThisManyTimesProp = this.object.multipleUseVariable, this.multipleUseVariable = this.object.multipleUseVariable)
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.$set(this.object, "selectedThisManyTimesProp", this.object.multipleUseVariable), this.multipleUseVariable = this.object.multipleUseVariable)
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -17121,9 +17182,9 @@
                     },
                     selectedOneMore: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : t = !1);
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
@@ -17133,9 +17194,9 @@
                     },
                     selectedOneLess: function(e) {
                         var t = !0;
-                        if (e.isMultipleUseVariable) e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, e.selectedThisManyTimesProp = e.multipleUseVariable) : t = !1;
+                        if (e.isMultipleUseVariable) e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : t = !1;
                         else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, e.selectedThisManyTimesProp = this.app.pointTypes[o].startingSum) : t = !1);
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : t = !1);
                         if (t)
 						{
 							for (var i = 0; i < e.scores.length; i++)
@@ -22478,7 +22539,7 @@
                     attrs: {
                         cols: "6"
                     }
-                }, [e._v(" Added a feature that automatically converts PNG or JPEG files larger than 500KB to WebP format upon set Choce/Row images. "), o("br"), o("br"), e._v(" Added a feature to set Border-Image in Manage Choice/Row Design. "), o("br"), o("br"), e._v(" Added a feature to download images of backpacks by splitting them if the size is too large for successful download. "), o("br"), o("br"), e._v(" Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3). "), o("br"), o("br"), o("br"), e._v(" Added a loading animation to the viewer. ")]), o("v-col", {
+                }, [e._v(" Added a feature that automatically converts PNG or JPEG files larger than 500KB to WebP format upon set Choce/Row images. "), o("br"), o("br"), e._v(" Added a feature to set Border-Image in Manage Choice/Row Design. "), o("br"), o("br"), e._v(" Added a feature to download images of backpacks by splitting them if the size is too large for successful download. "), o("br"), o("br"), e._v(" Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3). "), o("br"), o("br"), e._v(" Added a loading animation to the viewer. ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "6"
@@ -23533,8 +23594,9 @@
                                                                 if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1
                                                             }
                                             } else if ("or" == o.requireds[i].type) {
-                                                for (var l = !1, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) && "" != o.requireds[i].orRequired[c].req && (l = !0);
-                                                if (!l) return !1
+												o.requireds[i].orNum = "undefined" === typeof o.requireds[i].orNum ? 1 : o.requireds[i].orNum;
+                                                for (var l = 0, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) && "" != o.requireds[i].orRequired[c].req && l++;
+                                                if (l < o.requireds[i].orNum) return !1
                                             } else if ("pointCompare" == o.requireds[i].type) {
                                                 for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
                                                 for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
@@ -23603,7 +23665,7 @@
                                                     for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++)
                                                         for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == e.app.rows[o].objects[t].scores[r].id && this.getters.checkRequireds(e.app.rows[o].objects[t].scores[r]) && (e.app.pointTypes[a].startingSum += parseInt(e.app.rows[o].objects[t].scores[r].value))
                                             }
-                                    e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].forcedActivated = 0
+                                    e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].forcedActivated = !1
                                 }
 						for (o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, t = 0; t < e.app.rows[o].objects.length; t++) {
