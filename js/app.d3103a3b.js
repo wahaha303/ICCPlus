@@ -4488,6 +4488,24 @@
                         }
                     }
                 }, [e._v("mdi-key-plus")])], 1), o("v-row", [o("v-col", {
+                    staticClass: "py-0 col-12"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+						"hide-details": "",
+                        label: "at Random?"
+                    },
+                    model: {
+                        value: e.score.isRandom,
+                        callback: function(t) {
+                            e.$set(e.score, "isRandom", t),
+							e.$set(e.score, "minValue", "0"),
+							e.$set(e.score, "maxValue", "0"),
+							e.$set(e.score, "setValue", false)
+                        },
+                        expression: "score.isRandom"
+                    }
+                })], 1), o("v-col", {
                     staticClass: "py-0 pr-1"
                 }, [o("v-select", {
                     staticClass: "my-1",
@@ -4506,7 +4524,37 @@
                         },
                         expression: "score.id"
                     }
+                }), e.score.isRandom ? [o("v-text-field", {
+                    staticClass: "my-1",
+                    attrs: {
+                        "hide-details": "",
+                        type: "number",
+                        filled: "",
+                        label: "Minimum Value"
+                    },
+                    model: {
+                        value: e.score.minValue,
+                        callback: function(t) {
+                            e.$set(e.score, "minValue", t)
+                        },
+                        expression: "score.minValue"
+                    }
                 }), o("v-text-field", {
+                    staticClass: "my-1",
+                    attrs: {
+                        "hide-details": "",
+                        type: "number",
+                        filled: "",
+                        label: "Maximum Value"
+                    },
+                    model: {
+                        value: e.score.maxValue,
+                        callback: function(t) {
+                            e.$set(e.score, "maxValue", t)
+                        },
+                        expression: "score.maxValue"
+                    }
+                })] : o("v-text-field", {
                     staticClass: "my-1",
                     attrs: {
                         "hide-details": "",
@@ -4785,7 +4833,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + e.scoreValue + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -4812,7 +4860,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(" " + e.scoreValue + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(" " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -4921,7 +4969,8 @@
             VIcon: J["a"],
             VRow: S["a"],
             VSelect: K["a"],
-            VTextField: R["a"]
+            VTextField: R["a"],
+			VCheckbox: ae["a"]
         });
         var be = function() {
                 var e = this,
@@ -9168,6 +9217,12 @@
                         return t
                     },
                     activateObject: function(e, t) {
+						for (var g = 0; g < e.scores.length; g++)
+							if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+								e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+								e.scores[g].setValue = !0;
+								for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+							}
                         var i = this,
                             s = this.checkRequireds(e),
                             o = this.checkPoints(e);
@@ -9177,7 +9232,7 @@
                             if (this.activated.includes(e.id)) {
                                 for (var a = 0; a < e.scores.length; a++)
                                     if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1);
+                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
                                 var p, ee = 0;
                                 if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -9282,8 +9337,8 @@
                                         } this.activated.splice(this.activated.indexOf(e.id), 1), t.currentChoices -= 1
                             } else {
                                 for (var g = 0; g < e.scores.length; g++)
-                                    if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-                                        for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
+									if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+										for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
                                 var f, b, m, v, y, ee = 0;
                                 if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
                                 if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
@@ -9414,7 +9469,7 @@
                             this.activated.splice(this.activated.indexOf(e.id), 1);
                             for (var S = e.scores.length - 1; S >= 0; S--)
                                 if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
-                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1);
+                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1, e.scores[S].setValue = !1);
                             if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 								if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 									for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -10902,6 +10957,12 @@
                         return t
                     },
                     activateObject: function(e, t) {
+						for (var g = 0; g < e.scores.length; g++)
+							if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+								e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+								e.scores[g].setValue = !0;
+								for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+							}
                         var i = this,
                             s = this.checkRequireds(e),
                             o = this.checkPoints(e);
@@ -10911,7 +10972,7 @@
                             if (this.activated.includes(e.id)) {
                                 for (var a = 0; a < e.scores.length; a++)
                                     if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1);
+                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
                                 var p, ee = 0;
                                 if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -10961,29 +11022,29 @@
 														if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									}
-									if (e.deactivateOtherChoice)
-										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-											for (m = 0; m < this.app.rows.length; m++)
-												for (v = 0; v < this.app.rows[m].objects.length; v++) {
-													if (this.app.rows[m].objects[v].isSelectableMultiple) {
-														if (this.app.rows[m].objects[v].id == p[f].split("/ON#")[0]) {
-															if (ee = p[f].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) this.selectedOneMore(this.app.rows[m].objects[v])
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(this.app.rows[m].objects[v])
-															}
-														}
-													} else {
-														this.app.rows[m].objects[v].id != p[f] && this.app.rows[m].resultGroupId != p[f] || !this.app.rows[m].objects[v].isActive || this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]);
-													}
-												}
-											for (var l = 0; l < this.app.groups.length; l++)
-												if (this.app.groups[l].id == p[f])
-													for (m = 0; m < this.app.rows.length; m++)
-														for (v = 0; v < this.app.rows[m].objects.length; v++)
-															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
-										}
 								}
+								if (e.deactivateOtherChoice)
+                                    for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+                                        for (m = 0; m < this.app.rows.length; m++)
+                                            for (v = 0; v < this.app.rows[m].objects.length; v++) {
+                                                if (this.app.rows[m].objects[v].isSelectableMultiple) {
+                                                    if (this.app.rows[m].objects[v].id == p[f].split("/ON#")[0]) {
+                                                        if (ee = p[f].split("/ON#")[1], ee > 0) {
+                                                            for (var n = 0; n < ee; n++) this.selectedOneMore(this.app.rows[m].objects[v])
+                                                        } else if (ee < 0) {
+                                                            for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(this.app.rows[m].objects[v])
+                                                        }
+                                                    }
+                                                } else {
+                                                    this.app.rows[m].objects[v].id != p[f] && this.app.rows[m].resultGroupId != p[f] || !this.app.rows[m].objects[v].isActive || this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]);
+                                                }
+                                            }
+                                        for (var l = 0; l < this.app.groups.length; l++)
+                                            if (this.app.groups[l].id == p[f])
+                                                for (m = 0; m < this.app.rows.length; m++)
+                                                    for (v = 0; v < this.app.rows[m].objects.length; v++)
+                                                        for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
+                                    }
                                 var h = "Scores Updated On: ";
                                 if (this.app.rows.forEach((function(t) {
                                         t.objects.forEach((function(s) {
@@ -11016,11 +11077,12 @@
                                         } this.activated.splice(this.activated.indexOf(e.id), 1), t.currentChoices -= 1
                             } else {
                                 for (var g = 0; g < e.scores.length; g++)
-                                    if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-                                        for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
+									if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+										for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
                                 var f, b, m, v, y, ee = 0;
                                 if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
-                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
+								{
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
 										y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
 										var rd = y.slice();
@@ -11062,14 +11124,14 @@
 															if (ee = y[v].split("/ON#")[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(this.app.rows[f].objects[b]);
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.selectedOneLess(this.app.rows[f].objects[b]);
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															}
 														}
@@ -11147,7 +11209,7 @@
                             this.activated.splice(this.activated.indexOf(e.id), 1);
                             for (var S = e.scores.length - 1; S >= 0; S--)
                                 if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
-                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1);
+                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1, e.scores[S].setValue = !1);
                             if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 								if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 									for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -11174,7 +11236,7 @@
 												}
 								} else {
 									var A = e.activateThisChoice.split(","),
-										ee = 0;
+                                    ee = 0;
 									for (v = A.length - 1; v >= 0; v--)
 										for (f = 0; f < this.app.rows.length; f++)
 											for (b = 0; b < this.app.rows[f].objects.length; b++) {
@@ -11187,6 +11249,7 @@
 																this.selectedOneLess(this.app.rows[f].objects[b]);
 															}
 														} else if (ee < 0) {
+															this.app.rows[f].object[b].multipleUseVariable = 0;
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																this.selectedOneMore(this.app.rows[f].objects[b]);
 																this.app.rows[f].objects[b].forcedActivated = !1
@@ -11198,7 +11261,7 @@
 													if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 												}
 											}
-								}
+								}   
                             }
                             if (e.addToAllowChoice)
                                 for (m = 0; m < this.app.rows.length; m++)
@@ -16796,7 +16859,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + e.scoreValue + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -16823,7 +16886,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(" " + e.scoreValue + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(" " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -17161,6 +17224,12 @@
                         return t
                     },
                     activateObject: function(e, t) {
+						for (var g = 0; g < e.scores.length; g++)
+							if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+								e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+								e.scores[g].setValue = !0;
+								for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+							}
                         var i = this,
                             s = this.checkRequireds(e),
                             o = this.checkPoints(e);
@@ -17170,7 +17239,7 @@
                             if (this.activated.includes(e.id)) {
                                 for (var a = 0; a < e.scores.length; a++)
                                     if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1);
+                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
                                 var p, ee = 0;
                                 if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -17275,11 +17344,12 @@
                                         } this.activated.splice(this.activated.indexOf(e.id), 1), t.currentChoices -= 1
                             } else {
                                 for (var g = 0; g < e.scores.length; g++)
-                                    if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-                                        for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
+									if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+										for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
                                 var f, b, m, v, y, ee = 0;
                                 if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
-                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
+								{
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
 										y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
 										var rd = y.slice();
@@ -17321,15 +17391,14 @@
 															if (ee = y[v].split("/ON#")[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(this.app.rows[f].objects[b]);
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
-
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.selectedOneLess(this.app.rows[f].objects[b]);
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															}
 														}
@@ -17407,7 +17476,7 @@
                             this.activated.splice(this.activated.indexOf(e.id), 1);
                             for (var S = e.scores.length - 1; S >= 0; S--)
                                 if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
-                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1);
+                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1, e.scores[S].setValue = !1);
                             if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 								if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 									for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -17434,7 +17503,7 @@
 												}
 								} else {
 									var A = e.activateThisChoice.split(","),
-										ee = 0;
+                                    ee = 0;
 									for (v = A.length - 1; v >= 0; v--)
 										for (f = 0; f < this.app.rows.length; f++)
 											for (b = 0; b < this.app.rows[f].objects.length; b++) {
@@ -17447,6 +17516,7 @@
 																this.selectedOneLess(this.app.rows[f].objects[b]);
 															}
 														} else if (ee < 0) {
+															this.app.rows[f].object[b].multipleUseVariable = 0;
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																this.selectedOneMore(this.app.rows[f].objects[b]);
 																this.app.rows[f].objects[b].forcedActivated = !1
@@ -17458,7 +17528,7 @@
 													if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 												}
 											}
-								}
+								}   
                             }
                             if (e.addToAllowChoice)
                                 for (m = 0; m < this.app.rows.length; m++)
@@ -17806,6 +17876,12 @@
                         return t
                     },
                     activateObject: function(e, t) {
+						for (var g = 0; g < e.scores.length; g++)
+							if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+								e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+								e.scores[g].setValue = !0;
+								for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+							}
                         var i = this,
                             s = this.checkRequireds(e),
                             o = this.checkPoints(e);
@@ -17815,7 +17891,7 @@
                             if (this.activated.includes(e.id)) {
                                 for (var a = 0; a < e.scores.length; a++)
                                     if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1);
+                                        for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
                                 var p, ee = 0;
                                 if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -17920,11 +17996,12 @@
                                         } this.activated.splice(this.activated.indexOf(e.id), 1), t.currentChoices -= 1
                             } else {
                                 for (var g = 0; g < e.scores.length; g++)
-                                    if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-                                        for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
+									if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+										for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
                                 var f, b, m, v, y, ee = 0;
                                 if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
-                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+                                if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
+								{
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
 										y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
 										var rd = y.slice();
@@ -17966,14 +18043,14 @@
 															if (ee = y[v].split("/ON#")[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(this.app.rows[f].objects[b]);
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !0
 																	this.selectedOneLess(this.app.rows[f].objects[b]);
+																	this.app.rows[f].objects[b].forcedActivated = !0
 																}
 															}
 														}
@@ -17983,7 +18060,6 @@
 												}
 									}
 								}
-                                    
                                 if (e.deactivateOtherChoice)
                                     for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
                                         for (m = 0; m < this.app.rows.length; m++)
@@ -18052,7 +18128,7 @@
                             this.activated.splice(this.activated.indexOf(e.id), 1);
                             for (var S = e.scores.length - 1; S >= 0; S--)
                                 if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
-                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1);
+                                    for (var k = 0; k < this.app.pointTypes.length; k++) this.app.pointTypes[k].id == e.scores[S].id && (this.app.pointTypes[k].startingSum += parseInt(e.scores[S].value), e.scores[S].isActive = !1, e.scores[S].setValue = !1);
                             if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 								if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 									for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -18079,7 +18155,7 @@
 												}
 								} else {
 									var A = e.activateThisChoice.split(","),
-										ee = 0;
+                                    ee = 0;
 									for (v = A.length - 1; v >= 0; v--)
 										for (f = 0; f < this.app.rows.length; f++)
 											for (b = 0; b < this.app.rows[f].objects.length; b++) {
@@ -18092,6 +18168,7 @@
 																this.selectedOneLess(this.app.rows[f].objects[b]);
 															}
 														} else if (ee < 0) {
+															this.app.rows[f].object[b].multipleUseVariable = 0;
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																this.selectedOneMore(this.app.rows[f].objects[b]);
 																this.app.rows[f].objects[b].forcedActivated = !1
@@ -18103,7 +18180,7 @@
 													if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 												}
 											}
-								}
+								}   
                             }
                             if (e.addToAllowChoice)
                                 for (m = 0; m < this.app.rows.length; m++)
