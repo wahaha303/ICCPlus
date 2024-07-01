@@ -2901,39 +2901,127 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [1 == t.operator ? o("span", [e._v("A is bigger than B")]) : e._e(), 2 == t.operator ? o("span", [e._v("A is equal to B")]) : e._e(), 3 == t.operator ? o("span", [e._v("A is bigger/equal to B")]) : e._e(), o("v-select", {
+                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "id", id: ""});
+						}
+					}
+				}, [e._v("Add Point Type")]), o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "points", points: 0});
+						}
+					}
+				}, [e._v("Add Point")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Target Point"
+                    },
+                    model: {
+                        value: t.reqId,
+                        callback: function(o) {
+                            e.$set(t, "reqId", o)
+                        },
+                        expression: "required.reqId"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointComOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: t.operator,
+                        callback: function(o) {
+                            e.$set(t, "operator", o)
+                        },
+                        expression: "required.operator"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Point Type"
+                    },
+                    model: {
+                        value: t.reqId1,
+                        callback: function(o) {
+                            e.$set(t, "reqId1", o)
+                        },
+                        expression: "required.reqId1"
+                    }
+                }), e._l(t.more, (function(s) {
+                    return o("span", {
+                        key: s.index
+                    }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.moreOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: s.operator,
+                        callback: function(o) {
+                            e.$set(s, "operator", o)
+                        },
+                        expression: "s.oprator"
+                    }
+                }), "id" == s.type ? o("v-select", {
                         attrs: {
                             "hide-details": "",
-                            items: e.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type A"
+							items: e.pointTypes,
+							"item-text": "name",
+							"item-value": "id",
+							filled: "",
+							label: "Point Type"
                         },
                         model: {
-                            value: t.reqId,
+                            value: s.id,
                             callback: function(o) {
-                                e.$set(t, "reqId", o)
+                                e.$set(s, "id", o)
                             },
-                            expression: "requiredReq.reqId"
+                            expression: "s.id"
                         }
-                    }), o("v-select", {
+                    }) : o("v-text-field", {
                         attrs: {
                             "hide-details": "",
-                            items: e.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type B"
+							type: "number",
+							filled: "",
+							label: "Value"
                         },
                         model: {
-                            value: t.reqId1,
+                            value: s.points,
                             callback: function(o) {
-                                e.$set(t, "reqId1", o)
+                                e.$set(s, "points", o)
                             },
-                            expression: "requiredReq.reqId1"
+                            expression: "s.points"
                         }
-                    }), o("v-btn", {
+                    })], 1)
+                })), o("v-btn", {
                         staticStyle: {
                             color: "black"
                         },
@@ -2942,7 +3030,7 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -3179,35 +3267,9 @@
                     attrs: {
                         cols: "6"
                     }
-                }, [o("v-card-text", {
+                }, [o("v-row", [o("v-card-text", {
                     staticClass: "mb-n5"
-                }, [e._v("Point Comparison Requirements")]), o("v-col", [o("v-btn", {
-                    staticClass: "btn",
-                    staticStyle: {
-                        color: "black"
-                    },
-                    attrs: {
-                        type: "button"
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "1")
-                        }
-                    }
-                }, [e._v("This Point-type is bigger")])], 1), o("v-col", [o("v-btn", {
-                    staticClass: "btn",
-                    staticStyle: {
-                        color: "black"
-                    },
-                    attrs: {
-                        type: "button"
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "3")
-                        }
-                    }
-                }, [e._v("This Point-type is bigger or equal")])], 1), o("v-col", [o("v-btn", {
+                }, [e._v(" Point Comparison Requirements "), o("br")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
                         color: "black"
@@ -3220,7 +3282,59 @@
                             return e.addNewRequired(e.row.requireds, "pointCompare", !0, "2")
                         }
                     }
-                }, [e._v("These Point-types are equal")])], 1)], 1), o("v-card-text", {
+                }, [e._v("= Equal to")])], 1), o("v-col", [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "1")
+                        }
+                    }
+                }, [e._v("+ More than")])], 1), o("v-col", [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "5")
+                        }
+                    }
+                }, [e._v("- Less than")])], 1), o("v-col", [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "3")
+                        }
+                    }
+                }, [e._v("+= More or equal")])], 1), o("v-col", [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.addNewRequired(e.row.requireds, "pointCompare", !0, "4")
+                        }
+                    }
+                }, [e._v("-= Less or equal")])], 1)], 1)], 1), o("v-card-text", {
                     staticClass: "mb-n5"
                 }, [e._v("'One of these' Requirements")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
@@ -3317,7 +3431,8 @@
                             operator: i,
                             afterText: this.app.defaultAfterReq,
                             beforeText: this.app.defaultBeforeReq,
-							orNum: 1
+							orNum: 1,
+							more: []
                         })
                     }
                 }
@@ -3836,7 +3951,36 @@
                         }, {
                             text: "- Less than",
                             value: "5"
-                        }]
+                        }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}]
                     }
                 },
                 components: {
@@ -4097,26 +4241,36 @@
                         },
                         expression: "required.reqPoints"
                     }
-                })], 1) : "pointCompare" == e.required.type ? o("span", ["1" == e.required.operator ? o("span", {
-                    staticStyle: {
-                        "text-align": "center"
-                    }
-                }, [e._v("A is bigger than B")]) : e._e(), "2" == e.required.operator ? o("span", {
-                    staticStyle: {
-                        "text-align": "center"
-                    }
-                }, [e._v("A is equal to B")]) : e._e(), "3" == e.required.operator ? o("span", {
-                    staticStyle: {
-                        "text-align": "center"
-                    }
-                }, [e._v("A is bigger/equal to B")]) : e._e(), o("v-select", {
+                })], 1) : "pointCompare" == e.required.type ? o("span", [o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(t) {
+							if ("undefined" === typeof e.required.more) e.$set(e.required, "more", []);
+							e.required.more.push({operator: "1", type: "id", id: ""});
+						}
+					}
+				}, [e._v("Add Point Type")]), o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(t) {
+							if ("undefined" === typeof e.required.more) e.$set(e.required, "more", []);
+							e.required.more.push({operator: "1", type: "points", points: 0});
+						}
+					}
+				}, [e._v("Add Point")]), o("v-select", {
                     attrs: {
                         "hide-details": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
                         filled: "",
-                        label: "Point Type A"
+                        label: "Target Point"
                     },
                     model: {
                         value: e.required.reqId,
@@ -4128,11 +4282,27 @@
                 }), o("v-select", {
                     attrs: {
                         "hide-details": "",
+                        items: e.pointComOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: e.required.operator,
+                        callback: function(t) {
+                            e.$set(e.required, "operator", t)
+                        },
+                        expression: "required.operator"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
                         filled: "",
-                        label: "Point Type B"
+                        label: "Point Type"
                     },
                     model: {
                         value: e.required.reqId1,
@@ -4141,7 +4311,57 @@
                         },
                         expression: "required.reqId1"
                     }
-                })], 1) : "or" == e.required.type ? o("span", [o("v-checkbox", {
+                }), e._l(e.required.more, (function(i) {
+                    return o("span", {
+                        key: i.index
+                    }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.moreOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: i.operator,
+                        callback: function(o) {
+                            e.$set(i, "operator", o)
+                        },
+                        expression: "i.oprator"
+                    }
+                }), "id" == i.type ? o("v-select", {
+                        attrs: {
+                            "hide-details": "",
+							items: e.app.pointTypes,
+							"item-text": "name",
+							"item-value": "id",
+							filled: "",
+							label: "Point Type"
+                        },
+                        model: {
+                            value: i.id,
+                            callback: function(o) {
+                                e.$set(i, "id", o)
+                            },
+                            expression: "i.id"
+                        }
+                    }) : o("v-text-field", {
+                        attrs: {
+                            "hide-details": "",
+							type: "number",
+							filled: "",
+							label: "Value"
+                        },
+                        model: {
+                            value: i.points,
+                            callback: function(o) {
+                                e.$set(i, "points", o)
+                            },
+                            expression: "i.points"
+                        }
+                    })], 1)
+                }))], 2) : "or" == e.required.type ? o("span", [o("v-checkbox", {
                     staticClass: "pt-0 mt-0",
                     attrs: {
                         "hide-details": "",
@@ -4311,39 +4531,127 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [1 == t.operator ? o("span", [e._v("A is bigger than B")]) : e._e(), 2 == t.operator ? o("span", [e._v("A is equal to B")]) : e._e(), 3 == t.operator ? o("span", [e._v("A is bigger/equal to B")]) : e._e(), o("v-select", {
+                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "id", id: ""});
+						}
+					}
+				}, [e._v("Add Point Type")]), o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "points", points: 0});
+						}
+					}
+				}, [e._v("Add Point")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.app.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Target Point"
+                    },
+                    model: {
+                        value: t.reqId,
+                        callback: function(o) {
+                            e.$set(t, "reqId", o)
+                        },
+                        expression: "t.reqId"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointComOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: t.operator,
+                        callback: function(o) {
+                            e.$set(t, "operator", o)
+                        },
+                        expression: "t.operator"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.app.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Point Type"
+                    },
+                    model: {
+                        value: t.reqId1,
+                        callback: function(o) {
+                            e.$set(t, "reqId1", o)
+                        },
+                        expression: "required.reqId1"
+                    }
+                }), e._l(t.more, (function(s) {
+                    return o("span", {
+                        key: s.index
+                    }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.moreOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: s.operator,
+                        callback: function(o) {
+                            e.$set(s, "operator", o)
+                        },
+                        expression: "s.oprator"
+                    }
+                }), "id" == s.type ? o("v-select", {
                         attrs: {
                             "hide-details": "",
-                            items: e.app.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type A"
+							items: e.app.pointTypes,
+							"item-text": "name",
+							"item-value": "id",
+							filled: "",
+							label: "Point Type"
                         },
                         model: {
-                            value: t.reqId,
+                            value: s.id,
                             callback: function(o) {
-                                e.$set(t, "reqId", o)
+                                e.$set(s, "id", o)
                             },
-                            expression: "requiredReq.reqId"
+                            expression: "s.id"
                         }
-                    }), o("v-select", {
+                    }) : o("v-text-field", {
                         attrs: {
                             "hide-details": "",
-                            items: e.app.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type B"
+							type: "number",
+							filled: "",
+							label: "Value"
                         },
                         model: {
-                            value: t.reqId1,
+                            value: s.points,
                             callback: function(o) {
-                                e.$set(t, "reqId1", o)
+                                e.$set(s, "points", o)
                             },
-                            expression: "requiredReq.reqId1"
+                            expression: "s.points"
                         }
-                    }), o("v-btn", {
+                    })], 1)
+                })), o("v-btn", {
                         staticStyle: {
                             color: "black"
                         },
@@ -4352,7 +4660,7 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -4436,7 +4744,36 @@
                         }, {
                             text: "- Less than",
                             value: "5"
-                        }]
+                        }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}]
                     }
                 },
                 components: {
@@ -4734,48 +5071,136 @@
                                 return e.deleteEvent(i, e.score.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [1 == t.operator ? o("span", [e._v("A is bigger than B")]) : e._e(), 2 == t.operator ? o("span", [e._v("A is equal to B")]) : e._e(), 3 == t.operator ? o("span", [e._v("A is bigger/equal to B")]) : e._e(), o("v-select", {
+                    }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "id", id: ""});
+						}
+					}
+				}, [e._v("Add Point Type")]), o("v-btn", {
+					staticClass: "mt-01",
+					staticStyle: {
+						color: "black"
+					},
+					on: {
+						click: function(o) {
+							if ("undefined" === typeof t.more) e.$set(t, "more", []);
+							t.more.push({operator: "1", type: "points", points: 0});
+						}
+					}
+				}, [e._v("Add Point")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Target Point"
+                    },
+                    model: {
+                        value: t.reqId,
+                        callback: function(o) {
+                            e.$set(t, "reqId", o)
+                        },
+                        expression: "required.reqId"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointComOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: t.operator,
+                        callback: function(o) {
+                            e.$set(t, "operator", o)
+                        },
+                        expression: "required.operator"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Point Type"
+                    },
+                    model: {
+                        value: t.reqId1,
+                        callback: function(o) {
+                            e.$set(t, "reqId1", o)
+                        },
+                        expression: "required.reqId1"
+                    }
+                }), e._l(t.more, (function(s) {
+                    return o("span", {
+                        key: s.index
+                    }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.moreOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Operator"
+                    },
+                    model: {
+                        value: s.operator,
+                        callback: function(o) {
+                            e.$set(s, "operator", o)
+                        },
+                        expression: "s.oprator"
+                    }
+                }), "id" == s.type ? o("v-select", {
                         attrs: {
                             "hide-details": "",
-                            items: e.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type A"
+							items: e.pointTypes,
+							"item-text": "name",
+							"item-value": "id",
+							filled: "",
+							label: "Point Type"
                         },
                         model: {
-                            value: t.reqId,
+                            value: s.id,
                             callback: function(o) {
-                                e.$set(t, "reqId", o)
+                                e.$set(s, "id", o)
                             },
-                            expression: "requiredReq.reqId"
+                            expression: "s.id"
                         }
-                    }), o("v-select", {
+                    }) : o("v-text-field", {
                         attrs: {
                             "hide-details": "",
-                            items: e.pointTypes,
-                            "item-text": "name",
-                            "item-value": "id",
-                            filled: "",
-                            label: "Point Type B"
+							type: "number",
+							filled: "",
+							label: "Value"
                         },
                         model: {
-                            value: t.reqId1,
+                            value: s.points,
                             callback: function(o) {
-                                e.$set(t, "reqId1", o)
+                                e.$set(s, "points", o)
                             },
-                            expression: "requiredReq.reqId1"
+                            expression: "s.points"
                         }
-                    }), o("v-btn", {
+                    })], 1)
+                })), o("v-btn", {
                         staticStyle: {
                             color: "black"
                         },
                         on: {
                             click: function(t) {
-                                return e.deleteEvent(i, e.score.requireds)
+                                return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -4913,6 +5338,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         pointType: {
                             id: "text",
                             name: "Points",
@@ -9039,6 +9493,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         currentComponent: "",
                         sanitizeArg: {
                             allowedTags: ["address", "article", "aside", "footer", "header", "h1", "h2", "h3", "h4", "h5", "h6", "hgroup", "main", "nav", "section", "blockquote", "dd", "div", "dl", "dt", "figcaption", "figure", "hr", "li", "main", "ol", "p", "pre", "ul", "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn", "em", "i", "kbd", "mark", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr", "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "font", "iframe", "img"],
@@ -10729,6 +11212,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         rowIconButtons: [{
                             component: "AppObjectList",
                             icon: "mdi-format-list-bulleted",
@@ -16944,6 +17456,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         pointType: {
                             id: "text",
                             name: "Points",
@@ -17051,6 +17592,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         sanitizeArg: {
                             allowedTags: ["address", "article", "aside", "footer", "header", "h1", "h2", "h3", "h4", "h5", "h6", "hgroup", "main", "nav", "section", "blockquote", "dd", "div", "dl", "dt", "figcaption", "figure", "hr", "li", "main", "ol", "p", "pre", "ul", "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn", "em", "i", "kbd", "mark", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr", "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "font", "iframe"],
                             allowedAttributes: false,
@@ -17661,6 +18231,35 @@
                             text: "- Less than",
                             value: "5"
                         }],
+						pointComOperators: [{
+                            text: "+ More than",
+                            value: "1"
+                        }, {
+                            text: "= Equal to",
+                            value: "2"
+                        }, {
+                            text: "+= More or equal",
+                            value: "3"
+                        }, {
+                            text: "-= Less or equal",
+                            value: "4"
+                        }, {
+                            text: "- Less than",
+                            value: "5"
+                        }],
+						moreOperators: [{
+							text: "+ Plus",
+							value: "1"
+						}, {
+							text: "- Minus",
+							value: "2"
+						}, {
+							text: "× Multiply",
+							value: "3"
+						}, {
+							text: "÷ Divide",
+							value: "4"
+						}],
                         rowIconButtons: [{
                             component: "AppObjectList",
                             icon: "mdi-format-list-bulleted",
@@ -24088,9 +24687,24 @@
                                             } else if ("pointCompare" == o.requireds[i].type) {
                                                 for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
                                                 for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
+												if ("undefined" !== typeof o.requireds[i].more) {
+													for (var cp = 0, a = 0; a < o.requireds[i].more.length; a++) {
+														if ("undefined" !== typeof o.requireds[i].more[a].id) {
+															for (var s = 0; s < e.app.pointTypes.length; s++) o.requireds[i].more[a].id == e.app.pointTypes[s].id && (cp = e.app.pointTypes[s].startingSum);
+														} else {
+															cp = o.requireds[i].more[a].points;
+														}
+														if (1 == o.requireds[i].more[a].operator) p += parseInt(cp);
+														else if (2 == o.requireds[i].more[a].operator) p -= parseInt(cp);
+														else if (3 == o.requireds[i].more[a].operator) p *= parseInt(cp);
+														else if (4 == o.requireds[i].more[a].operator) p /= parseInt(cp);
+													}
+												}
                                                 if (d <= p && 1 == o.requireds[i].operator) return !1;
                                                 if (d != p && 2 == o.requireds[i].operator) return !1;
-                                                if (d < p && 3 == o.requireds[i].operator) return !1
+                                                if (d < p && 3 == o.requireds[i].operator) return !1;
+                                                if (d > p && 4 == o.requireds[i].operator) return !1;
+                                                if (d >= p && 5 == o.requireds[i].operator) return !1
                                             }
                                         }
                                         if (!o.requireds[i].required) {

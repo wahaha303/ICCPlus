@@ -1098,7 +1098,7 @@
                 }) : t._e()]), i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + t.scoreValue + " " + t.score.afterText, t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.isRandom ? (t.score.minValue + " ~ " + t.score.maxValue) : t.scoreValue) + " " + t.score.afterText, t.sanitizeArg))
                     }
                 })]), i("div", {
                     style: t.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -4136,11 +4136,26 @@
                                                 for (var p = 0, l = 0; l < i.requireds[s].orRequired.length; l++) t.app.activated.includes(i.requireds[s].orRequired[l].req) && "" != i.requireds[s].orRequired[l].req && p++;
                                                 if (p < i.requireds[s].orNum) return !1
                                             } else if ("pointCompare" == i.requireds[s].type) {
-                                                for (var c = void 0, h = void 0, d = 0; d < t.app.pointTypes.length; d++) i.requireds[s].reqId == t.app.pointTypes[d].id && (c = t.app.pointTypes[d].startingSum);
+												for (var c = void 0, h = void 0, d = 0; d < t.app.pointTypes.length; d++) i.requireds[s].reqId == t.app.pointTypes[d].id && (c = t.app.pointTypes[d].startingSum);
                                                 for (var u = 0; u < t.app.pointTypes.length; u++) i.requireds[s].reqId1 == t.app.pointTypes[u].id && (h = t.app.pointTypes[u].startingSum);
+												if ("undefined" !== typeof i.requireds[s].more) {
+													for (var cp = 0, a = 0; a < i.requireds[s].more.length; a++) {
+														if ("undefined" !== typeof i.requireds[s].more[a].id) {
+															for (var r = 0; r < t.app.pointTypes.length; r++) o.requireds[s].more[a].id == e.app.pointTypes[r].id && (cp = e.app.pointTypes[r].startingSum);
+														} else {
+															cp = i.requireds[s].more[a].points;
+														}
+														if (1 == i.requireds[s].more[a].operator) h += parseInt(cp);
+														else if (2 == i.requireds[s].more[a].operator) h -= parseInt(cp);
+														else if (3 == i.requireds[s].more[a].operator) h *= parseInt(cp);
+														else if (4 == i.requireds[s].more[a].operator) h /= parseInt(cp);
+													}
+												}
                                                 if (c <= h && 1 == i.requireds[s].operator) return !1;
                                                 if (c != h && 2 == i.requireds[s].operator) return !1;
-                                                if (c < h && 3 == i.requireds[s].operator) return !1
+                                                if (c < h && 3 == i.requireds[s].operator) return !1;
+                                                if (c > h && 4 == i.requireds[s].operator) return !1;
+                                                if (c >= h && 5 == i.requireds[s].operator) return !1
                                             }
                                         }
                                         if (!i.requireds[s].required) {
