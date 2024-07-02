@@ -41,6 +41,10 @@ body
   border-radius:50%;
   animation:animateC 2s linear infinite;
 }
+#lm {
+  opacity:0;
+  transition:opacity 0.5s;
+}
 @keyframes animateC
 {
   0%

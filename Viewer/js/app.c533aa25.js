@@ -511,7 +511,7 @@
                     style: t.objectBackground,
                     on: {
                         click: function(e) {
-                            t.row.isInfoRow || t.object.isNotSelectable || t.object.isSelectableMultiple || t.object.isButtonObject || t.object.isImageUpload ? t.object.isImageUpload && (t.currentComponent = "appImageUpload") : t.activateObject(t.object, t.row)
+                            t.row.isInfoRow || t.object.isNotSelectable || t.object.isSelectableMultiple || t.object.forcedActivated || t.object.isButtonObject || t.object.isImageUpload ? t.object.isImageUpload && (t.currentComponent = "appImageUpload") : t.activateObject(t.object, t.row)
                         }
                     }
                 }, [1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
@@ -1964,7 +1964,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -1987,7 +1987,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -2080,7 +2080,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -2104,7 +2104,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -2168,8 +2168,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -2200,7 +2204,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -2226,7 +2230,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -2289,7 +2293,86 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         })
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             K = Z,
@@ -2621,7 +2704,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -2644,7 +2727,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -2737,7 +2820,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -2761,7 +2844,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -2825,8 +2908,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -2857,7 +2944,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -2883,7 +2970,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -2904,7 +2991,86 @@
                     },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             rt = ot,
@@ -4223,24 +4389,40 @@
 						for (i = 0; i < t.app.rows.length; i++) {
 							for (t.app.rows[i].isEditModeOn = !1, e = 0; e < t.app.rows[i].objects.length; e++) {
 								if (t.app.rows[i].objects[e].isActive) {
-									t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
+									t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0, t.app.rows[i].objects[e].forcedActivated = !1
 									if (t.app.rows[i].objects[e].activateOtherChoice && "undefined" !== typeof t.app.rows[i].objects[e].activateThisChoice) {
-										for (ps = t.app.rows[i].objects[e].activateThisChoice.split(","), vv = ps.length - 1; vv >= 0; vv--)
-											for (f = 0; f < t.app.rows.length; f++)
-												for (b = 0; b < t.app.rows[f].objects.length; b++)
-													if (t.app.rows[f].objects[b].isSelectableMultiple) {
-														if (t.app.rows[f].objects[b].id == ps[vv].split("/ON#")[0]) {
-															if (ee = ps[vv].split("/ON#")[1], ee > 0) {
-																for (var nn = 0; nn < ee; nn++) 
-																	t.app.rows[f].objects[b].numMultipleTimesMinus--;
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++)
-																	t.app.rows[f].objects[b].numMultipleTimesMinus++;
+										if (t.app.rows[i].objects[e].isActivateRandom && "undefined" !== typeof t.app.rows[i].objects[e].activatedRandom) {
+											for (vv = t.app.rows[i].objects[e].activatedRandom.length - 1; vv >= 0; vv--)
+												for (f = 0; f < t.app.rows.length; f++)
+													for (b = 0; b < t.app.rows[f].objects.length; b++)
+														if (t.app.rows[f].objects[b].isSelectableMultiple) {
+															if (t.app.rows[f].objects[b].id == t.app.rows[i].objects[e].activatedRandom[vv].split("/ON#")[0]) {
+																if (ee = t.app.rows[i].objects[e].activatedRandom[vv].split("/ON#")[1], ee > 0) {
+																	for (var nn = 0; nn < ee; nn++) 
+																		t.app.rows[f].objects[b].numMultipleTimesMinus--;
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++)
+																		t.app.rows[f].objects[b].numMultipleTimesMinus++;
+																}
 															}
 														}
-													}
+										} else if (!t.app.rows[i].objects[e].isActivateRandom) {
+											for (ps = t.app.rows[i].objects[e].activateThisChoice.split(","), vv = ps.length - 1; vv >= 0; vv--)
+												for (f = 0; f < t.app.rows.length; f++)
+													for (b = 0; b < t.app.rows[f].objects.length; b++)
+														if (t.app.rows[f].objects[b].isSelectableMultiple) {
+															if (t.app.rows[f].objects[b].id == ps[vv].split("/ON#")[0]) {
+																if (ee = ps[vv].split("/ON#")[1], ee > 0) {
+																	for (var nn = 0; nn < ee; nn++) 
+																		t.app.rows[f].objects[b].numMultipleTimesMinus--;
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++)
+																		t.app.rows[f].objects[b].numMultipleTimesMinus++;
+																}
+															}
+														}
+										}
 									}
-									t.app.rows[i].objects[e].isActive = !1, t.app.rows[i].currentChoices = 0;
 									for (var c = 0; c < t.app.rows[i].objects[e].scores.length; c++)
 										for (var h = 0; h < t.app.pointTypes.length; h++) t.app.pointTypes[h].id == t.app.rows[i].objects[e].scores[c].id && ("undefined" !== typeof t.app.rows[i].objects[e].scores[c].requireds || t.app.rows[i].objects[e].scores[c].requireds > 0 ? t.app.rows[i].objects[e].scores[c].isActive && (t.app.rows[i].objects[e].scores[c].isActive = !1, t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value)) : t.app.pointTypes[h].startingSum += parseInt(t.app.rows[i].objects[e].scores[c].value))
 								} else t.app.rows[i].objects[e].isImageUpload && (t.app.rows[i].objects[e].image = "")

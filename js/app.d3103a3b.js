@@ -226,30 +226,30 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 26.06.2024")]), o("v-col", {
+                }, [e._v("Update: 01.07.2024")]), o("v-col", {
                     staticClass: "pb-0",
 					staticStyle: {
-						color: "red"
+						color: "blue"
 					},
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Fixed: ")]),  o("v-col", {
+                }, [e._v(" New Features: ")]),  o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Fixed an issue where the highlighting didn't display when multi-select was selected. "), o("br"), e._v(" Fixed an issue where the subtract feature of multi-select was not working properly. "), o("br"), e._v(" Fixed an issue where the Background Image was not visible when downloading Backpack as an image. "), o("br"), e._v(" Fixed an issue where Clean Activated feature was not working properly. ")]), o("v-col", {
+                }, [e._v(" Added a feature that 'X of these is selected' requirement. "), o("br"), e._v(" Added a feature that 'Force another choice active' at random. "), o("br"), e._v(" Added a feature that costs points at random. "), o("br"), e._v(" Added a feature that prevents each choice from being unselected. "), o("br"), e._v(" Added a feature that 'Point Comparison' requirement can reference multiple point-type. ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "12"
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
+                        href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.0.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.1.0 ")])]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -2251,12 +2251,66 @@
                         },
                         expression: "object.selectOnce"
                     }
-                })], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will duplicate a row."
+                    },
+                    model: {
+                        value: e.object.duplicateRow,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRow", t)
+                        },
+                        expression: "object.duplicateRow"
+                    }
+                }), e.object.duplicateRow ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Requirements"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufReq,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufReq", t)
+                        },
+                        expression: "object.dRowAddSufReq"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Functions"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufFunc,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufFunc", t)
+                        },
+                        expression: "object.dRowAddSufFunc"
+                    }
+                }), o("v-col", {
+                    staticClass: "pb-0"
+                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "Id of the row that will be duplicated"
+                    },
+                    model: {
+                        value: e.object.duplicateRowId,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRowId", t)
+                        },
+                        expression: "object.duplicateRowId"
+                    }
+                })] : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
                     staticClass: "row pa-0",
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
-                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
+                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
                         }
                     }
                 }, [1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
@@ -9752,7 +9806,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -9775,7 +9829,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -9868,7 +9922,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -9892,7 +9946,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -9956,8 +10010,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -9988,7 +10046,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -10014,7 +10072,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -10032,7 +10090,6 @@
 										} e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
-						
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -10078,7 +10135,86 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         })
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             mt = vt,
@@ -11524,7 +11660,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -11547,7 +11683,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -11640,7 +11776,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -11664,7 +11800,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -11728,8 +11864,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -11760,7 +11900,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -11786,7 +11926,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -11807,7 +11947,86 @@
                     },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             Kt = Xt,
@@ -16805,7 +17024,7 @@
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
-                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.isButtonObject || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
+                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isButtonObject || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
                         }
                     }
                 }, [1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
@@ -17851,7 +18070,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -17874,7 +18093,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -17967,7 +18186,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -17991,7 +18210,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -18055,8 +18274,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -18087,7 +18310,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -18113,7 +18336,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -18176,7 +18399,86 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         })
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             Is = js,
@@ -18534,7 +18836,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										} else {
 											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
@@ -18557,7 +18859,7 @@
 																}
 															}
 														} else {
-															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+															if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 														}
 										}
 									}
@@ -18650,7 +18952,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != e.activatedRandom[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										} else {
@@ -18674,7 +18976,7 @@
 																}
 															}
 														} else {
-															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].isNotSelectable = !0) : (this.app.rows[f].objects[b].isNotSelectable = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+															this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
 														}
 													}
 										}
@@ -18738,8 +19040,12 @@
 													var O = I - this.app.rows[m].allowedChoices;
 													for (v = 0; v < this.app.rows[m].objects.length; v++) O > 0 && this.app.rows[m].objects[v].isActive && (this.activateObject(this.app.rows[m].objects[v], this.app.rows[m]), O--)
 												}
-											} if (e.textfieldIsOn)
+											}
+									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -18770,7 +19076,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == e.activatedRandom[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 									} else {
 										var A = e.activateThisChoice.split(","),
@@ -18796,7 +19102,7 @@
 															}
 														}
 													} else {
-														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].isNotSelectable = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														if (this.app.rows[f].objects[b].id == A[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
 													}
 												}
 									}   
@@ -18817,7 +19123,86 @@
                     },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
-                    }
+                    },
+					duplicateRow: function(e) {
+						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
+						for (var f = 0; f < this.app.rows.length; f++) {
+							if (this.app.rows[f].id == e.duplicateRowId) {
+								this.app.rows.splice(f + 1, 0, JSON.parse(JSON.stringify(this.app.rows[f])));
+								fr = this.app.rows[f + 1], fr.currentChoices = 0;
+								y = fr.id.split("/D#"), y.length > 1 ? fr.id = y[0] + "/D#" + (parseInt(y[1]) + 1) : fr.id = y[0] + "/D#1";
+								for (fr.allowedChoicesChange > 0 && (fr.allowedChoices -= fr.allowedChoicesChange), s = 0; s < fr.objects.length; s++) {
+									fo = fr.objects[s], z = fo.id.split("/D#"), z.length > 1 ? fo.id = z[0] + "/D#" + (parseInt(z[1]) + 1) : fo.id = z[0] + "/D#1";
+									if (fo.multipleUseVariable) fo.multipleUseVariable = 0, fo.selectedThisManyTimesProp = 0;
+									if (fo.isActive) fo.isActive = !1;
+									fo.forcedActivated = !1;
+									if (!e.dRowAddSufReq) {
+										if ("undefined" !== typeof fo.requireds) {
+											for (i = 0; i < fo.requireds.length; i++) {
+												if ("id" == fo.requireds[i].type)
+													zx = fo.requireds[i].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].reqId = zx[0] + "/D#1";
+												else if ("or" == fo.requireds[i].type)
+													for (c = 0; c < fo.requireds[i].orRequired.length; c++)
+														zx = fo.requireds[i].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].orRequired[c].req = zx[0] + "/D#1";
+												if ("undefined" !== typeof fo.requireds[i].requireds)
+													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
+														if ("id" == fo.requireds[i].requireds[j].type)
+															zx = fo.requireds[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.requireds[i].requireds[j].type)
+															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++)
+																zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+											}
+										}
+										if ("undefined" !== typeof fo.scores)
+											for (i = 0; i < fo.scores.length; i++)
+												if ("undefined" !== fo.scores[i].requireds)
+													for (j = 0; j < fo.scores[i].requireds.length; j++) {
+														if ("id" == fo.scores[i].requireds[j].type)
+															zx = fo.scores[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.scores[i].requireds[j].type)
+															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++)
+																zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+										if ("undefined" !== typeof fo.addons)
+											for (i = 0; i < fo.addons.length; i++)
+												if ("undefined" !== fo.addons[i].requireds)
+													for (j = 0; j < fo.addons[i].requireds.length; j++) {
+														if ("id" == fo.addons[i].requireds[j].type)
+															zx = fo.addons[i].requireds[j].reqId.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].reqId = zx[0] + "/D#1";
+														else if ("or" == fo.addons[i].requireds[j].type)
+															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++)
+																zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), zx.length > 1 ? fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (parseInt(zx[1]) + 1) : fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#1";
+													}
+									}
+									if (!e.dRowAddSufFunc) {
+										if (fo.activateOtherChoice) {
+											zz = "";
+											for (y = fo.activateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.activateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.deactivateOtherChoice) {
+											zz = "";
+											for (y = fo.deactivateThisChoice.split(","), i = 0; i < y.length; i++) {
+												if (zx = y[i].split("/ON#"), zx.length > 1)
+													zy = zx[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + "/ON#" + zx[1] + ",";
+												else
+													zy = y[0].split("/D#"), zz += zy[0] + "/D#" + (zy.length > 1 ? (parseInt(zy[1]) + 1) : "1") + ",";
+											}
+											fo.deactivateThisChoice = zz.slice(0, -1);
+										}
+										if (fo.duplicateRow)
+											y = fo.duplicateRowId.split("/D#"), fo.duplicateRowId = y[0] + "/D#" + (y.length > 1 ? (parseInt(y[1]) + 1) : "1");
+									}
+								}
+							}
+						}
+					}
                 }
             },
             Os = Ss,
@@ -23586,7 +23971,34 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("ICC Plus First Release : 22.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("26.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 26.06.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where the highlighting didn't display when multi-select was selected. "), o("br"), o("br"), e._v(" Fixed an issue where the subtract feature of multi-select was not working properly. "), o("br"), o("br"), e._v(" Fixed an issue where the Background Image was not visible when downloading Backpack as an image. "), o("br"), o("br"), e._v(" Fixed an issue where Clean Activated feature was not working properly. ")])], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("ICC Plus First Release : 22.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -24171,14 +24583,20 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
+                        href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.0.1")]), o("br"), e._v(" https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0 "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.1.0")]), o("br"), e._v(" https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc "), o("br")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM"
+                        href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
+						target: "_blank"
                     }
-                }, [e._v(" 1.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v(" 1.0.0, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
+						target: "_blank"
+					}
+				}, [e._v(" 1.0.1 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -24772,22 +25190,40 @@
 						for (o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, t = 0; t < e.app.rows[o].objects.length; t++) {
 								if (e.app.rows[o].objects[t].isActive) {
-									e.app.rows[o].objects[t].isActive = !1, e.app.rows[o].currentChoices = 0, console.log(e.app.rows[o].objects[t]);
+									e.app.rows[o].objects[t].isActive = !1, e.app.rows[o].currentChoices = 0, e.app.rows[o].objects[t].forcedActivated = !1;
 									if (e.app.rows[o].objects[t].activateOtherChoice && "undefined" !== typeof e.app.rows[o].objects[t].activateThisChoice) {
-										for (p = e.app.rows[o].objects[t].activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-											for (f = 0; f < e.app.rows.length; f++)
-												for (b = 0; b < e.app.rows[f].objects.length; b++)
-													if (e.app.rows[f].objects[b].isSelectableMultiple) {
-														if (e.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-															if (ee = p[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) 
-																	e.app.rows[f].objects[b].numMultipleTimesMinus--;
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++)
-																	e.app.rows[f].objects[b].numMultipleTimesMinus++;
+										if (e.app.rows[o].objects[t].isActivateRandom && "undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) {
+											for (v = e.app.rows[o].objects[t].activatedRandom.length - 1; v >= 0; v--)
+												for (f = 0; f < e.app.rows.length; f++)
+													for (b = 0; b < e.app.rows[f].objects.length; b++)
+														if (e.app.rows[f].objects[b].isSelectableMultiple) {
+															if (e.app.rows[f].objects[b].id == e.app.rows[o].objects[t].activatedRandom[v].split("/ON#")[0]) {
+																if (ee = e.app.rows[o].objects[t].activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) 
+																		e.app.rows[f].objects[b].numMultipleTimesMinus--;
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++)
+																		e.app.rows[f].objects[b].numMultipleTimesMinus++;
+																}
 															}
 														}
-													}
+										} else if (!e.app.rows[o].objects[t].isActivateRandom) {
+											for (p = e.app.rows[o].objects[t].activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
+												for (f = 0; f < e.app.rows.length; f++)
+													for (b = 0; b < e.app.rows[f].objects.length; b++)
+														if (e.app.rows[f].objects[b].isSelectableMultiple) {
+															if (e.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
+																if (ee = p[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) 
+																		e.app.rows[f].objects[b].numMultipleTimesMinus--;
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++)
+																		e.app.rows[f].objects[b].numMultipleTimesMinus++;
+																}
+															}
+														}
+										}
+										
 									}
 									for (var d = 0; d < e.app.rows[o].objects[t].scores.length; d++)
 										for (var p = 0; p < e.app.pointTypes.length; p++) e.app.pointTypes[p].id == e.app.rows[o].objects[t].scores[d].id && ("undefined" !== typeof e.app.rows[o].objects[t].scores[d].requireds || e.app.rows[o].objects[t].scores[d].requireds > 0 ? e.app.rows[o].objects[t].scores[d].isActive && (e.app.rows[o].objects[t].scores[d].isActive = !1, e.app.pointTypes[p].startingSum += parseInt(e.app.rows[o].objects[t].scores[d].value)) : e.app.pointTypes[p].startingSum += parseInt(e.app.rows[o].objects[t].scores[d].value))
