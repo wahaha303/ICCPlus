@@ -2049,6 +2049,9 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= parseInt(e.scores[g].value), e.scores[g].isActive = !0);
 									var f, b, m, v, y, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.duplicateRow) {
+										this.duplicateRow(e);
+									}
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -2171,9 +2174,6 @@
 											}
 									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
-									if (e.duplicateRow) {
-										this.duplicateRow(e);
-									}
 									this.activated.push(e.id), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
