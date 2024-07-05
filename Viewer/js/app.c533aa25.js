@@ -149,6 +149,7 @@
                         "x-large": "",
                         color: "black"
                     },
+					style: t.pointBarIcon,
                     on: {
                         click: function(e) {
                             t.currentComponent = "appActivatedViewer"
@@ -180,6 +181,7 @@
                         "x-large": "",
                         color: "black"
                     },
+					style: t.pointBarIcon,
                     on: {
                         click: function(e) {
                             t.currentComponent = "appBackpackPreview"
@@ -1768,7 +1770,7 @@
                         return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + this.styling.objectTextColor + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
-                        var t = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + ";background-repeat: repeat;" : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        var t = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
                         return this.row.isEditModeOn ? t += "margin-left: 1%;margin-right: 1%;" : t += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", t
                     },
                     findRowTitle: function() {
@@ -1777,7 +1779,7 @@
                         return t
                     },
                     objectBackground: function() {
-                        var t = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px '+ this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");background-repeat: repeat;' : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
+                        var t = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px '+ this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
                             e = this.styling.objectBorderRadiusIsPixels ? "px" : "%";
                         this.styling.objectGradientIsOn && (t += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? t += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + e + " " + this.styling.objectBorderRadiusTopRight + 0 + e + " " + this.styling.objectBorderRadiusBottomRight + 0 + e + " " + this.styling.objectBorderRadiusBottomLeft + 0 + e + "; " : 2 == this.object.template ? t += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + e + " " + this.styling.objectBorderRadiusBottomLeft + 0 + e + " " + this.styling.objectBorderRadiusBottomRight + 0 + e + " " + this.styling.objectBorderRadiusTopRight + 0 + e + "; " : t += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + e + " " + this.styling.objectBorderRadiusTopLeft + 0 + e + " " + this.styling.objectBorderRadiusTopRight + 0 + e + " " + this.styling.objectBorderRadiusBottomRight + 0 + e + "; ", this.styling.objectOverflowIsOn && (t += "overflow:hidden;"), this.styling.objectBorderIsOn && (t += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + this.styling.objectBorderColor + ";"), t += "filter: ", this.styling.objectDropShadowIsOn && (t += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         var i = this.checkRequireds(this.object);
@@ -2023,7 +2025,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -2057,15 +2059,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -2096,7 +2100,7 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
@@ -2150,7 +2154,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -2528,7 +2532,7 @@
                         return i
                     },
                     rowBody: function() {
-                        var t = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + ";background-repeat: repeat;" : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        var t = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
                         return this.row.isEditModeOn ? t += "margin-left: 1%;margin-right: 1%;" : t += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", t
                     },
                     rowText: function() {
@@ -2539,7 +2543,7 @@
                         return "padding-left: " + this.styling.rowButtonYPadding + "px;padding-right: " + this.styling.rowButtonYPadding + "px;padding-top: " + this.styling.rowButtonXPadding + "px;padding-bottom: " + this.styling.rowButtonXPadding + "px;color:black;;"
                     },
                     rowBackground: function() {
-                        var t = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");background-repeat: repeat;' : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
+                        var t = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");' + (this.styling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
                             e = this.styling.rowBorderRadiusIsPixels ? "px" : "%";
                         return this.styling.rowGradientIsOn && (t += this.styling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.styling.rowGradient + ");" : ""), t += "border-radius: " + this.styling.rowBorderRadiusTopLeft + 0 + e + " " + this.styling.rowBorderRadiusTopRight + 0 + e + " " + this.styling.rowBorderRadiusBottomRight + 0 + e + " " + this.styling.rowBorderRadiusBottomLeft + 0 + e + ";", this.styling.rowOverflowIsOn && (t += "overflow:hidden;"), this.styling.rowBorderIsOn && (t += "border: " + this.styling.rowBorderWidth + "px " + this.styling.rowBorderStyle + " " + this.styling.rowBorderColor + ";"), this.styling.rowDropShadowIsOn && (t += "filter: drop-shadow(" + this.styling.rowDropShadowH + "px " + this.styling.rowDropShadowV + "px " + this.styling.rowDropShadowBlur + "px " + this.styling.rowDropShadowColor + ");"), t
                     },
@@ -2789,7 +2793,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -2823,15 +2827,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -2862,7 +2868,7 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
@@ -2916,7 +2922,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -3609,7 +3615,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     activated: function() {
                         for (var t = [], e = 0; e < this.rows.length; e++)
@@ -3636,6 +3642,69 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         });
+						var e = this.newActivated.split(","),
+                            t = 0;
+                        for (this.app.activated = e, s = 0; s < this.app.rows.length; s++)
+                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
+                                if (this.app.activated.includes(this.app.rows[s].objects[r].id)) {
+                                    this.app.rows[s].objects[r].isActive = !0, this.app.rows[s].currentChoices += 1;
+                                    for (var o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
+                                        for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length <= 0 && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value))
+                                } for (s = 0; s < this.app.rows.length; s++)
+                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
+                                if (this.app.activated.includes(this.app.rows[s].objects[r].id))
+                                    for (o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
+                                        for (i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length > 0 && this.checkRequireds(this.app.rows[s].objects[r].scores[o]) && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value));
+                        for (var s = 0; s < this.rows.length; s++)
+                            for (var r = 0; r < this.rows[s].objects.length; r++)
+                                if (this.rows[s].objects[r].isSelectableMultiple) {
+                                    for (var a = 0; a < e.length; a++)
+                                        if (this.rows[s].objects[r].id == e[a].split("/ON#")[0]) {
+                                            if (t = e[a].split("/ON#")[1], t > 0) {
+                                                this.multipleUseVariable = 0;
+                                                for (var n = 0; n < t; n++) this.selectedOneMore(this.rows[s].objects[r], this.rows[s])
+                                            } else if (t < 0) {
+                                                this.multipleUseVariable = 0;
+                                                for (var l = 0; l < -1 * t; l++) this.selectedOneLess(this.rows[s].objects[r], this.rows[s])
+                                            }
+                                        }
+                                } else if (this.rows[s].objects[r].isImageUpload)
+                            for (var c = 0; c < e.length; c++) this.rows[s].objects[r].id == e[c].split("/IMG#")[0] && (this.rows[s].objects[r].image = e[c].split("/IMG#")[1].replaceAll("/CHAR#", ","), e.splice(c, 1));
+                        console.log(e)
+                    },
+					selectedOneMore: function(e, t) {
+                        var s = !0;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+                        else
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+                        if (s)
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) {
+									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
+									if (e.isActive == !1) e.scores[i].isActive = !0;
+								}
+							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
+								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1;
+							}
+						}
+                    },
+                    selectedOneLess: function(e, t) {
+                        var s = !0;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+                        else
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+                        if (s)
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) {
+									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
+								}
+							if (e.isActive == !0) {
+								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, t.currentChoices -= 1;
+							}
+						}
                     },
                     checkRequireds: function(t) {
                         return this.$store.getters.checkRequireds(t)
@@ -3749,7 +3818,7 @@
                         return this.$store.state.app
                     },
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     }
                 },
                 methods: {
@@ -3758,9 +3827,12 @@
                     },
                     print: function() {
 						var e = this;
+						console.log(e.$refs.printThis);
 						if (e.app.styling.backgroundImage) {
 							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
-							e.$refs.printThis.style.backgroundRepeat = 'repeat';
+							e.styling.isBackgroundRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
+							e.$refs.printThis.style.backgroundPosition = 'center';
+							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
 						htmlToImage.toBlob(e.$refs.printThis, {
 							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
@@ -3821,6 +3893,7 @@
 									tempDiv.innerHTML = part;
 									e.$refs.printThis.appendChild(tempDiv);
 									htmlToImage.toBlob(tempDiv, {
+										backgroundImage: e.app.styling.backgroundImage,
 										backgroundColor: e.app.styling.backgroundColor,
 										type: "image/webp",
 										quality: 0.9
@@ -3842,7 +3915,7 @@
 									});
 								});
 							}
-						});	
+						});
 					}
                 }
             },
@@ -3880,7 +3953,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
                         return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
@@ -3888,6 +3961,9 @@
                     pointBarText: function() {
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
                     },
+					pointBarIcon: function() {
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+					},
                     app: function() {
                         return this.$store.state.app
                     },
@@ -3896,16 +3972,35 @@
                     }
                 },
                 beforeCreate: function() {
-                    var t = this,
-                        e = new XMLHttpRequest;
-                    e.onreadystatechange = function() {
-                        if (4 == this.readyState && 200 == this.status) {
-                            var e = this.responseText,
-                                i = JSON.parse(e);
-                            t.$store.commit("loadApp", i)
-                        }
-                    }, e.open("GET", "project.json", !0), e.send()
-                },
+					var t = this,
+						e = new XMLHttpRequest(),
+						lm = document.getElementById('lm'),
+						indicator = document.getElementById('indicator');
+					e.onreadystatechange = function() {
+						if (4 == this.readyState && 200 == this.status) {
+							var e = this.responseText,
+							i = JSON.parse(e);
+							t.$store.commit("loadApp", i)
+						}
+					};
+					e.addEventListener('progress', function(e) {
+						indicator.innerHTML = " Loading " + `${(e.loaded / 1e6).toFixed(1)} MB`;
+					});
+					e.addEventListener('loadend', function() {
+						setTimeout(function() {
+							lm.style.opacity = 1;
+							indicator.remove();
+						}, 1000);
+						const Error_msg = 'Your browser does not support the .avif format.\n Some images may not be displayed.';
+						new Promise(() => {
+							const image = new Image();
+							image.onerror = () => {alert(Error_msg);}
+							image.onload = () => {}
+							image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
+						}).catch(() => false);
+					});
+					e.open("GET", "project.json", true), e.send();
+				},
                 created: function() {
                     window.addEventListener("resize", this.handleResize), this.handleResize()
                 },
@@ -3929,8 +4024,15 @@
                     },
                     print: function() {
 						var e = this;
+						console.log(e.$refs.printThis);
+						if (e.app.styling.backgroundImage) {
+							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
+							e.styling.isBackgroundRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
+							e.$refs.printThis.style.backgroundPosition = 'center';
+							e.$refs.printThis.style.backgroundAttachment = 'fixed';
+						}
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: e.app.styling.backgroundColor,
+							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
@@ -3942,6 +4044,7 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
+							if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 						}).catch(function(error) {
 							console.log('Fail to generate image, Segmenting and recreating the image...', error);
 							var maxLength = 6e6;
@@ -3987,6 +4090,7 @@
 									tempDiv.innerHTML = part;
 									e.$refs.printThis.appendChild(tempDiv);
 									htmlToImage.toBlob(tempDiv, {
+										backgroundImage: e.app.styling.backgroundImage,
 										backgroundColor: e.app.styling.backgroundColor,
 										type: "image/webp",
 										quality: 0.9
@@ -4000,13 +4104,16 @@
 										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 										s.dispatchEvent(i);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
 									}).catch(function(error) {
-										console.log('Fail to generate image', error);
+										console.log('Failed to generate image', error);
 										e.$refs.printThis.removeChild(tempDiv);
+										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
+										alert('Failed to download the image.\nPlease try again with a different browser.');
 									});
 								});
 							}
-						});	
+						});
 					}
                 }
             },
@@ -4089,6 +4196,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#FFFFFFFF",
                             barTextPadding: 17,
                             barTextMargin: 0,

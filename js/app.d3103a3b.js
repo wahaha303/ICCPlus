@@ -220,36 +220,49 @@
                     }, [e._v(e._s(t.text))])], 1)
                 })), o("v-col", {
                     staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Download Latest Viewer : "), o("a", {
+                    attrs: {
+                        href: "https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM",
+						target: "_blank"
+                    }
+                }, [e._v(" Ver 1.2.0 ")])]), o("v-col", {
+                    staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
                     },
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 01.07.2024")]), o("v-col", {
+                }, [e._v("Update: 05.07.2024")]), o("v-col", {
                     staticClass: "pb-0",
 					staticStyle: {
 						color: "blue"
 					},
                     attrs: {
-                        cols: "12"
+                        cols: "6"
                     }
-                }, [e._v(" New Features: ")]),  o("v-col", {
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+						color: "red"
+					},
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
-                        cols: "12"
+                        cols: "6"
                     }
-                }, [e._v(" Added a feature that 'X of these is selected' requirement. "), o("br"), e._v(" Added a feature that 'Force another choice active' at random. "), o("br"), e._v(" Added a feature that costs points at random. "), o("br"), e._v(" Added a feature that prevents each choice from being unselected. "), o("br"), e._v(" Added a feature that 'Point Comparison' requirement can reference multiple point-type. ")]), o("v-col", {
+                }, [e._v(" Added a feature to the choice function where 'Selecting this choice will duplicate a row' "), o("br"), e._v(" Added a feature where change the icon color in the point bar. "), o("br"), e._v(" Added a feature to specify whether the background image should repeat. "), o("br"), e._v(" Added a feature to display the amount of data loaded so far during loading. "), o("br"), e._v(" Added the feature to use multi-select as a requirement (ex. ID/ON#3). ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
-                        cols: "12"
+                        cols: "6"
                     }
-                }, [e._v(" Download Latest Viewer : "), o("a", {
-                    attrs: {
-                        href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
-						target: "_blank"
-                    }
-                }, [e._v(" Ver 1.1.0 ")])]), o("v-col", {
+                }, [e._v(" Fixed an issue where Clean Activated feature was not working properly. "), o("br"), e._v(" Fixed the issue where multi-select choices were not deselected when losing requirements. "), o("br"), e._v(" Fixed the issue of loading not completing properly when loading a large project.json file. "), o("br"), e._v(" Fixed the issue where the Import Choices feature was not working properly. "), o("br"), e._v(" Fixed the issue where the random choices activation feature would select choices that were already selected. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -462,6 +475,7 @@
                         "x-large": "",
                         color: "black"
                     },
+					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
                             e.currentComponent = "appActivatedViewer"
@@ -493,6 +507,7 @@
                         "x-large": "",
                         color: "black"
                     },
+					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
                             e.currentComponent = "appBackpackPreview"
@@ -7542,7 +7557,20 @@
                     }
                 })], 1), o("v-col", {
                     staticClass: "col-4"
-                }, [o("picture-input", {
+                }, [o("v-checkbox", {
+                    staticClass: "shrink mr-2 mt-0",
+                    attrs: {
+                        label: "Does it repeat?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.isBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isBackgroundRepeat", t)
+                        },
+                        expression: "styling.isBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -7564,7 +7592,20 @@
                     }
                 })], 1), o("v-col", {
                     staticClass: "col-4"
-                }, [o("picture-input", {
+                }, [o("v-checkbox", {
+                    staticClass: "shrink mr-2 mt-0",
+                    attrs: {
+                        label: "Does it repeat?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.isRowBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isRowBackgroundRepeat", t)
+                        },
+                        expression: "styling.isRowBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -7586,7 +7627,20 @@
                     }
                 })], 1), o("v-col", {
                     staticClass: "col-4"
-                }, [o("picture-input", {
+                }, [o("v-checkbox", {
+                    staticClass: "shrink mr-2 mt-0",
+                    attrs: {
+                        label: "Does it repeat?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.isObjectBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isObjectBackgroundRepeat", t)
+                        },
+                        expression: "styling.isObjectBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -9613,7 +9667,7 @@
                         return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + this.styling.objectTextColor + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     objectBackground: function() {
-                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");background-repeat: repeat;' : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
+                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
                             t = this.styling.objectBorderRadiusIsPixels ? "px" : "%";
                         this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectBorderIsOn && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + this.styling.objectBorderColor + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         var o = this.checkRequireds(this.object);
@@ -9621,7 +9675,7 @@
                         else if (!o) {
                             if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
                             else if (this.object.isSelectableMultiple)
-                                for (var i = 0; i < this.object.numMultipleTimesPluss - this.object.numMultipleTimesMinus; i++) this.selectedOneLess(this.object);
+                                for (var i = 0; i < this.object.numMultipleTimesPluss - this.object.numMultipleTimesMinus; i++) this.selectedOneLess(this.object, this.row);
                             if ((this.object.multiplyPointtypeIsOnCheck || this.object.dividePointtypeIsOnCheck) && this.multiplyOrDivide(this.object), this.object.activateOtherChoice)
                                 for (var s = 0; s < this.app.rows.length; s++)
                                     for (var r = 0; r < this.app.rows[s].objects.length; r++) this.app.rows[s].objects[r].id == this.object.activateThisChoice && this.app.rows[s].objects[r].isActive && this.setFalse(this.app.rows[s].objects[r])
@@ -9865,7 +9919,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -9899,15 +9953,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -9938,14 +9994,14 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
 																} else if (ee < 0) {
 																	for (var pp = 0; pp < -1 * ee; pp++) {
 																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.selectedOneLess(this.app.rows[f].objects[b]);
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
 																}
@@ -9992,7 +10048,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -11483,7 +11539,7 @@
                         return o
                     },
                     rowBody: function() {
-                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + ";background-repeat: repeat;" : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
                     },
                     rowText: function() {
@@ -11494,7 +11550,7 @@
                         return "padding-left: " + this.styling.rowButtonYPadding + "px;padding-right: " + this.styling.rowButtonYPadding + "px;padding-top: " + this.styling.rowButtonXPadding + "px;padding-bottom: " + this.styling.rowButtonXPadding + "px;color:black;;"
                     },
                     rowBackground: function() {
-                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");background-repeat: repeat;' : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
+                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");' + (this.styling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
                             t = this.styling.rowBorderRadiusIsPixels ? "px" : "%";
                         return this.styling.rowGradientIsOn && (e += this.styling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.styling.rowGradient + ");" : ""), e += "border-radius: " + this.styling.rowBorderRadiusTopLeft + 0 + t + " " + this.styling.rowBorderRadiusTopRight + 0 + t + " " + this.styling.rowBorderRadiusBottomRight + 0 + t + " " + this.styling.rowBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowBorderIsOn && (e += "border: " + this.styling.rowBorderWidth + "px " + this.styling.rowBorderStyle + " " + this.styling.rowBorderColor + ";"), this.styling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.styling.rowDropShadowH + "px " + this.styling.rowDropShadowV + "px " + this.styling.rowDropShadowBlur + "px " + this.styling.rowDropShadowColor + ");"), e
                     },
@@ -11747,7 +11803,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -11781,15 +11837,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -11820,7 +11878,7 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
@@ -11874,7 +11932,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -13705,29 +13763,29 @@
                     },
                     compressAllImages: function() {
                         for (var e, t = this, o = new Uo, i = function(i) {
-                                var s = t.app.rows[i].image.length - "data:image/png;base64,".length,
-                                    r = 4 * Math.round(.5624896334383812 * Math.ceil(s / 3) * 1e3);
-                                t.app.rows[i].image.length > 0 && r > t.maxSize && (e = [P()(t.app.rows[i].image.split(",")[1], "image/webp")], o.compress(e, {
-                                    size: t.maxSize / 1e3,
-                                    quality: .75,
-                                    maxWidth: 1920,
-                                    maxHeight: 1920,
-                                    resize: !0
-                                }).then((function(e) {
-                                    t.imageCounter++, t.sizeReduced += e[0].initialSizeInMb - e[0].endSizeInMb, t.app.rows[i].image = e[0].prefix + "" + e[0].data
-                                })));
-                                for (var a = function(a) {
-                                        s = t.app.rows[i].objects[a].image.length - "data:image/webp;base64,".length, r = Math.round(.5624896334383812 * Math.ceil(s / 3) * 4) / 1e3, t.app.rows[i].objects[a].image.length > 0 && r > t.maxSize && (e = [P()(t.app.rows[i].objects[a].image.split(",")[1], "image/webp")], o.compress(e, {
-                                            size: t.maxSize / 1e3,
-                                            quality: .75,
-                                            maxWidth: 1920,
-                                            maxHeight: 1920,
-                                            resize: !0
-                                        }).then((function(e) {
-                                            t.imageCounter++, t.sizeReduced += e[0].initialSizeInMb - e[0].endSizeInMb, t.app.rows[i].objects[a].image = e[0].prefix + "" + e[0].data
-                                        })))
-                                    }, n = 0; n < t.app.rows[i].objects.length; n++) a(n)
-                            }, s = 0; s < this.app.rows.length; s++) i(s)
+							var s = t.app.rows[i].image.length - "data:image/png;base64,".length,
+								r = 4 * Math.round(.5624896334383812 * Math.ceil(s / 3) * 1e3);
+							t.app.rows[i].image.length > 0 && r > t.maxSize && (e = [P()(t.app.rows[i].image.split(",")[1], "image/webp")], o.compress(e, {
+								size: t.maxSize / 1e3,
+								quality: .75,
+								maxWidth: 1920,
+								maxHeight: 1920,
+								resize: !0
+							}).then((function(e) {
+								t.imageCounter++, t.sizeReduced += e[0].initialSizeInMb - e[0].endSizeInMb, t.app.rows[i].image = e[0].prefix + "" + e[0].data
+							})));
+							for (var a = function(a) {
+									s = t.app.rows[i].objects[a].image.length - "data:image/webp;base64,".length, r = Math.round(.5624896334383812 * Math.ceil(s / 3) * 4) / 1e3, t.app.rows[i].objects[a].image.length > 0 && r > t.maxSize && (e = [P()(t.app.rows[i].objects[a].image.split(",")[1], "image/webp")], o.compress(e, {
+										size: t.maxSize / 1e3,
+										quality: .75,
+										maxWidth: 1920,
+										maxHeight: 1920,
+										resize: !0
+									}).then((function(e) {
+										t.imageCounter++, t.sizeReduced += e[0].initialSizeInMb - e[0].endSizeInMb, t.app.rows[i].objects[a].image = e[0].prefix + "" + e[0].data
+									})))
+								}, n = 0; n < t.app.rows[i].objects.length; n++) a(n)
+						}, s = 0; s < this.app.rows.length; s++) i(s)
                     },
                     blobToBase4: function(e, t) {
                         var o = new FileReader;
@@ -14214,6 +14272,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14365,6 +14424,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14518,6 +14578,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14671,6 +14732,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#979797",
+							barIconColor: "#000000",
                             barBackgroundColor: "#535353FF",
                             barTextPadding: "5",
                             barTextMargin: 0,
@@ -14822,6 +14884,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#FFD7C0FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -14980,6 +15043,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#CC9900",
+							barIconColor: "#000000",
                             barBackgroundColor: "#333333FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15140,6 +15204,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#FFA52C",
+							barIconColor: "#000000",
                             barBackgroundColor: "#0000F9FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15300,6 +15365,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#4A8022",
+							barIconColor: "#000000",
                             barBackgroundColor: "#E4F3D8FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15807,6 +15873,7 @@
                                 addonTitleAlign: "center",
                                 addonTextAlign: "center",
                                 barTextColor: "#000000",
+								barIconColor: "#000000",
                                 barBackgroundColor: "#FFFFFFFF",
                                 barTextPadding: 17,
                                 barTextMargin: 0,
@@ -16664,7 +16731,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     activated: function() {
                         for (var e = [], t = 0; t < this.rows.length; t++)
@@ -16691,6 +16758,69 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         });
+						var e = this.newActivated.split(","),
+                            t = 0;
+                        for (this.app.activated = e, s = 0; s < this.app.rows.length; s++)
+                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
+                                if (this.app.activated.includes(this.app.rows[s].objects[r].id)) {
+                                    this.app.rows[s].objects[r].isActive = !0, this.app.rows[s].currentChoices += 1;
+                                    for (var o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
+                                        for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length <= 0 && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value))
+                                } for (s = 0; s < this.app.rows.length; s++)
+                            for (this.app.rows[s].isEditModeOn = !1, r = 0; r < this.app.rows[s].objects.length; r++)
+                                if (this.app.activated.includes(this.app.rows[s].objects[r].id))
+                                    for (o = 0; o < this.app.rows[s].objects[r].scores.length; o++)
+                                        for (i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == this.app.rows[s].objects[r].scores[o].id && this.app.rows[s].objects[r].scores[o].requireds.length > 0 && this.checkRequireds(this.app.rows[s].objects[r].scores[o]) && (this.app.rows[s].objects[r].scores[o].isActive = !0, this.app.pointTypes[i].startingSum -= parseInt(this.app.rows[s].objects[r].scores[o].value));
+                        for (var s = 0; s < this.rows.length; s++)
+                            for (var r = 0; r < this.rows[s].objects.length; r++)
+                                if (this.rows[s].objects[r].isSelectableMultiple) {
+                                    for (var a = 0; a < e.length; a++)
+                                        if (this.rows[s].objects[r].id == e[a].split("/ON#")[0]) {
+                                            if (t = e[a].split("/ON#")[1], t > 0) {
+                                                this.multipleUseVariable = 0;
+                                                for (var n = 0; n < t; n++) this.selectedOneMore(this.rows[s].objects[r], this.rows[s])
+                                            } else if (t < 0) {
+                                                this.multipleUseVariable = 0;
+                                                for (var l = 0; l < -1 * t; l++) this.selectedOneLess(this.rows[s].objects[r], this.rows[s])
+                                            }
+                                        }
+                                } else if (this.rows[s].objects[r].isImageUpload)
+                            for (var c = 0; c < e.length; c++) this.rows[s].objects[r].id == e[c].split("/IMG#")[0] && (this.rows[s].objects[r].image = e[c].split("/IMG#")[1].replaceAll("/CHAR#", ","), e.splice(c, 1));
+                        console.log(e)
+                    },
+					selectedOneMore: function(e, t) {
+                        var s = !0;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+                        else
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+                        if (s)
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) {
+									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
+									if (e.isActive == !1) e.scores[i].isActive = !0;
+								}
+							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
+								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1;
+							}
+						}
+                    },
+                    selectedOneLess: function(e, t) {
+                        var s = !0;
+                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+                        else
+                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+                        if (s)
+						{
+							for (var i = 0; i < e.scores.length; i++)
+                                for (var s = 0; s < this.app.pointTypes.length; s++) {
+									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
+									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
+								}
+							if (e.isActive == !0) {
+								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, t.currentChoices -= 1;
+							}
+						}
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -17916,7 +18046,7 @@
                         return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + this.styling.objectTextColor + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
-                        var e = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + ";background-repeat: repeat;" : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        var e = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
                     },
                     findRowTitle: function() {
@@ -17925,7 +18055,7 @@
                         return e
                     },
                     objectBackground: function() {
-                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");background-repeat: repeat;' : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
+                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
                             t = this.styling.objectBorderRadiusIsPixels ? "px" : "%";
                         this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectBorderIsOn && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + this.styling.objectBorderColor + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         var o = this.checkRequireds(this.object);
@@ -18171,7 +18301,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -18205,15 +18335,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -18244,7 +18376,7 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
@@ -18298,7 +18430,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -18704,7 +18836,7 @@
                         return o
                     },
                     rowBody: function() {
-                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + ";background-repeat: repeat;" : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
                     },
                     rowText: function() {
@@ -18715,7 +18847,7 @@
                         return "padding-left: " + this.styling.rowButtonYPadding + "px;padding-right: " + this.styling.rowButtonYPadding + "px;padding-top: " + this.styling.rowButtonXPadding + "px;padding-bottom: " + this.styling.rowButtonXPadding + "px;color:black;;"
                     },
                     rowBackground: function() {
-                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");background-repeat: repeat;' : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
+                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");' + (this.styling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
                             t = this.styling.rowBorderRadiusIsPixels ? "px" : "%";
                         return this.styling.rowGradientIsOn && (e += this.styling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.styling.rowGradient + ");" : ""), e += "border-radius: " + this.styling.rowBorderRadiusTopLeft + 0 + t + " " + this.styling.rowBorderRadiusTopRight + 0 + t + " " + this.styling.rowBorderRadiusBottomRight + 0 + t + " " + this.styling.rowBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowBorderIsOn && (e += "border: " + this.styling.rowBorderWidth + "px " + this.styling.rowBorderStyle + " " + this.styling.rowBorderColor + ";"), this.styling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.styling.rowDropShadowH + "px " + this.styling.rowDropShadowV + "px " + this.styling.rowDropShadowBlur + "px " + this.styling.rowDropShadowColor + ");"), e
                     },
@@ -18965,7 +19097,7 @@
 														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
 														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
 															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
+															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
 														}
 													}))
 												}))
@@ -18999,15 +19131,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
 									{
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","), e.numActivateRandom > y.length ? e.numActivateRandom = y.length : e.numActivateRandom = e.numActivateRandom;
-											var rd = y.slice();
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
 											this.$set(e, 'activatedRandom', []);
 											for (v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
-											e.activatedRandom = rd.slice(0, e.numActivateRandom);
-											for (v = 0; v < e.numActivateRandom; v++)
+											e.activatedRandom = rd.slice(0, nAR);
+											for (v = 0; v < nAR; v++)
 												for (f = 0; f < this.app.rows.length; f++)
 													for (b = 0; b < this.app.rows[f].objects.length; b++) {
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
@@ -19038,7 +19172,7 @@
 															if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
 																if (ee = y[v].split("/ON#")[1], ee > 0) {
 																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b]);
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
 																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
 																		this.app.rows[f].objects[b].forcedActivated = !0
 																	}
@@ -19325,7 +19459,7 @@
                         return this.$store.state.app
                     },
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     }
                 },
                 methods: {
@@ -19337,7 +19471,9 @@
 						console.log(e.$refs.printThis);
 						if (e.app.styling.backgroundImage) {
 							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
-							e.$refs.printThis.style.backgroundRepeat = 'repeat';
+							e.styling.isBackgroundRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
+							e.$refs.printThis.style.backgroundPosition = 'center';
+							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
 						htmlToImage.toBlob(e.$refs.printThis, {
 							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
@@ -19417,6 +19553,7 @@
 										console.log('Fail to generate image', error);
 										e.$refs.printThis.removeChild(tempDiv);
 										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
+										alert('Failed to download the image.\nPlease try again with a different browser.');
 									});
 								});
 							}
@@ -20091,11 +20228,7 @@
                     attrs: {
                         width: "100%"
                     }
-                }, [o("v-card-text", [o("v-container", [o("v-row", {
-                    attrs: {
-                        align: "center"
-                    }
-                }, [o("v-col", [o("p", {
+                }, [o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("p", {
                     staticClass: "text-center"
                 }, [e._v("Color of the background")]), o("v-color-picker", {
                     staticClass: "mx-auto",
@@ -20106,7 +20239,20 @@
                         },
                         expression: "styling.backgroundColor"
                     }
-                })], 1), o("v-col", [o("picture-input", {
+                })], 1), o("v-col", [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Dose it repeat?"
+                    },
+                    model: {
+                        value: e.styling.isBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isBackgroundRepeat", t)
+                        },
+                        expression: "styling.isBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -20151,7 +20297,20 @@
                         },
                         expression: "styling.rowBgColor"
                     }
-                })], 1), o("v-col", [o("picture-input", {
+                })], 1), o("v-col", [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Dose it repeat?"
+                    },
+                    model: {
+                        value: e.styling.isRowBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isRowBackgroundRepeat", t)
+                        },
+                        expression: "styling.isRowBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -20196,7 +20355,20 @@
                         },
                         expression: "styling.objectBgColor"
                     }
-                })], 1), o("v-col", [o("picture-input", {
+                })], 1), o("v-col", [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Dose it repeat?"
+                    },
+                    model: {
+                        value: e.styling.isObjectBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isObjectBackgroundRepeat", t)
+                        },
+                        expression: "styling.isObjectBackgroundRepeat"
+                    }
+                }), o("picture-input", {
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
@@ -21595,6 +21767,19 @@
                             e.$set(e.styling, "barPointPos", t)
                         },
                         expression: "styling.barPointPos"
+                    }
+                }), e._v(" Bar Icon Color "), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "70",
+                        "hide-inputs": ""
+                    },
+                    model: {
+                        value: e.styling.barIconColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "barIconColor", t)
+                        },
+                        expression: "styling.barIconColor"
                     }
                 })], 1), o("v-col", [e._v(" Style of the bar itself "), o("v-text-field", {
                     attrs: {
@@ -23553,7 +23738,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
                         return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
@@ -23562,6 +23747,9 @@
                         var e = "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";';
                         return this.window.width > 800 ? e += "font-size: " + this.app.styling.barTextSize + "px;" : e += "font-size: 10px;", e
                     },
+					pointBarIcon: function() {
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+					},
                     app: function() {
                         return this.$store.state.app
                     },
@@ -23775,7 +23963,7 @@
                         name: "show",
                         rawName: "v-show",
                         value: e.app.importedChoicesIsOpen,
-                        expression: "app.importedChoicesIsOpen"
+                        expression: "app.importedChoicesIsOpen",
                     }],
                     attrs: {
                         text: "",
@@ -23783,6 +23971,7 @@
                         "x-large": "",
                         color: "black"
                     },
+					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
                             e.currentComponent = "appActivatedViewer"
@@ -23813,7 +24002,8 @@
                         icon: "",
                         "x-large": "",
                         color: "black"
-                    },
+                    },					
+					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
                             e.currentComponent = "appBackpackPreview"
@@ -23871,7 +24061,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + ";background-repeat: repeat;" : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
                         return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
@@ -23879,6 +24069,9 @@
                     pointBarText: function() {
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
                     },
+					pointBarIcon: function() {
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+					},
                     app: function() {
                         return this.$store.state.app
                     },
@@ -24000,6 +24193,7 @@
 									}).catch(function(error) {
 										console.log('Fail to generate image', error);
 										e.$refs.printThiss.removeChild(tempDiv);
+										alert('Failed to download the image.\nPlease try again with a different browser.');
 									});
 								});
 							}
@@ -24055,7 +24249,34 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("26.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("01.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 01.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature that 'X of these is selected' requirement. "), o("br"), o("br"), e._v(" Added a feature that 'Force another choice active' at random. "), o("br"), o("br"), e._v(" Added a feature that costs points at random. "), o("br"), o("br"), e._v(" Added a feature that prevents each choice from being unselected. "), o("br"), o("br"), e._v(" Added a feature that 'Point Comparison' requirement can reference multiple point-type. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("26.06.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -24667,10 +24888,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
+                        href: "https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.1.0")]), o("br"), e._v(" https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.2.0")]), o("br"), e._v(" https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -24680,7 +24901,12 @@
 						href: "https://mega.nz/file/7jB3jaIS#s_mx7dd6xSJScMfW3fXnel9sKsd6N5DtZKaVqoe9Rz0",
 						target: "_blank"
 					}
-				}, [e._v(" 1.0.1 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.0.1, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
+						target: "_blank"
+					}
+				}, [e._v(" 1.1.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -24938,6 +25164,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
+							barIconColor: "#000000",
                             barBackgroundColor: "#FFFFFFFF",
                             barTextPadding: 17,
                             barTextMargin: 0,
@@ -25265,7 +25492,7 @@
                     },
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
-                        for (o = 0; o < e.app.rows.length; o++)
+                        for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++)
                             for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange), t = 0; t < e.app.rows[o].objects.length; t++)
                                 if (e.app.rows[o].objects[t].isSelectableMultiple) {
                                     if (e.app.rows[o].objects[t].isMultipleUseVariable)
@@ -25322,7 +25549,6 @@
 								} else e.app.rows[o].objects[t].isImageUpload && (e.app.rows[o].objects[t].image = "")
 							}
 						}
-						e.app.activated.splice(0)
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
