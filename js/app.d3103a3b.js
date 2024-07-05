@@ -225,7 +225,7 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM",
+                        href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
 						target: "_blank"
                     }
                 }, [e._v(" Ver 1.2.0 ")])]), o("v-col", {
@@ -24888,10 +24888,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM",
+                        href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.2.0")]), o("br"), e._v(" https://mega.nz/file/frxx2ahR#gx5tTsRm5QHEyimvAOtLiFqbvUGJke6N0ZZRYX_SJdM "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.2.0")]), o("br"), e._v(" https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8 "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
