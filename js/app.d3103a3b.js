@@ -9911,17 +9911,18 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var h = "Scores Updated On: ";
+									var h = "Scores Updated On: ",
+										nH = !1;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														var bE = i.checkRequireds(o);
+														i.activated.push(eid);
+														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== h && (this.text = h + ".", this.snackbar = !0), e.multiplyPointtypeIsOnCheck)
@@ -10044,13 +10045,13 @@
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.push(eid);
+														var bE = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== C && (this.text = C + ".", this.snackbar = !0), e.multiplyPointtypeIsOn)
@@ -10217,7 +10218,7 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         })
-                    },
+                    },					
 					duplicateRow: function(e) {
 						var c, i, j, s, fr, fo, y, z, zx, zy, zz;
 						for (var f = 0; f < this.app.rows.length; f++) {
@@ -11795,17 +11796,18 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var h = "Scores Updated On: ";
+									var h = "Scores Updated On: ",
+										nH = !1;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														var bE = i.checkRequireds(o);
+														i.activated.push(eid);
+														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== h && (this.text = h + ".", this.snackbar = !0), e.multiplyPointtypeIsOnCheck)
@@ -11928,13 +11930,13 @@
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.push(eid);
+														var bE = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== C && (this.text = C + ".", this.snackbar = !0), e.multiplyPointtypeIsOn)
@@ -18293,17 +18295,18 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var h = "Scores Updated On: ";
+									var h = "Scores Updated On: ",
+										nH = !1;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														var bE = i.checkRequireds(o);
+														i.activated.push(eid);
+														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== h && (this.text = h + ".", this.snackbar = !0), e.multiplyPointtypeIsOnCheck)
@@ -18426,13 +18429,13 @@
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.push(eid);
+														var bE = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== C && (this.text = C + ".", this.snackbar = !0), e.multiplyPointtypeIsOn)
@@ -19089,17 +19092,18 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var h = "Scores Updated On: ";
+									var h = "Scores Updated On: ",
+										nH = !1;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == h.length && s.multipleUseVariable > 0 ? h += s.title : s.multipleUseVariable > 0 && (h += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s, t)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														var bE = i.checkRequireds(o);
+														i.activated.push(eid);
+														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== h && (this.text = h + ".", this.snackbar = !0), e.multiplyPointtypeIsOnCheck)
@@ -19222,13 +19226,13 @@
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
-													o.requireds.forEach((function(o) {
-														if (s.isActive)(o.reqId == eid || JSON.stringify(o).includes('"' + eid + '"')) && (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, e));
-														else if (s.isSelectableMultiple && JSON.stringify(o).includes('"' + eid + '"')) {
-															console.log("one"), 19 == C.length && s.multipleUseVariable > 0 ? C += s.title : s.multipleUseVariable > 0 && (C += ", " + s.title);
-															for (var r = 0; r < s.numMultipleTimesPluss - s.numMultipleTimesMinus; r++) i.selectedOneLess(s)
-														}
-													}))
+													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														var bC = i.checkRequireds(o);
+														i.activated.push(eid);
+														var bE = i.checkRequireds(o);
+														i.activated.splice(i.activated.indexOf(eid), 1);
+														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+													}
 												}))
 											}))
 										})), "Scores Updated On: " !== C && (this.text = C + ".", this.snackbar = !0), e.multiplyPointtypeIsOn)
