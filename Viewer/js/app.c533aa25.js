@@ -2018,16 +2018,58 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = !1;
+										nH = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
 													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														nH = i.activated.indexOf(eid)
 														var bC = i.checkRequireds(o);
 														i.activated.splice(i.activated.indexOf(eid), 1);
 														var bE = i.checkRequireds(o);
-														i.activated.push(eid);
-														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+														i.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += s.title : h += ", " + s.title;
+															if (bC) {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	if (i.app.pointTypes[m].id == o.id) {
+																		if (s.isMultipleUseVariable)
+																		{
+																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
+																					i.selectedOneLess(s, t);
+																				}
+																				else {
+																					i.app.pointTypes[m].startingSum += parseInt(o.value);
+																					o.isActive = !1;
+																				}
+																			}
+																		} else {
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																		}
+																	}
+															} else {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	for (m = 0; m < i.app.pointTypes.length; m++)
+																		if (i.app.pointTypes[m].id == o.id) {
+																			if (s.isMultipleUseVariable)
+																			{
+																				
+																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
+																						i.selectedOneLess(s, t);
+																					}
+																					else {
+																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
+																						o.isActive = !0;
+																					}
+																				}
+																			} else {
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																			}
+																		}
+															}
+														}
 													}
 												}))
 											}))
@@ -2156,7 +2198,48 @@
 														i.activated.push(eid);
 														var bE = i.checkRequireds(o);
 														i.activated.splice(i.activated.indexOf(eid), 1);
-														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+														if (bC !== bE) {
+															19 == C.length ? C += s.title : C += ", " + s.title;
+															if (bC) {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	if (i.app.pointTypes[m].id == o.id) {
+																		if (s.isMultipleUseVariable)
+																		{
+																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
+																					i.selectedOneLess(s, t);
+																				}
+																				else {
+																					i.app.pointTypes[m].startingSum += parseInt(o.value);
+																					o.isActive = !1;
+																				}
+																			}
+																		} else {
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																		}
+																	}
+															} else {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	for (m = 0; m < i.app.pointTypes.length; m++)
+																		if (i.app.pointTypes[m].id == o.id) {
+																			if (s.isMultipleUseVariable)
+																			{
+																				
+																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
+																						i.selectedOneLess(s, t);
+																					}
+																					else {
+																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
+																						o.isActive = !0;
+																					}
+																				}
+																			} else {
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																			}
+																		}
+															}
+														}
 													}
 												}))
 											}))
@@ -2787,16 +2870,58 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = !1;
+										nH = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
 													if (s.isActive && JSON.stringify(o).includes('"' + eid + '"')) {
+														nH = i.activated.indexOf(eid)
 														var bC = i.checkRequireds(o);
 														i.activated.splice(i.activated.indexOf(eid), 1);
 														var bE = i.checkRequireds(o);
-														i.activated.push(eid);
-														if (bC !== bE) (19 == h.length ? h += s.title : h += ", " + s.title, i.activateObject(s, t));
+														i.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += s.title : h += ", " + s.title;
+															if (bC) {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	if (i.app.pointTypes[m].id == o.id) {
+																		if (s.isMultipleUseVariable)
+																		{
+																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
+																					i.selectedOneLess(s, t);
+																				}
+																				else {
+																					i.app.pointTypes[m].startingSum += parseInt(o.value);
+																					o.isActive = !1;
+																				}
+																			}
+																		} else {
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																		}
+																	}
+															} else {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	for (m = 0; m < i.app.pointTypes.length; m++)
+																		if (i.app.pointTypes[m].id == o.id) {
+																			if (s.isMultipleUseVariable)
+																			{
+																				
+																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
+																						i.selectedOneLess(s, t);
+																					}
+																					else {
+																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
+																						o.isActive = !0;
+																					}
+																				}
+																			} else {
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																			}
+																		}
+															}
+														}
 													}
 												}))
 											}))
@@ -2925,7 +3050,48 @@
 														i.activated.push(eid);
 														var bE = i.checkRequireds(o);
 														i.activated.splice(i.activated.indexOf(eid), 1);
-														if (bC !== bE) (19 == C.length ? C += s.title : C += ", " + s.title, i.activateObject(s, t));
+														if (bC !== bE) {
+															19 == C.length ? C += s.title : C += ", " + s.title;
+															if (bC) {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	if (i.app.pointTypes[m].id == o.id) {
+																		if (s.isMultipleUseVariable)
+																		{
+																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
+																					i.selectedOneLess(s, t);
+																				}
+																				else {
+																					i.app.pointTypes[m].startingSum += parseInt(o.value);
+																					o.isActive = !1;
+																				}
+																			}
+																		} else {
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																		}
+																	}
+															} else {
+																for (m = 0; m < i.app.pointTypes.length; m++)
+																	for (m = 0; m < i.app.pointTypes.length; m++)
+																		if (i.app.pointTypes[m].id == o.id) {
+																			if (s.isMultipleUseVariable)
+																			{
+																				
+																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
+																						i.selectedOneLess(s, t);
+																					}
+																					else {
+																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
+																						o.isActive = !0;
+																					}
+																				}
+																			} else {
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																			}
+																		}
+															}
+														}
 													}
 												}))
 											}))
