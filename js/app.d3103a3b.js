@@ -225,10 +225,10 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
+                        href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.2.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.2.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 05.07.2024")]), o("v-col", {
+                }, [e._v("Update: 09.07.2024")]), o("v-col", {
                     staticClass: "pb-0",
 					staticStyle: {
 						color: "blue"
@@ -257,12 +257,12 @@
                     attrs: {
                         cols: "6"
                     }
-                }, [e._v(" Added a feature to the choice function where 'Selecting this choice will duplicate a row' "), o("br"), e._v(" Added a feature where change the icon color in the point bar. "), o("br"), e._v(" Added a feature to specify whether the background image should repeat. "), o("br"), e._v(" Added a feature to display the amount of data loaded so far during loading. "), o("br"), e._v(" Added the feature to use multi-select as a requirement (ex. ID/ON#3). ")]), o("v-col", {
+                }, [e._v(" Added a feature to change the order of points. "), o("br"), e._v(" Added Global Settings Config: "), o("br"), e._v(" Auto-save, Check before delete, Dark Mode. ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
                         cols: "6"
                     }
-                }, [e._v(" Fixed an issue where Clean Activated feature was not working properly. "), o("br"), e._v(" Fixed the issue where multi-select choices were not deselected when losing requirements. "), o("br"), e._v(" Fixed the issue of loading not completing properly when loading a large project.json file. "), o("br"), e._v(" Fixed the issue where the Import Choices feature was not working properly. "), o("br"), e._v(" Fixed the issue where the random choices activation feature would select choices that were already selected. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where multi-select bypass points were allowed to go negative. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -25184,7 +25184,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("01.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("05.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 01.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v("  Added a feature to the choice function where 'Selecting this choice will duplicate a row' "), o("br"), o("br"), e._v(" Added a feature where change the icon color in the point bar. "), o("br"), o("br"), e._v(" Added a feature to specify whether the background image should repeat. "), o("br"), o("br"), e._v(" Added a feature to display the amount of data loaded so far during loading. "), o("br"), o("br"), e._v(" Added the feature to use multi-select as a requirement (ex. ID/ON#3). ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where Clean Activated feature was not working properly. "), o("br"), o("br"), e._v(" Fixed the issue where multi-select choices were not deselected when losing requirements. "), o("br"), o("br"), e._v(" Fixed the issue of loading not completing properly when loading a large project.json file. "), o("br"), o("br"), e._v(" Fixed the issue where the Import Choices feature was not working properly. "), o("br"), o("br"), e._v(" Fixed the issue where the random choices activation feature would select choices that were already selected. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("01.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -25823,10 +25863,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
+                        href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.2.0")]), o("br"), e._v(" https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8 "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.2.1")]), o("br"), e._v(" https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -25841,7 +25881,12 @@
 						href: "https://mega.nz/file/b6QmCCjR#U_sCWUQz2bJaQ6zeihhvYReR95H9XS2M45YBxjBKecc",
 						target: "_blank"
 					}
-				}, [e._v(" 1.1.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.1.0, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
+						target: "_blank"
+					}
+				}, [e._v(" 1.2.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"

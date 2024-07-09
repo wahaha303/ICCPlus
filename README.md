@@ -9,6 +9,11 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to download images of backpacks by splitting them if the size is too large for successful download.
  - Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3).
  - Added a loading animation to the viewer.
+ - Added a feature that 'X of these is selected' requirement.
+ - Added a feature that 'Forces another choice active' at random.
+ - Added a feature that costs points at random.
+ - Added a feature that prevents each choice from being unselected.
+ - Added a feature that 'Point Comparison' requirement can reference multiple point-type.
  - Added a feature to the choice function where 'Selecting this choice will duplicate a row'
  - Added a feature where change the icon color in the point bar.
  - Added a feature to specify whether the background image should repeat.
