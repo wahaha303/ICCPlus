@@ -207,7 +207,7 @@
                         }
                     }, [o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         attrs: {
                             small: ""
@@ -338,6 +338,12 @@
                     }
                 }, [o("v-list-item", e._g({
                     on: {
+                        click: function(t) {
+							e.currentComponent = "appGlobalSettings"
+						}
+                    }
+                }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-cog")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v("Configure Global Settings")])], 1)], 1), o("v-list-item", e._g({
+                    on: {
                         click: e.cleanSelectedChoices
                     }
                 }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-select-off")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v("Clean Selected Choices")])], 1)], 1), o("v-list-item", e._g({
@@ -366,7 +372,7 @@
                     }
                 }, e.on), [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -383,7 +389,7 @@
                     }
                 }, e.on), [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -400,7 +406,7 @@
                     }
                 }, e.on), [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -414,7 +420,7 @@
                     staticClass: "text-center"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -428,7 +434,7 @@
                         staticClass: "text-center"
                     }, [o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         attrs: {
                             small: ""
@@ -530,7 +536,7 @@
                         key: t.index,
                         class: e.window.width > 1200 && t.width ? "col-6 pt-0 pb-0" : "col-12 pt-0 pb-0"
                     }, [o("v-toolbar", {
-                        staticClass: "grey ma-2 lighten-2"
+                        staticClass: "grey ma-2 " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
                         domProps: {
                             innerHTML: e._s(e.$sanitize(t.title))
@@ -679,7 +685,7 @@
                 }, [o("v-card", {
                     staticClass: "my-n2"
                 }, [e.row.isEditModeOn ? o("v-toolbar", {
-                    staticClass: "grey lighten-3",
+                    staticClass: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-3",
                     attrs: {
                         dense: "",
                         flat: ""
@@ -740,7 +746,7 @@
                 }, [o("v-btn", {
                     staticClass: "mb-2",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -764,7 +770,7 @@
                 }), o("v-btn", {
                     staticClass: "mb-2",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -1033,7 +1039,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -1324,7 +1330,7 @@
                         outlined: ""
                     }
                 }, [e.row.isEditModeOn ? o("v-toolbar", {
-                    staticClass: "grey lighten-3",
+                    staticClass: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-3",
                     attrs: {
                         dense: "",
                         flat: ""
@@ -1367,7 +1373,7 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-                                        return e.deleteObject()
+                                        return e.deleteObject(t)
                                     }
                                 }
                             }, [e._v("mdi-delete-forever")])], 1)]
@@ -1479,7 +1485,7 @@
                     }
                 })], 1), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -1575,7 +1581,7 @@
                         expression: "object.objectWidth"
                     }
                 })], 1)], 1), e.row.isEditModeOn ? o("v-toolbar", {
-                    staticClass: "grey lighten-3",
+                    staticClass: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-3",
                     attrs: {
                         dense: "",
                         flat: ""
@@ -1719,7 +1725,7 @@
                         }
                     }, [o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -1750,7 +1756,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -1783,7 +1789,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -1822,7 +1828,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -1836,6 +1842,18 @@
                     }
                 }), o("v-expansion-panel-content", [o("v-checkbox", {
                     staticClass: "mt-n2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "- Expand 'Choice Select' Functions -"
+                    },
+                    model: {
+                        value: e.object.selectFuntions,
+                        callback: function(t) {
+                            e.$set(e.object, "selectFunctions", t)
+                        },
+                        expression: "object.selectFunctions"
+                    }
+                }), e.object.selectFunctions ? [o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Selecting this choice will de-select all other choices"
@@ -2012,6 +2030,72 @@
                         expression: "object.deactivateThisChoice"
                     }
                 }) : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Once this choice is selected, it cannot be canceled."
+                    },
+                    model: {
+                        value: e.object.selectOnce,
+                        callback: function(t) {
+                            e.$set(e.object, "selectOnce", t)
+                        },
+                        expression: "object.selectOnce"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will duplicate a row."
+                    },
+                    model: {
+                        value: e.object.duplicateRow,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRow", t)
+                        },
+                        expression: "object.duplicateRow"
+                    }
+                }), e.object.duplicateRow ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Requirements"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufReq,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufReq", t)
+                        },
+                        expression: "object.dRowAddSufReq"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Functions"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufFunc,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufFunc", t)
+                        },
+                        expression: "object.dRowAddSufFunc"
+                    }
+                }), o("v-col", {
+                    staticClass: "pb-0"
+                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "Id of the row that will be duplicated"
+                    },
+                    model: {
+                        value: e.object.duplicateRowId,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRowId", t)
+                        },
+                        expression: "object.duplicateRowId"
+                    }
+                })] : e._e()] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Multiply Points when activated:"
@@ -2254,73 +2338,7 @@
                         },
                         expression: "object.numbAddToAllowChoice"
                     }
-                }) : e._e(), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Once this choice is selected, it cannot be canceled."
-                    },
-                    model: {
-                        value: e.object.selectOnce,
-                        callback: function(t) {
-                            e.$set(e.object, "selectOnce", t)
-                        },
-                        expression: "object.selectOnce"
-                    }
-                }), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Selecting this choice will duplicate a row."
-                    },
-                    model: {
-                        value: e.object.duplicateRow,
-                        callback: function(t) {
-                            e.$set(e.object, "duplicateRow", t)
-                        },
-                        expression: "object.duplicateRow"
-                    }
-                }), e.object.duplicateRow ? [o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Not add /D#n to the end of the IDs of Requirements"
-                    },
-                    model: {
-                        value: e.object.dRowAddSufReq,
-                        callback: function(t) {
-                            e.$set(e.object, "dRowAddSufReq", t)
-                        },
-                        expression: "object.dRowAddSufReq"
-                    }
-                }), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Not add /D#n to the end of the IDs of Functions"
-                    },
-                    model: {
-                        value: e.object.dRowAddSufFunc,
-                        callback: function(t) {
-                            e.$set(e.object, "dRowAddSufFunc", t)
-                        },
-                        expression: "object.dRowAddSufFunc"
-                    }
-                }), o("v-col", {
-                    staticClass: "pb-0"
-                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: this.app.rows,
-                        "item-text": "id",
-                        "item-value": "id",
-                        filled: "",
-						label: "Id of the row that will be duplicated"
-                    },
-                    model: {
-                        value: e.object.duplicateRowId,
-                        callback: function(t) {
-                            e.$set(e.object, "duplicateRowId", t)
-                        },
-                        expression: "object.duplicateRowId"
-                    }
-                })] : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
+                }) : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
                     staticClass: "row pa-0",
                     style: e.objectBackground,
                     on: {
@@ -2775,7 +2793,9 @@
                     staticStyle: {
                         "text-align": "center"
                     }
-                }, [e._v(e._s(e.text))])])], 1) : e._e()], 1)
+                }, [e._v(e._s(e.text))])])], 1) : e._e(), o("ConfirmDlg", {
+                    ref: "confirm"
+                })], 1)
             }),
             u = [],
             h = (o("b0c0"), function() {
@@ -2814,7 +2834,7 @@
                     }
                 })], 1), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -2909,7 +2929,7 @@
                     }), o("v-btn", {
                         staticClass: "pa-0",
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -2963,7 +2983,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -2973,7 +2993,7 @@
                     }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -2984,7 +3004,7 @@
 				}, [e._v("Add Point Type")]), o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -3092,7 +3112,7 @@
                     })], 1)
                 })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -3134,7 +3154,7 @@
                         })], 1)
                     })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -3238,7 +3258,7 @@
                 }, [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3251,7 +3271,7 @@
                 }, [e._v("Add selected Choice requirement")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3270,7 +3290,7 @@
                 }, [e._v(" Point Requirements "), o("br")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3283,7 +3303,7 @@
                 }, [e._v("= Equal to")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3296,7 +3316,7 @@
                 }, [e._v("+ More than")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3309,7 +3329,7 @@
                 }, [e._v("- Less than")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3322,7 +3342,7 @@
                 }, [e._v("+= More or equal")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3341,7 +3361,7 @@
                 }, [e._v(" Point Comparison Requirements "), o("br")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3354,7 +3374,7 @@
                 }, [e._v("= Equal to")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3367,7 +3387,7 @@
                 }, [e._v("+ More than")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3380,7 +3400,7 @@
                 }, [e._v("- Less than")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3393,7 +3413,7 @@
                 }, [e._v("+= More or equal")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3408,7 +3428,7 @@
                 }, [e._v("'One of these' Requirements")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3421,7 +3441,7 @@
                 }, [e._v("'X of these is selected' Requirement")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         type: "button"
@@ -3594,7 +3614,7 @@
                     ref: "pictureInput",
                     attrs: {
                         hideChangeButton: !0,
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         removable: !0,
                         zIndex: 0,
                         crop: !1,
@@ -4313,7 +4333,7 @@
                 })], 1) : "pointCompare" == e.required.type ? o("span", [o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(t) {
@@ -4324,7 +4344,7 @@
 				}, [e._v("Add Point Type")]), o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(t) {
@@ -4539,7 +4559,7 @@
                     }), o("v-btn", {
                         staticClass: "pa-0",
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -4593,7 +4613,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -4603,7 +4623,7 @@
                     }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -4614,7 +4634,7 @@
 				}, [e._v("Add Point Type")]), o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -4722,7 +4742,7 @@
                     })], 1)
                 })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -4764,7 +4784,7 @@
                         })], 1)
                     })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -5078,7 +5098,7 @@
                     }), o("v-btn", {
                         staticClass: "pa-0",
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -5133,7 +5153,7 @@
                         }
                     }), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -5143,7 +5163,7 @@
                     }, [e._v("Delete")])], 1) : "pointCompare" == t.type ? o("span", [o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -5154,7 +5174,7 @@
 				}, [e._v("Add Point Type")]), o("v-btn", {
 					staticClass: "mt-01",
 					staticStyle: {
-						color: "black"
+						color: e.$vuetify.theme.isDark ? "white" : "black"
 					},
 					on: {
 						click: function(o) {
@@ -5262,7 +5282,7 @@
                     })], 1)
                 })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -5304,7 +5324,7 @@
                         })], 1)
                     })), o("v-btn", {
                         staticStyle: {
-                            color: "black"
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
                         },
                         on: {
                             click: function(t) {
@@ -5551,7 +5571,7 @@
                     staticClass: "pa-0"
                 }, [o("v-col", [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -5589,7 +5609,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -5610,7 +5630,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -5631,7 +5651,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -5652,7 +5672,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -5673,7 +5693,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -7574,7 +7594,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -7609,7 +7629,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -7644,7 +7664,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -8245,7 +8265,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -9051,7 +9071,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -9645,7 +9665,10 @@
                     AppRequirement: _,
                     AppImageUpload: G,
                     ObjectRequirement: le,
-                    ObjectSettings: bt
+                    ObjectSettings: bt,
+					ConfirmDlg: function() {
+                        return o.e("chunk-2d0e6102").then(o.bind(null, "96c2"))
+                    }
                 },
                 computed: {
                     styling: function() {
@@ -9801,8 +9824,29 @@
                             this.$set(this.objects, e, this.objects[e + 1]), this.$set(this.objects, e + 1, t)
                         }
                     },
-                    deleteObject: function() {
-                        this.objects.splice(this.objects.indexOf(this.object), 1)
+                    deleteObject: function(e) {
+                        var t = this;
+						if (t.app.checkDeleteObject) {
+							return Object(l["a"])(regeneratorRuntime.mark((function o() {
+								return regeneratorRuntime.wrap((function(o) {
+									while (1) switch (o.prev = o.next) {
+										case 0:
+											return o.next = 2, t.$refs.confirm.open("Confirm", "Are you sure you want to delete this object?");
+										case 2:
+											if (!o.sent) {
+												o.next = 4;
+												break
+											}
+											t.objects.splice(t.objects.indexOf(t.object), 1);
+										case 4:
+										case "end":
+											return o.stop()
+									}
+								}), o)
+							})))()
+						} else {
+							t.objects.splice(t.objects.indexOf(t.object), 1);
+						}
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -9830,7 +9874,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -9839,7 +9882,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -9847,17 +9890,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -9870,17 +9935,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -9912,7 +9999,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -9931,15 +10018,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -9948,18 +10038,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -10083,7 +10176,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -10101,15 +10195,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -10118,18 +10215,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -10182,17 +10281,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -10207,18 +10328,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -10256,7 +10399,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-									if (e.isActive == !1) e.scores[i].isActive = !0;
 								}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -10275,7 +10417,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
 								}
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
@@ -10458,7 +10599,7 @@
                     staticClass: "px-0"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -10491,7 +10632,7 @@
                     staticClass: "col-md-4 col-sm-12"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -10502,7 +10643,7 @@
                     staticClass: "col-md-8 col-sm-12"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -10581,7 +10722,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10602,7 +10743,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10623,7 +10764,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10644,7 +10785,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10665,7 +10806,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10686,7 +10827,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10707,7 +10848,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -10728,7 +10869,7 @@
                             var i = t.on;
                             return [o("v-col", [o("v-btn", e._g({
                                 staticStyle: {
-                                    color: "black"
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
                                 },
                                 on: {
                                     click: function(t) {
@@ -11798,7 +11939,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -11807,7 +11947,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -11815,17 +11955,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -11838,17 +12000,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -11880,7 +12064,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -11899,15 +12083,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -11916,18 +12103,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -12051,7 +12241,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -12069,15 +12260,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -12086,18 +12280,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -12150,17 +12346,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -12175,18 +12393,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -12383,7 +12623,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -12396,7 +12636,7 @@
                     }
                 }, [e._v(" You can use the button below to save when you have finished your project, it will keep the images separated from the JSON. Do not overwrite your project, as the new JSON-file inside the zip this downloads will have no pictures if loaded into the Creator. Place the JSON into the app-file like normal, and the images-folder besides the other folders. If the project has a lot of images then they might end up not showing when someone loads on the page, if so then just use the normal way, and use Image Compression in features to reduce the size of the project file. "), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -12409,7 +12649,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -12587,7 +12827,7 @@
                         var t = new FileReader;
                         t.onload = function() {
                             e.$store.commit("loadApp", JSON.parse(t.result))
-                        }, t.readAsText(this.files[0])
+                        }, t.readAsText(this.files[0]);
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
@@ -12762,7 +13002,7 @@
                                     staticClass: "col-lg-6"
                                 }, [o("v-btn", e._g({
                                     staticStyle: {
-                                        color: "black"
+                                        color: e.$vuetify.theme.isDark ? "white" : "black"
                                     },
                                     on: {
                                         click: function(o) {
@@ -13160,7 +13400,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("Point systems can be created and used to handle the player's ability to buy things and to keep a record of selected choices in a group or row.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13171,7 +13411,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("Variables can currently only be used by adding them to buttons, which in turn can activate and deactivate them, and the variable-id can be used in requirements.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13182,7 +13422,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("Rows and objects can be added into groups, and rows that show the selected choices can then use a group to decide which choices to show.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13193,7 +13433,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("The backpack is where rows can show which choices have been selected can be placed, and the import is where selected choices can be imported.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13204,7 +13444,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("In defaults, you can write in default text that you want the choices and rows to be filled with when created.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13215,7 +13455,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("In styles, you can find the premade design-templates, that either can be used as-is or to create a new design from.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13226,7 +13466,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("Words can be changed when a choice is presssed, or in textfields by the player, and be placed around in the text.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13237,7 +13477,7 @@
                     staticClass: "col-lg-6"
                 }, [o("p", [e._v("Symbols will show off some of the alt-codes that can be used in your project where you can place text. This is also where you can compress all the images in your project.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13248,7 +13488,7 @@
                     staticClass: "col-lg-12"
                 }, [o("p", [e._v("Will show you a list of ID's and the names of the choices they belong to.")]), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -13375,7 +13615,7 @@
                         refInFor: !0,
                         staticClass: "col",
                         attrs: {
-                            removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                            removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                             hideChangeButton: !0,
                             removable: !0,
                             crop: !1,
@@ -13586,7 +13826,19 @@
                             expression: "point.afterText"
                         }
                     })], 1), o("v-col", {
-                        staticClass: "col-12"
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changePointOrderLeft(t)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-left")])])], 1), o("v-col", {
+                        staticClass: "col-8"
                     }, [o("v-btn", {
                         staticClass: "py-0",
                         attrs: {
@@ -13597,7 +13849,19 @@
                                 return e.deletePointsType(t)
                             }
                         }
-                    }, [e._v("Delete")])], 1)], 1)], 1)
+                    }, [e._v("Delete")])], 1), o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changePointOrderRight(t)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-right")])])], 1)], 1)], 1)
                 })), 1)], 1)], 1), o("v-card-actions", [o("v-col", {
                     attrs: {
                         cols: "6"
@@ -13661,6 +13925,12 @@
                             afterText: ""
                         })
                     },
+					changePointOrderLeft: function(e) {
+						this.$store.commit("changePointOrderLeft", e)
+					},
+					changePointOrderRight: function(e) {
+						this.$store.commit("changePointOrderRight", e)
+					},
                     deletePointsType: function(e) {
                         this.$store.commit("deletePointType", e)
                     }
@@ -13681,7 +13951,8 @@
             VDialog: B["a"],
             VRow: S["a"],
             VSwitch: L["a"],
-            VTextField: R["a"]
+            VTextField: R["a"],
+			VIcon: J["a"]
         });
         var No = function() {
                 var e = this,
@@ -14311,7 +14582,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14324,7 +14595,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14337,7 +14608,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14350,7 +14621,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14363,7 +14634,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14376,7 +14647,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14389,7 +14660,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14402,7 +14673,7 @@
                     }
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     on: {
                         click: function(t) {
@@ -14440,7 +14711,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14592,7 +14863,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14746,7 +15017,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#9A997BFF",
                             barTextPadding: "13",
                             barTextMargin: 0,
@@ -14900,7 +15171,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#979797",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#535353FF",
                             barTextPadding: "5",
                             barTextMargin: 0,
@@ -15052,7 +15323,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#FFD7C0FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15211,7 +15482,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#CC9900",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#333333FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15372,7 +15643,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#FFA52C",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#0000F9FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15533,7 +15804,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#4A8022",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#E4F3D8FF",
                             barTextPadding: "16",
                             barTextMargin: 0,
@@ -15779,7 +16050,7 @@
                             cols: "12"
                         }
                     }, [o("v-toolbar", {
-                        staticClass: "grey lighten-2"
+                        staticClass: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
                         domProps: {
                             innerHTML: e._s(t.title)
@@ -16041,7 +16312,7 @@
                                 addonTitleAlign: "center",
                                 addonTextAlign: "center",
                                 barTextColor: "#000000",
-								barIconColor: "#000000",
+								barIconColor: "#0000008A",
                                 barBackgroundColor: "#FFFFFFFF",
                                 barTextPadding: 17,
                                 barTextMargin: 0,
@@ -16326,7 +16597,7 @@
                     }
                 }), o("br"), e._v("Clicking this will change the id of all of the choices and rows where the title is longer than 2 letters, or the default title, into the title, which can make it easier to manage on larger projects with large amounts of requirements being used. "), o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -16590,6 +16861,135 @@
             VDialog: B["a"],
             VRow: S["a"]
         });
+		var SMi = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        scrollable: "",
+                        "max-width": "600px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", [o("v-card-title", {
+                    staticClass: "headline"
+                }, [e._v("Configure Global Settings")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Saved automatically every 10 minutes."
+					},
+					model: {
+						value: e.app.autoSaveIsOn,
+						callback: function(o) {
+							e.$set(e.app, "autoSaveIsOn", o), e.saveAutomatically(e.app)
+						},
+						expression: "app.autoSaveIsOn"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Check before deleting a row."
+					},
+					model: {
+						value: e.app.checkDeleteRow,
+						callback: function(o) {
+							e.$set(e.app, "checkDeleteRow", o)
+						},
+						expression: "app.checkDeleteRow"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Check before deleting an object."
+					},
+					model: {
+						value: e.app.checkDeleteObject,
+						callback: function(o) {
+							e.$set(e.app, "checkDeleteObject", o)
+						},
+						expression: "app.checkDeleteObject"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Dark Mode."
+					},
+					model: {
+						value: e.vuetify.theme.isDark,
+						callback: function(o) {
+							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
+							e.$set(e.vuetify.theme, "isDark", o);
+						},
+						expression: "vuetify.theme.isDark"
+					}
+				})], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            SVi = [],
+            SPi = {
+                data: function() {
+                    return {
+                        dialog: !0
+                    }
+                },
+                computed: {
+					app: function() {
+                        return this.$store.state.app
+                    },
+					vuetify: function() {
+						return this.$vuetify
+					}
+                },
+                methods: {
+					getCurrentTimestamp() {
+					  const now = new Date();
+					  const year = now.getFullYear();
+					  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+					  const day = String(now.getDate()).padStart(2, '0');
+					  const hours = String(now.getHours()).padStart(2, '0');
+					  const minutes = String(now.getMinutes()).padStart(2, '0');
+					  const seconds = String(now.getSeconds()).padStart(2, '0');
+					  return `${year}${month}${day}_${hours}${minutes}${seconds}`;
+					},
+					saveAutomatically: function(e) {
+						this.$store.commit("saveAutomatically", e)
+					},
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    }
+                }
+            },
+            SDi = SPi,
+            Szi = Object(w["a"])(SDi, SMi, SVi, !1, null, null, null),
+            SLi = Szi.exports;
+        x()(Szi, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+			VSwitch: L["a"]
+        });
         var Wi = {
                 data: function() {
                     return {
@@ -16708,7 +17108,7 @@
                             }
                         }, [o("v-icon", {
                             attrs: {
-                                color: "grey lighten-1"
+                                color: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-1"
                             }
                         }, [e._v("mdi-chevron-down")])], 1)], 1), o("v-list-item-action", [o("v-btn", {
                             attrs: {
@@ -16721,7 +17121,7 @@
                             }
                         }, [o("v-icon", {
                             attrs: {
-                                color: "grey lighten-1"
+                                color: "grey " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-1"
                             }
                         }, [e._v("mdi-chevron-up")])], 1)], 1)], 1)
                     })), 1)
@@ -16966,7 +17366,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-									if (e.isActive == !1) e.scores[i].isActive = !0;
 								}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1;
@@ -16983,7 +17382,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
 								}
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, t.currentChoices -= 1;
@@ -17033,7 +17431,7 @@
                     style: e.background
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -18380,7 +18778,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -18389,7 +18786,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -18397,17 +18794,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -18420,17 +18839,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -18462,7 +18903,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -18481,15 +18922,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -18498,18 +18942,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -18633,7 +19080,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -18651,15 +19099,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -18668,18 +19119,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -18732,17 +19185,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -18757,18 +19232,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -18806,7 +19303,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-									if (e.isActive == !1) e.scores[i].isActive = !0;
 								}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -18825,7 +19321,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
 								}
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
@@ -19260,7 +19755,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -19269,7 +19763,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -19277,17 +19771,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -19300,17 +19816,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -19342,7 +19880,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -19361,15 +19899,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -19378,18 +19919,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -19513,7 +20057,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -19531,15 +20076,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -19548,18 +20096,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -19612,17 +20162,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -19637,18 +20209,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -20592,7 +21186,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -20650,7 +21244,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -20708,7 +21302,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -21501,7 +22095,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -22113,7 +22707,7 @@
                     model: {
                         value: e.styling.barIconColor,
                         callback: function(t) {
-                            e.$set(e.styling, "barIconColor", t)
+							e.$set(e.styling, "barIconColor", t)
                         },
                         expression: "styling.barIconColor"
                     }
@@ -22937,7 +23531,7 @@
                     ref: "pictureInput",
                     staticClass: "col",
                     attrs: {
-                        removeButtonClass: "v-btn v-btn--contained theme--light v-size--default",
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                         hideChangeButton: !0,
                         removable: !0,
                         crop: !1,
@@ -24062,6 +24656,7 @@
                     appRowImage: Vr,
                     appText: Er,
                     appIdSearch: Li,
+					appGlobalSettings: SLi,
                     ConfirmDlg: function() {
                         return o.e("chunk-2d0e6102").then(o.bind(null, "96c2"))
                     }
@@ -24084,7 +24679,7 @@
                         return this.window.width > 800 ? e += "font-size: " + this.app.styling.barTextSize + "px;" : e += "font-size: 10px;", e
                     },
 					pointBarIcon: function() {
-						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor + " !important;" : ""
 					},
                     app: function() {
                         return this.$store.state.app
@@ -24145,23 +24740,27 @@
                     },
                     deleteRow: function(e) {
                         var t = this;
-                        return Object(l["a"])(regeneratorRuntime.mark((function o() {
-                            return regeneratorRuntime.wrap((function(o) {
-                                while (1) switch (o.prev = o.next) {
-                                    case 0:
-                                        return o.next = 2, t.$refs.confirm.open("Confirm", "Are you sure you want to delete this row?");
-                                    case 2:
-                                        if (!o.sent) {
-                                            o.next = 4;
-                                            break
-                                        }
-                                        t.$store.commit("deleteRow", e);
-                                    case 4:
-                                    case "end":
-                                        return o.stop()
-                                }
-                            }), o)
-                        })))()
+						if (this.app.checkDeleteRow) {
+							return Object(l["a"])(regeneratorRuntime.mark((function o() {
+								return regeneratorRuntime.wrap((function(o) {
+									while (1) switch (o.prev = o.next) {
+										case 0:
+											return o.next = 2, t.$refs.confirm.open("Confirm", "Are you sure you want to delete this row?");
+										case 2:
+											if (!o.sent) {
+												o.next = 4;
+												break
+											}
+											t.$store.commit("deleteRow", e);
+										case 4:
+										case "end":
+											return o.stop()
+									}
+								}), o)
+							})))()
+						} else {
+							t.$store.commit("deleteRow", e);
+						}
                     },
                     moveRowUp: function(e) {
                         var t = this.app.rows.indexOf(e);
@@ -24244,7 +24843,7 @@
                     }
                 }, e.on), [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -24264,7 +24863,7 @@
                     staticClass: "text-center"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -24278,7 +24877,7 @@
                     staticClass: "text-center"
                 }, [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -24305,7 +24904,7 @@
                         text: "",
                         icon: "",
                         "x-large": "",
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
 					style: e.pointBarIcon,
                     on: {
@@ -24337,7 +24936,7 @@
                         text: "",
                         icon: "",
                         "x-large": "",
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },					
 					style: e.pointBarIcon,
                     on: {
@@ -24406,7 +25005,7 @@
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
                     },
 					pointBarIcon: function() {
-						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor + " !important;" : ""
 					},
                     app: function() {
                         return this.$store.state.app
@@ -24565,7 +25164,7 @@
                     }
                 }, e.on), [o("v-btn", {
                     staticStyle: {
-                        color: "black"
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
                     attrs: {
                         small: ""
@@ -25474,6 +26073,11 @@
                         rows: [],
                         pointTypes: [],
                         variables: [],
+						cancelForcedActivated: [],						
+						autoSaveIsOn: !1,
+						autoSaveInterval: null,
+						checkDeleteRow: !0,
+						checkDeleteObject: !1,
                         defaultRowTitle: "Row",
                         defaultRowText: "This is a row, and inside of it, you can place choices. On both rows and choices Requirements can be placed, which will block a row from being viewed, or make the player unable to select a choice, depending on either Point-types or the Ids of other choices. Point-types can be made in Features then Manage Points. Hovering over buttons will explain what they do. The Design of the project can be changed in 'Modify Design' at the side navigation bar, and private styling for each row can be turned on in the rows Settings. Default text like this can be turned off in Features -> Manage Defaults.",
                         defaultChoiceTitle: "Choice",
@@ -25500,7 +26104,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#FFFFFFFF",
                             barTextPadding: 17,
                             barTextMargin: 0,
@@ -25824,7 +26428,11 @@
                 },
                 mutations: {
                     loadApp: function(e, t) {
-                        e.app = t
+						if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
+                        e.app = t;
+						if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
+						if (e.app.autoSaveIsOn) this.commit("saveAutomatically", e);
+						if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.app.styling.barIconColor = e.app.styling.barIconColor.hexa;
                     },
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
@@ -25930,7 +26538,38 @@
                     },
                     deleteWord: function(e, t) {
                         e.app.words.splice(e.app.variables.indexOf(t), 1)
-                    }
+                    },
+					changePointOrderLeft: function(e, t) {
+						if (e.app.pointTypes.indexOf(t) > 0) e.app.pointTypes.splice(e.app.pointTypes.indexOf(t) - 1, 2, e.app.pointTypes[e.app.pointTypes.indexOf(t)], e.app.pointTypes[e.app.pointTypes.indexOf(t) - 1])
+					},
+					changePointOrderRight: function(e, t) {
+						if (e.app.pointTypes.indexOf(t) < e.app.pointTypes.length - 1) e.app.pointTypes.splice(e.app.pointTypes.indexOf(t), 2, e.app.pointTypes[e.app.pointTypes.indexOf(t) + 1], e.app.pointTypes[e.app.pointTypes.indexOf(t)])
+					},
+					saveAutomatically: function(e) {
+						if (e.app.autoSaveIsOn) {
+							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval);
+							e.app.autoSaveInterval = setInterval(() => {
+								const now = new Date();
+								const year = now.getFullYear();
+								const month = String(now.getMonth() + 1).padStart(2, '0');
+								const day = String(now.getDate()).padStart(2, '0');
+								const hours = String(now.getHours()).padStart(2, '0');
+								const minutes = String(now.getMinutes()).padStart(2, '0');
+								const seconds = String(now.getSeconds()).padStart(2, '0');
+								const timestamp = `${year}${month}${day}_${hours}${minutes}${seconds}`;
+								var t = JSON.stringify(e.app),
+									o = new Blob([t], {
+										type: "text/plain"
+									}),
+									i = document.createEvent("MouseEvents"),
+									s = document.createElement("a");
+								s.download = "project_" + timestamp + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
+							}, 600000)
+						} else {
+							clearInterval(e.app.autoSaveInterval);
+							e.app.autoSaveInterval = null;
+						}
+					}
                 },
                 actions: {},
                 modules: {}

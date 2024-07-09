@@ -1936,7 +1936,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -1945,7 +1944,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -1953,17 +1952,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -1976,17 +1997,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -2018,7 +2061,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -2037,15 +2080,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -2054,18 +2100,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -2189,7 +2238,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -2207,15 +2257,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -2224,18 +2277,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -2288,17 +2343,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -2313,18 +2390,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -2362,7 +2461,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-									if (e.isActive == !1) e.scores[i].isActive = !0;
 								}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -2381,7 +2479,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
 								}
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
@@ -2788,7 +2885,6 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							
 							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
@@ -2797,7 +2893,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0;
+									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--)
@@ -2805,17 +2901,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -2828,17 +2946,39 @@
 													for (b = 0; b < this.app.rows[f].objects.length; b++)
 														if (this.app.rows[f].objects[b].isSelectableMultiple) {
 															if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
-																if (ee = p[v].split("/ON#")[1], ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																			EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
 																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																		this.app.rows[f].objects[b].forcedActivated = !1
-																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = p[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
 																	}
 																}
 															}
@@ -2870,7 +3010,7 @@
 															for (var c = 0; c < this.app.rows[m].objects[v].groups.length; c++) this.app.rows[m].objects[v].groups[c].id == p[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
 									var h = "Scores Updated On: ",
-										nH = 0;
+										nH = 0, nh = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -2889,15 +3029,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nh++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
 																		}
 																	}
 															} else {
@@ -2906,18 +3049,21 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
+																					console.log(i.app);
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (console.log(s), s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nh > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nh);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
 																			}
 																		}
 															}
@@ -3041,7 +3187,8 @@
 														for (v = 0; v < this.app.rows[m].objects.length; v++)
 															for (var T = 0; T < this.app.rows[m].objects[v].groups.length; T++) this.app.rows[m].objects[v].groups[T].id == y[f] && this.app.rows[m].objects[v].isActive && this.activateObject(this.app.rows[m].objects[v], this.app.rows[m])
 										}
-									var C = "Scores Updated On: ";
+									var C = "Scores Updated On: ",
+										nC = 0;
 									if (this.app.rows.forEach((function(t) {
 											t.objects.forEach((function(s) {
 												s.scores.forEach((function(o) {
@@ -3059,15 +3206,18 @@
 																		{
 																			for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																				if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) {
-																					i.selectedOneLess(s, t);
+																					s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																				}
 																				else {
 																					i.app.pointTypes[m].startingSum += parseInt(o.value);
-																					o.isActive = !1;
 																				}
 																			}
+																			if (s.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																				i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																			}
 																		} else {
-																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value), o.isActive = !1);
+																			(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum + parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum += parseInt(o.value));
 																		}
 																	}
 															} else {
@@ -3076,18 +3226,20 @@
 																		if (i.app.pointTypes[m].id == o.id) {
 																			if (s.isMultipleUseVariable)
 																			{
-																				
 																				for (var X = s.multipleUseVariable, x = 0; x < X; x++) {
 																					if (i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) {
-																						i.selectedOneLess(s, t);
+																						s.forcedActivated ? (s.forcedActivated = !s.forcedActivated, s.numMultipleTimesMinus--, i.selectedOneLess(s, t), s.forcedActivated = !s.forcedActivated, nC++) : i.selectedOneLess(s, t);
 																					}
 																					else {
 																						i.app.pointTypes[m].startingSum -= parseInt(o.value);
-																						o.isActive = !0;
 																					}
 																				}
+																				if (s.forcedActivated && nC > 0) {
+																					if ("undefined" === typeof i.app.cancelForcedActivated) i.$set(i.app, "cancelForcedActivated", []);
+																					i.app.cancelForcedActivated.push(s.id + "/ON#" + nC);
+																				}
 																			} else {
-																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((i.forcedActivated = i.forcedActivated ? !i.forcedActivated : i.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value), o.isActive = !0);
+																				(i.app.pointTypes[m].belowZeroNotAllowed && i.app.pointTypes[m].startingSum - parseInt(o.value) < 0) ? ((s.forcedActivated = s.forcedActivated ? !s.forcedActivated : s.forcedActivated), i.activateObject(s, t)) : (i.app.pointTypes[m].startingSum -= parseInt(o.value));
 																			}
 																		}
 															}
@@ -3140,17 +3292,39 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++)
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == e.activatedRandom[v].split("/ON#")[0]) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandom[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
+																		EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -3165,18 +3339,40 @@
 												for (b = 0; b < this.app.rows[f].objects.length; b++) {
 													if (this.app.rows[f].objects[b].isSelectableMultiple) {
 														if (this.app.rows[f].objects[b].id == A[v].split("/ON#")[0]) {
-															if (ee = A[v].split("/ON#")[1], ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.app.rows[f].objects[b].numMultipleTimesMinus--;
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+															if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																	if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																		EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																		break
+																	}
 																}
-															} else if (ee < 0) {
-																this.app.rows[f].object[b].multipleUseVariable = 0;
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
-																	this.app.rows[f].objects[b].forcedActivated = !1
-																	this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																if (EE > 0) {
+																	for (var n = 0; n < EE; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (EE < 0) {
+																	for (var pp = 0; pp < -1 * EE; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
+																}
+															} else {
+																if (ee = A[v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																	}
+																} else if (ee < 0) {
+																	this.app.rows[f].object[b].multipleUseVariable = 0;
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !1
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																	}
 																}
 															}
 														}
@@ -3850,7 +4046,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= parseInt(e.scores[i].value));
-									if (e.isActive == !1) e.scores[i].isActive = !0;
 								}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1;
@@ -3867,7 +4062,6 @@
 							for (var i = 0; i < e.scores.length; i++)
                                 for (var s = 0; s < this.app.pointTypes.length; s++) {
 									this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += parseInt(e.scores[i].value));
-									if (e.scores[i].isActive && e.isActive == !0 && e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.scores[i].isActive = !1;
 								}
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, t.currentChoices -= 1;
@@ -4130,7 +4324,7 @@
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
                     },
 					pointBarIcon: function() {
-						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor.hex + " !important;" : ""
+						return "undefined" !== typeof this.app.styling.barIconColor ? "color: " + this.app.styling.barIconColor + " !important;" : ""
 					},
                     app: function() {
                         return this.$store.state.app
@@ -4338,6 +4532,7 @@
                         rows: [],
                         pointTypes: [],
                         variables: [],
+						cancelForcedActivated: [],
                         defaultRowTitle: "Row",
                         defaultRowText: "This is a row, and inside of it, you can place choices. On both rows and choices Requirements can be placed, which will block a row from being viewed, or make the player unable to select a choice, depending on either Point-types or the Ids of other choices. Point-types can be made in Features then Manage Points. Hovering over buttons will explain what they do. The Design of the project can be changed in 'Modify Design' at the side navigation bar, and private styling for each row can be turned on in the rows Settings. Default text like this can be turned off in Features -> Manage Defaults.",
                         defaultChoiceTitle: "Choice",
@@ -4364,7 +4559,7 @@
                             addonTextTextSize: 100,
                             scoreTextSize: 75,
                             barTextColor: "#000000",
-							barIconColor: "#000000",
+							barIconColor: "#0000008A",
                             barBackgroundColor: "#FFFFFFFF",
                             barTextPadding: 17,
                             barTextMargin: 0,

@@ -13,7 +13,9 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature where change the icon color in the point bar.
  - Added a feature to specify whether the background image should repeat.
  - Added a feature to display the amount of data loaded so far during loading.
- - Added the feature to use multi-select as a requirement (ex. ID/ON#3).
+ - Added a feature to use multi-select as a requirement (ex. ID/ON#3).
+ - Added a feature to change the order of points.
+ - Added Global Settings Config: Auto-save, Check before delete, Dark Mode.
 
 ## Fixed
 
@@ -27,7 +29,8 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where the subtract feature of multi-select was not working properly.
  - Fixed an issue where the Background Image was not visible when downloading Backpack as an image.
  - Fixed an issue where Clean Activated feature was not working properly.
- - Fixed the issue where multi-select choices were not deselected when losing requirements.
- - Fixed the issue of loading not completing properly when loading a large project.json file.
- - Fixed the issue where the Import Choices feature was not working properly.
- - Fixed the issue where the random choices activation feature would select choices that were already selected.
+ - Fixed an issue where multi-select choices were not deselected when losing requirements.
+ - Fixed an issue of loading not completing properly when loading a large project.json file.
+ - Fixed an issue where the Import Choices feature was not working properly.
+ - Fixed an issue where the random choices activation feature would select choices that were already selected.
+ - Fixed an issue where multi-select bypass points were allowed to go negative.

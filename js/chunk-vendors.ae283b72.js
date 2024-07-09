@@ -24142,7 +24142,7 @@
                         class: Object(r["a"])({
                             "v-application--is-rtl": this.$vuetify.rtl,
                             "v-application--is-ltr": !this.$vuetify.rtl
-                        }, this.themeClasses),
+                        }, this.appThemeClasses),
                         attrs: {
                             "data-app": !0
                         },
@@ -24210,6 +24210,11 @@
                         return {
                             "theme--dark": this.isDark,
                             "theme--light": !this.isDark
+                        }
+                    },
+					appThemeClasses: function() {
+                        return {
+                            "theme--light": !0
                         }
                     },
                     rootIsDark: function() {
