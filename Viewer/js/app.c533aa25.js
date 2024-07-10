@@ -165,9 +165,29 @@
                         }],
                         key: e.index,
                         style: t.pointBarText
-                    }, [t._v(t._s(e.beforeText) + " "), i("span", {
+                    }, [e.iconIsOn && !e.imageOnSide && !e.imageSidePlacement ? i("img", {
+						style: "width:" + e.iconWidth + "px;height:" + e.iconHeight + "px;",
+						attrs: {
+							src: e.image
+						}
+					}) : t._e(), t._v(" " + t._s(e.beforeText) + " "), e.iconIsOn && e.imageOnSide && !e.imageSidePlacement ? i("img", {
+						style: "width:" + e.iconWidth + "px;height:" + e.iconHeight + "px;",
+						attrs: {
+							src: e.image
+						}
+					}) : t._e(), i("span", {
                         style: e.startingSum >= 0 ? "undefined" !== typeof t.app.styling.barPointPos ? "color: " + t.app.styling.barPointPos.hex : "" : "undefined" !== typeof t.app.styling.barPointNeg ? "color: " + t.app.styling.barPointNeg.hex : ""
-                    }, [t._v(t._s(Math.round(e.startingSum)))]), t._v(" " + t._s(e.afterText))])
+                    }, [t._v(t._s(" " + Math.round(e.startingSum) + " "))]), e.iconIsOn && !e.imageOnSide && e.imageSidePlacement ? i("img", {
+						style: "width:" + e.iconWidth + "px;height:" + e.iconHeight + "px;",
+						attrs: {
+							src: e.image
+						}
+					}) : t._e(), t._v(" " + t._s(e.afterText) + " "), e.iconIsOn && e.imageOnSide && e.imageSidePlacement ? i("img", {
+						style: "width:" + e.iconWidth + "px;height:" + e.iconHeight + "px;",
+						attrs: {
+							src: e.image
+						}
+					}) : t._e()])
                 })), i("v-col", [i("v-btn", {
                     directives: [{
                         name: "show",
@@ -1087,61 +1107,34 @@
                     i = t._self._c || e;
                 return i("v-col", {
                     staticClass: "pa-0"
-                }, [!t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
+                }, [t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: t.scoreText
                 }, [i("div", {
                     style: t.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [t.pointType.iconIsOn && !t.pointType.imageOnSide ? i("img", {
-                    style: "float: left; width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
+                }, [i("p", {
+					staticClass: "pa-0 ma-0",
+				}, [t.pointType.iconIsOn && !t.pointType.imageOnSide && !t.pointType.imageSidePlacement ? i("img", {
+                    style: "width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
                     attrs: {
                         src: t.pointType.image
                     }
-                }) : t._e()]), i("div", [i("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.isRandom ? (t.score.minValue + " ~ " + t.score.maxValue) : t.scoreValue) + " " + t.score.afterText, t.sanitizeArg))
-                    }
-                })]), i("div", {
-                    style: t.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [t.pointType.iconIsOn && t.pointType.imageOnSide ? i("img", {
-                    style: "float: left; width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
+                }) : t._e(), t._v(" " + t._s(t.$sanitize(t.score.beforeText, t.sanitizeArg)) + " "), t.pointType.iconIsOn && t.pointType.imageOnSide && !t.pointType.imageSidePlacement ? i("img", {
+                    style: "width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
                     attrs: {
                         src: t.pointType.image
                     }
-                }) : t._e()])])], 1) : t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
-                    staticClass: "pa-0 ma-0",
-                    style: t.scoreText
-                }, [i("div", [i("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + "  ", t.sanitizeArg))
-                    }
-                })]), i("div", {
-                    style: t.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
-                }, [t.pointType.iconIsOn && !t.pointType.imageOnSide ? i("img", {
-                    style: "float: left; width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
+                }) : t._e(), t._v(" " + t._s(t.$sanitize((t.score.isRandom ? (t.score.minValue + " ~ " + t.score.maxValue) : t.scoreValue), t.sanitizeArg)) + " "), t.pointType.iconIsOn && !t.pointType.imageOnSide && t.pointType.imageSidePlacement ? i("img", {
+                    style: "width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
                     attrs: {
                         src: t.pointType.image
                     }
-                }) : t._e()]), i("div", [i("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(" " + t.scoreValue + " ", t.sanitizeArg))
-                    }
-                })]), i("div", {
-                    style: t.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [t.pointType.iconIsOn && t.pointType.imageOnSide ? i("img", {
-                    style: "float: left; width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
+                }) : t._e(), t._v(" " + t._s(t.$sanitize(t.score.afterText, t.sanitizeArg)) + " "), t.pointType.iconIsOn && t.pointType.imageOnSide && t.pointType.imageSidePlacement ? i("img", {
+                    style: "width:" + t.pointType.iconWidth + "px;height:" + t.pointType.iconHeight + "px;",
                     attrs: {
                         src: t.pointType.image
                     }
-                }) : t._e()]), i("div", [i("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.afterText, t.sanitizeArg))
-                    }
-                })])])], 1) : t._e()], 1)
+                }) : t._e()])])])], 1) : t._e()], 1)
             },
             x = [],
             I = {

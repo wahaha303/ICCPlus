@@ -950,6 +950,9 @@
                                 domProps: {
                                     value: n
                                 },
+								staticStyle: {
+									color: this.$vuetify.theme.dark ? "white" : ""
+								},
                                 on: r
                             }), this.$createElement("span", t.toUpperCase())])
                         },

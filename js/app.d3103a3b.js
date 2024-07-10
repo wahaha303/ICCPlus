@@ -262,7 +262,7 @@
                     attrs: {
                         cols: "6"
                     }
-                }, [e._v(" Fixed an issue where multi-select bypass points were allowed to go negative. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where multi-select bypass points were allowed to go negative. "), o("br"), e._v(" Fixed issues with 'Scores Updated On': "), o("br"), e._v(" - Now it only works when all conditions are met. "), o("br"), e._v(" - Instead of canceling choices, scores are recalculated. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -497,9 +497,29 @@
                         }],
                         key: t.index,
                         style: e.pointBarText
-                    }, [e._v(e._s(t.beforeText) + " "), o("span", {
+                    }, [t.iconIsOn && !t.imageOnSide && !t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), e._v(" " + e._s(t.beforeText) + " "), t.iconIsOn && t.imageOnSide && !t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), o("span", {
                         style: t.startingSum >= 0 ? "undefined" !== typeof e.app.styling.barPointPos ? "color: " + e.app.styling.barPointPos.hex : "" : "undefined" !== typeof e.app.styling.barPointNeg ? "color: " + e.app.styling.barPointNeg.hex : ""
-                    }, [e._v(e._s(Math.round(t.startingSum)))]), e._v(" " + e._s(t.afterText))])
+                    }, [e._v(e._s(" " + Math.round(t.startingSum) + " "))]), t.iconIsOn && !t.imageOnSide && t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), e._v(" " + e._s(t.afterText) + " "), t.iconIsOn && t.imageOnSide && t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e()])
                 })), o("v-col", [o("v-btn", {
                     directives: [{
                         name: "show",
@@ -2394,6 +2414,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2415,6 +2438,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2547,6 +2573,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2568,6 +2597,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2647,6 +2679,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2668,6 +2703,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -5346,61 +5384,34 @@
                             e.currentComponent = t
                         }
                     }
-                })], 1) : !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                })], 1) : e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }, [o("p", {
+					staticClass: "pa-0 ma-0",
+				}, [e.pointType.iconIsOn && !e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.beforeText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()])])], 1) : e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
-                    staticClass: "pa-0 ma-0",
-                    style: e.scoreText
-                }, [o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + "  ", e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
-                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue), e.sanitizeArg)) + " "), e.pointType.iconIsOn && !e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(" " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.afterText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText, e.sanitizeArg))
-                    }
-                })])])], 1) : e._e()], 1)
+                }) : e._e()])])])], 1) : e._e()], 1)
             },
             de = [],
             pe = {
@@ -13615,7 +13626,7 @@
                         refInFor: !0,
                         staticClass: "col",
                         attrs: {
-                            removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                            removeButtonClass: "v-btn v-btn--contained " + (e.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
                             hideChangeButton: !0,
                             removable: !0,
                             crop: !1,
@@ -13624,7 +13635,7 @@
                             prefill: t.image,
                             "custom-strings": {
                                 upload: "<h1>Error!</h1>",
-                                drag: "Upload Background Image"
+                                drag: "Upload Icon Image"
                             }
                         },
                         on: {
@@ -13636,7 +13647,7 @@
                     })], 1), o("v-col", [o("v-switch", {
                         staticClass: "mt-n2 mb-n6 ms-3",
                         attrs: {
-                            label: "Image is on Right/Left side."
+                            label: "Image is on Left/Right side."
                         },
                         model: {
                             value: t.imageOnSide,
@@ -17230,7 +17241,7 @@
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
-                        "background-color": "white",
+                        "background-color": e.$vuetify.theme.dark ? "grey" : "white",
                         filled: "",
                         label: "Current Activated Choices Titles"
                     },
@@ -17245,7 +17256,7 @@
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
-                        "background-color": "white",
+                        "background-color": e.$vuetify.theme.dark ? "grey" : "white",
                         filled: "",
                         label: "Current Activated Choices ID's"
                     },
@@ -17259,7 +17270,7 @@
                 })], 1), o("v-textarea", {
                     attrs: {
                         "hide-details": "",
-                        "background-color": "white",
+                        "background-color": e.$vuetify.theme.dark ? "grey" : "white",
                         filled: "",
                         label: "Area To Import Activated Choices With Lists Of Id's"
                     },
@@ -17447,6 +17458,9 @@
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0",
+						staticStyle: {
+							color: e.$vuetify.theme.isDark ? "rgba(0,0,0,.6)" : ""
+						},
                         attrs: {
                             cols: "12"
                         }
@@ -17813,6 +17827,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -17834,6 +17851,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -17948,6 +17968,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -17969,6 +17992,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -18048,6 +18074,9 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -18069,6 +18098,9 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
+					staticStyle: {
+						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
+					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -18332,61 +18364,34 @@
                     o = e._self._c || t;
                 return o("v-col", {
                     staticClass: "pa-0"
-                }, [!e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                }, [e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }, [o("p", {
+					staticClass: "pa-0 ma-0",
+				}, [e.pointType.iconIsOn && !e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.beforeText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()])])], 1) : e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
-                    staticClass: "pa-0 ma-0",
-                    style: e.scoreText
-                }, [o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + "  ", e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
-                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue), e.sanitizeArg)) + " "), e.pointType.iconIsOn && !e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(" " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
-                    }
-                })]), o("div", {
-                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
-                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.afterText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()]), o("div", [o("p", {
-                    staticClass: "pa-0 ma-0",
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText, e.sanitizeArg))
-                    }
-                })])])], 1) : e._e()], 1)
+                }) : e._e()])])])], 1) : e._e()], 1)
             },
             ws = [],
             ys = {
@@ -24799,6 +24804,7 @@
             VCol: I["a"],
             VDivider: li["a"],
             VIcon: J["a"],
+			VImg: X["a"],
             VLayout: Yr["a"],
             VList: Jr["a"],
             VListItem: Xi["a"],
@@ -24918,13 +24924,33 @@
                             name: "show",
                             rawName: "v-show",
                             value: "" == t.activatedId || e.app.activated.includes(t.activatedId),
-                            expression: "\n        score.activatedId == '' || app.activated.includes(score.activatedId)\n      "
+                            expression: "\n            score.activatedId == '' ||\n            app.activated.includes(score.activatedId)\n          "
                         }],
                         key: t.index,
                         style: e.pointBarText
-                    }, [e._v(e._s(t.beforeText) + " "), o("span", {
+                    }, [t.iconIsOn && !t.imageOnSide && !t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), e._v(" " + e._s(t.beforeText) + " "), t.iconIsOn && t.imageOnSide && !t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), o("span", {
                         style: t.startingSum >= 0 ? "undefined" !== typeof e.app.styling.barPointPos ? "color: " + e.app.styling.barPointPos.hex : "" : "undefined" !== typeof e.app.styling.barPointNeg ? "color: " + e.app.styling.barPointNeg.hex : ""
-                    }, [e._v(e._s(Math.round(t.startingSum)))]), e._v(" " + e._s(t.afterText))])
+                    }, [e._v(e._s(" " + Math.round(t.startingSum) + " "))]), t.iconIsOn && !t.imageOnSide && t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e(), e._v(" " + e._s(t.afterText) + " "), t.iconIsOn && !t.imageOnSide && t.imageSidePlacement ? o("img", {
+						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
+						attrs: {
+							src: t.image
+						}
+					}) : e._e()])
                 })), o("v-col", [o("v-btn", {
                     directives: [{
                         name: "show",

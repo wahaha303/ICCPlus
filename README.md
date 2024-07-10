@@ -38,4 +38,7 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue of loading not completing properly when loading a large project.json file.
  - Fixed an issue where the Import Choices feature was not working properly.
  - Fixed an issue where the random choices activation feature would select choices that were already selected.
+ - Fixed issues with 'Scores Updated On':
+   - Now it only works when all conditions are met.
+   - Instead of canceling choices, scores are recalculated.
  - Fixed an issue where multi-select bypass points were allowed to go negative.
