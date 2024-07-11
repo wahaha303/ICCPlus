@@ -225,10 +225,10 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
+                        href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.2.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.2.3 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -249,41 +249,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Fixed an issue where multi-selects did not refund points when canceled. "), o("br"), e._v(" Fixed an issue where the position of the point-icon was not displayed correctly. "), o("br"), e._v(" Fixed an issue where the points icon was not being displayed on the points bar. ")]), o("v-col", {
-                    staticClass: "pb-0",
-                    staticStyle: {
-                        color: "green"
-                    },
-                    attrs: {
-                        cols: "12"
-                    }
-                }, [e._v("Update: 09.07.2024")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
-					staticStyle: {
-						color: "blue"
-					},
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" New Features: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
-					staticStyle: {
-						color: "red"
-					},
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" Fixed: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" Added a feature to change the order of points. "), o("br"), e._v(" Added Global Settings Config: "), o("br"), e._v(" Auto-save, Check before delete, Dark Mode. ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" Fixed an issue where multi-select bypass points were allowed to go negative. "), o("br"), e._v(" Fixed issues with 'Scores Updated On': "), o("br"), e._v(" - Now it only works when all conditions are met. "), o("br"), e._v(" - Instead of canceling choices, scores are recalculated. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where multi-selects did not refund points when canceled. "), o("br"), e._v(" Fixed an issue where the position of the point-icon was not displayed correctly. "), o("br"), e._v(" Fixed an issue where the points icon was not being displayed on the points bar. "), o("br"), e._v(" Fixed an issue where tags couldn't be used in Show Score. "), o("br"), e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -5405,34 +5371,61 @@
                             e.currentComponent = t
                         }
                     }
-                })], 1) : e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                })], 1) : !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [o("p", {
-					staticClass: "pa-0 ma-0",
-				}, [e.pointType.iconIsOn && !e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
+                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                    attrs: {
+                        src: e.pointType.image
+                    }
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
+                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.beforeText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
+                    }
+                })])])], 1) : e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                    staticClass: "pa-0 ma-0",
+                    style: e.scoreText
+                }, [o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
+                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue), e.sanitizeArg)) + " "), e.pointType.iconIsOn && !e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
+                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.afterText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
-                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
-                    attrs: {
-                        src: e.pointType.image
-                    }
-                }) : e._e()])])])], 1) : e._e()], 1)
+                }) : e._e()])])], 1) : e._e()], 1)
             },
             de = [],
             pe = {
@@ -13018,7 +13011,12 @@
                         console.log(this.files[0]);
                         var t = new FileReader;
                         t.onload = function() {
-                            e.$store.commit("loadApp", JSON.parse(t.result))
+                            e.$store.commit("loadApp", JSON.parse(t.result));
+							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
+							if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
+							if (e.app.autoSaveIsOn) this.commit("saveAutomatically", e);
+							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
+							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "0000008A");
                         }, t.readAsText(this.files[0]);
                     },
                     cleanCurrentComponent: function() {
@@ -18545,34 +18543,61 @@
                     o = e._self._c || t;
                 return o("v-col", {
                     staticClass: "pa-0"
-                }, [e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                }, [!e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
-                }, [o("p", {
-					staticClass: "pa-0 ma-0",
-				}, [e.pointType.iconIsOn && !e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
+                    style: "float: left; width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
+                    attrs: {
+                        src: e.pointType.image
+                    }
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
+                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.beforeText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && !e.pointType.imageSidePlacement ? o("img", {
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
+                    }
+                })])])], 1) : e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                    staticClass: "pa-0 ma-0",
+                    style: e.scoreText
+                }, [o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue) + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
+                }, [e.pointType.iconIsOn && !e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize((e.score.isRandom ? (e.score.minValue + " ~ " + e.score.maxValue) : e.scoreValue), e.sanitizeArg)) + " "), e.pointType.iconIsOn && !e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
+                }) : e._e()]), o("div", [o("p", {
+                    staticClass: "pa-0 ma-0",
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                    }
+                })]), o("div", {
+                    style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
+                }, [e.pointType.iconIsOn && e.pointType.imageOnSide ? o("img", {
                     style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e(), e._v(" " + e._s(e.$sanitize(e.score.afterText, e.sanitizeArg)) + " "), e.pointType.iconIsOn && e.pointType.imageOnSide && e.pointType.imageSidePlacement ? o("img", {
-                    style: "width:" + e.pointType.iconWidth + "px;height:" + e.pointType.iconHeight + "px;",
-                    attrs: {
-                        src: e.pointType.image
-                    }
-                }) : e._e()])])])], 1) : e._e()], 1)
+                }) : e._e()])])], 1) : e._e()], 1)
             },
             ws = [],
             ys = {
@@ -23048,7 +23073,7 @@
                     staticClass: "mx-auto",
                     attrs: {
                         "canvas-height": "70",
-                        "hide-inputs": ""
+						"hide-inputs": ""
                     },
                     model: {
                         value: e.styling.barIconColor,
@@ -23103,7 +23128,7 @@
                     staticClass: "mx-auto",
                     attrs: {
                         "canvas-height": "70",
-                        "hide-inputs": ""
+						"hide-inputs": ""
                     },
                     model: {
                         value: e.styling.barBackgroundColor,
@@ -25551,7 +25576,7 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("05.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("09.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -25565,7 +25590,47 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 01.07.2024")]), o("v-col", {
+                }, [e._v("Update: 0*.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Added a feature to change the order of points. "), o("br"), o("br"), e._v(" Added Global Settings Config: Auto-save, Check before delete, Dark Mode. ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where multi-select bypass points were allowed to go negative. "), o("br"), o("br"), e._v(" Fixed issues with 'Scores Updated On': "), o("br"), o("br"), e._v(" - Now it only works when all conditions are met. "), o("br"), o("br"), e._v(" - Instead of canceling choices, scores are recalculated. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("05.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 05.07.2024")]), o("v-col", {
                     staticClass: "pb-0",
 					staticStyle: {
                         color: "blue"
@@ -26230,10 +26295,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
+                        href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.2.2")]), o("br"), e._v(" https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.2.3")]), o("br"), e._v(" https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -26258,7 +26323,12 @@
 						href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
 						target: "_blank"
 					}
-				}, [e._v(" 1.2.1 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.2.1, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
+						target: "_blank"
+					}
+				}, [e._v(" 1.2.2 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -26845,11 +26915,7 @@
                 },
                 mutations: {
                     loadApp: function(e, t) {
-						if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
                         e.app = t;
-						if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
-						if (e.app.autoSaveIsOn) this.commit("saveAutomatically", e);
-						if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.app.styling.barIconColor = e.app.styling.barIconColor.hexa;
                     },
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;

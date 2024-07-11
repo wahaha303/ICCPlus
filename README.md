@@ -45,4 +45,6 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where multi-selects did not refund points when canceled.
  - Fixed an issue where the position of the point-icon was not displayed correctly.
  - Fixed an issue where the points icon was not being displayed on the points bar.
+ - Fixed an issue where tags couldn't be used in Show Score.
+ - Fixed an issue where Forces Another Choice couldn't be used with multi-select. 
 
