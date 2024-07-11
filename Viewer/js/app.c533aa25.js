@@ -2458,6 +2458,70 @@
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
+								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice)
+									{
+										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											y = e.activateThisChoice.split(","); 
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.includes(item)),
+												nAR = e.numActivateRandom > rd.length ? rd.length : e.numActivateRandom;
+											if ("undefined" === typeof e.activatedRandomMul) this.$set(e, 'activatedRandomMul', []);
+											for (v = rd.length - 1; v > 0; v--) {
+												var rnd = Math.floor(Math.random() * (v + 1));
+												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+											}
+											e.activatedRandomMul.push(rd.slice(0, nAR));
+											for (v = 0; v < nAR; v++)
+												for (f = 0; f < this.app.rows.length; f++)
+													for (b = 0; b < this.app.rows[f].objects.length; b++) {
+														if (this.app.rows[f].objects[b].isSelectableMultiple) {
+															if (this.app.rows[f].objects[b].id == e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]) {
+																if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[1], ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		this.app.rows[f].objects[b].forcedActivated = !0
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																		this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		this.app.rows[f].objects[b].forcedActivated = !0
+																	}
+																}
+															}
+														} else {
+															this.app.rows[f].objects[b].id != e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+														}
+													}
+										} else {
+											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++)
+													for (f = 0; f < this.app.rows.length; f++)
+														for (b = 0; b < this.app.rows[f].objects.length; b++) {
+															if (this.app.rows[f].objects[b].isSelectableMultiple) {
+																if (this.app.rows[f].objects[b].id == y[v].split("/ON#")[0]) {
+																	if (ee = y[v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																			this.app.rows[f].objects[b].forcedActivated = !0
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !0
+																		}
+																	}
+																}
+															} else {
+																if (e.selectedThisManyTimesProp == 1) {
+																	this.app.rows[f].objects[b].id != y[v] || this.app.rows[f].objects[b].isActive ? this.app.rows[f].objects[b].id == y[v] && this.app.rows[f].objects[b].isActive && (this.app.rows[f].objects[b].forcedActivated = !0) : (this.app.rows[f].objects[b].forcedActivated = !0, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]));
+																}
+															}
+														}
+										}
+									}
 								this.updateActivated();
 							}
 						}
@@ -2476,6 +2540,102 @@
 							if (e.isActive == !0) {
 								if (e.selectedThisManyTimesProp == e.numMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
+								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul) {
+											for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--)
+												for (f = 0; f < this.app.rows.length; f++)
+													for (b = 0; b < this.app.rows[f].objects.length; b++)
+														if (this.app.rows[f].objects[b].isSelectableMultiple) {
+															if (this.app.rows[f].objects[b].id == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
+																			EE = parseInt(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																			this.app.rows[f].objects[b].forcedActivated = !1
+																			this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															}
+														} else {
+															if (this.app.rows[f].objects[b].id == e.activatedRandomMul[e.selectedThisManyTimesProp][v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+														}
+														e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
+										} else {
+												for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
+													for (f = 0; f < this.app.rows.length; f++)
+														for (b = 0; b < this.app.rows[f].objects.length; b++)
+															if (this.app.rows[f].objects[b].isSelectableMultiple) {
+																if (this.app.rows[f].objects[b].id == p[v].split("/ON#")[0]) {
+																	if ("undefined" !== typeof this.app.cancelForcedActivated && JSON.stringify(this.app.cancelForcedActivated).includes(p[v].split("/ON#")[0])) {
+																		for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																			if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
+																				EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																				break
+																			}
+																		}
+																		if (EE > 0) {
+																			for (var n = 0; n < EE; n++) {
+																				this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																				this.app.rows[f].objects[b].forcedActivated = !1
+																				this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																			}
+																		} else if (EE < 0) {
+																			for (var pp = 0; pp < -1 * EE; pp++) {
+																				this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																				this.app.rows[f].objects[b].forcedActivated = !1
+																				this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																			}
+																		}
+																	} else {
+																		if (ee = p[v].split("/ON#")[1], ee > 0) {
+																			for (var n = 0; n < ee; n++) {
+																				this.app.rows[f].objects[b].numMultipleTimesMinus--;
+																				this.app.rows[f].objects[b].forcedActivated = !1
+																				this.selectedOneLess(this.app.rows[f].objects[b], this.app.rows[f]);
+																			}
+																		} else if (ee < 0) {
+																			for (var pp = 0; pp < -1 * ee; pp++) {
+																				this.selectedOneMore(this.app.rows[f].objects[b], this.app.rows[f]);
+																				this.app.rows[f].objects[b].forcedActivated = !1
+																				this.app.rows[f].objects[b].numMultipleTimesMinus++;
+																			}
+																		}
+																	}
+																}
+															} else {
+																if (e.selectedThisManyTimesProp == 0) {
+																	if (this.app.rows[f].objects[b].id == p[v] && this.app.rows[f].objects[b].isActive) this.app.rows[f].objects[b].forcedActivated = !1, this.activateObject(this.app.rows[f].objects[b], this.app.rows[f]);
+																}
+															}
+										}
+									}
 								this.updateActivated();
 							}
 						}
