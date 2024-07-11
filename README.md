@@ -42,3 +42,7 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
    - Now it only works when all conditions are met.
    - Instead of canceling choices, scores are recalculated.
  - Fixed an issue where multi-select bypass points were allowed to go negative.
+ - Fixed an issue where multi-selects did not refund points when canceled.
+ - Fixed an issue where the position of the point-icon was not displayed correctly.
+ - Fixed an issue where the points icon was not being displayed on the points bar.
+
