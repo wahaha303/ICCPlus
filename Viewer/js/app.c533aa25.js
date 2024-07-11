@@ -1935,7 +1935,7 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -2318,7 +2318,7 @@
 							} else if (this.activated.includes(eid)) {
 								this.activated.splice(this.activated.indexOf(eid), 1);
 								for (var S = e.scores.length - 1; S >= 0; S--)
-									if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
+									if (this.checkRequireds(e.scores[S]) || e.scores[S].isActive)
 										for (var k = 0; k < this.app.pointTypes.length; k++)
 											if (this.app.pointTypes[k].id == e.scores[S].id) {
 												if (e.isSelectableMultiple) {
@@ -2884,7 +2884,7 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += parseInt(e.scores[a].value), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var p, ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -3267,7 +3267,7 @@
 							} else if (this.activated.includes(eid)) {
 								this.activated.splice(this.activated.indexOf(eid), 1);
 								for (var S = e.scores.length - 1; S >= 0; S--)
-									if (this.checkRequireds(e.scores[S]) && e.scores[S].isActive || e.scores[S].isActive)
+									if (this.checkRequireds(e.scores[S]) || e.scores[S].isActive)
 										for (var k = 0; k < this.app.pointTypes.length; k++)
 											if (this.app.pointTypes[k].id == e.scores[S].id) {
 												if (e.isSelectableMultiple) {
