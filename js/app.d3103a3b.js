@@ -225,10 +225,31 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
+                        href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.2.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.2.2 ")])]), o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 11.07.2024")]), o("v-col", {
+                    staticClass: "pt-0 pb-0",
+					staticStyle: {
+						color: "red"
+					},
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pt-0 pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where multi-selects did not refund points when canceled. "), o("br"), e._v(" Fixed an issue where the position of the point-icon was not displayed correctly. "), o("br"), e._v(" Fixed an issue where the points icon was not being displayed on the points bar. ")]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -237,7 +258,7 @@
                         cols: "12"
                     }
                 }, [e._v("Update: 09.07.2024")]), o("v-col", {
-                    staticClass: "pb-0",
+                    staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
 					},
@@ -245,7 +266,7 @@
                         cols: "6"
                     }
                 }, [e._v(" New Features: ")]), o("v-col", {
-                    staticClass: "pb-0",
+                    staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
 					},
@@ -253,12 +274,12 @@
                         cols: "6"
                     }
                 }, [e._v(" Fixed: ")]), o("v-col", {
-                    staticClass: "pb-0",
+                    staticClass: "pt-0 pb-0",
                     attrs: {
                         cols: "6"
                     }
                 }, [e._v(" Added a feature to change the order of points. "), o("br"), e._v(" Added Global Settings Config: "), o("br"), e._v(" Auto-save, Check before delete, Dark Mode. ")]), o("v-col", {
-                    staticClass: "pb-0",
+                    staticClass: "pt-0 pb-0",
                     attrs: {
                         cols: "6"
                     }
@@ -25889,10 +25910,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
+                        href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.2.1")]), o("br"), e._v(" https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.2.2")]), o("br"), e._v(" https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -25912,7 +25933,12 @@
 						href: "https://mega.nz/file/LzhSAZYJ#k9hPmlLl6vOFakMejKT6KBaFof0jhW2ZqwMgx1YVMp8",
 						target: "_blank"
 					}
-				}, [e._v(" 1.2.0 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.2.0, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/fi5x3RjI#Zj-5lm9ln5CLxmX5D9WnzXrtTp5nmilMup1WU5tivAA",
+						target: "_blank"
+					}
+				}, [e._v(" 1.2.1 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
