@@ -548,7 +548,7 @@
                         staticClass: "grey ma-2 " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(t.title))
+                            innerHTML: e._s(t.title)
                         }
                     }), o("v-spacer"), o("v-tooltip", {
                         attrs: {
@@ -1094,7 +1094,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1103,7 +1103,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()], 1) : e._e(), 2 == e.row.template && e.window.width > 1e3 ? o("div", {
                     staticClass: "row nopadding"
@@ -1113,7 +1113,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1122,7 +1122,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()]), o("div", {
                     staticClass: "col-6 nopadding"
@@ -1197,7 +1197,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1206,7 +1206,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()])]) : e._e(), 4 == e.row.template ? o("div", {
                     staticClass: "col nopadding"
@@ -1214,7 +1214,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1223,7 +1223,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e(), e.row.isButtonRow || "" === e.row.imageSourceTooltip || "undefined" === typeof e.row.imageSourceTooltip ? e.row.isButtonRow ? o("v-btn", {
                     ref: "rowBtn",
@@ -1547,7 +1547,7 @@
                     model: {
                         value: e.object.id,
                         callback: function(t) {
-                            e.$set(e.app.comp, t, e.app.comp[e.object.id]), e.$delete(e.app.comp, e.object.id), e.$set(e.object, "id", t)
+                            e.app.comp[t] = e.app.comp[e.object.id], e.$delete(e.app.comp, e.object.id), e.$set(e.object, "id", t)
                         },
                         expression: "object.id"
                     }
@@ -1688,7 +1688,7 @@
                     }
                 }, [e.object.scores.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s(e.$sanitize("Scores: " + e.object.scores.length, e.sanitizeArg))
+                        innerHTML: e._s("Scores: " + e.object.scores.length)
                     }
                 }), o("v-expansion-panel-content", e._l(e.object.scores, (function(t, i) {
                     return o("v-col", {
@@ -1744,7 +1744,7 @@
                     }, [e._v("Delete")])], 1)], 1)], 1)
                 })), 1)], 1) : e._e(), e.object.addons.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s(e.$sanitize("Addons: " + e.object.addons.length, e.sanitizeArg))
+                        innerHTML: e._s("Addons: " + e.object.addons.length)
                     }
                 }), o("v-expansion-panel-content", e._l(e.object.addons, (function(t, i) {
                     return o("v-col", {
@@ -1775,7 +1775,7 @@
                     }, [e._v("Delete")])], 1)
                 })), 1)], 1) : e._e(), e.object.requireds.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s(e.$sanitize("Requirements: " + e.object.requireds.length, e.sanitizeArg))
+                        innerHTML: e._s("Requirements: " + e.object.requireds.length)
                     }
                 }), o("v-expansion-panel-content", [o("v-row", {
                     staticClass: "pa-0"
@@ -1808,7 +1808,7 @@
                     }, [e._v("Delete")])], 1)
                 })), 1)], 1)], 1) : e._e(), "undefined" !== typeof e.object.groups && e.object.groups.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s(e.$sanitize("Groups: " + ("undefined" !== typeof e.object.groups ? e.object.groups.length : ""), e.sanitizeArg))
+                        innerHTML: e._s("Groups: " + ("undefined" !== typeof e.object.groups ? e.object.groups.length : ""))
                     }
                 }), o("v-expansion-panel-content", [o("v-row", {
                     staticClass: "pa-0"
@@ -2493,7 +2493,7 @@
                     staticClass: "pa-0",
                     style: e.scoreText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.findRowTitle)
                     }
                 })], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -2527,7 +2527,7 @@
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2594,7 +2594,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2610,7 +2610,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e(), e.object.textFieldIsOn ? o("v-text-field", {
                     attrs: {
@@ -2686,7 +2686,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2752,7 +2752,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2761,7 +2761,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -2792,7 +2792,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2858,7 +2858,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2867,7 +2867,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
@@ -3415,7 +3415,7 @@
                     }],
                     style: e.addonTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceAddonTitle)
                     }
                 }), o("p", {
                     staticStyle: {
@@ -3423,7 +3423,7 @@
                     },
                     style: e.addonText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceAddonText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceAddonText)
                     }
                 })])], 1)]) : e._e(), o(e.currentComponent, {
                     tag: "component",
@@ -5898,7 +5898,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -5910,7 +5910,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText)
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -5918,7 +5918,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -5930,7 +5930,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.afterText + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -5945,7 +5945,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ")
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -10338,34 +10338,26 @@
                         var t, o;
                         if (e.showRequired)
                             if ("id" == e.type) {
-								if ("undefined" !== typeof this.app.comp[e.reqId.split("/ON#")[0]]) {
-									var co = this.app.comp[e.reqId.split("/ON#")[0]],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									return e.beforeText + " " + (e.reqId.split("/ON#").length > 1 ? e.reqId.split("/ON#")[1] + " " : "") + coO.title + " " + e.afterText
-								}
+								var rId = e.reqId.split("/ON#");
+								return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + this.getObjectName(rId[0]) + " " + e.afterText
                             } else if ("points" == e.type) {
+								var rId = e.reqId.split("/ON#");
 								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (e.reqId.split("/ON#")[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (e.reqId.split("/ON#").length > 1 ? e.reqId.split("/ON#")[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
+									if (rId[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (rId.length > 1 ? rId[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
 							} else if ("or" == e.type) {
-								for (var i = "", s = 0; s < e.orRequired.length; s++) {
-									if ("undefined" !== typeof this.app.comp[e.orRequired[s].req.split("/ON#")[0]]) {
-										var co = this.app.comp[e.orRequired[s].req.split("/ON#")[0]],
-											coR = this.app.rows[co.rows],
-											coO = coR.objects[co.objects];
-										(i += (e.orRequired[s].req.split("/ON#").length > 1 ? e.orRequired[s].req.split("/ON#")[1] + " " : "") + coO.title + ", ");
-									}
+								var i = [];
+								for (var s = 0; s < e.orRequired.length; s++) {
+									var rId = e.orRequired[s].req.split("/ON#");
+									o = rId.length > 1 ? rId[1] + " " : "";
+									i.push((o + this.getObjectName(rId[0])));
 								}
-								i = i.substr(0, i.length - 2);
-								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i + " " + e.afterText
+								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
-								for (var i = "", s = 0; s < e.selRows.length; s++) {
-									for (var m = 0; m < this.app.rows.length; m++) {
-										if (this.app.rows[m].id == e.selRows[s]) i += this.app.rows[m].title + ", ";
-									}
+								var i = [];
+								for (var s = 0; s < e.selRows.length; s++) {
+									i.push(this.getRowName(e.selRows[s]));
 								}
-								i = i.substr(0, i.length - 2);
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i + " " + e.afterText
+								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
 							}
@@ -10400,7 +10392,7 @@
                         if (e > 0) {
                             var t = this.objects[e];
                             this.$set(this.objects, e, this.objects[e - 1]), this.$set(this.objects, e - 1, t);
-							this.$set(this.app.comp[this.objects[e].id], "objects", e), this.$set(this.app.comp[this.objects[e - 1].id], "objects", e - 1);
+							this.app.comp[this.objects[e].id].objects = e, this.app.comp[this.objects[e - 1].id].objects = e - 1;
                         }
                     },
                     moveObjectDown: function() {
@@ -10408,7 +10400,7 @@
                         if (-1 !== e && e < this.objects.length - 1) {
                             var t = this.objects[e];
                             this.$set(this.objects, e, this.objects[e + 1]), this.$set(this.objects, e + 1, t);
-							this.$set(this.app.comp[this.objects[e].id], "objects", e), this.$set(this.app.comp[this.objects[e + 1].id], "objects", e + 1);
+							this.app.comp[this.objects[e].id].objects = e, this.app.comp[this.objects[e + 1].id].objects = e + 1;
                         }
                     },
                     deleteObject: function(e) {
@@ -10437,6 +10429,12 @@
 							t.objects.splice(t.objects.indexOf(t.object), 1);
 							console.log(t.app.comp);
 						}
+                    },
+					getObjectName: function(e) {
+                        return this.$store.getters.getObjectName(e)
+                    },
+					getRowName: function(e) {
+                        return this.$store.getters.getRowName(e)
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -10476,15 +10474,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																	EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == rndV[0]) {
+																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -10502,7 +10502,7 @@
 																}
 															}
 														} else {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -10522,16 +10522,18 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-												if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-													var co = this.app.comp[p[v].split("/ON#")[0]],
+											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+												var pv = p[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[pv[0]]) {
+													var co = this.app.comp[pv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																	EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == pv[0]) {
+																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -10549,7 +10551,7 @@
 																}
 															}
 														} else {
-															if (ee = p[v].split("/ON#")[1], ee > 0) {
+															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -10568,16 +10570,18 @@
 														if (coO.isActive) this.activateObject(coO, coR);
 													}
 												}
+											}
 										}
 									}
 									if (e.deactivateOtherChoice)
 										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-											if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-												var co = this.app.comp[p[f].split("/ON#")[0]],
+											var pf = p[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pf[0]]) {
+												var co = this.app.comp[pf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if (ee = p[f].split("/ON#")[1], ee > 0) {
+													if (ee = pf[1], ee > 0) {
 														for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 													} else if (ee < 0) {
 														for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -10586,15 +10590,16 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 												for (var l = 0; l < this.app.groups.length; l++)
-													if (this.app.groups[l].id == p[f].split("/ON#"))
-														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+													if (this.app.groups[l].id == pf[0])
+														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
 									var h = "Scores Updated On: ",
 										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var af = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[af[0]]) {
+											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											nR = this.activated.indexOf(eid);
@@ -10774,13 +10779,14 @@
 											}
 											e.activatedRandom = rd.slice(0, nAR);
 											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -10810,13 +10816,14 @@
 											}
 										} else {
 											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-													var co = this.app.comp[y[v].split("/ON#")[0]],
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = y[v].split("/ON#")[1], ee > 0) {
+															if (ee = yv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -10835,7 +10842,7 @@
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
 											}
@@ -10843,12 +10850,13 @@
 									}
 									if (e.deactivateOtherChoice)
 										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[f].split("/ON#")[0]],
+											var yf = y[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yf[0]]) {
+												var co = this.app.comp[yf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = y[f].split("/ON#")[1], ee > 0) {
+														if (ee = yf[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -10870,8 +10878,9 @@
 									var C = "Scores Updated On: ",
 										nC = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											var bRO = this.checkRequireds(coO);
@@ -11011,15 +11020,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+											var rndV = e.activatedRandom[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+												var co = this.app.comp[rndV[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == rndV[0]) {
+																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -11037,7 +11048,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+														if (ee = rndV[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -11057,16 +11068,18 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-											if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -11084,7 +11097,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -11103,16 +11116,18 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 											}
+										}
 									}
 								}
 								if (e.deactivateOtherChoice)
 									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-										if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-											var co = this.app.comp[p[f].split("/ON#")[0]],
+										var pf = p[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[pf[0]]) {
+											var co = this.app.comp[pf[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											if (coO.isSelectableMultiple) {
-												if (ee = p[f].split("/ON#")[1], ee > 0) {
+												if (ee = pf[1], ee > 0) {
 													for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 												} else if (ee < 0) {
 													for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -11121,15 +11136,16 @@
 												if (coO.isActive) this.activateObject(coO, coR);
 											}
 											for (var l = 0; l < this.app.groups.length; l++)
-												if (this.app.groups[l].id == p[f].split("/ON#"))
-													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+												if (this.app.groups[l].id == pf[0])
+													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
 								var h = "Scores Updated On: ",
 									nH = 0, nh = 0, nR = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										nR = this.activated.indexOf(eid);
@@ -11170,7 +11186,8 @@
 																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}																
+																}
+																
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
@@ -11205,7 +11222,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																}
@@ -11225,7 +11242,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}																		
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																}
@@ -11267,7 +11284,7 @@
 														this.$set(coS, "discountIsOn", false)
 													}
 												}
-								this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
                     },
@@ -11304,13 +11321,14 @@
 										}
 										e.activatedRandomMul.push(rd.slice(0, nAR));
 										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -11339,13 +11357,14 @@
 										}
 									} else {
 										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[v].split("/ON#")[0]],
+											var yv = y[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yv[0]]) {
+												var co = this.app.comp[yv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = y[v].split("/ON#")[1], ee > 0) {
+														if (ee = yv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -11366,7 +11385,7 @@
 													}
 												} else {
 													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 												}
 											}
 										}
@@ -11375,8 +11394,9 @@
 								var C = "Scores Updated On: ",
 									nC = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid),
@@ -11479,15 +11499,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 										for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == aRM[0]) {
+																EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -11505,7 +11527,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -11527,15 +11549,17 @@
 										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 									} else {
 										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-											if ("undefined" !== this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -11553,7 +11577,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
@@ -11579,8 +11603,9 @@
 								var h = "Scores Updated On: ",
 									nh = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										var bRO = this.checkRequireds(coO);
@@ -11665,9 +11690,9 @@
                         this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
                         for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects[this.row.objects.indexOf(this.object) + 1].id = e;
-						this.$set(this.app.comp, e, {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1})
+						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
-							this.$set(this.app.comp[this.row.objects[b].id], "objects", b);
+							this.app.comp[this.row.objects[b].id].objects = b;
 						}
                     },
                     updateActivated: function() {
@@ -11817,7 +11842,7 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
-								this.$set(this.app.comp, this.app.rows[m].objects[n].id, {rows: m, objects: n})
+								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
 						}
 					}
@@ -12846,7 +12871,7 @@
                             fn: function() {
                                 return [o("v-list-item-title", {
                                     domProps: {
-                                        innerHTML: e._s(e.$sanitize("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id))
+                                        innerHTML: e._s("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id)
                                     }
                                 })]
                             },
@@ -13166,7 +13191,7 @@
                         });
 						for (var b = 0; b < this.app.rows.length; b++) {
 							if (this.app.rows[b].id == this.row.id) {
-								this.$set(this.app.comp, e, {rows: b, objects: this.row.objects.length - 1});
+								this.app.comp[e] = {rows: b, objects: this.row.objects.length - 1};
 								break
 							}
 						}
@@ -13255,15 +13280,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																	EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == rndV[0]) {
+																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -13281,7 +13308,7 @@
 																}
 															}
 														} else {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -13301,16 +13328,18 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-												if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-													var co = this.app.comp[p[v].split("/ON#")[0]],
+											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+												var pv = p[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[pv[0]]) {
+													var co = this.app.comp[pv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																	EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == pv[0]) {
+																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -13328,7 +13357,7 @@
 																}
 															}
 														} else {
-															if (ee = p[v].split("/ON#")[1], ee > 0) {
+															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -13347,16 +13376,18 @@
 														if (coO.isActive) this.activateObject(coO, coR);
 													}
 												}
+											}
 										}
 									}
 									if (e.deactivateOtherChoice)
 										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-											if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-												var co = this.app.comp[p[f].split("/ON#")[0]],
+											var pf = p[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pf[0]]) {
+												var co = this.app.comp[pf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if (ee = p[f].split("/ON#")[1], ee > 0) {
+													if (ee = pf[1], ee > 0) {
 														for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 													} else if (ee < 0) {
 														for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -13365,15 +13396,16 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 												for (var l = 0; l < this.app.groups.length; l++)
-													if (this.app.groups[l].id == p[f].split("/ON#"))
-														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+													if (this.app.groups[l].id == pf[0])
+														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
 									var h = "Scores Updated On: ",
 										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var af = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[af[0]]) {
+											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											nR = this.activated.indexOf(eid);
@@ -13553,13 +13585,14 @@
 											}
 											e.activatedRandom = rd.slice(0, nAR);
 											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -13589,13 +13622,14 @@
 											}
 										} else {
 											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-													var co = this.app.comp[y[v].split("/ON#")[0]],
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = y[v].split("/ON#")[1], ee > 0) {
+															if (ee = yv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -13614,7 +13648,7 @@
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
 											}
@@ -13622,12 +13656,13 @@
 									}
 									if (e.deactivateOtherChoice)
 										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[f].split("/ON#")[0]],
+											var yf = y[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yf[0]]) {
+												var co = this.app.comp[yf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = y[f].split("/ON#")[1], ee > 0) {
+														if (ee = yf[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -13649,8 +13684,9 @@
 									var C = "Scores Updated On: ",
 										nC = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											var bRO = this.checkRequireds(coO);
@@ -13790,15 +13826,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+											var rndV = e.activatedRandom[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+												var co = this.app.comp[rndV[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == rndV[0]) {
+																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -13816,7 +13854,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+														if (ee = rndV[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -13836,16 +13874,18 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-											if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -13863,7 +13903,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -13882,16 +13922,18 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 											}
+										}
 									}
 								}
 								if (e.deactivateOtherChoice)
 									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-										if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-											var co = this.app.comp[p[f].split("/ON#")[0]],
+										var pf = p[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[pf[0]]) {
+											var co = this.app.comp[pf[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											if (coO.isSelectableMultiple) {
-												if (ee = p[f].split("/ON#")[1], ee > 0) {
+												if (ee = pf[1], ee > 0) {
 													for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 												} else if (ee < 0) {
 													for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -13900,15 +13942,16 @@
 												if (coO.isActive) this.activateObject(coO, coR);
 											}
 											for (var l = 0; l < this.app.groups.length; l++)
-												if (this.app.groups[l].id == p[f].split("/ON#"))
-													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+												if (this.app.groups[l].id == pf[0])
+													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
 								var h = "Scores Updated On: ",
 									nH = 0, nh = 0, nR = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										nR = this.activated.indexOf(eid);
@@ -13949,7 +13992,8 @@
 																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}																
+																}
+																
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
@@ -13984,7 +14028,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																}
@@ -14004,7 +14048,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}																		
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																}
@@ -14046,7 +14090,7 @@
 														this.$set(coS, "discountIsOn", false)
 													}
 												}
-								this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
                     },
@@ -14083,13 +14127,14 @@
 										}
 										e.activatedRandomMul.push(rd.slice(0, nAR));
 										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -14118,13 +14163,14 @@
 										}
 									} else {
 										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[v].split("/ON#")[0]],
+											var yv = y[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yv[0]]) {
+												var co = this.app.comp[yv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = y[v].split("/ON#")[1], ee > 0) {
+														if (ee = yv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -14145,7 +14191,7 @@
 													}
 												} else {
 													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 												}
 											}
 										}
@@ -14154,8 +14200,9 @@
 								var C = "Scores Updated On: ",
 									nC = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid),
@@ -14258,15 +14305,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 										for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == aRM[0]) {
+																EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -14284,7 +14333,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -14306,15 +14355,17 @@
 										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 									} else {
 										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-											if ("undefined" !== this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -14332,7 +14383,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
@@ -14358,8 +14409,9 @@
 								var h = "Scores Updated On: ",
 									nh = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										var bRO = this.checkRequireds(coO);
@@ -14439,6 +14491,9 @@
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 							}
 						}
+                    },					
+                    updateActivated: function() {
+                        this.$emit("activatedWasChanged", this.activated)
                     },
 					duplicateRow: function(e) {
 						var c, i, j, s, fr, fo, y, z, zx, zy, zz, nR = 0, nF = 0;
@@ -14574,7 +14629,7 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
-								this.$set(this.app.comp, this.app.rows[m].objects[n].id, {rows: m, objects: n})
+								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
 						}
 					}
@@ -14877,10 +14932,11 @@
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
+							var cnt = 0;
 							for (var b = 0; b < e.app.rows.length; b++) {
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
-									e.$set(e.app.comp, d, {rows: b, objects: c});
+									e.app.comp[d] = {rows: b, objects: c};
 									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
 									}
@@ -19214,7 +19270,7 @@
                             fn: function() {
                                 return [o("v-list-item-content", [o("v-list-item-title", {
                                     domProps: {
-                                        innerHTML: e._s(e.$sanitize("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id))
+                                        innerHTML: e._s("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id)
                                     }
                                 }), o("v-list-item-subtitle")], 1)]
                             },
@@ -19225,7 +19281,7 @@
                             key: s
                         }, [o("v-list-item-content", [o("v-list-item-title", {
                             domProps: {
-                                innerHTML: e._s(e.$sanitize(s + 1 + ". " + i.title))
+                                innerHTML: e._s(s + 1 + ". " + i.title)
                             }
                         }), o("v-list-item-subtitle")], 1), o("v-list-item-action", [o("v-btn", {
                             attrs: {
@@ -19291,10 +19347,10 @@
                             var o = this.app.rows[t];
                             this.$set(this.app.rows, t, this.app.rows[t - 1]), this.$set(this.app.rows, t - 1, o);
 							for (var b = 0; b < this.app.rows[t - 1].objects.length; b++) {
-								this.$set(this.app.comp[this.app.rows[t - 1].objects[b].id], "rows", t - 1);
+								this.app.comp[this.app.rows[t - 1].objects[b].id].rows = t - 1;
 							}
 							for (var c = 0; c < this.app.rows[t].objects.length; c++) {
-								this.$set(this.app.comp[this.app.rows[t].objects[c].id], "rows", t);
+								this.app.comp[this.app.rows[t].objects[c].id].rows = t;
 							}
                         }
                     },
@@ -19304,10 +19360,10 @@
                             var o = this.app.rows[t];
                             this.$set(this.app.rows, t, this.app.rows[t + 1]), this.$set(this.app.rows, t + 1, o);
 							for (var b = 0; b < this.app.rows[t + 1].objects.length; b++) {
-								this.$set(this.app.comp[this.app.rows[t + 1].objects[b].id], "rows", t + 1);
+								this.app.comp[this.app.rows[t + 1].objects[b].id].rows = t + 1;
 							}
 							for (var c = 0; c < this.app.rows[t].objects.length; c++) {
-								this.$set(this.app.comp[this.app.rows[t].objects[c].id], "rows", t);
+								this.app.comp[this.app.rows[t].objects[c].id].rows = t;
 							}
                         }
                     },
@@ -19316,7 +19372,7 @@
                         if (o > 0) {
                             var i = e.objects[o];
                             this.$set(e.objects, o, e.objects[o - 1]), this.$set(e.objects, o - 1, i);
-							this.$set(e.app.comp[e.objects[o].id], "objects", o), this.$set(e.app.comp[e.objects[o - 1].id], "objects", o - 1);
+							e.app.comp[e.objects[o].id].objects = o, e.app.comp[e.objects[o - 1].id].objects = o - 1;
                         }
                     },
                     moveObjectDown: function(e, t) {
@@ -19324,7 +19380,7 @@
                         if (-1 !== o && o < e.objects.length - 1) {
                             var i = e.objects[o];
                             this.$set(e.objects, o, e.objects[o + 1]), this.$set(e.objects, o + 1, i);
-							this.$set(e.app.comp[e.objects[o].id], "objects", o), e.$set(e.app.comp[e.objects[o + 1].id], "objects", o + 1);
+							e.app.comp[e.objects[o].id].objects = o, e.app.comp[e.objects[o + 1].id].objects = o + 1;
                         }
                     }
                 }
@@ -19475,12 +19531,13 @@
 							var e = this.newActivated.split(",");
 							this.app.activated = e;
 							for (var a = 0; a < e.length; a++) {
-								if ("undefined" !== this.app.comp[e[a].split("/ON#")[0]]) {
-									var co = this.app.comp[e[a].split("/ON#")[0]],
+								var ea = e[a].split("/ON#");
+								if ("undefined" !== this.app.comp[ea[0]]) {
+									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
 									if (coO.isMultipleUseVariable) {
-										for (var ee = e[a].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+										for (var ee = ea[1], x = 0; x < Math.abs(ee); x++) {
 											if (ee > 0) {
 												coO.multipleUseVariable++;
 											} else if (ee < 0) {
@@ -19493,8 +19550,9 @@
 								}
 							}
 							for (var b = 0; b < e.length; b++) {
-								if ("undefined" !== this.app.comp[e[b].split("/ON#")[0]]) {
-									var co = this.app.comp[e[b].split("/ON#")[0]],
+								var eb = e[b].split("/ON#");
+								if ("undefined" !== this.app.comp[eb[0]]) {
+									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
 									if (coO.discountOther) {
@@ -19532,12 +19590,13 @@
 													nAR[v] = rd.length / (parseInt(coO.numActivateRandom) * (v + 1)) < 1 ? rd.length % (parseInt(coO.numActivateRandom) * (v + 1)) : parseInt(coO.numActivateRandom);
 													coO.activatedRandomMul.push(rd.slice(preNAR, nAR[v] + preNAR));
 													for (var f = 0; f < nAR[v] - preNAR; f++) {
-														if ("undefined" !== typeof this.app.comp[coO.activatedRandomMul[v][f].split("/ON#")[0]]) {
-															var coT = this.app.comp[coO.activatedRandomMul[v][f].split("/ON#")[0]],
+														var aRM = coO.activatedRandomMul[v][f].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+															var coT = this.app.comp[aRM[0]],
 																coTR = this.app.rows[coT.rows],
 																coTO = coTR.objects[coT.objects];
 															if (coTO.isMultipleUseVariable) {
-																for (var ee = coO.activatedRandomMul[v][f].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+																for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
 																	if (ee > 0) {
 																		coTO.numMultipleTimesMinus++;
 																	} else if (ee < 0) {
@@ -19559,12 +19618,13 @@
 												}
 												coO.activatedRandom = rd.slice(0, nAR);
 												for (var v = 0; v < nAR; v++) {
-													if ("undefined" !== typeof this.app.comp[coO.activatedRandom[v].split("/ON#")[0]]) {
-														var coT = this.app.comp[coO.activatedRandom[v].split("/ON#")[0]],
+													var aRM = coO.activatedRandom[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+														var coT = this.app.comp[aRM[0]],
 															coTR = this.app.rows[coT.rows],
 															coTO = coTR.objects[coT.objects];
 														if (coTO.isMultipleUseVariable) {
-															for (var ee = coO.activatedRandom[v].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+															for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
 																if (ee > 0) {
 																	coTO.numMultipleTimesMinus++;
 																} else if (ee < 0) {
@@ -19582,8 +19642,9 @@
 												rd = RD.filter(item => this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nrd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0]));
 											for (var v = 0; v < rd.length; v++) {
-												if ("undefined" !== typeof this.app.comp[rd[v].split("/ON#")[0]]) {
-													var coT = this.app.comp[rd[v].split("/ON#")[0]],
+												var rdV = rd[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rdV[0]]) {
+													var coT = this.app.comp[rdV[0]],
 														coTR = this.app.rows[coT.rows],
 														coTO = coTR.objects[coT.objects];
 													if (coTO.isMultipleUseVariable) {
@@ -19598,7 +19659,7 @@
 																}
 															}
 														} else {
-															for (var ee = rd[v].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+															for (var ee = rdV[1], x = 0; x < Math.abs(ee); x++) {
 																if (ee > 0) {
 																	coTO.numMultipleTimesMinus++;
 																} else if (ee < 0) {
@@ -19611,11 +19672,12 @@
 												}
 											}
 											for (var v = 0; v < nrd.length; v++) {
-												if ("undefined" !== typeof this.app.comp[nrd[v].split("/ON#")[0]]) {
-													var coT = this.app.comp[nrd[v].split("/ON#")[0]],
+												var nrdV = nrd[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[nrdV[0]]) {
+													var coT = this.app.comp[nrdV[0]],
 														coTR = this.app.rows[coT.rows],
 														coTO = coTR.objects[coT.objects];
-													coTO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coTO.id + "/ON#" + nrd[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coTO.id);
+													coTO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coTO.id + "/ON#" + nrdV[1]) : this.app.cancelForcedActivated.push(coTO.id);
 												}
 											}
 										}
@@ -19633,8 +19695,9 @@
 								}
 							}
 							for (var n = 0; n < e.length; n++) {
-								if ("undefined" !== this.app.comp[e[n].split("/ON#")[0]]) {
-									var co = this.app.comp[e[n].split("/ON#")[0]],
+								var en = e[n].split("/ON#");
+								if ("undefined" !== this.app.comp[en[0]]) {
+									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
 									for (var h = 0; h < coO.scores.length; h++) {
@@ -19642,7 +19705,7 @@
 										for (var j = 0; j < this.app.pointTypes.length; j++) {
 											if (this.app.pointTypes[j].id == coS.id) {
 												if (coO.isMultipleUseVariable) {
-													for (var ee = e[n].split("/ON#")[1], k = 0; k < Math.abs(ee); k++) {
+													for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
 														if (ee > 0) {
 															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
 														} else if (ee < 0) {
@@ -19794,7 +19857,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19803,7 +19866,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()], 1) : e._e(), 2 == e.row.template && e.window.width > 1e3 ? o("div", {
                     staticClass: "row nopadding"
@@ -19813,7 +19876,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19822,7 +19885,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()]), o("div", {
                     staticClass: "col-6 nopadding"
@@ -19897,7 +19960,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19906,7 +19969,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e()])]) : e._e(), 4 == e.row.template ? o("div", {
                     staticClass: "col nopadding"
@@ -19914,7 +19977,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowTitle)
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19923,7 +19986,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceRowText)
                     }
                 }) : e._e(), e.row.isButtonRow || "" === e.row.imageSourceTooltip || "undefined" === typeof e.row.imageSourceTooltip ? e.row.isButtonRow ? o("v-btn", {
                     ref: "rowBtn",
@@ -20051,7 +20114,7 @@
                     staticClass: "pa-0",
                     style: e.scoreText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.findRowTitle)
                     }
                 })], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -20085,7 +20148,7 @@
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20152,7 +20215,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20168,7 +20231,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -20226,7 +20289,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20292,7 +20355,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20301,7 +20364,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -20332,7 +20395,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectTitleText)
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20398,7 +20461,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                            innerHTML: e._s(e.getChoiceTitle(t))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20407,7 +20470,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceObjectText)
                     }
                 }) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
@@ -20530,7 +20593,7 @@
                     }],
                     style: e.addonTitle,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceAddonTitle)
                     }
                 }), o("p", {
                     staticStyle: {
@@ -20538,7 +20601,7 @@
                     },
                     style: e.addonText,
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceAddonText, e.sanitizeArg))
+                        innerHTML: e._s(e.replaceAddonText)
                     }
                 })])], 1)]) : e._e()])
             },
@@ -20638,7 +20701,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -20650,7 +20713,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText)
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -20658,7 +20721,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -20670,7 +20733,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.afterText + " ")
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -20685,7 +20748,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ")
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -21013,34 +21076,26 @@
                         var t, o;
                         if (e.showRequired)
                             if ("id" == e.type) {
-								if ("undefined" !== typeof this.app.comp[e.reqId.split("/ON#")[0]]) {
-									var co = this.app.comp[e.reqId.split("/ON#")[0]],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									return e.beforeText + " " + (e.reqId.split("/ON#").length > 1 ? e.reqId.split("/ON#")[1] + " " : "") + coO.title + " " + e.afterText
-								}
+								var rId = e.reqId.split("/ON#");
+								return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + this.getObjectName(rId[0]) + " " + e.afterText
                             } else if ("points" == e.type) {
+								var rId = e.reqId.split("/ON#");
 								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (e.reqId.split("/ON#")[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (e.reqId.split("/ON#").length > 1 ? e.reqId.split("/ON#")[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
+									if (rId[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (rId.length > 1 ? rId[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
 							} else if ("or" == e.type) {
-								for (var i = "", s = 0; s < e.orRequired.length; s++) {
-									if ("undefined" !== typeof this.app.comp[e.orRequired[s].req.split("/ON#")[0]]) {
-										var co = this.app.comp[e.orRequired[s].req.split("/ON#")[0]],
-											coR = this.app.rows[co.rows],
-											coO = coR.objects[co.objects];
-										(i += (e.orRequired[s].req.split("/ON#").length > 1 ? e.orRequired[s].req.split("/ON#")[1] + " " : "") + coO.title + ", ");
-									}
+								var i = [];
+								for (var s = 0; s < e.orRequired.length; s++) {
+									var rId = e.orRequired[s].req.split("/ON#");
+									o = rId.length > 1 ? rId[1] + " " : "";
+									i.push((o + this.getObjectName(rId[0])));
 								}
-								i = i.substr(0, i.length - 2);
-								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i + " " + e.afterText
+								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
-								for (var i = "", s = 0; s < e.selRows.length; s++) {
-									for (var m = 0; m < this.app.rows.length; m++) {
-										if (this.app.rows[m].id == e.selRows[s]) i += this.app.rows[m].title + ", ";
-									}
+								var i = [];
+								for (var s = 0; s < e.selRows.length; s++) {
+									i.push(this.getRowName(e.selRows[s]));
 								}
-								i = i.substr(0, i.length - 2);
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i + " " + e.afterText
+								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
 							}
@@ -21075,7 +21130,7 @@
                         if (e > 0) {
                             var t = this.objects[e];
                             this.$set(this.objects, e, this.objects[e - 1]), this.$set(this.objects, e - 1, t);
-							this.$set(this.app.comp[this.objects[e].id], "objects", e), this.$set(this.app.comp[this.objects[e - 1].id], "objects", e - 1);
+							this.app.comp[this.objects[e].id].objects = e, this.app.comp[this.objects[e - 1].id].objects = e - 1;
                         }
                     },
                     moveObjectDown: function() {
@@ -21083,11 +21138,17 @@
                         if (-1 !== e && e < this.objects.length - 1) {
                             var t = this.objects[e];
                             this.$set(this.objects, e, this.objects[e + 1]), this.$set(this.objects, e + 1, t);
-							this.$set(this.app.comp[this.objects[e].id], "objects", e), this.$set(this.app.comp[this.objects[e + 1].id], "objects", e + 1);
+							this.app.comp[this.objects[e].id].objects = e, this.app.comp[this.objects[e + 1].id].objects = e + 1;
                         }
                     },
                     deleteObject: function() {
                         this.objects.splice(this.objects.indexOf(this.object), 1)
+                    },
+					getObjectName: function(e) {
+                        return this.$store.getters.getObjectName(e)
+                    },
+					getRowName: function(e) {
+                        return this.$store.getters.getRowName(e)
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
@@ -21127,15 +21188,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																	EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == rndV[0]) {
+																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -21153,7 +21216,7 @@
 																}
 															}
 														} else {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -21173,16 +21236,18 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-												if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-													var co = this.app.comp[p[v].split("/ON#")[0]],
+											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+												var pv = p[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[pv[0]]) {
+													var co = this.app.comp[pv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																	EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == pv[0]) {
+																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -21200,7 +21265,7 @@
 																}
 															}
 														} else {
-															if (ee = p[v].split("/ON#")[1], ee > 0) {
+															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -21219,16 +21284,18 @@
 														if (coO.isActive) this.activateObject(coO, coR);
 													}
 												}
+											}
 										}
 									}
 									if (e.deactivateOtherChoice)
 										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-											if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-												var co = this.app.comp[p[f].split("/ON#")[0]],
+											var pf = p[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pf[0]]) {
+												var co = this.app.comp[pf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if (ee = p[f].split("/ON#")[1], ee > 0) {
+													if (ee = pf[1], ee > 0) {
 														for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 													} else if (ee < 0) {
 														for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -21237,15 +21304,16 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 												for (var l = 0; l < this.app.groups.length; l++)
-													if (this.app.groups[l].id == p[f].split("/ON#"))
-														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+													if (this.app.groups[l].id == pf[0])
+														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
 									var h = "Scores Updated On: ",
 										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var af = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[af[0]]) {
+											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											nR = this.activated.indexOf(eid);
@@ -21425,13 +21493,14 @@
 											}
 											e.activatedRandom = rd.slice(0, nAR);
 											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -21461,13 +21530,14 @@
 											}
 										} else {
 											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-													var co = this.app.comp[y[v].split("/ON#")[0]],
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = y[v].split("/ON#")[1], ee > 0) {
+															if (ee = yv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -21486,7 +21556,7 @@
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
 											}
@@ -21494,12 +21564,13 @@
 									}
 									if (e.deactivateOtherChoice)
 										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[f].split("/ON#")[0]],
+											var yf = y[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yf[0]]) {
+												var co = this.app.comp[yf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = y[f].split("/ON#")[1], ee > 0) {
+														if (ee = yf[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -21521,8 +21592,9 @@
 									var C = "Scores Updated On: ",
 										nC = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											var bRO = this.checkRequireds(coO);
@@ -21662,15 +21734,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+											var rndV = e.activatedRandom[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+												var co = this.app.comp[rndV[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == rndV[0]) {
+																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -21688,7 +21762,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+														if (ee = rndV[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -21708,16 +21782,18 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-											if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -21735,7 +21811,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -21754,16 +21830,18 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 											}
+										}
 									}
 								}
 								if (e.deactivateOtherChoice)
 									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-										if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-											var co = this.app.comp[p[f].split("/ON#")[0]],
+										var pf = p[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[pf[0]]) {
+											var co = this.app.comp[pf[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											if (coO.isSelectableMultiple) {
-												if (ee = p[f].split("/ON#")[1], ee > 0) {
+												if (ee = pf[1], ee > 0) {
 													for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 												} else if (ee < 0) {
 													for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -21772,15 +21850,16 @@
 												if (coO.isActive) this.activateObject(coO, coR);
 											}
 											for (var l = 0; l < this.app.groups.length; l++)
-												if (this.app.groups[l].id == p[f].split("/ON#"))
-													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+												if (this.app.groups[l].id == pf[0])
+													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
 								var h = "Scores Updated On: ",
 									nH = 0, nh = 0, nR = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										nR = this.activated.indexOf(eid);
@@ -21821,7 +21900,8 @@
 																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}																
+																}
+																
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
@@ -21856,7 +21936,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																}
@@ -21876,7 +21956,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}																		
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																}
@@ -21918,7 +21998,7 @@
 														this.$set(coS, "discountIsOn", false)
 													}
 												}
-								this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
                     },
@@ -21955,13 +22035,14 @@
 										}
 										e.activatedRandomMul.push(rd.slice(0, nAR));
 										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -21990,13 +22071,14 @@
 										}
 									} else {
 										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[v].split("/ON#")[0]],
+											var yv = y[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yv[0]]) {
+												var co = this.app.comp[yv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = y[v].split("/ON#")[1], ee > 0) {
+														if (ee = yv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -22017,7 +22099,7 @@
 													}
 												} else {
 													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 												}
 											}
 										}
@@ -22026,8 +22108,9 @@
 								var C = "Scores Updated On: ",
 									nC = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid),
@@ -22130,15 +22213,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 										for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == aRM[0]) {
+																EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -22156,7 +22241,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -22178,15 +22263,17 @@
 										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 									} else {
 										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-											if ("undefined" !== this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -22204,7 +22291,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
@@ -22230,8 +22317,9 @@
 								var h = "Scores Updated On: ",
 									nh = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										var bRO = this.checkRequireds(coO);
@@ -22316,9 +22404,9 @@
                         this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
                         for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects[this.row.objects.length - 1].id = e;
-						this.$set(this.app.comp, e, {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1})
+						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
-							this.$set(this.app.comp[this.row.objects[b].id], "objects", b);
+							this.app.comp[this.row.objects[b].id].objects = b;
 						}
                     },
                     updateActivated: function() {
@@ -22468,7 +22556,7 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
-								this.$set(this.app.comp, this.app.rows[m].objects[n].id, {rows: m, objects: n})
+								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
 						}
 					}
@@ -22730,7 +22818,7 @@
                         });
 						for (var b = 0; b < this.app.rows.length; b++) {
 							if (this.app.rows[b].id == this.row.id) {
-								this.$set(this.app.comp, e, {rows: b, objects: this.row.objects.length - 1});
+								this.app.comp[e] = {rows: b, objects: this.row.objects.length - 1};
 								break
 							}
 						}
@@ -22817,15 +22905,17 @@
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																	EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == rndV[0]) {
+																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -22843,7 +22933,7 @@
 																}
 															}
 														} else {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -22863,16 +22953,18 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-												if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-													var co = this.app.comp[p[v].split("/ON#")[0]],
+											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+												var pv = p[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[pv[0]]) {
+													var co = this.app.comp[pv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																	EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																if (cFA[0] == pv[0]) {
+																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
 																}
 															}
@@ -22890,7 +22982,7 @@
 																}
 															}
 														} else {
-															if (ee = p[v].split("/ON#")[1], ee > 0) {
+															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	coO.numMultipleTimesMinus--;
 																	coO.forcedActivated = !1;
@@ -22909,16 +23001,18 @@
 														if (coO.isActive) this.activateObject(coO, coR);
 													}
 												}
+											}
 										}
 									}
 									if (e.deactivateOtherChoice)
 										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-											if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-												var co = this.app.comp[p[f].split("/ON#")[0]],
+											var pf = p[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pf[0]]) {
+												var co = this.app.comp[pf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if (ee = p[f].split("/ON#")[1], ee > 0) {
+													if (ee = pf[1], ee > 0) {
 														for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 													} else if (ee < 0) {
 														for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -22927,15 +23021,16 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 												for (var l = 0; l < this.app.groups.length; l++)
-													if (this.app.groups[l].id == p[f].split("/ON#"))
-														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+													if (this.app.groups[l].id == pf[0])
+														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
 									var h = "Scores Updated On: ",
 										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var af = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[af[0]]) {
+											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											nR = this.activated.indexOf(eid);
@@ -23115,13 +23210,14 @@
 											}
 											e.activatedRandom = rd.slice(0, nAR);
 											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-													var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+												var rndV = e.activatedRandom[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+													var co = this.app.comp[rndV[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -23151,13 +23247,14 @@
 											}
 										} else {
 											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-													var co = this.app.comp[y[v].split("/ON#")[0]],
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
 														coR = this.app.rows[co.rows],
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = y[v].split("/ON#")[1], ee > 0) {
+															if (ee = yv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
 																	coO.numMultipleTimesMinus++;
@@ -23176,7 +23273,7 @@
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
 											}
@@ -23184,12 +23281,13 @@
 									}
 									if (e.deactivateOtherChoice)
 										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[f].split("/ON#")[0]],
+											var yf = y[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yf[0]]) {
+												var co = this.app.comp[yf[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = y[f].split("/ON#")[1], ee > 0) {
+														if (ee = yf[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -23211,8 +23309,9 @@
 									var C = "Scores Updated On: ",
 										nC = 0;
 									for (var f = 0; f < this.activated.length; f++) {
-										if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-											var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											var bRO = this.checkRequireds(coO);
@@ -23352,15 +23451,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandom[v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandom[v].split("/ON#")[0]],
+											var rndV = e.activatedRandom[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+												var co = this.app.comp[rndV[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandom[v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandom[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == rndV[0]) {
+																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -23378,7 +23479,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandom[v].split("/ON#")[1], ee > 0) {
+														if (ee = rndV[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -23398,16 +23499,18 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--)
-											if ("undefined" !== typeof this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -23425,7 +23528,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -23444,16 +23547,18 @@
 													if (coO.isActive) this.activateObject(coO, coR);
 												}
 											}
+										}
 									}
 								}
 								if (e.deactivateOtherChoice)
 									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
-										if ("undefined" !== typeof this.app.comp[p[f].split("/ON#")[0]]) {
-											var co = this.app.comp[p[f].split("/ON#")[0]],
+										var pf = p[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[pf[0]]) {
+											var co = this.app.comp[pf[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
 											if (coO.isSelectableMultiple) {
-												if (ee = p[f].split("/ON#")[1], ee > 0) {
+												if (ee = pf[1], ee > 0) {
 													for (var n = 0; n < ee; n++) this.selectedOneMore(coO, coR)
 												} else if (ee < 0) {
 													for (var pp = 0; pp < -1 * ee; pp++) this.selectedOneLess(coO, coR)
@@ -23462,15 +23567,16 @@
 												if (coO.isActive) this.activateObject(coO, coR);
 											}
 											for (var l = 0; l < this.app.groups.length; l++)
-												if (this.app.groups[l].id == p[f].split("/ON#"))
-													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == p[f] && coO.isActive && this.activateObject(coO, coR);
+												if (this.app.groups[l].id == pf[0])
+													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
 								var h = "Scores Updated On: ",
 									nH = 0, nh = 0, nR = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										nR = this.activated.indexOf(eid);
@@ -23511,7 +23617,8 @@
 																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}																
+																}
+																
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
@@ -23546,7 +23653,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																}
@@ -23566,7 +23673,7 @@
 																	if (coO.forcedActivated && nh > 0) {
 																		if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																	}																	
+																	}																		
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																}
@@ -23608,7 +23715,7 @@
 														this.$set(coS, "discountIsOn", false)
 													}
 												}
-								this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
                     },
@@ -23645,13 +23752,14 @@
 										}
 										e.activatedRandomMul.push(rd.slice(0, nAR));
 										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -23680,13 +23788,14 @@
 										}
 									} else {
 										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											if ("undefined" !== typeof this.app.comp[y[v].split("/ON#")[0]]) {
-												var co = this.app.comp[y[v].split("/ON#")[0]],
+											var yv = y[v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[yv[0]]) {
+												var co = this.app.comp[yv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 													if (coO.isSelectableMultiple) {
-														if (ee = y[v].split("/ON#")[1], ee > 0) {
+														if (ee = yv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																this.selectedOneMore(coO, coR);
 																coO.numMultipleTimesMinus++;
@@ -23707,7 +23816,7 @@
 													}
 												} else {
 													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + y[v].split("/ON#")[1]) : this.app.cancelForcedActivated.push(coO.id);
+													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 												}
 											}
 										}
@@ -23716,8 +23825,9 @@
 								var C = "Scores Updated On: ",
 									nC = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid),
@@ -23820,15 +23930,17 @@
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 										for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-											if ("undefined" !== typeof this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]]) {
-												var co = this.app.comp[e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]],
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
-													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0])) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[0]) {
-																EE = parseInt(e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == aRM[0]) {
+																EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -23846,7 +23958,7 @@
 															}
 														}
 													} else {
-														if (ee = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#")[1], ee > 0) {
+														if (ee = aRM[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																coO.forcedActivated = !1;
@@ -23868,15 +23980,17 @@
 										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 									} else {
 										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-											if ("undefined" !== this.app.comp[p[v].split("/ON#")[0]]) {
-												var co = this.app.comp[p[v].split("/ON#")[0]],
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
 													coR = this.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															if (this.app.cancelForcedActivated[AC].split("/ON#")[0] == p[v].split("/ON#")[0]) {
-																EE = parseInt(p[v].split("/ON#")[1]) - parseInt(this.app.cancelForcedActivated[AC].split("/ON#")[1]), this.app.cancelForcedActivated.splice(AC, 1);
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
 															}
 														}
@@ -23894,7 +24008,7 @@
 															}
 														}
 													} else {
-														if (ee = p[v].split("/ON#")[1], ee > 0) {
+														if (ee = pv[1], ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
@@ -23920,8 +24034,9 @@
 								var h = "Scores Updated On: ",
 									nh = 0;
 								for (var f = 0; f < this.activated.length; f++) {
-									if ("undefined" !== typeof this.app.comp[this.activated[f].split("/ON#")[0]]) {
-										var co = this.app.comp[this.activated[f].split("/ON#")[0]],
+									var aF = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[aF[0]]) {
+										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
 										var bRO = this.checkRequireds(coO);
@@ -24139,7 +24254,7 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
-								this.$set(this.app.comp, this.app.rows[m].objects[n].id, {rows: m, objects: n})
+								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
 						}
 					}
@@ -28489,11 +28604,11 @@
                             t = "";
                             for (var r = 0; r < 4; r++) t += o.charAt(Math.floor(Math.random() * o.length));
                             this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].id = t;
-							this.$set(this.app.comp, t, {rows: this.app.rows.indexOf(e) + 1, objects: s})
+							this.app.comp[t] = {rows: this.app.rows.indexOf(e) + 1, objects: s};
                         }
 						for (var b = this.app.rows.indexOf(e) + 2; b < this.app.rows.length; b++) {
 							for (var c = 0; c < this.app.rows[b].objects.length; c++) {
-								this.$set(this.app.comp, this.app.rows[b].objects[c].id, {rows: b, objects: c})
+								this.app.comp[this.app.rows[b].objects[c].id] = {rows: b, objects: c};
 							}
 						}
                     },
@@ -28573,10 +28688,10 @@
                             var o = this.app.rows[t];
                             this.$set(this.app.rows, t, this.app.rows[t - 1]), this.$set(this.app.rows, t - 1, o);
 							for (var b = 0; b < this.app.rows[t - 1].objects.length; b++) {
-								this.$set(this.app.comp[this.app.rows[t - 1].objects[b].id], "rows", t - 1);
+								this.app.comp[this.app.rows[t - 1].objects[b].id].rows = t - 1;
 							}
 							for (var c = 0; c < this.app.rows[t].objects.length; c++) {
-								this.$set(this.app.comp[this.app.rows[t].objects[c].id], "rows", t);
+								this.app.comp[this.app.rows[t].objects[c].id].rows = t;
 							}
                         }
                     },
@@ -28586,10 +28701,10 @@
                             var o = this.app.rows[t];
                             this.$set(this.app.rows, t, this.app.rows[t + 1]), this.$set(this.app.rows, t + 1, o);
 							for (var b = 0; b < this.app.rows[t + 1].objects.length; b++) {
-								this.$set(this.app.comp[this.app.rows[t + 1].objects[b].id], "rows", t + 1);
+								this.app.comp[this.app.rows[t + 1].objects[b].id].rows = t + 1;
 							}
 							for (var c = 0; c < this.app.rows[t].objects.length; c++) {
-								this.$set(this.app.comp[this.app.rows[t].objects[c].id], "rows", t);
+								this.app.comp[this.app.rows[t].objects[c].id].rows = t;
 							}
                         }
                     },
@@ -30251,7 +30366,9 @@
                     }, {
                         text: "12 per Row",
                         value: "col-xl-1"
-                    }]
+                    }],
+					objectNamesCache: [],
+					rowNamesCache: []
                 },
                 getters: {
                     checkRequireds: function(e, t) {
@@ -30369,6 +30486,37 @@
                                     }
                                 }
                             return !0
+                        }
+                    },
+					getObjectName: function(e) {
+                        return function(t) {
+                            if (!(t in e.objectNamesCache)) {
+								if ("undefined" !== e.app.comp[t]) {
+									var co = e.app.comp[t],
+										coR = e.app.rows[co.rows],
+										coO = coR.objects[co.objects];
+									e.objectNamesCache[t] = coO.title;
+									return e.objectNamesCache[t]
+								}
+                                return "???"
+                            } else {
+                                return e.objectNamesCache[t]
+                            }
+                        }
+                    },
+					getRowName: function(e) {
+                        return function(t) {
+                            if (!(t in e.rowNamesCache)) {
+                                for (s = 0; s < e.app.rows.length; s++) {
+									if (t == e.app.rows[s].id) {
+										e.objectNamesCache[t] = e.app.rows[s].title;
+										return e.objectNamesCache[t]
+									}
+                                }
+                                return "???"
+                            } else {
+                                return state.rowNamesCache[t]
+                            }
                         }
                     }
                 },
