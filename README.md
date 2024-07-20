@@ -21,6 +21,12 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to use multi-select as a requirement (ex. ID/ON#3).
  - Added a feature to change the order of points.
  - Added Global Settings Config: Auto-save, Check before delete, Dark Mode.
+ - Added a feature to Auto-save in local storage.
+ - Added requirements to check how many choices have been selected in rows/entire.
+ - Added a feature to set Border Color and Text Color in Filter design.
+ - Added a feature to apply a discount to all Choices within Groups.
+ - Added a feature to set the initial value of points applied when using Clean Activated.
+ - Added a feature to customize the color of each point text in the point bar.
 
 ## Fixed
 
@@ -47,4 +53,9 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where the points icon was not being displayed on the points bar.
  - Fixed an issue where tags couldn't be used in Show Score.
  - Fixed an issue where Forces Another Choice couldn't be used with multi-select. 
+ - Fixed an issue where the choices in hidden rows weren't deselected automatically.
+ - Fixed an issue where 'X of these is selected' couldn't be set X to 0.
+ - Fixed an issue where words were not resetting with Clean Activated.
+ - Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices.
+ - A slight performance improvement
 

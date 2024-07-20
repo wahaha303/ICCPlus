@@ -225,10 +225,10 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
+                        href: "https://mega.nz/file/vrBRWYDL#EYqwJl9SDLdnoqbIz9_VKAovm0yUaAVBMKz9cVgdSOg",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.2.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.3.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,20 +236,33 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 11.07.2024")]), o("v-col", {
+                }, [e._v("Update: 20.07.2024")]), o("v-col", {
+                    staticClass: "pt-0 pb-0",
+					staticStyle: {
+						color: "blue"
+					},
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Feature: ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
 					},
                     attrs: {
-                        cols: "12"
+                        cols: "6"
                     }
                 }, [e._v(" Fixed: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
+                    staticClass: "pt-0 pb-0 text-left",
                     attrs: {
-                        cols: "12"
+                        cols: "6"
                     }
-                }, [e._v(" Fixed an issue where multi-selects did not refund points when canceled. "), o("br"), e._v(" Fixed an issue where the position of the point-icon was not displayed correctly. "), o("br"), e._v(" Fixed an issue where the points icon was not being displayed on the points bar. "), o("br"), e._v(" Fixed an issue where tags couldn't be used in Show Score. "), o("br"), e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. ")]), o("v-col", {
+                }, [e._v(" Added a feature to Auto-save in local storage. "), o("br"), e._v(" Added requirements to check how many choices have been selected in rows/entire. "), o("br"), e._v(" Added a feature to set Border Color and Text Color in Filter design. "), o("br"), e._v(" Added a feature to apply a discount to all Choices within Groups. "), o("br"), e._v(" Added a feature to set the initial value of points applied when using Clean Activated. "), o("br"), e._v(" Added a feature to customize the color of each point text in the point bar. ")]), o("v-col", {
+                    staticClass: "pt-0 pb-0 text-left",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. "), o("br"), e._v(" Fixed an issue where the choices in hidden rows weren't deselected automatically. "), o("br"), e._v(" Fixed an issue where 'X of these is selected' couldn't be set X to 0. "), o("br"), e._v(" Fixed an issue where words were not resetting with Clean Activated. "), o("br"), e._v(" Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices. "), o("br"), e._v(" A slight performance improvement. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -548,7 +561,7 @@
                         staticClass: "grey ma-2 " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
                         domProps: {
-                            innerHTML: e._s(t.title)
+                            innerHTML: e._s(e.$sanitize(t.title))
                         }
                     }), o("v-spacer"), o("v-tooltip", {
                         attrs: {
@@ -1094,7 +1107,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1103,7 +1116,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()], 1) : e._e(), 2 == e.row.template && e.window.width > 1e3 ? o("div", {
                     staticClass: "row nopadding"
@@ -1113,7 +1126,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1122,7 +1135,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()]), o("div", {
                     staticClass: "col-6 nopadding"
@@ -1197,7 +1210,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1206,7 +1219,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()])]) : e._e(), 4 == e.row.template ? o("div", {
                     staticClass: "col nopadding"
@@ -1214,7 +1227,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -1223,7 +1236,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e(), e.row.isButtonRow || "" === e.row.imageSourceTooltip || "undefined" === typeof e.row.imageSourceTooltip ? e.row.isButtonRow ? o("v-btn", {
                     ref: "rowBtn",
@@ -1688,7 +1701,7 @@
                     }
                 }, [e.object.scores.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s("Scores: " + e.object.scores.length)
+                        innerHTML: e._s(e.$sanitize("Scores: " + e.object.scores.length, e.sanitizeArg))
                     }
                 }), o("v-expansion-panel-content", e._l(e.object.scores, (function(t, i) {
                     return o("v-col", {
@@ -1744,7 +1757,7 @@
                     }, [e._v("Delete")])], 1)], 1)], 1)
                 })), 1)], 1) : e._e(), e.object.addons.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s("Addons: " + e.object.addons.length)
+                        innerHTML: e._s(e.$sanitize("Addons: " + e.object.addons.length, e.sanitizeArg))
                     }
                 }), o("v-expansion-panel-content", e._l(e.object.addons, (function(t, i) {
                     return o("v-col", {
@@ -1775,7 +1788,7 @@
                     }, [e._v("Delete")])], 1)
                 })), 1)], 1) : e._e(), e.object.requireds.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s("Requirements: " + e.object.requireds.length)
+                        innerHTML: e._s(e.$sanitize("Requirements: " + e.object.requireds.length, e.sanitizeArg))
                     }
                 }), o("v-expansion-panel-content", [o("v-row", {
                     staticClass: "pa-0"
@@ -1808,7 +1821,7 @@
                     }, [e._v("Delete")])], 1)
                 })), 1)], 1)], 1) : e._e(), "undefined" !== typeof e.object.groups && e.object.groups.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
-                        innerHTML: e._s("Groups: " + ("undefined" !== typeof e.object.groups ? e.object.groups.length : ""))
+                        innerHTML: e._s(e.$sanitize("Groups: " + ("undefined" !== typeof e.object.groups ? e.object.groups.length : ""), e.sanitizeArg))
                     }
                 }), o("v-expansion-panel-content", [o("v-row", {
                     staticClass: "pa-0"
@@ -2493,7 +2506,7 @@
                     staticClass: "pa-0",
                     style: e.scoreText,
                     domProps: {
-                        innerHTML: e._s(e.findRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
                 })], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -2527,7 +2540,7 @@
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2594,7 +2607,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2610,7 +2623,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e(), e.object.textFieldIsOn ? o("v-text-field", {
                     attrs: {
@@ -2686,7 +2699,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2752,7 +2765,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2761,7 +2774,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -2792,7 +2805,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -2858,7 +2871,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -2867,7 +2880,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
@@ -3415,7 +3428,7 @@
                     }],
                     style: e.addonTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceAddonTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
                 }), o("p", {
                     staticStyle: {
@@ -3423,7 +3436,7 @@
                     },
                     style: e.addonText,
                     domProps: {
-                        innerHTML: e._s(e.replaceAddonText)
+                        innerHTML: e._s(e.$sanitize(e.replaceAddonText, e.sanitizeArg))
                     }
                 })])], 1)]) : e._e(), o(e.currentComponent, {
                     tag: "component",
@@ -4357,11 +4370,16 @@
                     app: function() {
                         return this.$store.state.app
                     },
+					object: function() {
+						return this.$parent.object
+					},
                     addonTitle: function() {
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + this.styling.addonTitleColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : this.styling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + this.styling.addonTextColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : this.styling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -5402,9 +5420,9 @@
                         }
                     }
                 }, [e._v("mdi-key-plus")])], 1), o("v-row", [o("v-col", {
-                    staticClass: "py-0 col-12"
+                    staticClass: "py-0 col-6"
                 }, [o("v-checkbox", {
-                    staticClass: "auto shrink mr-2 mt-0",
+                    staticClass: "auto shrink mr-2 ml-0",
                     attrs: {
 						"hide-details": "",
                         label: "at Random?"
@@ -5418,6 +5436,21 @@
 							e.$set(e.score, "setValue", false)
                         },
                         expression: "score.isRandom"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "py-0 col-6"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 ml-0",
+                    attrs: {
+						"hide-details": "",
+                        label: "Not allow to discount?"
+                    },
+                    model: {
+                        value: e.score.isNotDiscountable,
+                        callback: function(t) {
+                            e.$set(e.score, "isNotDiscountable", t)
+                        },
+                        expression: "score.isNotDiscountable"
                     }
                 })], 1), o("v-col", {
                     staticClass: "py-0 pr-1"
@@ -5898,7 +5931,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -5910,7 +5943,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText)
+                        innerHTML: e._s(e.$sanitize((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -5918,7 +5951,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -5930,7 +5963,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.afterText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -5945,7 +5978,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ", e.sanitizeArg))
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -10239,7 +10272,8 @@
                         return this.$store.state.objectWidths
                     },
                     objectTitle: function() {
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + this.styling.objectTitleColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : this.styling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -10248,13 +10282,14 @@
                         return "color: " + this.styling.scoreTextColor + ";"
                     },
                     objectText: function() {
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + this.styling.objectTextColor + ";padding: " + this.styling.objectTextPadding + "px;"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     objectBackground: function() {
                         var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
-                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%";
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectBorderIsOn && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + this.styling.objectBorderColor + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
-                        var o = this.checkRequireds(this.object);
+                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
+							o = this.checkRequireds(this.object);
+                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
                         else if (!o) {
                             if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
@@ -10339,24 +10374,35 @@
                         if (e.showRequired)
                             if ("id" == e.type) {
 								var rId = e.reqId.split("/ON#");
-								return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + this.getObjectName(rId[0]) + " " + e.afterText
+								if ("undefined" !== typeof this.app.comp[rId[0]]) {
+									var	co = this.app.comp[rId[0]],
+										coR = this.app.rows[co.rows],
+										coO = coR.objects[co.objects];
+									return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
+								}
                             } else if ("points" == e.type) {
-								var rId = e.reqId.split("/ON#");
 								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (rId[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (rId.length > 1 ? rId[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
+									if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
 							} else if ("or" == e.type) {
 								var i = [];
 								for (var s = 0; s < e.orRequired.length; s++) {
 									var rId = e.orRequired[s].req.split("/ON#");
-									o = rId.length > 1 ? rId[1] + " " : "";
-									i.push((o + this.getObjectName(rId[0])));
+									if ("undefined" !== typeof this.app.comp[rId[0]]) {
+										var	co = this.app.comp[rId[0]],
+											coR = this.app.rows[co.rows],
+											coO = coR.objects[co.objects];
+										o = rId.length > 1 ? rId[1] + " " : "";
+										i.push((o + coO.title));
+									}
 								}
 								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
 								var i = [];
-								for (var s = 0; s < e.selRows.length; s++) {
-									i.push(this.getRowName(e.selRows[s]));
-								}
+								for (var s = 0; s < this.app.rows.length; s++) {
+									for (var o = 0; o < e.selRows.length; o++) {
+										if (e.selRows[o] == this.app.rows[s].title) i.push(this.app.rows[s].title);
+									}
+                                }
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
@@ -10430,12 +10476,6 @@
 							console.log(t.app.comp);
 						}
                     },
-					getObjectName: function(e) {
-                        return this.$store.getters.getObjectName(e)
-                    },
-					getRowName: function(e) {
-                        return this.$store.getters.getRowName(e)
-                    },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
                     },
@@ -10470,7 +10510,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0, EE = 0;
+									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -10482,7 +10522,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == rndV[0]) {
 																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -10522,7 +10562,7 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 												var pv = p[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[pv[0]]) {
 													var co = this.app.comp[pv[0]],
@@ -10531,7 +10571,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == pv[0]) {
 																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -10574,7 +10614,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+										for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 											var pf = p[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pf[0]]) {
 												var co = this.app.comp[pf[0]],
@@ -10653,7 +10693,7 @@
 											for (var b = 0; b < coO.scores.length; b++) {
 												var coS = coO.scores[b],
 													coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-												if (JSON.stringify(coS).includes('"' + eid + '"')) {
+												if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 													nH = this.activated.indexOf(eid);
 													var bC = this.checkRequireds(coS);
 													this.activated.splice(nH, 1);
@@ -10750,25 +10790,27 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-															else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-															else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-															else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-															if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
-															this.$set(coS, "discountIsOn", true);
+															if (!coS.isNotDiscountable) {
+																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
+																this.$set(coS, "discountIsOn", true);
+															}
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
-									var a, f, b, m, v, y, ee = 0;
+									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e);
 									}
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","); 
+											var y = e.activateThisChoice.split(","); 
 											var RD = y.slice(),
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
@@ -10815,7 +10857,7 @@
 												}
 											}
 										} else {
-											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
 												var yv = y[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[yv[0]]) {
 													var co = this.app.comp[yv[0]],
@@ -10849,7 +10891,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
 											var yf = y[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[yf[0]]) {
 												var co = this.app.comp[yf[0]],
@@ -10932,7 +10974,7 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + eid + '"')) {
+													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
 														var bE = this.checkRequireds(coS);
@@ -11016,7 +11058,7 @@
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var p, ee = 0, EE = 0;
+								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -11028,7 +11070,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == rndV[0]) {
 																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -11068,7 +11110,7 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 											var pv = p[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pv[0]]) {
 												var co = this.app.comp[pv[0]],
@@ -11077,7 +11119,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == pv[0]) {
 																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -11120,7 +11162,7 @@
 									}
 								}
 								if (e.deactivateOtherChoice)
-									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+									for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 										var pf = p[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[pf[0]]) {
 											var co = this.app.comp[pf[0]],
@@ -11199,7 +11241,7 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 												nH = this.activated.indexOf(eid);
 												var bC = this.checkRequireds(coS);
 												this.activated.splice(nH, 1);
@@ -11298,7 +11340,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							var eid, eidNum
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -11421,12 +11469,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var nE = this.activated.indexOf(eid);
-												var bC = this.checkRequireds(coS);
-												this.activated.splice(nE, 1);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(nE, 0, eid);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												if (bC !== bE) {
 													19 == C.length ? C += coO.title : C+= ", " + coO.title;
 													if (bE) {
@@ -11486,7 +11535,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1) : e.id;
+							var eid, eidNum;
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -11629,11 +11684,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var bC = this.checkRequireds(coS);
-												this.activated.push(eid);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(this.activated.indexOf(eid), 1);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												if (bC !== bE) {
 													19 == h.length ? h += coO.title : h+= ", " + coO.title;
 													if (bE) {
@@ -11734,34 +11791,34 @@
 												if ("id" == fo.requireds[i].type) {
 													y = fo.requireds[i].reqId.split("/ON#");
 													if (y.length > 1)
-														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+														zx = y[0].split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 													else
-														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+														zx = y[0].split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 												}													
 												else if ("or" == fo.requireds[i].type)
 													for (c = 0; c < fo.requireds[i].orRequired.length; c++) {
 														y = fo.requireds[i].orRequired[c].req.split("/ON#");
 														if (y.length > 1)
-															zx = fo.requireds[i].orRequired[c].req.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+															zx = y[0].split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 														else
-															zx = fo.requireds[i].orRequired[c].req.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+															zx = y[0].split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 													}
 												if ("undefined" !== typeof fo.requireds[i].requireds)
 													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
 														if ("id" == fo.requireds[i].requireds[j].type) {
 															y = fo.requireds[i].requireds[j].reqId.split("/ON#");
 															if (y.length > 1)
-																zx = fo.requireds[i].requireds[j].reqId.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																zx = y[0].split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 															else
-																zx = fo.requireds[i].requireds[j].reqId.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																zx = y[0].split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 														}
 														else if ("or" == fo.requireds[i].requireds[j].type)
 															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++) {
 																y = fo.requireds[i].requireds[j].orRequired[c].req.split("/ON#");
 																if (y.length > 1)
-																	zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																	zx = y[0].split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 																else
-																	zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																	zx = y[0].split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 															}
 													}
 											}
@@ -11773,17 +11830,17 @@
 														if ("id" == fo.scores[i].requireds[j].type) {
 															y = fo.scores[i].requireds[j].reqId.split("/ON#");
 															if (y.length > 1)
-																zx = fo.scores[i].requireds[j].reqId.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																zx = y[0].split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 															else
-																zx = fo.scores[i].requireds[j].reqId.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																zx = y[0].split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 														}
 														else if ("or" == fo.scores[i].requireds[j].type)
 															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++) {
 																y = fo.scores[i].requireds[j].orRequired[c].req.split("/ON#");
 																if (y.length > 1)
-																	zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																	zx = y[0].split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 																else
-																	zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																	zx = y[0].split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 															}
 																
 													}
@@ -11794,17 +11851,17 @@
 														if ("id" == fo.addons[i].requireds[j].type) {
 															y = fo.addons[i].requireds[j].reqId.split("/ON#");
 															if (y.length > 1)
-																zx = fo.addons[i].requireds[j].reqId.split("/D#"), fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																zx = y[0].split("/D#"), fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 															else
-																zx = fo.addons[i].requireds[j].reqId.split("/D#"), fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																zx = y[0].split("/D#"), fo.addons[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 														}
 														else if ("or" == fo.addons[i].requireds[j].type)
 															for (c = 0; c < fo.addons[i].requireds[j].orRequired.length; c++) {
 																y = fo.addons[i].requireds[j].orRequired[c].req.split("/ON#");
 																if (y.length > 1)
-																	zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																	zx = y[0].split("/D#"), fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 																else
-																	zx = fo.addons[i].requireds[j].orRequired[c].req.split("/D#"), fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																	zx = y[0].split("/D#"), fo.addons[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 															}
 													}
 									}
@@ -11842,7 +11899,8 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
-								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
+								var d = this.app.rows[m].objects[n].id;
+								this.app.comp[d] = {rows: m, objects: n};
 							}
 						}
 					}
@@ -12871,7 +12929,7 @@
                             fn: function() {
                                 return [o("v-list-item-title", {
                                     domProps: {
-                                        innerHTML: e._s("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id)
+                                        innerHTML: e._s(e.$sanitize("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id))
                                     }
                                 })]
                             },
@@ -13276,7 +13334,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0, EE = 0;
+									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -13288,7 +13346,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == rndV[0]) {
 																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -13328,7 +13386,7 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 												var pv = p[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[pv[0]]) {
 													var co = this.app.comp[pv[0]],
@@ -13337,7 +13395,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == pv[0]) {
 																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -13380,7 +13438,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+										for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 											var pf = p[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pf[0]]) {
 												var co = this.app.comp[pf[0]],
@@ -13459,7 +13517,7 @@
 											for (var b = 0; b < coO.scores.length; b++) {
 												var coS = coO.scores[b],
 													coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-												if (JSON.stringify(coS).includes('"' + eid + '"')) {
+												if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 													nH = this.activated.indexOf(eid);
 													var bC = this.checkRequireds(coS);
 													this.activated.splice(nH, 1);
@@ -13556,25 +13614,27 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-															else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-															else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-															else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-															if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
-															this.$set(coS, "discountIsOn", true);
+															if (!coS.isNotDiscountable) {
+																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
+																this.$set(coS, "discountIsOn", true);
+															}
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
-									var a, f, b, m, v, y, ee = 0;
+									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e);
 									}
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","); 
+											var y = e.activateThisChoice.split(","); 
 											var RD = y.slice(),
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
@@ -13621,7 +13681,7 @@
 												}
 											}
 										} else {
-											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
 												var yv = y[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[yv[0]]) {
 													var co = this.app.comp[yv[0]],
@@ -13655,7 +13715,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
 											var yf = y[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[yf[0]]) {
 												var co = this.app.comp[yf[0]],
@@ -13738,7 +13798,7 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + eid + '"')) {
+													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
 														var bE = this.checkRequireds(coS);
@@ -13822,7 +13882,7 @@
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var p, ee = 0, EE = 0;
+								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -13834,7 +13894,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == rndV[0]) {
 																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -13874,7 +13934,7 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 											var pv = p[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pv[0]]) {
 												var co = this.app.comp[pv[0]],
@@ -13883,7 +13943,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == pv[0]) {
 																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -13926,7 +13986,7 @@
 									}
 								}
 								if (e.deactivateOtherChoice)
-									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+									for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 										var pf = p[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[pf[0]]) {
 											var co = this.app.comp[pf[0]],
@@ -14005,7 +14065,7 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 												nH = this.activated.indexOf(eid);
 												var bC = this.checkRequireds(coS);
 												this.activated.splice(nH, 1);
@@ -14104,7 +14164,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							var eid, eidNum
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -14227,12 +14293,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var nE = this.activated.indexOf(eid);
-												var bC = this.checkRequireds(coS);
-												this.activated.splice(nE, 1);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(nE, 0, eid);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												if (bC !== bE) {
 													19 == C.length ? C += coO.title : C+= ", " + coO.title;
 													if (bE) {
@@ -14292,7 +14359,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1) : e.id;
+							var eid, eidNum;
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -14435,11 +14508,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var bC = this.checkRequireds(coS);
-												this.activated.push(eid);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(this.activated.indexOf(eid), 1);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												if (bC !== bE) {
 													19 == h.length ? h += coO.title : h+= ", " + coO.title;
 													if (bE) {
@@ -14491,7 +14566,7 @@
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 							}
 						}
-                    },					
+                    },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
                     },
@@ -14679,7 +14754,7 @@
                     staticClass: "headline"
                 }, [e._v("Load/Save Project")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
                     attrs: {
-                        cols: "12"
+                        cols: "8"
                     }
                 }, [o("v-file-input", {
                     attrs: {
@@ -14716,6 +14791,20 @@
                         expression: "files"
                     }
                 })], 1), o("v-col", {
+                    attrs: {
+                        cols: "4"
+                    }
+                }, [o("v-btn", {
+					staticClass: "v-size--x-large",
+                    staticStyle: {
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.loadFromLocalStorage()
+                        }
+                    }
+                }, [e._v("Local Storage")])], 1), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -14781,7 +14870,23 @@
                     on: {
                         click: e.cleanCurrentComponent
                     }
-                }, [e._v("Close")])], 1)], 1)], 1)], 1)
+                }, [e._v("Close")])], 1)], 1)], 1), e.snackbar ? o("span", [o("v-snackbar", {
+                    attrs: {
+                        top: "",
+                        timeout: 2e3
+                    },
+                    model: {
+                        value: e.snackbar,
+                        callback: function(t) {
+                            e.snackbar = t
+                        },
+                        expression: "snackbar"
+                    }
+                }, [o("div", {
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [e._v(e._s(e.text))])])], 1) : e._e()], 1)
             },
             to = [],
             oo = (o("a15b"), function() {
@@ -14907,7 +15012,9 @@
                     return {
                         files: [],
                         dialog: !0,
-                        currentComponent: ""
+                        currentComponent: "",
+						snackbar: !1,
+						text: ""
                     }
                 },
                 components: {
@@ -14927,9 +15034,19 @@
                             e.$store.commit("loadApp", JSON.parse(t.result));
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
 							if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
-							if (e.app.autoSaveIsOn) this.commit("saveAutomatically", e);
+							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
 							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
+							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
 							var cnt = 0;
@@ -14943,6 +15060,45 @@
 								}
 							}
                         }, t.readAsText(this.files[0]);
+                    },
+					loadFromLocalStorage: function() {
+                        var e = this;
+                        var t = localStorage.getItem("Auto-save");
+						console.log(this.files[0]);
+						var i = new FileReader;
+						if (t) {
+							console.log(t);
+							e.$store.commit("loadApp", JSON.parse(t));
+							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
+							if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
+							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
+							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
+							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
+							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000");
+							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000");
+							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
+							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
+							var cnt = 0;
+							for (var b = 0; b < e.app.rows.length; b++) {
+								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
+									var d = e.app.rows[b].objects[c].id;
+									e.app.comp[d] = {rows: b, objects: c};
+									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
+										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
+									}
+								}
+							}
+						} else {
+							e.text = "There is no data in local storage", e.snackbar = !0;
+						}
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
@@ -15076,7 +15232,8 @@
             VDialog: B["a"],
             VFileInput: vo["a"],
             VRow: S["a"],
-            VSpacer: O["a"]
+            VSpacer: O["a"],
+			VSnackbar: Ct["a"]
         });
         var wo = function() {
                 var e = this,
@@ -16925,6 +17082,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#5E645AFF",
                             objectBgColor: "#9A997BFF",
                             rowBgColor: "#9A997BFF",
@@ -16975,6 +17146,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -16995,6 +17176,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -17077,6 +17268,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#1A130EFF",
                             objectBgColor: "#B4A78EFF",
                             rowBgColor: "#B4A78EFF",
@@ -17127,6 +17332,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#6B594698",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "3",
                             reqFilterBrightIsOn: !1,
@@ -17147,6 +17362,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "11",
                             rowBorderRadiusTopRight: "11",
@@ -17231,6 +17456,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#1A0000FF",
                             objectBgColor: "#A2A2A2FF",
                             rowBgColor: "#A2A2A2FF",
@@ -17281,6 +17520,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFFFFFFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17301,6 +17550,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#F99090FF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "3",
                             rowBorderRadiusTopRight: "0",
@@ -17385,6 +17644,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#090909FF",
                             objectBgColor: "#E5E5E5FF",
                             rowBgColor: "#E5E5E5FF",
@@ -17435,6 +17708,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -17455,6 +17738,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -17537,6 +17830,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#18C10FFF",
                             objectBgColor: "#F78F49FF",
                             rowBgColor: "#F78F49FF",
@@ -17587,6 +17894,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FBED37FF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17607,6 +17924,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#FFD7C0FF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "2",
                             rowBorderRadiusTopRight: "2",
@@ -17696,6 +18023,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#B8860BFF",
                             objectBgColor: "#D9B01CFF",
                             rowBgColor: "#D9B01CFF",
@@ -17746,6 +18087,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFB500FF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17766,6 +18117,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#333333FF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "4",
                             rowBorderRadiusTopRight: "4",
@@ -17857,6 +18218,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#008018FF",
                             objectBgColor: "#FFFF41FF",
                             rowBgColor: "#FFFF41FF",
@@ -17907,6 +18282,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFA52CFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17927,6 +18312,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#86007DFF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "12",
                             rowBorderRadiusTopRight: "12",
@@ -18018,6 +18413,20 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
+							rowBorderImage: "",
+                            rowBorderImageRepeat: "stretch",
+                            rowBorderImageWidth: 5,
+							rowBorderImageSliceTop: 5,
+							rowBorderImageSliceBottom: 5,
+							rowBorderImageSliceLeft: 5,
+							rowBorderImageSliceRight: 5,
+                            objectBorderImage: "",
+                            objectBorderImageRepeat: "stretch",
+                            objectBorderImageWidth: 5,
+							objectBorderImageSliceTop: 5,
+							objectBorderImageSliceBottom: 5,
+							objectBorderImageSliceLeft: 5,
+							objectBorderImageSliceRight: 5,
                             backgroundColor: "#E4F3D8FF",
                             objectBgColor: "#C8E6B2FF",
                             rowBgColor: "#C8E6B2FF",
@@ -18068,6 +18477,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#C8E6B2FF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -18088,6 +18507,16 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#C8E6B2FF",
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -18506,16 +18935,30 @@
                                 barTextSize: 15,
                                 barPadding: 0,
                                 barMargin: 0,
-                                rowTitleColor: "000000",
-                                rowTextColor: "000000",
-                                objectTitleColor: "000000",
-                                objectTextColor: "000000",
-                                addonTitleColor: "000000",
-                                addonTextColor: "000000",
+                                rowTitleColor: "#000000",
+                                rowTextColor: "#000000",
+                                objectTitleColor: "#000000",
+                                objectTextColor: "#000000",
+                                addonTitleColor: "#000000",
+                                addonTextColor: "#000000",
                                 objectHeight: !0,
                                 backgroundImage: "",
                                 rowBackgroundImage: "",
                                 objectBackgroundImage: "",
+								rowBorderImage: "",
+								rowBorderImageRepeat: "stretch",
+								rowBorderImageWidth: 5,
+								rowBorderImageSliceTop: 5,
+								rowBorderImageSliceBottom: 5,
+								rowBorderImageSliceLeft: 5,
+								rowBorderImageSliceRight: 5,
+								objectBorderImage: "",
+								objectBorderImageRepeat: "stretch",
+								objectBorderImageWidth: 5,
+								objectBorderImageSliceTop: 5,
+								objectBorderImageSliceBottom: 5,
+								objectBorderImageSliceLeft: 5,
+								objectBorderImageSliceRight: 5,
 								rowBorderImage: "",
 								rowBorderImageRepeat: "stretch",
 								rowBorderImageWidth: 5,
@@ -18579,6 +19022,16 @@
                                 selFilterSepia: 0,
                                 selBgColorIsOn: !0,
                                 selFilterBgColor: "#70FF7EFF",
+								selBorderColorIsOn: !1,
+								selFilterBorderColor: "#000000",
+								selCTitleColorIsOn: !1,
+								selFilterCTitleColor: "#000000",
+								selCTextColorIsOn: !1,
+								selFilterCTextColor: "#000000",
+								selATitleColorIsOn: !1,
+								selFilterATitleColor: "#000000",
+								selATextColorIsOn: !1,
+								selFilterATextColor: "#000000",
                                 reqFilterBlurIsOn: !1,
                                 reqFilterBlur: 0,
                                 reqFilterBrightIsOn: !1,
@@ -18599,6 +19052,16 @@
                                 reqFilterSepia: 0,
                                 reqBgColorIsOn: !1,
                                 reqFilterBgColor: "#FFFFFFFF",
+								reqBorderColorIsOn: !1,
+								reqFilterBorderColor: "#000000",
+								reqCTitleColorIsOn: !1,
+								reqFilterCTitleColor: "#000000",
+								reqCTextColorIsOn: !1,
+								reqFilterCTextColor: "#000000",
+								reqATitleColorIsOn: !1,
+								reqFilterATitleColor: "#000000",
+								reqATextColorIsOn: !1,
+								reqFilterATextColor: "#000000",
                                 reqFilterVisibleIsOn: !1
                             }
                         })
@@ -19080,7 +19543,19 @@
 						},
 						expression: "app.autoSaveIsOn"
 					}
-				}), o("v-switch", {
+				}), e.app.autoSaveIsOn ? o("v-switch", {
+					staticClass: "mt-n4 ms-8",
+					attrs: {
+						label: "Saved in local storage."
+					},
+					model: {
+						value: e.app.saveInLocalStorage,
+						callback: function(o) {
+							e.$set(e.app, "saveInLocalStorage", o)
+						},
+						expression: "app.autoSaveIsOn"
+					}
+				}) : e._e(), o("v-switch", {
 					staticClass: "mt-n2 ms-3",
 					attrs: {
 						label: "Check before deleting a row."
@@ -19270,7 +19745,7 @@
                             fn: function() {
                                 return [o("v-list-item-content", [o("v-list-item-title", {
                                     domProps: {
-                                        innerHTML: e._s("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id)
+                                        innerHTML: e._s(e.$sanitize("" != t.title ? i + 1 + ". " + t.title : i + 1 + ". " + t.id))
                                     }
                                 }), o("v-list-item-subtitle")], 1)]
                             },
@@ -19281,7 +19756,7 @@
                             key: s
                         }, [o("v-list-item-content", [o("v-list-item-title", {
                             domProps: {
-                                innerHTML: e._s(s + 1 + ". " + i.title)
+                                innerHTML: e._s(e.$sanitize(s + 1 + ". " + i.title))
                             }
                         }), o("v-list-item-subtitle")], 1), o("v-list-item-action", [o("v-btn", {
                             attrs: {
@@ -19565,12 +20040,14 @@
 															coTO = coTR.objects[coT.objects];
 														for (var f = 0; f < coTO.scores.length; f++) {
 															var coTS = coTO.scores[f];
-															if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
-															else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
-															else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
-															else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
-															if ("undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? coO.discountLowLimit : coTS.discountScore;
-															this.$set(coTS, "discountIsOn", true);
+															if (!coTS.isNotDiscountable) {
+																if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
+																else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
+																else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
+																else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
+																if ("undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? coO.discountLowLimit : coTS.discountScore;
+																this.$set(coTS, "discountIsOn", true);
+															}
 														}
 													}
 									}
@@ -19857,7 +20334,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19866,7 +20343,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()], 1) : e._e(), 2 == e.row.template && e.window.width > 1e3 ? o("div", {
                     staticClass: "row nopadding"
@@ -19876,7 +20353,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19885,7 +20362,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()]), o("div", {
                     staticClass: "col-6 nopadding"
@@ -19960,7 +20437,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19969,7 +20446,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e()])]) : e._e(), 4 == e.row.template ? o("div", {
                     staticClass: "col nopadding"
@@ -19977,7 +20454,7 @@
                     staticClass: "mb-0",
                     style: e.rowTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowTitle, e.sanitizeArg))
                     }
                 }) : e._e(), "" !== e.row.titleText ? o("p", {
                     staticClass: "mb-0",
@@ -19986,7 +20463,7 @@
                     },
                     style: e.rowText,
                     domProps: {
-                        innerHTML: e._s(e.replaceRowText)
+                        innerHTML: e._s(e.$sanitize(e.replaceRowText, e.sanitizeArg))
                     }
                 }) : e._e(), e.row.isButtonRow || "" === e.row.imageSourceTooltip || "undefined" === typeof e.row.imageSourceTooltip ? e.row.isButtonRow ? o("v-btn", {
                     ref: "rowBtn",
@@ -20114,7 +20591,7 @@
                     staticClass: "pa-0",
                     style: e.scoreText,
                     domProps: {
-                        innerHTML: e._s(e.findRowTitle)
+                        innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
                 })], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -20148,7 +20625,7 @@
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20215,7 +20692,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20231,7 +20708,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -20289,7 +20766,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20355,7 +20832,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20364,7 +20841,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -20395,7 +20872,7 @@
                 }, [o("h3", {
                     style: e.objectTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectTitleText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
 					staticStyle: {
@@ -20461,7 +20938,7 @@
                         staticClass: "pa-0",
                         style: e.scoreText,
                         domProps: {
-                            innerHTML: e._s(e.getChoiceTitle(t))
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
                 })), "" !== e.object.text ? o("p", {
@@ -20470,7 +20947,7 @@
                     },
                     style: e.objectText,
                     domProps: {
-                        innerHTML: e._s(e.replaceObjectText)
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
                 }) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
@@ -20593,7 +21070,7 @@
                     }],
                     style: e.addonTitle,
                     domProps: {
-                        innerHTML: e._s(e.replaceAddonTitle)
+                        innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
                 }), o("p", {
                     staticStyle: {
@@ -20601,7 +21078,7 @@
                     },
                     style: e.addonText,
                     domProps: {
-                        innerHTML: e._s(e.replaceAddonText)
+                        innerHTML: e._s(e.$sanitize(e.replaceAddonText, e.sanitizeArg))
                     }
                 })])], 1)]) : e._e()])
             },
@@ -20633,11 +21110,16 @@
                     app: function() {
                         return this.$store.state.app
                     },
+                    object: function() {
+						return this.$parent.object
+					},
                     addonTitle: function() {
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + this.styling.addonTitleColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : this.styling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + this.styling.addonTextColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : this.styling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -20701,7 +21183,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -20713,7 +21195,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText)
+                        innerHTML: e._s(e.$sanitize((e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText, e.sanitizeArg))
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -20721,7 +21203,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -20733,7 +21215,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.afterText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -20748,7 +21230,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ")
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue) + " " + e.score.afterText + " ", e.sanitizeArg))
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -20975,7 +21457,8 @@
                         return this.$store.state.objectWidths
                     },
                     objectTitle: function() {
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + this.styling.objectTitleColor + ";"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : this.styling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -20984,7 +21467,8 @@
                         return "color: " + this.styling.scoreTextColor + ";"
                     },
                     objectText: function() {
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + this.styling.objectTextColor + ";padding: " + this.styling.objectTextPadding + "px;"
+						var e = this.checkRequireds(this.object);
+                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
                         var e = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
@@ -20997,21 +21481,22 @@
                     },
                     objectBackground: function() {
                         var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
-                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%";
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectBorderIsOn && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + this.styling.objectBorderColor + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
-                        var o = this.checkRequireds(this.object);
-                        if ((this.object.isActive || this.object.isSelectableMultiple && this.object.multipleUseVariable > 0) && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
+                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
+							o = this.checkRequireds(this.object);
+                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
+                        if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
                         else if (!o) {
                             if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
                             else if (this.object.isSelectableMultiple)
                                 for (var i = 0; i < this.object.numMultipleTimesPluss - this.object.numMultipleTimesMinus; i++) this.selectedOneLess(this.object, this.row);
-                            if ((this.object.multiplyPointtypeIsOnCheck || this.object.dividePointtypeIsOnCheck) && this.multiplyOrDivide(this.object), this.object.activateOtherChoice)
-                                if ("undefined" !== typeof this.app.comp[this.object.activateThisChoice]) {
+                            if ((this.object.multiplyPointtypeIsOnCheck || this.object.dividePointtypeIsOnCheck) && this.multiplyOrDivide(this.object), this.object.activateOtherChoice) {
+								if ("undefined" !== typeof this.app.comp[this.object.activateThisChoice]) {
 									var co = this.app.comp[this.object.activateThisChoice],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
-									coO.isActive && this.setFalse(coO);this.setFalse(coO);
+									coO.isActive && this.setFalse(coO);
 								}
+							}
                         }
                         return e += ";", e
                     },
@@ -21076,25 +21561,32 @@
                         var t, o;
                         if (e.showRequired)
                             if ("id" == e.type) {
-								var rId = e.reqId.split("/ON#");
-								return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + this.getObjectName(rId[0]) + " " + e.afterText
+								var rId = e.reqId.split("/ON#"),
+									co = this.app.comp[rId[0]],
+									coR = this.app.rows[co.rows],
+									coO = coR.objects[co.objects];
+								return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
                             } else if ("points" == e.type) {
-								var rId = e.reqId.split("/ON#");
 								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (rId[0] == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + (rId.length > 1 ? rId[1] + " " : "") + this.app.pointTypes[t].name + " " + e.afterText
+									if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
 							} else if ("or" == e.type) {
 								var i = [];
 								for (var s = 0; s < e.orRequired.length; s++) {
-									var rId = e.orRequired[s].req.split("/ON#");
+									var rId = e.orRequired[s].req.split("/ON#"),
+										co = this.app.comp[rId[0]],
+										coR = this.app.rows[co.rows],
+										coO = coR.objects[co.objects];
 									o = rId.length > 1 ? rId[1] + " " : "";
-									i.push((o + this.getObjectName(rId[0])));
+									i.push((o + coO.title));
 								}
 								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
 								var i = [];
-								for (var s = 0; s < e.selRows.length; s++) {
-									i.push(this.getRowName(e.selRows[s]));
-								}
+								for (var s = 0; s < this.app.rows.length; s++) {
+									for (var o = 0; o < e.selRows.length; o++) {
+										if (e.selRows[o] == this.app.rows[s].title) i.push(this.app.rows[s].title);
+									}
+                                }
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
@@ -21144,12 +21636,6 @@
                     deleteObject: function() {
                         this.objects.splice(this.objects.indexOf(this.object), 1)
                     },
-					getObjectName: function(e) {
-                        return this.$store.getters.getObjectName(e)
-                    },
-					getRowName: function(e) {
-                        return this.$store.getters.getRowName(e)
-                    },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
                     },
@@ -21184,7 +21670,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0, EE = 0;
+									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -21196,7 +21682,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == rndV[0]) {
 																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -21236,7 +21722,7 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 												var pv = p[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[pv[0]]) {
 													var co = this.app.comp[pv[0]],
@@ -21245,7 +21731,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == pv[0]) {
 																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -21288,7 +21774,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+										for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 											var pf = p[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pf[0]]) {
 												var co = this.app.comp[pf[0]],
@@ -21367,7 +21853,7 @@
 											for (var b = 0; b < coO.scores.length; b++) {
 												var coS = coO.scores[b],
 													coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-												if (JSON.stringify(coS).includes('"' + eid + '"')) {
+												if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 													nH = this.activated.indexOf(eid);
 													var bC = this.checkRequireds(coS);
 													this.activated.splice(nH, 1);
@@ -21464,25 +21950,27 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-															else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-															else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-															else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-															if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
-															this.$set(coS, "discountIsOn", true);
+															if (!coS.isNotDiscountable) {
+																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
+																this.$set(coS, "discountIsOn", true);
+															}
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
-									var a, f, b, m, v, y, ee = 0;
+									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e);
 									}
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","); 
+											var y = e.activateThisChoice.split(","); 
 											var RD = y.slice(),
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
@@ -21529,7 +22017,7 @@
 												}
 											}
 										} else {
-											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
 												var yv = y[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[yv[0]]) {
 													var co = this.app.comp[yv[0]],
@@ -21563,7 +22051,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
 											var yf = y[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[yf[0]]) {
 												var co = this.app.comp[yf[0]],
@@ -21646,7 +22134,7 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + eid + '"')) {
+													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
 														var bE = this.checkRequireds(coS);
@@ -21730,7 +22218,7 @@
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var p, ee = 0, EE = 0;
+								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -21742,7 +22230,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == rndV[0]) {
 																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -21782,7 +22270,7 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 											var pv = p[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pv[0]]) {
 												var co = this.app.comp[pv[0]],
@@ -21791,7 +22279,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == pv[0]) {
 																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -21834,7 +22322,7 @@
 									}
 								}
 								if (e.deactivateOtherChoice)
-									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+									for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 										var pf = p[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[pf[0]]) {
 											var co = this.app.comp[pf[0]],
@@ -21913,7 +22401,7 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 												nH = this.activated.indexOf(eid);
 												var bC = this.checkRequireds(coS);
 												this.activated.splice(nH, 1);
@@ -22012,7 +22500,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							var eid, eidNum
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -22135,12 +22629,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var nE = this.activated.indexOf(eid);
-												var bC = this.checkRequireds(coS);
-												this.activated.splice(nE, 1);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(nE, 0, eid);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												if (bC !== bE) {
 													19 == C.length ? C += coO.title : C+= ", " + coO.title;
 													if (bE) {
@@ -22200,7 +22695,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1) : e.id;
+							var eid, eidNum;
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -22343,11 +22844,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var bC = this.checkRequireds(coS);
-												this.activated.push(eid);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(this.activated.indexOf(eid), 1);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												if (bC !== bE) {
 													19 == h.length ? h += coO.title : h+= ", " + coO.title;
 													if (bE) {
@@ -22901,7 +23404,7 @@
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-									var p, ee = 0, EE = 0;
+									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -22913,7 +23416,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == rndV[0]) {
 																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -22953,7 +23456,7 @@
 												}
 											}
 										} else {
-											for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 												var pv = p[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[pv[0]]) {
 													var co = this.app.comp[pv[0]],
@@ -22962,7 +23465,7 @@
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 																if (cFA[0] == pv[0]) {
 																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																	break
@@ -23005,7 +23508,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+										for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 											var pf = p[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pf[0]]) {
 												var co = this.app.comp[pf[0]],
@@ -23084,7 +23587,7 @@
 											for (var b = 0; b < coO.scores.length; b++) {
 												var coS = coO.scores[b],
 													coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-												if (JSON.stringify(coS).includes('"' + eid + '"')) {
+												if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 													nH = this.activated.indexOf(eid);
 													var bC = this.checkRequireds(coS);
 													this.activated.splice(nH, 1);
@@ -23181,25 +23684,27 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-															else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-															else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-															else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-															if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
-															this.$set(coS, "discountIsOn", true);
+															if (!coS.isNotDiscountable) {
+																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																if ("undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? e.discountLowLimit : coS.discountScore;
+																this.$set(coS, "discountIsOn", true);
+															}
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
-									var a, f, b, m, v, y, ee = 0;
+									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e);
 									}
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											y = e.activateThisChoice.split(","); 
+											var y = e.activateThisChoice.split(","); 
 											var RD = y.slice(),
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
@@ -23246,7 +23751,7 @@
 												}
 											}
 										} else {
-											for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
 												var yv = y[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[yv[0]]) {
 													var co = this.app.comp[yv[0]],
@@ -23280,7 +23785,7 @@
 										}
 									}
 									if (e.deactivateOtherChoice)
-										for (y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
 											var yf = y[f].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[yf[0]]) {
 												var co = this.app.comp[yf[0]],
@@ -23363,7 +23868,7 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + eid + '"')) {
+													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
 														var bE = this.checkRequireds(coS);
@@ -23447,7 +23952,7 @@
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var p, ee = 0, EE = 0;
+								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -23459,7 +23964,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == rndV[0]) {
 																EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -23499,7 +24004,7 @@
 											}
 										}
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 											var pv = p[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[pv[0]]) {
 												var co = this.app.comp[pv[0]],
@@ -23508,7 +24013,7 @@
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-															cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
 															if (cFA[0] == pv[0]) {
 																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
 																break
@@ -23551,7 +24056,7 @@
 									}
 								}
 								if (e.deactivateOtherChoice)
-									for (p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
+									for (var p = e.deactivateThisChoice.split(","), f = 0; f < p.length; f++) {
 										var pf = p[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[pf[0]]) {
 											var co = this.app.comp[pf[0]],
@@ -23630,7 +24135,7 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
 												nH = this.activated.indexOf(eid);
 												var bC = this.checkRequireds(coS);
 												this.activated.splice(nH, 1);
@@ -23729,7 +24234,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							var eid, eidNum
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -23852,12 +24363,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var nE = this.activated.indexOf(eid);
-												var bC = this.checkRequireds(coS);
-												this.activated.splice(nE, 1);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(nE, 0, eid);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												if (bC !== bE) {
 													19 == C.length ? C += coO.title : C+= ", " + coO.title;
 													if (bE) {
@@ -23917,7 +24429,13 @@
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
                         if (s)
 						{
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1) : e.id;
+							var eid, eidNum;
+							if (e.isMultipleUseVariable) {
+								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+								eidNum = parseInt(e.multipleUseVariable) + 1;
+							} else {
+								eid = e.id;
+							}
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -24060,11 +24578,13 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											if (JSON.stringify(coS).includes('"' + eid + '"')) {
-												var bC = this.checkRequireds(coS);
-												this.activated.push(eid);
+											if (JSON.stringify(coS).includes('"' + e.id + '"')) {
+												var bC = this.checkRequireds(coS),
+													fI = this.activate.findIndex(item => item.split("/ON#")[0] == e.id),
+													aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - eidNum) : this.activated.splice(fI, 1);
 												var bE = this.checkRequireds(coS);
-												this.activated.splice(this.activated.indexOf(eid), 1);
+												parseInt(aFI[1]) > eidNum ? this.activated[fI] = aFI[0] + "/ON#" - (parseInt(aFI[1]) + eidNum) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
 												if (bC !== bE) {
 													19 == h.length ? h += coO.title : h+= ", " + coO.title;
 													if (bE) {
@@ -24146,34 +24666,34 @@
 												if ("id" == fo.requireds[i].type) {
 													y = fo.requireds[i].reqId.split("/ON#");
 													if (y.length > 1)
-														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+														zx = y.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 													else
-														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
-												}													
+														zx = y.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+												}
 												else if ("or" == fo.requireds[i].type)
 													for (c = 0; c < fo.requireds[i].orRequired.length; c++) {
 														y = fo.requireds[i].orRequired[c].req.split("/ON#");
 														if (y.length > 1)
-															zx = fo.requireds[i].orRequired[c].req.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+															zx = y.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 														else
-															zx = fo.requireds[i].orRequired[c].req.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+															zx = y.split("/D#"), fo.requireds[i].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 													}
 												if ("undefined" !== typeof fo.requireds[i].requireds)
 													for (j = 0; j < fo.requireds[i].requireds.length; j++) {
 														if ("id" == fo.requireds[i].requireds[j].type) {
 															y = fo.requireds[i].requireds[j].reqId.split("/ON#");
 															if (y.length > 1)
-																zx = fo.requireds[i].requireds[j].reqId.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																zx = y.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 															else
-																zx = fo.requireds[i].requireds[j].reqId.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																zx = y.split("/D#"), fo.requireds[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 														}
 														else if ("or" == fo.requireds[i].requireds[j].type)
 															for (c = 0; c < fo.requireds[i].requireds[j].orRequired.length; c++) {
 																y = fo.requireds[i].requireds[j].orRequired[c].req.split("/ON#");
 																if (y.length > 1)
-																	zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																	zx = y.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 																else
-																	zx = fo.requireds[i].requireds[j].orRequired[c].req.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																	zx = y.split("/D#"), fo.requireds[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 															}
 													}
 											}
@@ -24185,17 +24705,17 @@
 														if ("id" == fo.scores[i].requireds[j].type) {
 															y = fo.scores[i].requireds[j].reqId.split("/ON#");
 															if (y.length > 1)
-																zx = fo.scores[i].requireds[j].reqId.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																zx = y.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 															else
-																zx = fo.scores[i].requireds[j].reqId.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																zx = y.split("/D#"), fo.scores[i].requireds[j].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 														}
 														else if ("or" == fo.scores[i].requireds[j].type)
 															for (c = 0; c < fo.scores[i].requireds[j].orRequired.length; c++) {
 																y = fo.scores[i].requireds[j].orRequired[c].req.split("/ON#");
 																if (y.length > 1)
-																	zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
+																	zx = y.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 																else
-																	zx = fo.scores[i].requireds[j].orRequired[c].req.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
+																	zx = y.split("/D#"), fo.scores[i].requireds[j].orRequired[c].req = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
 															}
 																
 													}
@@ -24254,6 +24774,7 @@
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
+								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
 						}
@@ -24688,7 +25209,9 @@
                         },
                         expression: "styling.selFilterGray"
                     }
-                })], 1), o("v-col", [o("v-checkbox", {
+                })], 1)], 1), o("v-row", [o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         dense: "",
@@ -24716,7 +25239,157 @@
                         },
                         expression: "styling.selFilterBgColor"
                     }
-                })], 1)], 1)], 1), o("v-col", [o("v-row", {
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Border Color"
+                    },
+                    model: {
+                        value: e.styling.selBorderColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selBorderColorIsOn", t)
+                        },
+                        expression: "styling.selBorderColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selBorderColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterBorderColor", t)
+                        },
+                        expression: "styling.selFilterBorderColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Title Color"
+                    },
+                    model: {
+                        value: e.styling.selCTitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selCTitleColorIsOn", t)
+                        },
+                        expression: "styling.selCTitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selCTitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterCTitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterCTitleColor", t)
+                        },
+                        expression: "styling.selFilterCTitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Text Color"
+                    },
+                    model: {
+                        value: e.styling.selCTextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selCTextColorIsOn", t)
+                        },
+                        expression: "styling.selCTextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selCTextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterCTextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterCTextColor", t)
+                        },
+                        expression: "styling.selFilterCTextColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Title Color"
+                    },
+                    model: {
+                        value: e.styling.selATitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selATitleColorIsOn", t)
+                        },
+                        expression: "styling.selATitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selATitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterATitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterATitleColor", t)
+                        },
+                        expression: "styling.selFilterATitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Text Color"
+                    },
+                    model: {
+                        value: e.styling.selATextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selATextColorIsOn", t)
+                        },
+                        expression: "styling.selATextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selATextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterATextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterATextColor", t)
+                        },
+                        expression: "styling.selFilterATextColor"
+                    }
+                })], 1)])], 1), o("v-col", [o("v-row", {
                     staticClass: "modal-header"
                 }, [o("h5", {
                     staticClass: "modal-title"
@@ -24980,11 +25653,12 @@
                         },
                         expression: "styling.reqFilterGray"
                     }
-                })], 1), o("v-col", [o("v-checkbox", {
+                })], 1)], 1), o("v-row", [o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         dense: "",
-                        disabled: e.styling.reqFilterVisibleIsOn,
                         "hide-details": "",
                         label: "Background Color"
                     },
@@ -25000,7 +25674,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqBgColorIsOn || e.styling.reqFilterVisibleIsOn
+                        disabled: !e.styling.reqBgColorIsOn
                     },
                     model: {
                         value: e.styling.reqFilterBgColor,
@@ -25009,7 +25683,157 @@
                         },
                         expression: "styling.reqFilterBgColor"
                     }
-                })], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Border Color"
+                    },
+                    model: {
+                        value: e.styling.reqBorderColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqBorderColorIsOn", t)
+                        },
+                        expression: "styling.reqBorderColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqBorderColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterBorderColor", t)
+                        },
+                        expression: "styling.reqFilterBorderColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Title Color"
+                    },
+                    model: {
+                        value: e.styling.reqCTitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqCTitleColorIsOn", t)
+                        },
+                        expression: "styling.reqCTitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqCTitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterCTitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterCTitleColor", t)
+                        },
+                        expression: "styling.reqFilterCTitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Text Color"
+                    },
+                    model: {
+                        value: e.styling.reqCTextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqCTextColorIsOn", t)
+                        },
+                        expression: "styling.reqCTextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqCTextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterCTextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterCTextColor", t)
+                        },
+                        expression: "styling.reqFilterCTextColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Title Color"
+                    },
+                    model: {
+                        value: e.styling.reqATitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqATitleColorIsOn", t)
+                        },
+                        expression: "styling.reqATitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqATitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterATitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterATitleColor", t)
+                        },
+                        expression: "styling.reqFilterATitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Text Color"
+                    },
+                    model: {
+                        value: e.styling.reqATextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqATextColorIsOn", t)
+                        },
+                        expression: "styling.reqATextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqATextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterATextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterATextColor", t)
+                        },
+                        expression: "styling.reqFilterATextColor"
+                    }
+                })], 1)])], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -29139,7 +29963,34 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("09.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 11.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where multi-selects did not refund points when canceled. "), o("br"), o("br"), e._v(" Fixed an issue where the position of the point-icon was not displayed correctly. "), o("br"), o("br"), e._v(" Fixed an issue where the points icon was not being displayed on the points bar. "), o("br"), o("br"), e._v(" Fixed an issue where tags couldn't be used in Show Score. "), o("br"), o("br"), e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. ")])], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("09.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -29858,10 +30709,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
+                        href: "https://mega.nz/file/vrBRWYDL#EYqwJl9SDLdnoqbIz9_VKAovm0yUaAVBMKz9cVgdSOg",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.2.3")]), o("br"), e._v(" https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.3.0")]), o("br"), e._v(" https://mega.nz/file/vrBRWYDL#EYqwJl9SDLdnoqbIz9_VKAovm0yUaAVBMKz9cVgdSOg "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -29891,7 +30742,12 @@
 						href: "https://mega.nz/file/ev4QCZbS#WeSBf7yi565j5aAy4QmoBKWCZnduN_XKL_kIbiP1mKU",
 						target: "_blank"
 					}
-				}, [e._v(" 1.2.2 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.2.2, ")]), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
+						target: "_blank"
+					}
+				}, [e._v(" 1.2.3 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -30163,13 +31019,13 @@
                             barTextSize: 15,
                             barPadding: 0,
                             barMargin: 0,
-                            rowTitleColor: "000000",
-                            rowTextColor: "000000",
-                            objectTitleColor: "000000",
-                            objectTextColor: "000000",
-                            addonTitleColor: "000000",
-                            addonTextColor: "000000",
-                            scoreTextColor: "000000",
+                            rowTitleColor: "#000000",
+                            rowTextColor: "#000000",
+                            objectTitleColor: "#000000",
+                            objectTextColor: "#000000",
+                            addonTitleColor: "#000000",
+                            addonTextColor: "#000000",
+                            scoreTextColor: "#000000",
                             objectHeight: !0,
                             rowTitleAlign: "center",
                             rowTextAlign: "center",
@@ -30247,6 +31103,16 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -30267,7 +31133,17 @@
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
-                            reqFilterVisibleIsOn: !1,
+							reqBorderColorIsOn: !1,
+							reqFilterBorderColor: "#000000",
+							reqCTitleColorIsOn: !1,
+							reqFilterCTitleColor: "#000000",
+							reqCTextColorIsOn: !1,
+							reqFilterCTextColor: "#000000",
+							reqATitleColorIsOn: !1,
+							reqFilterATitleColor: "#000000",
+							reqATextColorIsOn: !1,
+							reqFilterATextColor: "#000000",
+							reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: 0,
                             rowBorderRadiusTopRight: 0,
                             rowBorderRadiusBottomRight: 0,
@@ -30481,42 +31357,20 @@
                                             } else if ("or" == o.requireds[i].type) {
                                                 for (var m = !1, f = 0; f < o.requireds[i].orRequired.length; f++) e.app.activated.includes(o.requireds[i].orRequired[f].req) || "" == o.requireds[i].orRequired[f].req || (m = !0);
                                                 if (!m) return !1
-                                            }
+                                            }  else if ("selFromRows" == o.requireds[i].type) {
+												if ("undefined" !== typeof o.requireds[i].selRows) {
+													for (var x = 0, f = 0; f < o.requireds[i].selRows.length; f++)
+														for (var m = 0; m < e.app.rows.length; m++) o.requireds[i].selRows[f] == e.app.rows[m].id && (x += e.app.rows[m].currentChoices);
+													if (x < o.requireds[i].selNum) return !1
+												}
+											} else if ("selFromWhole" == o.requireds[i].type) {
+												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
+												if (x < o.requireds[i].selNum) return !1
+											}
                                         }
                                     }
                                 }
                             return !0
-                        }
-                    },
-					getObjectName: function(e) {
-                        return function(t) {
-                            if (!(t in e.objectNamesCache)) {
-								if ("undefined" !== e.app.comp[t]) {
-									var co = e.app.comp[t],
-										coR = e.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									e.objectNamesCache[t] = coO.title;
-									return e.objectNamesCache[t]
-								}
-                                return "???"
-                            } else {
-                                return e.objectNamesCache[t]
-                            }
-                        }
-                    },
-					getRowName: function(e) {
-                        return function(t) {
-                            if (!(t in e.rowNamesCache)) {
-                                for (s = 0; s < e.app.rows.length; s++) {
-									if (t == e.app.rows[s].id) {
-										e.objectNamesCache[t] = e.app.rows[s].title;
-										return e.objectNamesCache[t]
-									}
-                                }
-                                return "???"
-                            } else {
-                                return state.rowNamesCache[t]
-                            }
                         }
                     }
                 },
@@ -30602,21 +31456,25 @@
 						if (e.app.autoSaveIsOn) {
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval);
 							e.app.autoSaveInterval = setInterval(() => {
-								const now = new Date();
-								const year = now.getFullYear();
-								const month = String(now.getMonth() + 1).padStart(2, '0');
-								const day = String(now.getDate()).padStart(2, '0');
-								const hours = String(now.getHours()).padStart(2, '0');
-								const minutes = String(now.getMinutes()).padStart(2, '0');
-								const seconds = String(now.getSeconds()).padStart(2, '0');
-								const timestamp = `${year}${month}${day}_${hours}${minutes}${seconds}`;
-								var t = JSON.stringify(e.app),
-									o = new Blob([t], {
-										type: "text/plain"
-									}),
-									i = document.createEvent("MouseEvents"),
-									s = document.createElement("a");
-								s.download = "project_" + timestamp + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
+								if (e.app.saveInLocalStorage) {
+									localStorage.setItem("Auto-save", JSON.stringify(e.app));
+								} else {
+									const now = new Date();
+									const year = now.getFullYear();
+									const month = String(now.getMonth() + 1).padStart(2, '0');
+									const day = String(now.getDate()).padStart(2, '0');
+									const hours = String(now.getHours()).padStart(2, '0');
+									const minutes = String(now.getMinutes()).padStart(2, '0');
+									const seconds = String(now.getSeconds()).padStart(2, '0');
+									const timestamp = `${year}${month}${day}_${hours}${minutes}${seconds}`;
+									var t = JSON.stringify(e.app),
+										o = new Blob([t], {
+											type: "text/plain"
+										}),
+										i = document.createEvent("MouseEvents"),
+										s = document.createElement("a");
+									s.download = "project_" + timestamp + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i);
+								}
 							}, 600000)
 						} else {
 							clearInterval(e.app.autoSaveInterval);
