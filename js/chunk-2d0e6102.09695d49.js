@@ -42,7 +42,7 @@
                             value: !!t.message,
                             expression: "!!message"
                         }],
-                        staticClass: "pa-4 black--text",
+                        staticClass: t.$vuetify.theme.isDark ? "pa-4 white--text" : "pa-4 black--text",
                         domProps: {
                             innerHTML: t._s(t.message)
                         }
