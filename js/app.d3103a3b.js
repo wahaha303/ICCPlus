@@ -690,9 +690,6 @@
                         }
                     })], 1)
                 })), 1), o("ConfirmDlg", {
-					staticStyle: {
-                        color: e.$vuetify.theme.isDark ? "white" : "black"
-                    },
                     ref: "confirm"
                 })], 1)], 1)
             },
@@ -2546,9 +2543,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2570,9 +2564,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2705,9 +2696,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2729,9 +2717,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2811,9 +2796,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -2835,9 +2817,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -4378,11 +4357,11 @@
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : this.styling.addonTitleColor)) + ";"
+                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : this.styling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : this.styling.addonTextColor)) + ";"
+                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : this.styling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -6347,7 +6326,7 @@
                     attrs: {
                         align: "center"
                     }
-                }, [o("v-row", {
+                }, [o("v-col", [o("v-row", {
                     staticClass: "modal-header"
                 }, [o("h5", {
                     staticClass: "modal-title"
@@ -6594,9 +6573,12 @@
                         },
                         expression: "styling.selFilterGray"
                     }
-                })], 1), o("v-col", [o("v-checkbox", {
+                })], 1), o("v-row", [o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
+                        dense: "",
                         "hide-details": "",
                         label: "Background Color"
                     },
@@ -6610,6 +6592,8 @@
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
+                        dense: "",
+                        "canvas-height": "50",
                         disabled: !e.styling.selBgColorIsOn
                     },
                     model: {
@@ -6619,7 +6603,157 @@
                         },
                         expression: "styling.selFilterBgColor"
                     }
-                })], 1)], 1), o("v-row", {
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Border Color"
+                    },
+                    model: {
+                        value: e.styling.selBorderColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selBorderColorIsOn", t)
+                        },
+                        expression: "styling.selBorderColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selBorderColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterBorderColor", t)
+                        },
+                        expression: "styling.selFilterBorderColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Title Color"
+                    },
+                    model: {
+                        value: e.styling.selCTitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selCTitleColorIsOn", t)
+                        },
+                        expression: "styling.selCTitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selCTitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterCTitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterCTitleColor", t)
+                        },
+                        expression: "styling.selFilterCTitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Text Color"
+                    },
+                    model: {
+                        value: e.styling.selCTextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selCTextColorIsOn", t)
+                        },
+                        expression: "styling.selCTextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selCTextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterCTextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterCTextColor", t)
+                        },
+                        expression: "styling.selFilterCTextColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Title Color"
+                    },
+                    model: {
+                        value: e.styling.selATitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selATitleColorIsOn", t)
+                        },
+                        expression: "styling.selATitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selATitleColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterATitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterATitleColor", t)
+                        },
+                        expression: "styling.selFilterATitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Text Color"
+                    },
+                    model: {
+                        value: e.styling.selATextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "selATextColorIsOn", t)
+                        },
+                        expression: "styling.selATextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.selATextColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selFilterATextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "selFilterATextColor", t)
+                        },
+                        expression: "styling.selFilterATextColor"
+                    }
+                })], 1)])], 1), o("v-row", {
                     staticClass: "modal-header"
                 }, [o("h5", {
                     staticClass: "modal-title"
@@ -6895,10 +7029,12 @@
                         },
                         expression: "styling.reqFilterGray"
                     }
-                })], 1), o("v-col", [o("v-checkbox", {
+                })], 1), o("v-row", [o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
-                        disabled: e.styling.reqFilterVisibleIsOn,
+                        dense: "",
                         "hide-details": "",
                         label: "Background Color"
                     },
@@ -6912,6 +7048,8 @@
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
+                        dense: "",
+                        "canvas-height": "50",
                         disabled: !e.styling.reqBgColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
@@ -6921,7 +7059,157 @@
                         },
                         expression: "styling.reqFilterBgColor"
                     }
-                })], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Border Color"
+                    },
+                    model: {
+                        value: e.styling.reqBorderColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqBorderColorIsOn", t)
+                        },
+                        expression: "styling.reqBorderColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqBorderColorIsOn || e.styling.reqFilterVisibleIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterBorderColor", t)
+                        },
+                        expression: "styling.reqFilterBorderColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Title Color"
+                    },
+                    model: {
+                        value: e.styling.reqCTitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqCTitleColorIsOn", t)
+                        },
+                        expression: "styling.reqCTitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqCTitleColorIsOn || e.styling.reqFilterVisibleIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterCTitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterCTitleColor", t)
+                        },
+                        expression: "styling.reqFilterCTitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Choice Text Color"
+                    },
+                    model: {
+                        value: e.styling.reqCTextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqCTextColorIsOn", t)
+                        },
+                        expression: "styling.reqCTextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqCTextColorIsOn || e.styling.reqFilterVisibleIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterCTextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterCTextColor", t)
+                        },
+                        expression: "styling.reqFilterCTextColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Title Color"
+                    },
+                    model: {
+                        value: e.styling.reqATitleColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqATitleColorIsOn", t)
+                        },
+                        expression: "styling.reqATitleColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqATitleColorIsOn || e.styling.reqFilterVisibleIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterATitleColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterATitleColor", t)
+                        },
+                        expression: "styling.reqFilterATitleColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "col-4"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Addon Text Color"
+                    },
+                    model: {
+                        value: e.styling.reqATextColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqATextColorIsOn", t)
+                        },
+                        expression: "styling.reqATextColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        dense: "",
+                        "canvas-height": "50",
+                        disabled: !e.styling.reqATextColorIsOn || e.styling.reqFilterVisibleIsOn
+                    },
+                    model: {
+                        value: e.styling.reqFilterATextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqFilterATextColor", t)
+                        },
+                        expression: "styling.reqFilterATextColor"
+                    }
+                })], 1)])], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -10276,7 +10564,7 @@
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : this.styling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : this.styling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -10286,13 +10574,14 @@
                     },
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
+                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     objectBackground: function() {
+						var o = this.checkRequireds(this.object);
                         var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
                             t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
+                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn) || (!o && this.styling.reqBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
                         else if (!o) {
                             if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
@@ -10465,6 +10754,16 @@
 												o.next = 4;
 												break
 											}
+											var s = t.objects.indexOf(t.object);
+											if ("undefined" !== typeof t.app.comp[t.object.id]) {
+												var co = t.app.comp[t.object.id],
+													coR = t.app.rows[co.rows];
+											}
+											for (var i = s + 1; s < coR.length; s++) {
+												if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
+													t.app.comp[coR.objects[s]].objects = s;
+												}
+											}
 											t.$delete(t.app.comp, t.object.id);
 											t.objects.splice(t.objects.indexOf(t.object), 1);
 										case 4:
@@ -10474,9 +10773,20 @@
 								}), o)
 							})))()
 						} else {
-							t.$delete(t.app.comp, t.object.id);
-							t.objects.splice(t.objects.indexOf(t.object), 1);
+							console.log(t.object);
 							console.log(t.app.comp);
+							var s = t.objects.indexOf(t.object);
+							if ("undefined" !== typeof t.app.comp[t.object.id]) {
+								var co = t.app.comp[t.object.id],
+									coR = t.app.rows[co.rows];
+								for (var i = s + 1; s < coR.length; s++) {
+									if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
+										t.app.comp[coR.objects[s]].objects = s;
+									}
+								}
+								t.$delete(t.app.comp, t.object.id);
+								t.objects.splice(t.objects.indexOf(t.object), 1);
+							}
 						}
                     },
                     checkRequireds: function(e) {
@@ -12376,6 +12686,9 @@
                     },
                     groups: function() {
                         return this.$store.state.app.groups
+                    },
+					app: function() {
+                        return this.$store.state.app
                     }
                 },
                 methods: {
@@ -12385,33 +12698,73 @@
                                 for (var t = this.row.objects.length, o = 0; o < t; o++) {
                                     this.rows[e].objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
                                     for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
-                                    this.rows[e].objects[this.rows[e].objects.length - 1].id = i
+                                    this.rows[e].objects[this.rows[e].objects.length - 1].id = i;
+									this.app.comp[i] = {rows: e, objects: this.row.objects.length - 1};
                                 }
                     },
                     mergeAndDeleteRow: function() {
-                        for (var e = 0; e < this.rows.length; e++)
-                            if (this.row.id != this.newRow && this.rows[e].id == this.newRow) {
-                                for (var t = 0; t < this.row.objects.length; t++) this.rows[e].objects.push(this.row.objects[t]);
-                                this.rows.splice(this.rows.indexOf(this.row), 1), this.cleanCurrentComponent()
-                            }
+						var a = this.app.rows.indexOf(this.row);
+						if (this.row.id != this.newRow) {
+							for (var e = 0; e < this.rows.length; e++) {
+								if (this.rows[e].id == this.newRow) {
+									for (var t = 0; t < this.row.objects.length; t++) {
+										this.rows[e].objects.push(this.row.objects[t]);
+										this.app.comp[this.row.objects[t].id] = {rows: e, objects: this.rows[e].objects.length - 1};
+									}
+									this.rows.splice(this.rows.indexOf(this.row), 1);
+									break
+								}
+							}
+							for (var f = a; f < this.rows.length; f++) {
+								for (var b = 0; b < this.rows[f].objects.length; b++) {
+									this.app.comp[this.rows[f].objects[b].id].rows = f;
+								}
+							}
+							this.cleanCurrentComponent();
+						}
                     },
                     sortRowObjects: function() {
-                        var e = parseInt(this.row.objectWidth.replace(/\D/g, ""));
-                        "1" == this.sortType ? this.row.objects.sort((function(t, o) {
-                            var i, s;
-                            return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i > s ? -1 : i < s ? 1 : 0
-                        })) : "2" == this.sortType ? this.row.objects.sort((function(t, o) {
-                            var i, s;
-                            return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i < s ? -1 : i > s ? 1 : 0
-                        })) : "3" == this.sortType ? this.row.objects.sort((function(e, t) {
-                            var o = e.text.length,
-                                i = t.text.length;
-                            return o > i ? -1 : o < i ? 1 : 0
-                        })) : "4" == this.sortType && this.row.objects.sort((function(e, t) {
-                            var o = e.text.length,
-                                i = t.text.length;
-                            return o < i ? -1 : o > i ? 1 : 0
-                        }))
+                        var e = parseInt(this.row.objectWidth.replace(/\D/g, "")),
+							th = this;
+						if ("1" == this.sortType) {
+							this.row.objects.sort((function(t, o) {
+								var i, s;
+								return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i > s ? -1 : i < s ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("2" == this.sortType) {
+							this.row.objects.sort((function(t, o) {
+								var i, s;
+								return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i < s ? -1 : i > s ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("3" == this.sortType) {
+							this.row.objects.sort((function(e, t) {
+								var o = e.text.length,
+									i = t.text.length;
+								return o > i ? -1 : o < i ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("4" == this.sortType) {
+							this.row.objects.sort((function(e, t) {
+								var o = e.text.length,
+									i = t.text.length;
+								return o < i ? -1 : o > i ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						}
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
@@ -12827,7 +13180,10 @@
                     },
                     pointTypes: function() {
                         return this.$store.state.app.pointTypes
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					}
                 },
                 methods: {
                     mergeRow: function() {
@@ -12836,33 +13192,73 @@
                                 for (var t = this.row.objects.length, o = 0; o < t; o++) {
                                     this.rows[e].objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
                                     for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
-                                    this.rows[e].objects[this.rows[e].objects.length - 1].id = i
+                                    this.rows[e].objects[this.rows[e].objects.length - 1].id = i;
+									this.app.comp[i] = {rows: e, objects: this.row.objects.length - 1};
                                 }
                     },
                     mergeAndDeleteRow: function() {
-                        for (var e = 0; e < this.rows.length; e++)
-                            if (this.row.id != this.newRow && this.rows[e].id == this.newRow) {
-                                for (var t = 0; t < this.row.objects.length; t++) this.rows[e].objects.push(this.row.objects[t]);
-                                this.rows.splice(this.rows.indexOf(this.row), 1), this.cleanCurrentComponent()
-                            }
+						var a = this.app.rows.indexOf(this.row);
+						if (this.row.id != this.newRow) {
+							for (var e = 0; e < this.rows.length; e++) {
+								if (this.rows[e].id == this.newRow) {
+									for (var t = 0; t < this.row.objects.length; t++) {
+										this.rows[e].objects.push(this.row.objects[t]);
+										this.app.comp[this.row.objects[t].id] = {rows: e, objects: this.rows[e].objects.length - 1};
+									}
+									this.rows.splice(this.rows.indexOf(this.row), 1);
+									break
+								}
+							}
+							for (var f = a; f < this.rows.length; f++) {
+								for (var b = 0; b < this.rows[f].objects.length; b++) {
+									this.app.comp[this.rows[f].objects[b].id].rows = f;
+								}
+							}
+							this.cleanCurrentComponent();
+						}
                     },
                     sortRowObjects: function() {
-                        var e = parseInt(this.row.objectWidth.replace(/\D/g, ""));
-                        "1" == this.sortType ? this.row.objects.sort((function(t, o) {
-                            var i, s;
-                            return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i > s ? -1 : i < s ? 1 : 0
-                        })) : "2" == this.sortType ? this.row.objects.sort((function(t, o) {
-                            var i, s;
-                            return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i < s ? -1 : i > s ? 1 : 0
-                        })) : "3" == this.sortType ? this.row.objects.sort((function(e, t) {
-                            var o = e.text.length,
-                                i = t.text.length;
-                            return o > i ? -1 : o < i ? 1 : 0
-                        })) : "4" == this.sortType && this.row.objects.sort((function(e, t) {
-                            var o = e.text.length,
-                                i = t.text.length;
-                            return o < i ? -1 : o > i ? 1 : 0
-                        }))
+                        var e = parseInt(this.row.objectWidth.replace(/\D/g, "")),
+							th = this;
+						if ("1" == this.sortType) {
+							this.row.objects.sort((function(t, o) {
+								var i, s;
+								return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i > s ? -1 : i < s ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("2" == this.sortType) {
+							this.row.objects.sort((function(t, o) {
+								var i, s;
+								return s = "" != o.objectWidth ? parseInt(o.objectWidth.replace(/\D/g, "")) : e, i = "" != t.objectWidth ? parseInt(t.objectWidth.replace(/\D/g, "")) : e, i < s ? -1 : i > s ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("3" == this.sortType) {
+							this.row.objects.sort((function(e, t) {
+								var o = e.text.length,
+									i = t.text.length;
+								return o > i ? -1 : o < i ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						} else if ("4" == this.sortType) {
+							this.row.objects.sort((function(e, t) {
+								var o = e.text.length,
+									i = t.text.length;
+								return o < i ? -1 : o > i ? 1 : 0
+							}));
+							for (var b = 0; b < this.row.objects.length; b++) {
+								this.app.comp[this.row.objects[b].id].objects = b;
+								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
+							}
+						}
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
@@ -15058,16 +15454,16 @@
 							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
 							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
-							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000FF"); else if (e.app.styling.selFilterBorderColor.length == 7) e.$set(e.app.styling, "selFilterBorderColor", e.app.styling.selFilterBorderColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000FF"); else if (e.app.styling.selFilterCTitleColor.length == 7) e.$set(e.app.styling, "selFilterCTitleColor", e.app.styling.selFilterCTitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000FF"); else if (e.app.styling.selFilterCTextColor.length == 7) e.$set(e.app.styling, "selFilterCTextColor", e.app.styling.selFilterCTextColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000FF"); else if (e.app.styling.selFilterATitleColor.length == 7) e.$set(e.app.styling, "selFilterATitleColor", e.app.styling.selFilterATitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000FF"); else if (e.app.styling.selFilterATextColor.length == 7) e.$set(e.app.styling, "selFilterATextColor", e.app.styling.selFilterATextColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000FF"); else if (e.app.styling.reqFilterBorderColor.length == 7) e.$set(e.app.styling, "reqFilterBorderColor", e.app.styling.reqFilterBorderColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000FF"); else if (e.app.styling.reqFilterCTitleColor.length == 7) e.$set(e.app.styling, "reqFilterCTitleColor", e.app.styling.reqFilterCTitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000FF"); else if (e.app.styling.reqFilterCTextColor.length == 7) e.$set(e.app.styling, "reqFilterCTextColor", e.app.styling.reqFilterCTextColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
 							var cnt = 0;
@@ -15088,6 +15484,7 @@
 						console.log(this.files[0]);
 						var i = new FileReader;
 						if (t) {
+							
 							console.log(t);
 							e.$store.commit("loadApp", JSON.parse(t));
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
@@ -15095,16 +15492,16 @@
 							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
 							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
-							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000");
-							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000");
+							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000FF"); else if (e.app.styling.selFilterBorderColor.length == 7) e.$set(e.app.styling, "selFilterBorderColor", e.app.styling.selFilterBorderColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterCTitleColor) e.$set(e.app.styling, "selFilterCTitleColor", "#000000FF"); else if (e.app.styling.selFilterCTitleColor.length == 7) e.$set(e.app.styling, "selFilterCTitleColor", e.app.styling.selFilterCTitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterCTextColor) e.$set(e.app.styling, "selFilterCTextColor", "#000000FF"); else if (e.app.styling.selFilterCTextColor.length == 7) e.$set(e.app.styling, "selFilterCTextColor", e.app.styling.selFilterCTextColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterATitleColor) e.$set(e.app.styling, "selFilterATitleColor", "#000000FF"); else if (e.app.styling.selFilterATitleColor.length == 7) e.$set(e.app.styling, "selFilterATitleColor", e.app.styling.selFilterATitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.selFilterATextColor) e.$set(e.app.styling, "selFilterATextColor", "#000000FF"); else if (e.app.styling.selFilterATextColor.length == 7) e.$set(e.app.styling, "selFilterATextColor", e.app.styling.selFilterATextColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterBorderColor) e.$set(e.app.styling, "reqFilterBorderColor", "#000000FF"); else if (e.app.styling.reqFilterBorderColor.length == 7) e.$set(e.app.styling, "reqFilterBorderColor", e.app.styling.reqFilterBorderColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterCTitleColor) e.$set(e.app.styling, "reqFilterCTitleColor", "#000000FF"); else if (e.app.styling.reqFilterCTitleColor.length == 7) e.$set(e.app.styling, "reqFilterCTitleColor", e.app.styling.reqFilterCTitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000FF"); else if (e.app.styling.reqFilterCTextColor.length == 7) e.$set(e.app.styling, "reqFilterCTextColor", e.app.styling.reqFilterCTextColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
+							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
 							var cnt = 0;
@@ -17168,15 +17565,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -17198,15 +17595,15 @@
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -17354,15 +17751,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#6B594698",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "3",
                             reqFilterBrightIsOn: !1,
@@ -17384,15 +17781,15 @@
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "11",
                             rowBorderRadiusTopRight: "11",
@@ -17542,15 +17939,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFFFFFFF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17572,15 +17969,15 @@
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#F99090FF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "3",
                             rowBorderRadiusTopRight: "0",
@@ -17730,15 +18127,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -17760,15 +18157,15 @@
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -17916,15 +18313,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FBED37FF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !0,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -17946,15 +18343,15 @@
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#FFD7C0FF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "2",
                             rowBorderRadiusTopRight: "2",
@@ -18109,15 +18506,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFB500FF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -18139,15 +18536,15 @@
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#333333FF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "4",
                             rowBorderRadiusTopRight: "4",
@@ -18304,15 +18701,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#FFA52CFF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -18334,15 +18731,15 @@
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#86007DFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "12",
                             rowBorderRadiusTopRight: "12",
@@ -18499,15 +18896,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#C8E6B2FF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: "1",
                             reqFilterBrightIsOn: !1,
@@ -18529,15 +18926,15 @@
                             reqBgColorIsOn: !0,
                             reqFilterBgColor: "#C8E6B2FF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
                             reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: "6",
                             rowBorderRadiusTopRight: "6",
@@ -19044,15 +19441,15 @@
                                 selBgColorIsOn: !0,
                                 selFilterBgColor: "#70FF7EFF",
 								selBorderColorIsOn: !1,
-								selFilterBorderColor: "#000000",
+								selFilterBorderColor: "#000000FF",
 								selCTitleColorIsOn: !1,
-								selFilterCTitleColor: "#000000",
+								selFilterCTitleColor: "#000000FF",
 								selCTextColorIsOn: !1,
-								selFilterCTextColor: "#000000",
+								selFilterCTextColor: "#000000FF",
 								selATitleColorIsOn: !1,
-								selFilterATitleColor: "#000000",
+								selFilterATitleColor: "#000000FF",
 								selATextColorIsOn: !1,
-								selFilterATextColor: "#000000",
+								selFilterATextColor: "#000000FF",
                                 reqFilterBlurIsOn: !1,
                                 reqFilterBlur: 0,
                                 reqFilterBrightIsOn: !1,
@@ -19074,15 +19471,15 @@
                                 reqBgColorIsOn: !1,
                                 reqFilterBgColor: "#FFFFFFFF",
 								reqBorderColorIsOn: !1,
-								reqFilterBorderColor: "#000000",
+								reqFilterBorderColor: "#000000FF",
 								reqCTitleColorIsOn: !1,
-								reqFilterCTitleColor: "#000000",
+								reqFilterCTitleColor: "#000000FF",
 								reqCTextColorIsOn: !1,
-								reqFilterCTextColor: "#000000",
+								reqFilterCTextColor: "#000000FF",
 								reqATitleColorIsOn: !1,
-								reqFilterATitleColor: "#000000",
+								reqFilterATitleColor: "#000000FF",
 								reqATextColorIsOn: !1,
-								reqFilterATextColor: "#000000",
+								reqFilterATextColor: "#000000FF",
                                 reqFilterVisibleIsOn: !1
                             }
                         })
@@ -20649,9 +21046,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -20673,9 +21067,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -20790,9 +21181,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -20814,9 +21202,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -20896,9 +21281,6 @@
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
                 }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -20920,9 +21302,6 @@
                         innerHTML: e._s(e.object.selectedThisManyTimesProp)
                     }
                 }), o("v-spacer"), o("v-btn", {
-					staticStyle: {
-						color: this.$vuetify.theme.isDark ? "rgba(0, 0, 0, 0.54)" : ""
-					},
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -21136,11 +21515,11 @@
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : this.styling.addonTitleColor)) + ";"
+                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : this.styling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : this.styling.addonTextColor)) + ";"
+                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : this.styling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -21479,7 +21858,7 @@
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : this.styling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : this.styling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -21489,7 +21868,7 @@
                     },
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
+                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
                         var e = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
@@ -21504,7 +21883,7 @@
                         var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.object.isActive ? "" : (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "")) + (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "") + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || this.object.isImageUpload && this.object.image.length > 0 ? "background-color: " + this.styling.selFilterBgColor + " !important;" : ""),
                             t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
+                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn) || (!o && this.styling.reqBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
                         if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
                         else if (!o) {
                             if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
@@ -25717,7 +26096,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqBgColorIsOn
+                        disabled: !e.styling.reqBgColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterBgColor,
@@ -25747,7 +26126,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqBorderColorIsOn
+                        disabled: !e.styling.reqBorderColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterBorderColor,
@@ -25777,7 +26156,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqCTitleColorIsOn
+                        disabled: !e.styling.reqCTitleColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterCTitleColor,
@@ -25807,7 +26186,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqCTextColorIsOn
+                        disabled: !e.styling.reqCTextColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterCTextColor,
@@ -25837,7 +26216,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqATitleColorIsOn
+                        disabled: !e.styling.reqATitleColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterATitleColor,
@@ -25867,7 +26246,7 @@
                     attrs: {
                         dense: "",
                         "canvas-height": "50",
-                        disabled: !e.styling.reqATextColorIsOn
+                        disabled: !e.styling.reqATextColorIsOn || e.styling.reqFilterVisibleIsOn
                     },
                     model: {
                         value: e.styling.reqFilterATextColor,
@@ -27446,46 +27825,7 @@
                         },
                         expression: "styling.barTextFont"
                     }
-                })], 1), o("v-col", [e._v(" Bar Text Color "), o("v-color-picker", {
-                    staticClass: "mx-auto",
-                    attrs: {
-                        "canvas-height": "70",
-                        "hide-inputs": ""
-                    },
-                    model: {
-                        value: e.styling.barTextColor,
-                        callback: function(t) {
-                            e.$set(e.styling, "barTextColor", t)
-                        },
-                        expression: "styling.barTextColor"
-                    }
-                }), e._v(" Bar Points Color Positive "), o("v-color-picker", {
-                    staticClass: "mx-auto",
-                    attrs: {
-                        "canvas-height": "70",
-                        "hide-inputs": ""
-                    },
-                    model: {
-                        value: e.styling.barPointPos,
-                        callback: function(t) {
-                            e.$set(e.styling, "barPointPos", t)
-                        },
-                        expression: "styling.barPointPos"
-                    }
-                }), e._v(" Bar Icon Color "), o("v-color-picker", {
-                    staticClass: "mx-auto",
-                    attrs: {
-                        "canvas-height": "70",
-						"hide-inputs": ""
-                    },
-                    model: {
-                        value: e.styling.barIconColor,
-                        callback: function(t) {
-							e.$set(e.styling, "barIconColor", t)
-                        },
-                        expression: "styling.barIconColor"
-                    }
-                })], 1), o("v-col", [e._v(" Style of the bar itself "), o("v-text-field", {
+                }), e._v(" Style of the bar itself "), o("v-text-field", {
                     attrs: {
                         type: "number",
                         label: "Bar Padding",
@@ -27527,11 +27867,46 @@
                         },
                         expression: "styling.barTextSize"
                     }
+                })], 1), o("v-col", [e._v(" Bar Text Color "), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+                    },
+                    model: {
+                        value: e.styling.barTextColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "barTextColor", t)
+                        },
+                        expression: "styling.barTextColor"
+                    }
+                }), e._v(" Bar Points Color Positive "), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+                    },
+                    model: {
+                        value: e.styling.barPointPos,
+                        callback: function(t) {
+                            e.$set(e.styling, "barPointPos", t)
+                        },
+                        expression: "styling.barPointPos"
+                    }
+                }), e._v(" Bar Icon Color "), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+                    },
+                    model: {
+                        value: e.styling.barIconColor,
+                        callback: function(t) {
+							e.$set(e.styling, "barIconColor", t)
+                        },
+                        expression: "styling.barIconColor"
+                    }
                 })], 1), o("v-col", [e._v(" Bar Background Color "), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
-                        "canvas-height": "70",
-						"hide-inputs": ""
+                        "canvas-height": "50",
                     },
                     model: {
                         value: e.styling.barBackgroundColor,
@@ -27543,8 +27918,7 @@
                 }), e._v(" Bar Points Color Negative "), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
-                        "canvas-height": "70",
-                        "hide-inputs": ""
+                        "canvas-height": "50",
                     },
                     model: {
                         value: e.styling.barPointNeg,
@@ -29531,11 +29905,18 @@
 												o.next = 4;
 												break
 											}
-											for (var b = 0; b < e.objects.length; b++) {
-												t.$delete(t.app.comp, e.objects[b].id);
+											var s = t.app.rows.indexOf(e);
+											for (var f = s + 1; f < t.app.rows.length; f++) {
+												for (var b = 0; b < t.app.rows[f].objects.length; b++) {
+													if ("undefined" !== typeof t.app.comp[t.app.rows[f].objects[b].id]) {
+														t.app.comp[t.app.rows[f].objects[b].id].rows -= 1;
+													}
+												}
+											}
+											for (var c = 0; c < e.objects.length; c++) {
+												t.$delete(t.app.comp, e.objects[c].id);
 											}
 											t.$store.commit("deleteRow", e);
-											console.log(t.app.comp);
 										case 4:
 										case "end":
 											return o.stop()
@@ -29543,6 +29924,14 @@
 								}), o)
 							})))()
 						} else {
+							var s = t.app.rows.indexOf(e);
+							for (var f = s + 1; f < t.app.rows.length; f++) {
+								for (var b = 0; b < t.app.rows[f].objects.length; b++) {
+									if ("undefined" !== typeof t.app.comp[t.app.rows[f].objects[b].id]) {
+										t.app.comp[t.app.rows[f].objects[b].id].rows -= 1;
+									}
+								}
+							}
 							for (var c = 0; c < e.objects.length; c++) {
 								t.$delete(t.app.comp, e.objects[c].id);
 							}
@@ -31147,15 +31536,15 @@
                             selBgColorIsOn: !0,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
+							selFilterBorderColor: "#000000FF",
 							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
+							selFilterCTitleColor: "#000000FF",
 							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
+							selFilterCTextColor: "#000000FF",
 							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
+							selFilterATitleColor: "#000000FF",
 							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -31177,15 +31566,15 @@
                             reqBgColorIsOn: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-							reqFilterATextColor: "#000000",
+							reqFilterATextColor: "#000000FF",
 							reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: 0,
                             rowBorderRadiusTopRight: 0,
@@ -31520,7 +31909,7 @@
 										s = document.createElement("a");
 									s.download = "project_" + timestamp + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i);
 								}
-							}, 6000)
+							}, 600000)
 						} else {
 							clearInterval(e.app.autoSaveInterval);
 							e.app.autoSaveInterval = null;
