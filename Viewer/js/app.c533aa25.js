@@ -194,7 +194,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: t.app.backpack.length > 0,
+						value: t.app.backpack.length > 0 && (("undefined" === typeof t.app.hideBackpackBtn || t.app.hideBackpackBtn == 0) || (t.app.hideBackpackBtn > 0 && t.app.hideBackpackBtn == t.app.btnBackpackIsOn)),
                         expression: "app.backpack.length > 0"
                     }],
                     attrs: {
@@ -2605,8 +2605,17 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -2874,7 +2883,6 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
@@ -2904,8 +2912,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -2920,7 +2927,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -3105,8 +3118,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -3121,7 +3133,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -3472,6 +3487,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[d] = {rows: m, objects: n};
@@ -3578,33 +3594,38 @@
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
                     },
                     resultArray: function() {
-                        var t, e, i = [];
+                        var e, t, o = [];
                         if ("standard" == this.type) {
-                            for (var s = 0; s < this.allChapters.length; s++)
-                                for (var o = 0; o < this.allChapters[s].pages.length; o++) this.findAllActiveObjects(this.allChapters[s].pages[o], this.allChapters[s]);
-                            i = this.activeObjectList
+                            for (var i = 0; i < this.allChapters.length; i++)
+                                for (var s = 0; s < this.allChapters[i].pages.length; s++) this.findAllActiveObjects(this.allChapters[i].pages[s], this.allChapters[i]);
+                            o = this.activeObjectList
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
-                            for (e = 0; e < this.rows.length; e++)
-                                for (t = 0; t < this.rows[e].objects.length; t++) this.rows[e].objects[t].isActive ? i.push(this.rows[e].objects[t]) : this.rows[e].objects[t].isImageUpload ? this.rows[e].objects[t].image.length > 5 && i.push(this.rows[e].objects[t]) : this.rows[e].objects[t].isSelectableMultiple && "undefined" !== typeof this.rows[e].objects[t].multipleUseVariable && this.rows[e].objects[t].multipleUseVariable > 0 && i.push(this.rows[e].objects[t]);
+                            for (t = 0; t < this.rows.length; t++)
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+								}
                         else
-                            for (e = 0; e < this.rows.length; e++)
-                                for (t = 0; t < this.rows[e].objects.length; t++)
-                                    if (this.rows[e].objects[t].isActive)
-                                        for (var r = 0; r < this.groups.length; r++)
-                                            if (this.row.resultGroupId == this.rows[e].resultGroupId && this.rows[e] != this.row && this.groups[r].id == this.rows[e].resultGroupId) i.push(this.rows[e].objects[t]);
-                                            else
-                                                for (var a = 0; a < this.rows[e].objects[t].groups.length; a++) this.rows[e].objects[t].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && i.push(this.rows[e].objects[t]);
-                        else if (this.rows[e].objects[t].isImageUpload && this.rows[e].objects[t].image.length > 5)
-                            for (var n = 0; n < this.groups.length; n++)
-                                if (this.row.resultGroupId == this.rows[e].resultGroupId && this.rows[e] != this.row && this.groups[n].id == this.rows[e].resultGroupId) i.push(this.rows[e].objects[t]);
-                                else
-                                    for (var p = 0; p < this.rows[e].objects[t].groups.length; p++) this.rows[e].objects[t].groups[p].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && i.push(this.rows[e].objects[t]);
-                        else if (this.rows[e].objects[t].isSelectableMultiple && ("undefined" !== typeof this.rows[e].objects[t].multipleUseVariable && this.rows[e].objects[t].multipleUseVariable > 0))
-                            for (var l = 0; l < this.groups.length; l++)
-                                if (this.row.resultGroupId == this.rows[e].resultGroupId && this.rows[e] != this.row && this.groups[l].id == this.rows[e].resultGroupId) i.push(this.rows[e].objects[t]);
-                                else
-                                    for (var c = 0; c < this.rows[e].objects[t].groups.length; c++) this.rows[e].objects[t].groups[c].id == this.row.resultGroupId && this.groups[l].id == this.row.resultGroupId && i.push(this.rows[e].objects[t]);
-                        return i
+                            for (t = 0; t < this.rows.length; t++)
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (!this.rows[t].objects[e].isNotResult) {
+										if (this.rows[t].objects[e].isActive)
+											for (var r = 0; r < this.groups.length; r++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
+											for (var n = 0; n < this.groups.length; n++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+											for (var c = 0; c < this.groups.length; c++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var d = 0; d < this.rows[t].objects[e].groups.length; d++) this.rows[t].objects[e].groups[d].id == this.row.resultGroupId && this.groups[c].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+									}
+								}
+                        return o
                     },
                     rowBody: function() {
                         var t = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
@@ -4339,8 +4360,17 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -4608,7 +4638,6 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
@@ -4638,8 +4667,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -4654,7 +4682,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -4839,8 +4873,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -4855,7 +4888,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -5188,6 +5224,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[d] = {rows: m, objects: n};

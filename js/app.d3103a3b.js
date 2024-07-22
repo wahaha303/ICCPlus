@@ -526,7 +526,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.app.backpack.length > 0,
+                        value: e.app.backpack.length > 0 && (("undefined" === typeof e.app.hideBackpackBtn || e.app.hideBackpackBtn == 0) || (e.app.hideBackpackBtn > 0 && e.app.hideBackpackBtn == e.app.btnBackpackIsOn)),
                         expression: "app.backpack.length > 0"
                     }],
                     attrs: {
@@ -2375,7 +2375,19 @@
                         },
                         expression: "object.textfieldIsOn"
                     }
-                }), e.object.textfieldIsOn ? o("v-select", {
+                }), e.object.textfieldIsOn ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Player can set word by pressing this choice."
+                    },
+                    model: {
+                        value: e.object.customTextfieldIsOn,
+                        callback: function(t) {
+                            e.$set(e.object, "customTextfieldIsOn", t), e.$set(e.object, "wordChangeSelect", "");
+                        },
+                        expression: "object.customTextfieldIsOn"
+                    }
+                }), o("v-select", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
@@ -2392,7 +2404,21 @@
                         },
                         expression: "object.idOfTheTextfieldWord"
                     }
-                }) : e._e(), e.object.textfieldIsOn ? o("v-text-field", {
+                })] : e._e(), e.object.customTextfieldIsOn ? o("v-text-field", {
+                    staticClass: "pa-1",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Will be shown text in prompt",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.wordPromptText,
+                        callback: function(t) {
+                            e.$set(e.object, "wordPromptText", t)
+                        },
+                        expression: "object.wordPromptText"
+                    }
+                }) : e._e(), e.object.textfieldIsOn && !e.object.customTextfieldIsOn ? o("v-text-field", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
@@ -2487,7 +2513,24 @@
                         },
                         expression: "object.numbAddToAllowChoice"
                     }
-                }) : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
+                }) : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "If do not select this, backpack button will not appear."
+                    },
+                    model: {
+						value: e.object.backpackBtnRequirement,
+                        callback: function(t) {
+							e.$set(e.object, "backpackBtnRequirement", t);
+							if (t) {
+								("undefined" === typeof e.app.hideBackpackBtn || e.app.hideBackpackBtn == 0) ? e.$set(e.app, "hideBackpackBtn", 1) : e.$set(e.app, "hideBackpackBtn", e.app.hideBackpackBtn + 1)
+							} else {
+								e.$set(e.app, "hideBackpackBtn", e.app.hideBackpackBtn - 1)
+							}
+                        },
+                        expression: "object.BackpackButton"
+                    }
+                })], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
                     staticClass: "row pa-0",
                     style: e.objectBackground,
                     on: {
@@ -11323,6 +11366,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -11610,8 +11655,21 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -11879,11 +11937,12 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -11909,8 +11968,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -11925,7 +11983,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -12110,8 +12174,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -12126,7 +12189,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -12481,6 +12547,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[d] = {rows: m, objects: n};
@@ -13796,25 +13863,30 @@
                             o = this.activeObjectList
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
-                                for (e = 0; e < this.rows[t].objects.length; e++) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+								}
                         else
                             for (t = 0; t < this.rows.length; t++)
-                                for (e = 0; e < this.rows[t].objects.length; e++)
-                                    if (this.rows[t].objects[e].isActive)
-                                        for (var r = 0; r < this.groups.length; r++)
-                                            if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                            else
-                                                for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-                        else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
-                            for (var n = 0; n < this.groups.length; n++)
-                                if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                else
-                                    for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-                        else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
-                            for (var c = 0; c < this.groups.length; c++)
-                                if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                else
-                                    for (var d = 0; d < this.rows[t].objects[e].groups.length; d++) this.rows[t].objects[e].groups[d].id == this.row.resultGroupId && this.groups[c].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (!this.rows[t].objects[e].isNotResult) {
+										if (this.rows[t].objects[e].isActive)
+											for (var r = 0; r < this.groups.length; r++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
+											for (var n = 0; n < this.groups.length; n++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+											for (var c = 0; c < this.groups.length; c++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var d = 0; d < this.rows[t].objects[e].groups.length; d++) this.rows[t].objects[e].groups[d].id == this.row.resultGroupId && this.groups[c].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+									}
+								}
                         return o
                     },
                     rowBody: function() {
@@ -14271,6 +14343,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -14558,8 +14632,21 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -14827,11 +14914,12 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -14857,8 +14945,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -14873,7 +14960,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -15058,8 +15151,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -15074,7 +15166,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -15410,6 +15505,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
@@ -19604,7 +19700,10 @@
                 computed: {
                     backpack: function() {
                         return this.$store.state.app.backpack
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					}
                 },
                 methods: {
                     deleteRow: function(e) {
@@ -22696,6 +22795,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -22983,8 +23084,21 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -23252,11 +23366,12 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -23282,8 +23397,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -23298,7 +23412,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -23483,8 +23603,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -23499,7 +23618,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -23854,6 +23976,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
@@ -23992,25 +24115,30 @@
                             o = this.activeObjectList
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
-                                for (e = 0; e < this.rows[t].objects.length; e++) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+								}
                         else
                             for (t = 0; t < this.rows.length; t++)
-                                for (e = 0; e < this.rows[t].objects.length; e++)
-                                    if (this.rows[t].objects[e].isActive)
-                                        for (var r = 0; r < this.groups.length; r++)
-                                            if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                            else
-                                                for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-                        else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
-                            for (var n = 0; n < this.groups.length; n++)
-                                if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                else
-                                    for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-                        else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
-                            for (var c = 0; c < this.groups.length; c++)
-                                if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-                                else
-                                    for (var d = 0; d < this.rows[t].objects[e].groups.length; d++) this.rows[t].objects[e].groups[d].id == this.row.resultGroupId && this.groups[c].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+                                for (e = 0; e < this.rows[t].objects.length; e++) {
+									if (!this.rows[t].objects[e].isNotResult) {
+										if (this.rows[t].objects[e].isActive)
+											for (var r = 0; r < this.groups.length; r++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
+											for (var n = 0; n < this.groups.length; n++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+											for (var c = 0; c < this.groups.length; c++)
+												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
+												else
+													for (var d = 0; d < this.rows[t].objects[e].groups.length; d++) this.rows[t].objects[e].groups[d].id == this.row.resultGroupId && this.groups[c].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
+									}
+								}
                         return o
                     },
                     rowBody: function() {
@@ -24465,6 +24593,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -24752,8 +24882,21 @@
 												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
 											}
 										}
-									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeSelect);
+									if (e.textfieldIsOn) {
+										for (m = 0; m < this.app.words.length; m++) {
+											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+												if (e.customTextfieldIsOn) {
+													e.wordChangeSelect = prompt(e.wordPromptText);
+													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
+												}
+												this.app.words[m].replaceText = e.wordChangeSelect;
+											}
+										}
+									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -25021,11 +25164,12 @@
 												if (u > 0 && coR.objects[v].isActive) {
 													this.activateObject(coR.objects[v], coR);
 													u--;
-													console.log("u:", u)
 												}
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -25051,8 +25195,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
@@ -25067,7 +25210,13 @@
 									}
 							}							
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+								if (e.isActive == !1) {
+									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
@@ -25252,8 +25401,7 @@
                         if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
                         else
                             for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s)
-						{
+                        if (s) {
 							var eid, eidNum;
 							if (e.isMultipleUseVariable) {
 								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
@@ -25268,7 +25416,10 @@
 									}
 							}
 							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
@@ -25604,6 +25755,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
+							this.app.compR[this.app.rows[m].id] = {rows: m};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
@@ -30558,7 +30710,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.app.backpack.length > 0,
+                        value: e.app.backpack.length > 0 && (("undefined" === typeof e.app.hideBackpackBtn || e.app.hideBackpackBtn == 0) || (e.app.hideBackpackBtn > 0 && e.app.hideBackpackBtn == e.app.btnBackpackIsOn)),
                         expression: "app.backpack.length > 0"
                     }],
                     attrs: {
