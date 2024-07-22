@@ -225,10 +225,10 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/GvhgRabC#znBvMbWiv5Z_zT3VZymbjhzZh_SzDjR1i1hJ2pwLgSY",
+                        href: "https://mega.nz/file/yrYXAJyC#d3rgq4552P8AwXY81Zjhv2SG5EQl_Gj2tVXoHULZVj4",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.3.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.3.4 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -3310,7 +3310,47 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "selFromGroups" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "Number of Selection",
+						filled: "",
+						min: 0
+					},
+					model: {
+						value: t.selNum,
+						callback: function(o) {
+							e.$set(t, "selNum", o < 0 ? 0 : o)
+						}
+					}
+				}), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						label: "Selected from Groups",
+						filled: "",
+						items: e.app.groups,
+						"item-text": "id",
+						"item-value": "id",
+						multiple: true
+                    },
+                    model: {
+                        value: t.selGroups,
+                        callback: function(o) {
+                            e.$set(t, "selGroups", o)
+                        },
+                        expression: "required.selGroups"
+                    }
+                }), o("v-btn", {
+                        staticStyle: {
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
+                        },
+                        on: {
+                            click: function(t) {
+                                return e.deleteEvent(i, e.addon.requireds)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -3693,10 +3733,23 @@
                     },
                     on: {
                         click: function(t) {
+                            return e.addNewRequired(e.row.requireds, "selFromGroups", !0, "")
+                        }
+                    }
+                }, [e._v("From Groups")])], 1), o("v-col", [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
                             return e.addNewRequired(e.row.requireds, "selFromRows", !0, "")
                         }
                     }
-                }, [e._v("'Selected from Rows' Requirement")])], 1), o("v-col", [o("v-btn", {
+                }, [e._v("From Rows")])], 1), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
                         color: e.$vuetify.theme.isDark ? "white" : "black"
@@ -3709,7 +3762,7 @@
                             return e.addNewRequired(e.row.requireds, "selFromWhole", !0, "")
                         }
                     }
-                }, [e._v("'Selected from Whole' Requirement")])], 1), o("v-col", {
+                }, [e._v("From Entire Rows")])], 1), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -4800,7 +4853,89 @@
                             expression: "orRequired.req"
                         }
                     })], 1)
-                }))], 2) : "selFromRows" == e.required.type ? o("span", [o("v-checkbox", {
+                }))], 2) : "selFromGroups" == e.required.type ? o("span", [o("v-checkbox", {
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Show Requirement"
+                    },
+                    model: {
+                        value: e.required.showRequired,
+                        callback: function(t) {
+                            e.$set(e.required, "showRequired", t)
+                        },
+                        expression: "required.showRequired"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Text Before"
+                    },
+                    model: {
+                        value: e.required.beforeText,
+                        callback: function(t) {
+                            e.$set(e.required, "beforeText", t)
+                        },
+                        expression: "required.beforeText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Text After"
+                    },
+                    model: {
+                        value: e.required.afterText,
+                        callback: function(t) {
+                            e.$set(e.required, "afterText", t)
+                        },
+                        expression: "required.afterText"
+                    }
+                }), o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "Number of Selection",
+						filled: "",
+						min: 0
+					},
+					model: {
+						value: e.required.selNum,
+						callback: function(t) {
+							e.$set(e.required, "selNum", t < 0 ? 0 : t)
+						}
+					}
+				}), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						label: "Selected from Groups",
+						filled: "",
+						items: e.app.groups,
+						"item-text": "id",
+						"item-value": "id",
+						multiple: true
+                    },
+                    model: {
+                        value: e.required.selGroups,
+                        callback: function(t) {
+                            e.$set(e.required, "selGroups", t)
+                        },
+                        expression: "required.selGroups"
+                    }
+                })], 1) : "selFromRows" == e.required.type ? o("span", [o("v-checkbox", {
                     staticClass: "pt-0 mt-0",
                     attrs: {
                         "hide-details": "",
@@ -5204,7 +5339,47 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "selFromGroups" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "Number of Selection",
+						filled: "",
+						min: 0
+					},
+					model: {
+						value: t.selNum,
+						callback: function(o) {
+							e.$set(t, "selNum", o < 0 ? 0 : o)
+						}
+					}
+				}), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						label: "Selected from Groups",
+						filled: "",
+						items: e.app.groups,
+						"item-text": "id",
+						"item-value": "id",
+						multiple: true
+                    },
+                    model: {
+                        value: t.selGroups,
+                        callback: function(o) {
+                            e.$set(t, "selGroups", o)
+                        },
+                        expression: "required.selGroups"
+                    }
+                }), o("v-btn", {
+                        staticStyle: {
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
+                        },
+                        on: {
+                            click: function(t) {
+                                return e.deleteEvent(i, e.required.requireds)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -5822,7 +5997,47 @@
                                 return e.deleteEvent(i, e.score.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "selFromGroups" == t.type ? o("span", [o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						type: "number",
+						label: "Number of Selection",
+						filled: "",
+						min: 0
+					},
+					model: {
+						value: t.selNum,
+						callback: function(o) {
+							e.$set(t, "selNum", o < 0 ? 0 : o)
+						}
+					}
+				}), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						label: "Selected from Groups",
+						filled: "",
+						items: e.app.groups,
+						"item-text": "id",
+						"item-value": "id",
+						multiple: true
+                    },
+                    model: {
+                        value: t.selGroups,
+                        callback: function(o) {
+                            e.$set(t, "selGroups", o)
+                        },
+                        expression: "required.selGroups"
+                    }
+                }), o("v-btn", {
+                        staticStyle: {
+                            color: e.$vuetify.theme.isDark ? "white" : "black"
+                        },
+                        on: {
+                            click: function(t) {
+                                return e.deleteEvent(i, e.score.requireds)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1) : "selFromRows" == t.type ? o("span", [o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -10687,6 +10902,12 @@
 									}
 								}
 								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
+							} else if ("selFromGroups" == e.type) {
+								var i = [];
+								for (var s = 0; s < this.app.groups.length; s++) {
+									if (e.selGroups[s] == this.app.groups.id) i.push(this.app.groups.title);
+                                }
+								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
 								var i = [];
 								for (var s = 0; s < this.app.rows.length; s++) {
@@ -15220,7 +15441,7 @@
                             return e.loadFromLocalStorage()
                         }
                     }
-                }, [e._v("Local Storage")])], 1), o("v-col", {
+                }, [e._v("Local Storage (Not Recommended)")])], 1), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -15464,7 +15685,7 @@
 							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
-							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
+							e.$set(e.app, "comp", []);
 							var cnt = 0;
 							for (var b = 0; b < e.app.rows.length; b++) {
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
@@ -15483,7 +15704,6 @@
 						console.log(this.files[0]);
 						var i = new FileReader;
 						if (t) {
-							
 							console.log(t);
 							e.$store.commit("loadApp", JSON.parse(t));
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
@@ -15502,7 +15722,7 @@
 							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
-							if ("undefined" === typeof e.app.comp || e.app.comp.length == 0) e.$set(e.app, "comp", []);
+							e.$set(e.app, "comp", []);
 							var cnt = 0;
 							for (var b = 0; b < e.app.rows.length; b++) {
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
@@ -15521,7 +15741,9 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     saveFile: function(e) {
-                        var t = JSON.stringify(this.app),
+						var sv = JSON.parse(JSON.stringify(this.app));
+						this.$delete(sv, "comp");
+                        var t = JSON.stringify(sv),
                             o = new Blob([t], {
                                 type: "text/plain"
                             }),
@@ -15530,7 +15752,9 @@
                         s.download = e + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
                     },
                     saveFileFinished: function(e) {
-						var t = new co.a, o = JSON.parse(JSON.stringify(this.app)), i = "", m = "", ext = "";
+						var sv = JSON.parse(JSON.stringify(this.app));
+						this.$delete(sv, "comp");
+						var t = new co.a, o = JSON.parse(JSON.stringify(sv)), i = "", m = "", ext = "";
 						this.app.styling.backgroundImage && this.app.styling.backgroundImage.length > 30 && (m = this.getMime(this.app.styling.backgroundImage), ext = this.getExt(m), i = P()(this.app.styling.backgroundImage.split(",")[1], m), t.file("images/Bg." + ext, i, {
 							binary: !0
 						}), o.styling.backgroundImage = "images/Bg." + ext);
@@ -21983,6 +22207,12 @@
 									}
 								}
 								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
+							} else if ("selFromGroups" == e.type) {
+								var i = [];
+								for (var s = 0; s < this.app.groups.length; s++) {
+									if (e.selGroups[s] == this.app.groups.id) i.push(this.app.groups.title);
+                                }
+								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
 								var i = [];
 								for (var s = 0; s < this.app.rows.length; s++) {
@@ -31140,10 +31370,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/GvhgRabC#znBvMbWiv5Z_zT3VZymbjhzZh_SzDjR1i1hJ2pwLgSY",
+                        href: "https://mega.nz/file/yrYXAJyC#d3rgq4552P8AwXY81Zjhv2SG5EQl_Gj2tVXoHULZVj4",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.3.3")]), o("br"), e._v(" https://mega.nz/file/GvhgRabC#znBvMbWiv5Z_zT3VZymbjhzZh_SzDjR1i1hJ2pwLgSY "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.3.4")]), o("br"), e._v(" https://mega.nz/file/yrYXAJyC#d3rgq4552P8AwXY81Zjhv2SG5EQl_Gj2tVXoHULZVj4 "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -31742,7 +31972,19 @@
                                                 if (d < p && 3 == o.requireds[i].operator) return !1;
                                                 if (d > p && 4 == o.requireds[i].operator) return !1;
                                                 if (d >= p && 5 == o.requireds[i].operator) return !1
-                                            } else if ("selFromRows" == o.requireds[i].type) {
+                                            } else if ("selFromGroups" == o.requireds[i].type) {
+												if ("undefined" !== typeof o.requireds[i].selGroups) {
+													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
+														for (var m = 0; m < e.app.groups.length; m++) {
+															if (o.requireds[i].selGroups[f] == e.app.groups[m].id) {
+																var z = e.app.groups[m].elements;
+																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
+															}
+														}
+													if (x < o.requireds[i].selNum) return !1
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+												}
+											} else if ("selFromRows" == o.requireds[i].type) {
 												if ("undefined" !== typeof o.requireds[i].selRows) {
 													for (var x = 0, f = 0; f < o.requireds[i].selRows.length; f++)
 														for (var m = 0; m < e.app.rows.length; m++) o.requireds[i].selRows[f] == e.app.rows[m].id && (x += e.app.rows[m].currentChoices);
@@ -31790,7 +32032,19 @@
                                             } else if ("or" == o.requireds[i].type) {
                                                 for (var m = !1, f = 0; f < o.requireds[i].orRequired.length; f++) e.app.activated.includes(o.requireds[i].orRequired[f].req) || "" == o.requireds[i].orRequired[f].req || (m = !0);
                                                 if (!m) return !1
-                                            }  else if ("selFromRows" == o.requireds[i].type) {
+                                            } else if ("selFromGroups" == o.requireds[i].type) {
+												if ("undefined" !== typeof o.requireds[i].selGroups) {
+													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
+														for (var m = 0; m < e.app.groups.length; m++) {
+															if (o.requireds[i].selGroups[f] == e.app.groups[m].id) {
+																var z = e.app.groups[m].elements;
+																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
+															}
+														}
+													if (x < o.requireds[i].selNum) return !1
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+												}
+											} else if ("selFromRows" == o.requireds[i].type) {
 												if ("undefined" !== typeof o.requireds[i].selRows) {
 													for (var x = 0, f = 0; f < o.requireds[i].selRows.length; f++)
 														for (var m = 0; m < e.app.rows.length; m++) o.requireds[i].selRows[f] == e.app.rows[m].id && (x += e.app.rows[m].currentChoices);

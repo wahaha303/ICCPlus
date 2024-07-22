@@ -6546,7 +6546,7 @@
 							indicator.remove();
 						}, 1000);
 						for (var a = 0; a < t.app.pointTypes.length; a++) if ("undefined" === typeof t.app.pointTypes[a].initValue) t.app.pointTypes[a].initValue = t.app.pointTypes[a].startingSum;
-						if ("undefined" === typeof t.app.comp || t.app.comp.length == 0) t.$set(t.app, "comp", []);
+						t.$set(t.app, "comp", []);
 						for (var b = 0; b < t.app.rows.length; b++) {
 							for (var c = 0; c < t.app.rows[b].objects.length; c++) {
 								var d = t.app.rows[b].objects[c].id;
