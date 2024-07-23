@@ -1881,28 +1881,16 @@
                     staticClass: "mt-n2",
                     attrs: {
                         "hide-details": "",
-                        label: "- Expand 'Choice Select' Functions -"
+                        label: "Expand 'Manage This choice' Functions"
                     },
                     model: {
-                        value: e.object.selectFuntions,
+                        value: e.object.thisChoiceFunction,
                         callback: function(t) {
-                            e.$set(e.object, "selectFunctions", t)
+                            e.$set(e.object, "thisChoiceFunction", t)
                         },
-                        expression: "object.selectFunctions"
+                        expression: "object.thisChoiceFunction"
                     }
-                }), e.object.selectFunctions ? [o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Selecting this choice will de-select all other choices"
-                    },
-                    model: {
-                        value: e.object.cleanACtivatedOnSelect,
-                        callback: function(t) {
-                            e.$set(e.object, "cleanACtivatedOnSelect", t)
-                        },
-                        expression: "object.cleanACtivatedOnSelect"
-                    }
-                }), o("v-checkbox", {
+                }), e.object.thisChoiceFunction ? [o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "The choice can be selected multiple times"
@@ -1987,88 +1975,6 @@
                 }), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
-                        label: "Forces another choice active:"
-                    },
-                    model: {
-                        value: e.object.activateOtherChoice,
-                        callback: function(t) {
-                            e.$set(e.object, "activateOtherChoice", t)
-                        },
-                        expression: "object.activateOtherChoice"
-                    }
-                }), e.object.activateOtherChoice ? o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Press this to activate choice at random?"
-                    },
-                    model: {
-                        value: e.object.isActivateRandom,
-                        callback: function(t) {
-                            e.$set(e.object, "isActivateRandom", t),
-							e.$set(e.object, "numActivateRandom", 1)
-                        },
-                        expression: "object.isActivateRandom"
-                    }
-                }) : e._e(), e.object.isActivateRandom ? o("v-text-field", {
-                    attrs: {
-                        "hide-details": "",
-						type: "number",
-                        label: "How many choices do you want to activate?",
-						filled: "",
-						min: 1
-                    },
-                    model: {
-                        value: e.object.numActivateRandom,
-                        callback: function(t) {
-                            e.$set(e.object, "numActivateRandom", t < 1 ? 1 : t)
-                        },
-                        expression: "object.isActivateRandom"
-                    }
-                }) : e._e(), e.object.activateOtherChoice ? o("v-col", {
-                    staticClass: "py-0"
-                }, [e._v("Works badly if multiple of these have the same ID, or if the target has requirements attached. You can use comma to activate multiple (ID,ID,ID/ON#1).")]) : e._e(), e.object.activateOtherChoice ? o("v-text-field", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Id of the choice that will be activated",
-                        filled: ""
-                    },
-                    model: {
-                        value: e.object.activateThisChoice,
-                        callback: function(t) {
-                            e.$set(e.object, "activateThisChoice", t)
-                        },
-                        expression: "object.activateThisChoice"
-                    }
-                }) : e._e(), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Will make another choice unselected:"
-                    },
-                    model: {
-                        value: e.object.deactivateOtherChoice,
-                        callback: function(t) {
-                            e.$set(e.object, "deactivateOtherChoice", t)
-                        },
-                        expression: "object.deactivateOtherChoice"
-                    }
-                }), e.object.deactivateOtherChoice ? o("v-col", {
-                    staticClass: "py-0"
-                }, [e._v("Will be useful if the target has scores with requirements, use a Group Id to turn of multiple. You can use comma to deactivate multiple (ID,ID,ID).")]) : e._e(), e.object.deactivateOtherChoice ? o("v-text-field", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Id of the choice that will be deactivated",
-                        filled: ""
-                    },
-                    model: {
-                        value: e.object.deactivateThisChoice,
-                        callback: function(t) {
-                            e.$set(e.object, "deactivateThisChoice", t)
-                        },
-                        expression: "object.deactivateThisChoice"
-                    }
-                }) : e._e(), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
                         label: "Once this choice is selected, it cannot be canceled."
                     },
                     model: {
@@ -2079,200 +1985,6 @@
                         expression: "object.selectOnce"
                     }
                 }), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Selecting this choice will duplicate a row."
-                    },
-                    model: {
-                        value: e.object.duplicateRow,
-                        callback: function(t) {
-                            e.$set(e.object, "duplicateRow", t)
-                        },
-                        expression: "object.duplicateRow"
-                    }
-                }), e.object.duplicateRow ? [o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Not add /D#n to the end of the IDs of Requirements"
-                    },
-                    model: {
-                        value: e.object.dRowAddSufReq,
-                        callback: function(t) {
-                            e.$set(e.object, "dRowAddSufReq", t)
-                        },
-                        expression: "object.dRowAddSufReq"
-                    }
-                }), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Not add /D#n to the end of the IDs of Functions"
-                    },
-                    model: {
-                        value: e.object.dRowAddSufFunc,
-                        callback: function(t) {
-                            e.$set(e.object, "dRowAddSufFunc", t)
-                        },
-                        expression: "object.dRowAddSufFunc"
-                    }
-                }), o("v-col", {
-                    staticClass: "pb-0"
-                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: this.app.rows,
-                        "item-text": "id",
-                        "item-value": "id",
-                        filled: "",
-						label: "Id of the row that will be duplicated"
-                    },
-                    model: {
-                        value: e.object.duplicateRowId,
-                        callback: function(t) {
-                            e.$set(e.object, "duplicateRowId", t)
-                        },
-                        expression: "object.duplicateRowId"
-                    }
-                }), o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: this.app.rows,
-                        "item-text": "id",
-                        "item-value": "id",
-                        filled: "",
-						label: "The duplicated row will be placed after:"
-                    },
-                    model: {
-                        value: e.object.duplicateRowPlace,
-                        callback: function(t) {
-                            e.$set(e.object, "duplicateRowPlace", t)
-                        },
-                        expression: "object.duplicateRowPlace"
-                    }
-                })] : e._e(), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Discount other choices:"
-                    },
-                    model: {
-                        value: e.object.discountOther,
-                        callback: function(t) {
-                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", "");
-                        },
-                        expression: "object.discountOther"
-                    }
-                }), e.object.discountOther ? [o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Press this to set low limit?"
-                    },
-                    model: {
-                        value: e.object.discountLowLimitIsOn,
-                        callback: function(t) {
-                            e.$set(e.object, "discountLowLimitIsOn", t), e.$set(e.object, "discountLowLimit", "")
-                        },
-                        expression: "object.discountLowLimitIsOn"
-                    }
-                }), e.object.discountLowLimitIsOn ? [o("v-text-field", {
-					staticClass: "pb-1",
-                    attrs: {
-                        "hide-details": "",
-						type: "number",
-                        label: "Low limit",
-						filled: ""
-                    },
-                    model: {
-                        value: e.object.discountLowLimit,
-                        callback: function(t) {
-                            e.$set(e.object, "discountLowLimit", t)
-                        },
-                        expression: "object.discountLowLimit"
-                    }
-                })] : e._e(), o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: this.app.groups,
-                        "item-text": "id",
-                        "item-value": "id",
-                        filled: "",
-						multiple: true,
-						label: "Id of the groups that will be discounted"
-                    },
-                    model: {
-                        value: e.object.discountGroups,
-                        callback: function(t) {
-                            e.$set(e.object, "discountGroups", t)
-                        },
-                        expression: "object.discountGroups"
-                    }
-                }), o("v-row", [o("v-col", {
-                    staticClass: "pb-0 pr-1",
-					attrs: {
-						cols: "6"
-					}
-                }, [o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: e.moreOperators,
-                        "item-text": "text",
-                        "item-value": "value",
-                        filled: "",
-						label: "Operator"
-                    },
-                    model: {
-                        value: e.object.discountOperator,
-                        callback: function(t) {
-                            e.$set(e.object, "discountOperator", t)
-                        },
-                        expression: "object.discountOperator"
-                    }
-                })]), o("v-col", {
-                    staticClass: "pb-0 pl-1",
-					attrs: {
-						cols: "6"
-					}
-                }, [o("v-text-field", {
-                    attrs: {
-                        "hide-details": "",
-						type: "number",
-                        label: "Value",
-						filled: ""
-                    },
-                    model: {
-                        value: e.object.discountValue,
-                        callback: function(t) {
-                            e.$set(e.object, "discountValue", t)
-                        },
-                        expression: "object.discountValue"
-                    }
-                })])])] : e._e(), o("v-checkbox", {
-                    attrs: {
-                        "hide-details": "",
-                        label: "Selecting this choice will scroll to the row"
-                    },
-                    model: {
-                        value: e.object.scrollToRow,
-                        callback: function(t) {
-                            e.$set(e.object, "scrollToRow", t), e.$set(e.object, "scrollRowId", "");
-                        },
-                        expression: "object.scrollToRow"
-                    }
-                }), e.object.scrollToRow ? o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-						items: this.app.rows,
-                        "item-text": "id",
-                        "item-value": "id",
-                        filled: "",
-						label: "Row Id"
-                    },
-                    model: {
-                        value: e.object.scrollRowId,
-                        callback: function(t) {
-                            e.$set(e.object, "scrollRowId", t)
-                        },
-                        expression: "object.scrollRowId"
-                    }
-                }) : e._e()] : e._e(), o("v-divider"), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Multiply Points when activated:"
@@ -2391,7 +2103,381 @@
                         },
                         expression: "object.divideWithThis"
                     }
+                }) : e._e()] : e._e(), o("v-divider"), o("v-checkbox", {
+                    staticClass: "mt-n2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Expand 'Manage Other choice' Functions"
+                    },
+                    model: {
+                        value: e.object.otherChoiceFunction,
+                        callback: function(t) {
+                            e.$set(e.object, "otherChoiceFunction", t)
+                        },
+                        expression: "object.thisChoiceFunction"
+                    }
+                }), e.object.otherChoiceFunction ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will de-select all other choices"
+                    },
+                    model: {
+                        value: e.object.cleanACtivatedOnSelect,
+                        callback: function(t) {
+                            e.$set(e.object, "cleanACtivatedOnSelect", t)
+                        },
+                        expression: "object.cleanACtivatedOnSelect"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Forces another choice active:"
+                    },
+                    model: {
+                        value: e.object.activateOtherChoice,
+                        callback: function(t) {
+                            e.$set(e.object, "activateOtherChoice", t)
+                        },
+                        expression: "object.activateOtherChoice"
+                    }
+                }), e.object.activateOtherChoice ? o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Press this to activate choice at random?"
+                    },
+                    model: {
+                        value: e.object.isActivateRandom,
+                        callback: function(t) {
+                            e.$set(e.object, "isActivateRandom", t),
+							e.$set(e.object, "numActivateRandom", 1)
+                        },
+                        expression: "object.isActivateRandom"
+                    }
+                }) : e._e(), e.object.isActivateRandom ? o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+						type: "number",
+                        label: "How many choices do you want to activate?",
+						filled: "",
+						min: 1
+                    },
+                    model: {
+                        value: e.object.numActivateRandom,
+                        callback: function(t) {
+                            e.$set(e.object, "numActivateRandom", t < 1 ? 1 : t)
+                        },
+                        expression: "object.isActivateRandom"
+                    }
+                }) : e._e(), e.object.activateOtherChoice ? o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Works badly if multiple of these have the same ID, or if the target has requirements attached. You can use comma to activate multiple (ID,ID,ID/ON#1).")]) : e._e(), e.object.activateOtherChoice ? o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Id of the choice that will be activated",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.activateThisChoice,
+                        callback: function(t) {
+                            e.$set(e.object, "activateThisChoice", t)
+                        },
+                        expression: "object.activateThisChoice"
+                    }
                 }) : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Will make another choice unselected:"
+                    },
+                    model: {
+                        value: e.object.deactivateOtherChoice,
+                        callback: function(t) {
+                            e.$set(e.object, "deactivateOtherChoice", t)
+                        },
+                        expression: "object.deactivateOtherChoice"
+                    }
+                }), e.object.deactivateOtherChoice ? o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Will be useful if the target has scores with requirements, use a Group Id to turn of multiple. You can use comma to deactivate multiple (ID,ID,ID).")]) : e._e(), e.object.deactivateOtherChoice ? o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Id of the choice that will be deactivated",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.deactivateThisChoice,
+                        callback: function(t) {
+                            e.$set(e.object, "deactivateThisChoice", t)
+                        },
+                        expression: "object.deactivateThisChoice"
+                    }
+                }) : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Discount other choices:"
+                    },
+                    model: {
+                        value: e.object.discountOther,
+                        callback: function(t) {
+                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", "");
+                        },
+                        expression: "object.discountOther"
+                    }
+                }), e.object.discountOther ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Press this to set low limit?"
+                    },
+                    model: {
+                        value: e.object.discountLowLimitIsOn,
+                        callback: function(t) {
+                            e.$set(e.object, "discountLowLimitIsOn", t), e.$set(e.object, "discountLowLimit", "")
+                        },
+                        expression: "object.discountLowLimitIsOn"
+                    }
+                }), e.object.discountLowLimitIsOn ? [o("v-text-field", {
+					staticClass: "pb-1",
+                    attrs: {
+                        "hide-details": "",
+						type: "number",
+                        label: "Low limit",
+						filled: ""
+                    },
+                    model: {
+                        value: e.object.discountLowLimit,
+                        callback: function(t) {
+                            e.$set(e.object, "discountLowLimit", t)
+                        },
+                        expression: "object.discountLowLimit"
+                    }
+                })] : e._e(), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.groups,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						multiple: true,
+						label: "Id of the groups that will be discounted"
+                    },
+                    model: {
+                        value: e.object.discountGroups,
+                        callback: function(t) {
+                            e.$set(e.object, "discountGroups", t)
+                        },
+                        expression: "object.discountGroups"
+                    }
+                }), o("v-row", [o("v-col", {
+                    staticClass: "pb-0 pr-1",
+					attrs: {
+						cols: "6"
+					}
+                }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: e.moreOperators,
+                        "item-text": "text",
+                        "item-value": "value",
+                        filled: "",
+						label: "Operator"
+                    },
+                    model: {
+                        value: e.object.discountOperator,
+                        callback: function(t) {
+                            e.$set(e.object, "discountOperator", t)
+                        },
+                        expression: "object.discountOperator"
+                    }
+                })]), o("v-col", {
+                    staticClass: "pb-0 pl-1",
+					attrs: {
+						cols: "6"
+					}
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+						type: "number",
+                        label: "Value",
+						filled: ""
+                    },
+                    model: {
+                        value: e.object.discountValue,
+                        callback: function(t) {
+                            e.$set(e.object, "discountValue", t)
+                        },
+                        expression: "object.discountValue"
+                    }
+                })])])] : e._e()] : e._e(), o("v-divider"), o("v-checkbox", {
+                    staticClass: "mt-n2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Expand Miscellaneous Functions"
+                    },
+                    model: {
+                        value: e.object.miscFunction,
+                        callback: function(t) {
+                            e.$set(e.object, "miscFunction", t)
+                        },
+                        expression: "object.miscFunction"
+                    }
+                }), e.object.miscFunction ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will duplicate a row."
+                    },
+                    model: {
+                        value: e.object.duplicateRow,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRow", t)
+                        },
+                        expression: "object.duplicateRow"
+                    }
+                }), e.object.duplicateRow ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Requirements"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufReq,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufReq", t)
+                        },
+                        expression: "object.dRowAddSufReq"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Not add /D#n to the end of the IDs of Functions"
+                    },
+                    model: {
+                        value: e.object.dRowAddSufFunc,
+                        callback: function(t) {
+                            e.$set(e.object, "dRowAddSufFunc", t)
+                        },
+                        expression: "object.dRowAddSufFunc"
+                    }
+                }), o("v-col", {
+                    staticClass: "pb-0"
+                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "Id of the row that will be duplicated"
+                    },
+                    model: {
+                        value: e.object.duplicateRowId,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRowId", t)
+                        },
+                        expression: "object.duplicateRowId"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "The duplicated row will be placed after:"
+                    },
+                    model: {
+                        value: e.object.duplicateRowPlace,
+                        callback: function(t) {
+                            e.$set(e.object, "duplicateRowPlace", t)
+                        },
+                        expression: "object.duplicateRowPlace"
+                    }
+                })] : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will scroll to the row"
+                    },
+                    model: {
+                        value: e.object.scrollToRow,
+                        callback: function(t) {
+                            e.$set(e.object, "scrollToRow", t), e.$set(e.object, "scrollRowId", "");
+                        },
+                        expression: "object.scrollToRow"
+                    }
+                }), e.object.scrollToRow ? o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "Row Id"
+                    },
+                    model: {
+                        value: e.object.scrollRowId,
+                        callback: function(t) {
+                            e.$set(e.object, "scrollRowId", t)
+                        },
+                        expression: "object.scrollRowId"
+                    }
+                }) : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will change backgorund"
+                    },
+                    model: {
+                        value: e.object.changeBackground,
+                        callback: function(t) {
+                            e.$set(e.object, "changeBackground", t), e.$set(e.object, "scrollRowId", "");
+                        },
+                        expression: "object.changeBackground"
+                    }
+                }), e.object.changeBackground ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Change Background Image instead?"
+                    },
+                    model: {
+                        value: e.object.changeBgImage,
+                        callback: function(t) {
+                            e.$set(e.object, "changeBgImage", t), e.$set(e.object, "bgImage", "");
+                        },
+                        expression: "object.changeBgImage"
+                    }
+                }), e.object.changeBgImage ? o("picture-input", {
+                    staticClass: "col",
+                    attrs: {
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                        hideChangeButton: !0,
+                        removable: !0,
+                        crop: !1,
+                        zIndex: 0,
+                        margin: "50",
+                        prefill: e.object.bgImage,
+                        "custom-strings": {
+                            upload: "<h1>Error!</h1>",
+                            drag: "Upload Background Image"
+                        }
+                    },
+                    on: {
+                        change: function(t) {
+							console.log(t), e.object.bgImage = t
+						},
+                        remove: function() {
+							e.object.bgImage = ""
+						}
+                    }
+                }) : o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "8 digits Hex Color Code(e.g., #000000FF)",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.changedBgColorCode,
+                        callback: function(t) {
+                            e.$set(e.object, "changedBgColorCode", t)
+                        },
+                        expression: "object.changedBgColorCode"
+                    }
+                })] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Word will be changed to something else at select."
@@ -2558,7 +2644,7 @@
                         },
                         expression: "object.BackpackButton"
                     }
-                })], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
+                })] : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
                     staticClass: "row pa-0",
                     style: e.objectBackground,
                     on: {
@@ -11396,6 +11482,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -11698,6 +11791,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
 											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
@@ -11980,6 +12082,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -12025,6 +12134,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
@@ -12238,6 +12356,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -14391,6 +14516,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -14693,6 +14825,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -14966,6 +15107,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -15004,13 +15152,22 @@
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
 										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
 									}
-							}							
+							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) {
 									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -15215,6 +15372,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -22843,6 +23007,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -23145,6 +23316,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
 											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
@@ -23432,6 +23612,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -23477,6 +23664,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
@@ -23695,6 +23891,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -24669,6 +24872,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -24971,6 +25181,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -25244,6 +25463,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -25289,6 +25515,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -25493,6 +25728,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {

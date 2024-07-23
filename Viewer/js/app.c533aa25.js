@@ -2320,6 +2320,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -2622,6 +2629,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
 											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
@@ -2910,6 +2926,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -2955,6 +2978,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
@@ -3174,6 +3206,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -4113,6 +4152,13 @@
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -4415,6 +4461,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
 											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
@@ -4703,6 +4758,13 @@
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+								if (e.changeBackground) {
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -4748,6 +4810,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(e, "bgImageOrigin", this.app.styling.backgroundImage);
+											this.$set(this.app.styling, "backgroundImage", e.bgImage);
+										} else {
+											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
+											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
 									}
 									if (e.scrollToRow) {
 										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
@@ -4967,6 +5038,13 @@
 								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
 									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+									if (e.changeBackground) {
+										if (e.changeBgImage) {
+											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+										} else {
+											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
