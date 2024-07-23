@@ -2318,6 +2318,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -2616,6 +2618,25 @@
 											}
 										}
 									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+														break
+													}
+												}
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -2887,6 +2908,8 @@
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -2932,6 +2955,21 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+														break
+													}
+												}
+											}
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -4073,6 +4111,8 @@
 												}
 											}											
 										}
+									if (e.backpackBtnRequirement)
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -4371,6 +4411,25 @@
 											}
 										}
 									}
+									if (e.backpackBtnRequirement) {
+										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+														break
+													}
+												}
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -4642,6 +4701,8 @@
 											}
 										}											
 									}
+								if (e.backpackBtnRequirement)
+									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -4687,6 +4748,21 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+														break
+													}
+												}
+											}
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -6249,6 +6325,8 @@
 						t.$set(t.app, "compR", []);
 						t.$set(t.app, "compG", []);
 						for (var b = 0; b < t.app.rows.length; b++) {
+							var g = t.app.rows[b].id;
+							t.app.compR[g] = {rows: b};
 							for (var c = 0; c < t.app.rows[b].objects.length; c++) {
 								var d = t.app.rows[b].objects[c].id;
 								t.app.comp[d] = {rows: b, objects: c};
@@ -6256,6 +6334,10 @@
 									t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", t.app.rows[b].objects[c].numMultipleTimesMinus);
 								}
 							}
+						}
+						for (var f = 0; f < t.app.groups.length; f++) {
+							var r = t.app.groups[f].id;
+							t.app.compG[r] = {groups: f};
 						}
 						const Error_msg = 'Your browser does not support the .avif format.\n Some images may not be displayed.';
 						new Promise(() => {

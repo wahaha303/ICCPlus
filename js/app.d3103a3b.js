@@ -556,7 +556,7 @@
                 }, e._l(e.app.rows, (function(t) {
                     return o("v-col", {
                         key: t.index,
-                        class: e.window.width > 1200 && t.width ? "col-6 pt-0 pb-0" : "col-12 pt-0 pb-0"
+                        class: e.window.width > 1200 && t.width ? "col-6 pt-0 pb-0" : "col-12 pt-0 pb-0",
                     }, [o("v-toolbar", {
                         staticClass: "grey ma-2 " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
@@ -952,7 +952,7 @@
                         "hide-details": "",
                         label: "Row Id",
                         placeholder: "Placeholder",
-                        filled: ""
+                        filled: "",
                     },
                     model: {
                         value: e.row.id,
@@ -1345,7 +1345,7 @@
                 var e = this,
                     t = e.$createElement,
                     o = e._self._c || t;
-                return o("span", [e.isEditModeOn ? o("v-row", [o("v-card", {
+                return o("span", [e.isEditModeOn ? o("v-row", {ref: "ThisComp"}, [o("v-card", {
                     staticClass: "ma-1",
                     attrs: {
                         width: "100%",
@@ -2244,7 +2244,35 @@
                         },
                         expression: "object.discountValue"
                     }
-                })])])] : e._e()] : e._e(), o("v-divider"), o("v-checkbox", {
+                })])])] : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will scroll to the row"
+                    },
+                    model: {
+                        value: e.object.scrollToRow,
+                        callback: function(t) {
+                            e.$set(e.object, "scrollToRow", t), e.$set(e.object, "scrollRowId", "");
+                        },
+                        expression: "object.scrollToRow"
+                    }
+                }), e.object.scrollToRow ? o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.rows,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+						label: "Row Id"
+                    },
+                    model: {
+                        value: e.object.scrollRowId,
+                        callback: function(t) {
+                            e.$set(e.object, "scrollRowId", t)
+                        },
+                        expression: "object.scrollRowId"
+                    }
+                }) : e._e()] : e._e(), o("v-divider"), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Multiply Points when activated:"
@@ -11670,6 +11698,15 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var co = this.app.compR[e.scrollRowId],
+													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+												coR.$el.scrollIntoView({ behavior: 'smooth' });
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -11988,6 +12025,15 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var co = this.app.compR[e.scrollRowId],
+													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+												coR.$el.scrollIntoView({ behavior: 'smooth' });
+											}
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -23099,6 +23145,20 @@
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+													}
+												}
+											}
+										}
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
@@ -23417,6 +23477,20 @@
 									if (e.backpackBtnRequirement) {
 										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+													}
+												}
+											}
+										}
 									}
 								}
 								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
@@ -30700,7 +30774,7 @@
 						attrs: {
 							src: t.image
 						}
-					}) : e._e(), e._v(" " + e._s(t.afterText) + " "), t.iconIsOn && !t.imageOnSide && t.imageSidePlacement ? o("img", {
+					}) : e._e(), e._v(" " + e._s(t.afterText) + " "), t.iconIsOn && t.imageOnSide && t.imageSidePlacement ? o("img", {
 						style: "width:" + t.iconWidth + "px;height:" + t.iconHeight + "px;",
 						attrs: {
 							src: t.image
