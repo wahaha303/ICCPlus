@@ -561,7 +561,7 @@
                         staticClass: "grey ma-2 " + (e.$vuetify.theme.isDark ? "darken" : "lighten") + "-2"
                     }, [o("v-toolbar-title", {
                         domProps: {
-                            innerHTML: e._s(e.$sanitize(t.title))
+                            innerHTML: e._s(e.$sanitize((("undefined" !== typeof t.debugTitle && t.debugTitle !== "") ? t.debugTitle + " " : "") + t.title))
                         }
                     }), o("v-spacer"), o("v-tooltip", {
                         attrs: {
@@ -872,6 +872,7 @@
                     staticClass: "col-md-2 pa-2"
                 }, [o("v-select", {
                     attrs: {
+						"hide-details" : "",
                         items: e.templates,
                         "item-text": "text",
                         "item-value": "value",
@@ -887,6 +888,7 @@
                     }
                 }), o("v-text-field", {
                     attrs: {
+						"hide-details" : "",
                         label: "Row Title",
                         placeholder: "Placeholder",
                         filled: ""
@@ -897,6 +899,20 @@
                             e.$set(e.row, "title", t)
                         },
                         expression: "row.title"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+						"hide-details" : "",
+                        label: "Debug Title",
+                        placeholder: "Placeholder",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.row.debugTitle,
+                        callback: function(t) {
+                            e.$set(e.row, "debugTitle", t)
+                        },
+                        expression: "row.debugTitle"
                     }
                 }), o("v-text-field", {
                     attrs: {
@@ -1304,8 +1320,8 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: e.checkRequireds(t) || e.row.isEditModeOn || (t.isPrivateStyling ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
-                            expression: "\n          checkRequireds(object) ||\n          row.isEditModeOn || (object.isPrivateStyling ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn) \n        "
+                            value: e.checkRequireds(t) || e.row.isEditModeOn || (t.privateFilterIsOn ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
+                            expression: "\n          checkRequireds(object) ||\n          row.isEditModeOn || (object.privateFilterIsOn ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn) \n        "
                         }],
                         key: t.index,
                         staticClass: "nopadding",
@@ -1417,6 +1433,7 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
+										console.log(e, t);
                                         e.currentComponent = "ObjectSettings"
                                     }
                                 }
@@ -2425,7 +2442,7 @@
                     model: {
                         value: e.object.changeBackground,
                         callback: function(t) {
-                            e.$set(e.object, "changeBackground", t), e.$set(e.object, "scrollRowId", "");
+                            e.$set(e.object, "changeBackground", t), e.$set(e.object, "changeBgImage", !1), e.$set(e.object, "bgImaage", "");
                         },
                         expression: "object.changeBackground"
                     }
@@ -2478,6 +2495,31 @@
                         expression: "object.changedBgColorCode"
                     }
                 })] : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Selecting this choice will set Background Music"
+                    },
+                    model: {
+                        value: e.object.setBgmIsOn,
+                        callback: function(t) {
+                            e.$set(e.object, "setBgmIsOn", t), e.$set(e.object, "bgmId", "")
+                        },
+                        expression: "object.setBgmIsOn"
+                    }
+                }), e.object.setBgmIsOn ? o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Youtube Video ID (e.g., naktUDBaHuw)",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.bgmId,
+                        callback: function(t) {
+                            e.$set(e.object, "bgmId", t)
+                        },
+                        expression: "object.bgmId"
+                    }
+                }) : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Word will be changed to something else at select."
@@ -2645,11 +2687,11 @@
                         expression: "object.BackpackButton"
                     }
                 })] : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
-                    staticClass: "row pa-0",
+                    staticClass: "row pa-0" + (e.object.isActive && e.app.styling.selOverlayOnImage ? " bg-overlay" : "") + (e.app.styling.reqOverlayOnImage && !e.checkRequireds(e.object) ? " bg-overlay" : ""),
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
-                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
+                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row);
                         }
                     }
                 }, [1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
@@ -6531,14 +6573,6 @@
                     attrs: {
                         label: "Use private styling?"
                     },
-                    on: {
-                        change: function(t) {
-                            e.row.styling = JSON.parse(JSON.stringify(e.styling)),
-							e.row.styling.backgroundImage = "",
-							e.row.styling.rowBackgroundImage = "",
-							e.row.styling.rowBorderImage = ""
-                        }
-                    },
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
@@ -6694,7 +6728,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Filter")]), o("v-card-text", [o("v-container", [o("v-row", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateFilterIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateFilterIsOn", t);
+							if (t) {
+								Object.keys(e.filterStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.filterStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateFilterIsOn"
+                    }
+                }), e._v("Filter")]), o("v-card-text", {
+					staticClass: !e.row.privateFilterIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", {
                     attrs: {
                         align: "center"
                     }
@@ -6960,6 +7021,21 @@
                             e.$set(e.styling, "selBgColorIsOn", t)
                         },
                         expression: "styling.selBgColorIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Overlay on Image?",
+						disabled: !e.styling.selBgColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selOverlayOnImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "selOverlayOnImage", t)
+                        },
+                        expression: "styling.selOverlayOnImage"
                     }
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
@@ -7417,6 +7493,21 @@
                         },
                         expression: "styling.reqBgColorIsOn"
                     }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Overlay on Image?",
+						disabled: !e.styling.reqBgColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqOverlayOnImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqOverlayOnImage", t)
+                        },
+                        expression: "styling.reqOverlayOnImage"
+                    }
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
@@ -7606,7 +7697,13 @@
                 computed: {
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
-                    }
+                    },
+					filterStyling: function() {
+						return this.$store.state.filterStyling
+					},
+					app: function() {
+						return this.$store.state.app
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -7653,7 +7750,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Text")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateTextIsOn", t);
+							if (t) {
+								Object.keys(e.textStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.textStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateTextIsOn"
+                    }
+                }), e._v("Text")]), o("v-card-text", {
+					staticClass: !e.row.privateTextIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", {
                     attrs: {
                         cols: "3"
                     }
@@ -8104,7 +8228,13 @@
                 computed: {
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
-                    }
+                    },
+					textStyling: function() {
+						return this.$store.state.textStyling
+					},
+					app: function() {
+						return this.$store.state.app
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -8121,6 +8251,7 @@
             VCardActions: j["a"],
             VCardText: j["b"],
             VCardTitle: j["c"],
+			VCheckbox: ae["a"],
             VCol: I["a"],
             VColorPicker: xe["a"],
             VContainer: k["a"],
@@ -8149,7 +8280,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Choice Images")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("v-col", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateObjectImageIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateObjectImageIsOn", t);
+							if (t) {
+								Object.keys(e.objectImageStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.objectImageStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateObjectImageIsOn"
+                    }
+                }), e._v("Choice Images")]), o("v-card-text", {
+					staticClass: !e.row.privateObjectImageIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", [o("v-col", {
                     staticClass: "py-0"
                 }, [e._v("Style and Width of the border")]), o("v-select", {
                     attrs: {
@@ -8437,7 +8595,13 @@
                     },
                     borderRadiusSuffix: function() {
                         return this.styling.objectImgBorderRadiusIsPixels ? "px" : "%"
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					objectImageStyling: function() {
+						return this.$store.state.objectImageStyling
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -8484,7 +8648,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Row Images")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("v-col", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateRowImageIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateRowImageIsOn", t);
+							if (t) {
+								Object.keys(e.rowImageStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.rowImageStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateRowImageIsOn"
+                    }
+                }), e._v("Row Images")]), o("v-card-text", {
+					staticClass: !e.row.privateRowImageIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", [o("v-col", {
                     staticClass: "py-0"
                 }, [e._v("Style and Width of the border")]), o("v-select", {
                     attrs: {
@@ -8720,7 +8911,13 @@
                     },
                     borderRadiusSuffix: function() {
                         return this.styling.rowImgBorderRadiusIsPixels ? "px" : "%"
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					rowImageStyling: function() {
+						return this.$store.state.rowImageStyling
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -8767,7 +8964,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Backgrounds")]), o("v-card-text", [o("v-container", [o("v-row", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateBackgroundIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateBackgroundIsOn", t);
+							if (t) {
+								Object.keys(e.backgroundStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.backgroundStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateBackgroundIsOn"
+                    }
+                }), e._v("Backgrounds")]), o("v-card-text", {
+					staticClass: !e.row.privateBackgroundIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", {
                     attrs: {
                         align: "center"
                     }
@@ -8965,7 +9189,13 @@
                 computed: {
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					backgroundStyling: function() {
+						return this.$store.state.backgroundStyling
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -9030,7 +9260,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Choice Design")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("v-checkbox", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateObjectIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateObjectIsOn", t);
+							if (t) {
+								Object.keys(e.objectStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.objectStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateObjectIsOn"
+                    }
+                }), e._v("Choice Design")]), o("v-card-text", {
+					staticClass: !e.row.privateObjectIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
@@ -9681,7 +9938,13 @@
                     },
                     borderRadiusSuffix: function() {
                         return this.styling.objectBorderRadiusIsPixels ? "px" : "%"
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					objectStyling: function() {
+						return this.$store.state.objectStyling
+					}
                 },
                 methods: {
                     shadowIsChanged: function() {
@@ -9746,7 +10009,34 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Row Design")]), o("v-card-text", [o("v-container", [o("v-switch", {
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateRowIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateRowIsOn", t);
+							if (t) {
+								Object.keys(e.rowStyling).forEach(key => {
+									if (e.app.styling.hasOwnProperty(key)) {
+										e.$set(e.styling, key, e.app.styling[key]);
+									}
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.rowStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateRowIsOn"
+                    }
+                }), e._v("Row Design")]), o("v-card-text", {
+					staticClass: !e.row.privateRowIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-switch", {
                     attrs: {
                         label: "Advanced Design?"
                     },
@@ -10487,7 +10777,13 @@
                     },
                     borderRadiusSuffix: function() {
                         return this.styling.rowBorderRadiusIsPixels ? "px" : "%"
-                    }
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					rowStyling: function() {
+						return this.$store.state.rowStyling
+					}
                 },
                 methods: {
                     shadowIsChanged: function() {
@@ -10934,45 +11230,156 @@
                 },
                 computed: {
                     styling: function() {
-                        return this.object.isPrivateStyling ? this.object.styling : this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
+                        return this.$store.state.app.styling
                     },
+					objectStyling: function() {
+						if (this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.privateObjectIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling
+					},
+					objectImageStyling: function() {
+						if (this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					filterStyling: function() {
+						if (this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.privateFilterIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					backgroundStyling: function() {
+						if (this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									console.log(coD);
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									console.log(coD);
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					textStyling: function() {
+						if (this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : this.styling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.filterStyling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
                     },
                     multiChoiceButton: function() {
-                        return "color: " + this.styling.scoreTextColor + ";"
+                        return "color: " + this.textStyling.scoreTextColor + ";"
                     },
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
+                        return 'font-family: "' + this.textStyling.objectText + '";text-align: ' + this.textStyling.objectTextAlign + ";font-size: " + this.textStyling.objectTextTextSize + "%;color: " + (!e && this.filterStyling.reqCTextColorIsOn ? this.filterStyling.reqFilterCTextColor : (this.object.isActive && this.filterStyling.selCTextColorIsOn ? this.filterStyling.selFilterCTextColor : this.textStyling.objectTextColor)) + ";padding: " + this.textStyling.objectTextPadding + "px;"
                     },
                     objectBackground: function() {
-                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "")) + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.styling.selBgColorIsOn ? "background-color: " + this.styling.selFilterBgColor + " !important;" : "") : ""),
-                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
+						console.log(this.backgroundStyling);
+						console.log(this.app.compODG, this.app.compRDG);
+                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px !important; ' : "") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + " ;" : "") + "margin:" + this.objectStyling.objectMargin + "px; " + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + " !important;" : "") : ""),
+							t = this.objectStyling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn) || (!o && this.styling.reqBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
-                        if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
-                        else if (!o) {
-                            if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
-                            else if (this.object.isSelectableMultiple)
-                                for (var i = 0; i < this.object.numMultipleTimesPluss - this.object.numMultipleTimesMinus; i++) this.selectedOneLess(this.object, this.row);
-                            if ((this.object.multiplyPointtypeIsOnCheck || this.object.dividePointtypeIsOnCheck) && this.multiplyOrDivide(this.object), this.object.activateOtherChoice) {
-								if ("undefined" !== typeof this.app.comp[this.object.activateThisChoice]) {
-									var co = this.app.comp[this.object.activateThisChoice],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									coO.isActive && this.setFalse(coO);
-								}
-							}
-                        }
-                        return e += ";", e
+						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
+						if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
+						else if (!o) {
+							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;");
+							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
+							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor + " !important" : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
+						}
+						return e += ";", e
                     },
                     findRowTitle: function() {
 						var e = "";
@@ -10984,13 +11391,13 @@
                         return e
                     },
                     objectImage: function() {
-                        var e = "width:" + this.styling.objectImageWidth + "%;margin-top:" + this.styling.objectImageMarginTop + "%;margin-bottom:" + this.styling.objectImageMarginBottom + "%;";
-                        this.styling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.styling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
-                        var t = this.styling.objectImgBorderRadiusIsPixels ? "px" : "%";
-                        return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectImgBorderIsOn && (e += "border: " + this.styling.objectImgBorderWidth + "px " + this.styling.objectImgBorderStyle + " " + this.styling.objectImgBorderColor + ";"), e
+                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+                        var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
+                        return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
                     scoreText: function() {
-                        return 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";color: " + this.styling.scoreTextColor + ";"
+                        return 'font-family: "' + this.textStyling.scoreText + '";font-size: ' + this.textStyling.scoreTextSize + "%;text-align: " + this.textStyling.scoreTextAlign + ";color: " + this.textStyling.scoreTextColor + ";"
                     },
                     app: function() {
                         return this.$store.state.app
@@ -11165,8 +11572,6 @@
 								}), o)
 							})))()
 						} else {
-							console.log(t.object);
-							console.log(t.app.comp);
 							var s = t.objects.indexOf(t.object);
 							if ("undefined" !== typeof t.app.comp[t.object.id]) {
 								var co = t.app.comp[t.object.id],
@@ -11196,6 +11601,17 @@
                                 for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
+					playBgm: function(e, t) {
+						var p = this.app.bgmIsPlaying,
+							s = document.getElementById('bgm'),
+							o = s.src.split("/").pop().split("?")[0];
+						if (o == t) {
+							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+						} else {
+							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+						}
+					},
                     activateObject: function(e, t) {
 						if (!(e.selectOnce && e.isActive)) {
 							for (var g = 0; g < e.scores.length; g++)
@@ -11347,7 +11763,7 @@
 											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
@@ -11371,7 +11787,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -11400,55 +11816,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															nH = this.activated.indexOf(eid);
-															var bC = this.checkRequireds(coS);
-															this.activated.splice(nH, 1);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(nH, 0, eid);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														nH = this.activated.indexOf(eid);
+														var bC = this.checkRequireds(coS);
+														this.activated.splice(nH, 1);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
-																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																		
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																		
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -11458,16 +11872,16 @@
 									}
 									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
 												coR = this.app.rows[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice;
+											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 											var d = coR.currentChoices - 1;
 											if (d > coR.allowedChoices) {
 												var u = d - coR.allowedChoices;
@@ -11475,7 +11889,6 @@
 													if (u > 0 && coR.objects[v].isActive) {
 														this.activateObject(coR.objects[v], coR);
 														u--;
-														console.log("u:", u)
 													}
 												}
 											}											
@@ -11489,6 +11902,12 @@
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 										}
 									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -11499,7 +11918,7 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															this.$set(coS, "discountIsOn", false)
+															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 														}
 													}
 									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
@@ -11514,13 +11933,14 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable) {
+															if (!coS.isNotDiscountable && !coS.discountIsOn) {
 																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
 																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
 																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
 																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
 																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
 																this.$set(coS, "discountIsOn", true);
+																this.$set(coS, "discountedFrom", e.id);
 															}
 														}
 													}
@@ -11649,7 +12069,7 @@
 											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												var bRO = this.checkRequireds(coO);
 												this.activated.push(eid);
 												var bRT = this.checkRequireds(coO);
@@ -11672,7 +12092,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -11700,55 +12120,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															this.activated.push(eid);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(this.activated.indexOf(eid), 1);
-															if (bC !== bE) {
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														this.activated.push(eid);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(this.activated.indexOf(eid), 1);
+														if (bC !== bE) {
+															19 == C.length ? C += coO.title : C+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																				}																			
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
+																				}
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
 																				}
-																				
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}
+																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
-																}
+																	}
 															}
 														}
 													}
@@ -11761,10 +12179,10 @@
 										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
 									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -11807,6 +12225,13 @@
 													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
 												coR.$el.scrollIntoView({ behavior: 'smooth' });
 											}
+										}
+									}									
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 									this.activated.push(eid), t.currentChoices += 1
@@ -11948,7 +12373,7 @@
 										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											nR = this.activated.indexOf(eid);
 											var bRO = this.checkRequireds(coO);
 											this.activated.splice(nR, 1);
@@ -11972,7 +12397,7 @@
 												if (e.discountOther) {
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b];
-														if (coS.discountIsOn) {
+														if (coS.discountIsOn && coS.discountedFrom == e.id) {
 															var coSDiscount = parseInt(coS.value) - coS.discountScore;
 															for (var m = 0; m < this.app.pointTypes.length; m++)
 																if (this.app.pointTypes[m].id == coS.id) {
@@ -12001,55 +12426,53 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														nH = this.activated.indexOf(eid);
-														var bC = this.checkRequireds(coS);
-														this.activated.splice(nH, 1);
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													nH = this.activated.indexOf(eid);
+													var bC = this.checkRequireds(coS);
+													this.activated.splice(nH, 1);
+													var bE = this.checkRequireds(coS);
+													this.activated.splice(nH, 0, eid);
+													if (bC !== bE) {
+														19 == h.length ? h += coO.title : h+= ", " + coO.title;
+														if (bC) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																		}
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																		}																		
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -12059,16 +12482,16 @@
 								}
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 								if (e.multiplyPointtypeIsOnCheck)
-									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 								if (e.textfieldIsOn)
 									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
 											coR = this.app.rows[co.rows];
-										coR.allowedChoices -= e.numbAddToAllowChoice;
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 										var d = coR.currentChoices - 1;
 										if (d > coR.allowedChoices) {
 											var u = d - coR.allowedChoices;
@@ -12099,9 +12522,15 @@
 														coO = coR.objects[co.objects];
 													for (var c = 0; c < coO.scores.length; c++) {
 														var coS = coO.scores[c];
-														this.$set(coS, "discountIsOn", false)
+														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
+								if (e.setBgmIsOn) {
+									if (e.bgmId) {
+										this.app.bgmIsPlaying = !1;
+										this.playBgm(e, e.bgmId)
+									}
+								}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
 						}
@@ -12151,6 +12580,13 @@
 													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
 												coR.$el.scrollIntoView({ behavior: 'smooth' });
 											}
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -12247,7 +12683,7 @@
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid);
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
@@ -12272,56 +12708,54 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														var bC = this.checkRequireds(coS),
-															fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-															aFI = this.activated[fI].split("/ON#");
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bE) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													var bC = this.checkRequireds(coS),
+														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+														aFI = this.activated[fI].split("/ON#");
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													var bE = this.checkRequireds(coS);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													if (bC !== bE) {
+														19 == C.length ? C += coO.title : C+= ", " + coO.title;
+														if (bE) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -12361,6 +12795,12 @@
 											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
 										} else {
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -12477,7 +12917,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
@@ -12503,54 +12943,52 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
-															var bE = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bE) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
+														var bE = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bE) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -12900,12 +13338,6 @@
                     attrs: {
                         label: "Use private styling?"
                     },
-                    on: {
-                        change: function(t) {
-                            e.row.styling = JSON.parse(JSON.stringify(e.styling)),
-							e.row.styling.backgroundImage = ""
-                        }
-                    },
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
@@ -13060,28 +13492,7 @@
                             }, i), [e._v("Manage Choice Design")])], 1)]
                         }
                     }], null, !1, 2942481490)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])]), o("v-tooltip", {
-                    attrs: {
-                        right: "",
-                        "open-delay": "1000"
-                    },
-                    scopedSlots: e._u([{
-                        key: "activator",
-                        fn: function(t) {
-                            var i = t.on;
-                            return [o("v-col", [o("v-btn", e._g({
-                                staticStyle: {
-                                    color: e.$vuetify.theme.isDark ? "white" : "black"
-                                },
-                                on: {
-                                    click: function(t) {
-                                        e.currentComponent = "appBackpack"
-                                    }
-                                }
-                            }, i), [e._v("Manage Backpack Design")])], 1)]
-                        }
-                    }], null, !1, 3838688510)
-                }, [o("span", [e._v("Here you can change the backpack.")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         from: "private",
@@ -13279,6 +13690,468 @@
             Rt = Object(w["a"])(Ot, kt, Bt, !1, null, null, null),
             Ft = Rt.exports;
         x()(Rt, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"],
+            VTooltip: Q["a"]
+        });
+		var dkt = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        "max-width": "600px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+							console.log(e, t, o),
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", [o("v-card-title", {
+                    staticClass: "headline"
+                }, [e._v("Row Design Settings")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appFilter"
+                                    }
+                                }
+                            }, i), [e._v("Manage Filter Design")])], 1)]
+                        }
+                    }], null, !1, 3225312638)
+                }, [o("span", [e._v(" Here you can change the filters for choices that are selected "), o("br"), e._v("and the one's you dont have the requirements for. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appText"
+                                    }
+                                }
+                            }, i), [e._v("Manage Text Design")])], 1)]
+                        }
+                    }], null, !1, 268359582)
+                }, [o("span", [e._v(" Here you can change the size, font and "), o("br"), e._v("color of the text on titles and text. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choices Image Design")])], 1)]
+                        }
+                    }], null, !1, 1468014515)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appRowImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Row Image Design")])], 1)]
+                        }
+                    }], null, !1, 3359790558)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appBackground"
+                                    }
+                                }
+                            }, i), [e._v("Manage Background Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appRowDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Row Design")])], 1)]
+                        }
+                    }], null, !1, 2123780716)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on rows. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choice Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1)], 1)], 1), o(e.currentComponent, {
+                    tag: "component",
+                    attrs: {
+                        from: "private",
+                        row: e.row,
+                        currentComponent: e.currentComponent
+                    },
+                    on: {
+                        cleanCurrentComponent: function(t) {
+                            e.currentComponent = t
+                        }
+                    }
+                }), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            dBt = [],
+            dSt = {
+                props: {
+                    row: Object
+                },
+                data: function() {
+                    return {
+                        currentComponent: "",
+                        dialog: !0
+                    }
+                },
+                components: {
+                    appFilter: Te,
+                    appText: Oe,
+                    appObjectImage: $e,
+                    appBackground: Ue,
+                    appObjectDesign: Qe,
+                    appRowDesign: rt,
+                    appPointBar: pt,
+                    appRowImage: Le
+                },
+                computed: {
+                    styling: function() {
+                        return this.$store.state.app.styling
+                    },
+                    rows: function() {
+                        return this.$store.state.app.rows
+                    },
+                    groups: function() {
+                        return this.$store.state.app.groups
+                    },
+					app: function() {
+                        return this.$store.state.app
+                    }
+                },
+                methods: {
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    },
+                    rowWasChanged: function() {
+                        this.$emit("rowWasChanged", this.row)
+                    }
+                }
+            },
+            dOt = dSt,
+            dRt = Object(w["a"])(dOt, dkt, dBt, !1, null, null, null),
+            dFt = dRt.exports;
+        x()(dRt, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"],
+            VTooltip: Q["a"]
+        });
+		var okt = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        "max-width": "600px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+							console.log(e, t, o),
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", [o("v-card-title", {
+                    staticClass: "headline"
+                }, [e._v("Row Design Settings")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appFilter"
+                                    }
+                                }
+                            }, i), [e._v("Manage Filter Design")])], 1)]
+                        }
+                    }], null, !1, 3225312638)
+                }, [o("span", [e._v(" Here you can change the filters for choices that are selected "), o("br"), e._v("and the one's you dont have the requirements for. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appText"
+                                    }
+                                }
+                            }, i), [e._v("Manage Text Design")])], 1)]
+                        }
+                    }], null, !1, 268359582)
+                }, [o("span", [e._v(" Here you can change the size, font and "), o("br"), e._v("color of the text on titles and text. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choices Image Design")])], 1)]
+                        }
+                    }], null, !1, 1468014515)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appBackground"
+                                    }
+                                }
+                            }, i), [e._v("Manage Background Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choice Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1)], 1)], 1), o(e.currentComponent, {
+                    tag: "component",
+                    attrs: {
+                        from: "private",
+                        row: e.row,
+                        currentComponent: e.currentComponent
+                    },
+                    on: {
+                        cleanCurrentComponent: function(t) {
+                            e.currentComponent = t
+                        }
+                    }
+                }), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            oBt = [],
+            oSt = {
+                props: {
+                    row: Object
+                },
+                data: function() {
+                    return {
+                        currentComponent: "",
+                        dialog: !0
+                    }
+                },
+                components: {
+                    appFilter: Te,
+                    appText: Oe,
+                    appObjectImage: $e,
+                    appBackground: Ue,
+                    appObjectDesign: Qe,
+                    appRowDesign: rt,
+                    appPointBar: pt,
+                    appRowImage: Le
+                },
+                computed: {
+                    styling: function() {
+                        return this.$store.state.app.styling
+                    },
+                    rows: function() {
+                        return this.$store.state.app.rows
+                    },
+                    groups: function() {
+                        return this.$store.state.app.groups
+                    },
+					app: function() {
+                        return this.$store.state.app
+                    }
+                },
+                methods: {
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    },
+                    rowWasChanged: function() {
+                        this.$emit("rowWasChanged", this.row)
+                    }
+                }
+            },
+            oOt = oSt,
+            oRt = Object(w["a"])(oOt, okt, oBt, !1, null, null, null),
+            oFt = oRt.exports;
+        x()(oRt, {
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -14021,11 +14894,63 @@
                         return this.$store.state.objectWidths
                     },
                     rowTitle: function() {
-                        return 'font-family: "' + this.styling.rowTitle + '";font-size: ' + this.styling.rowTitleTextSize + "%;text-align: " + this.styling.rowTitleAlign + ";color: " + this.styling.rowTitleColor + ";"
+                        return 'font-family: "' + this.textStyling.rowTitle + '";font-size: ' + this.textStyling.rowTitleTextSize + "%;text-align: " + this.textStyling.rowTitleAlign + ";color: " + this.textStyling.rowTitleColor + ";"
                     },
                     styling: function() {
-                        return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
+                        return this.$store.state.app.styling
                     },
+					rowStyling: function() {
+						if (this.row.privateRowIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateRowIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					textStyling: function() {
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					rowImageStyling: function() {
+						if (this.row.privateRowImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateRowImageIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					backgroundStyling: function() {
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     resultArray: function() {
                         var e, t, o = [];
                         if ("standard" == this.type) {
@@ -14061,25 +14986,25 @@
                         return o
                     },
                     rowBody: function() {
-                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
-                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
+                        var e = "margin-top: " + this.rowStyling.rowBodyMarginTop + "px;margin-bottom:" + this.rowStyling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
                     rowText: function() {
-                        var e = 'font-family: "' + this.styling.rowText + '";text-align: ' + this.styling.rowTextAlign + ";font-size: " + this.styling.rowTextTextSize + "%;color: " + this.styling.rowTextColor + ";padding-top: " + this.styling.rowTextPaddingX + "px;padding-bottom: " + this.styling.rowTextPaddingX + "px;";
-                        return this.row.isEditModeOn || (e += "padding-left: " + this.styling.rowTextPaddingY + "%;padding-right: " + this.styling.rowTextPaddingY + "%;"), e
+                        var e = 'font-family: "' + this.textStyling.rowText + '";text-align: ' + this.textStyling.rowTextAlign + ";font-size: " + this.textStyling.rowTextTextSize + "%;color: " + this.textStyling.rowTextColor + ";padding-top: " + this.rowStyling.rowTextPaddingX + "px;padding-bottom: " + this.rowStyling.rowTextPaddingX + "px;";
+                        return this.row.isEditModeOn || (e += "padding-left: " + this.rowStyling.rowTextPaddingY + "%;padding-right: " + this.rowStyling.rowTextPaddingY + "%;"), e
                     },
                     rowButton: function() {
-                        return "padding-left: " + this.styling.rowButtonYPadding + "px;padding-right: " + this.styling.rowButtonYPadding + "px;padding-top: " + this.styling.rowButtonXPadding + "px;padding-bottom: " + this.styling.rowButtonXPadding + "px;color:black;;"
+                        return "padding-left: " + this.rowStyling.rowButtonYPadding + "px;padding-right: " + this.rowStyling.rowButtonYPadding + "px;padding-top: " + this.rowStyling.rowButtonXPadding + "px;padding-bottom: " + this.rowStyling.rowButtonXPadding + "px;color:black;;"
                     },
                     rowBackground: function() {
-                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");' + (this.styling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
-                            t = this.styling.rowBorderRadiusIsPixels ? "px" : "%";
-                        return this.styling.rowGradientIsOn && (e += this.styling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.styling.rowGradient + ");" : ""), e += "border-radius: " + this.styling.rowBorderRadiusTopLeft + 0 + t + " " + this.styling.rowBorderRadiusTopRight + 0 + t + " " + this.styling.rowBorderRadiusBottomRight + 0 + t + " " + this.styling.rowBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowBorderIsOn && (e += "border: " + this.styling.rowBorderWidth + "px " + this.styling.rowBorderStyle + " " + this.styling.rowBorderColor + ";"), this.styling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.styling.rowDropShadowH + "px " + this.styling.rowDropShadowV + "px " + this.styling.rowDropShadowBlur + "px " + this.styling.rowDropShadowColor + ");"), e
+                        var e = (this.rowStyling.rowBorderImage ? 'border-image: url("' + this.rowStyling.rowBorderImage + '") ' + this.rowStyling.rowBorderImageSliceTop + ' ' + this.rowStyling.rowBorderImageSliceRight + ' ' + this.rowStyling.rowBorderImageSliceBottom + ' ' + this.rowStyling.rowBorderImageSliceLeft + ' / ' + this.rowStyling.rowBorderImageWidth + 'px '+ this.rowStyling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.rowStyling.rowBorderImageWidth + 'px !important; ' : "") + (this.backgroundStyling.rowBackgroundImage ? 'background-image: url("' + this.backgroundStyling.rowBackgroundImage + '");' + (this.backgroundStyling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.backgroundStyling.rowBgColorIsOn ? "background-color: " + this.backgroundStyling.rowBgColor + ";" : "") + "margin-left:" + this.rowStyling.rowMargin + "%;margin-right: " + this.rowStyling.rowMargin + "%;",
+                            t = this.rowStyling.rowBorderRadiusIsPixels ? "px" : "%";
+                        return this.rowStyling.rowGradientIsOn && (e += this.rowStyling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.rowStyling.rowGradient + ");" : ""), e += "border-radius: " + this.rowStyling.rowBorderRadiusTopLeft + 0 + t + " " + this.rowStyling.rowBorderRadiusTopRight + 0 + t + " " + this.rowStyling.rowBorderRadiusBottomRight + 0 + t + " " + this.rowStyling.rowBorderRadiusBottomLeft + 0 + t + ";", this.rowStyling.rowOverflowIsOn && (e += "overflow:hidden;"), this.rowStyling.rowBorderIsOn && (e += "border: " + this.rowStyling.rowBorderWidth + "px " + this.rowStyling.rowBorderStyle + " " + this.rowStyling.rowBorderColor + ";"), this.rowStyling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.rowStyling.rowDropShadowH + "px " + this.rowStyling.rowDropShadowV + "px " + this.rowStyling.rowDropShadowBlur + "px " + this.rowStyling.rowDropShadowColor + ");"), e
                     },
                     rowImage: function() {
-                        var e = "width:" + this.styling.rowImageWidth + "%;margin-top:" + this.styling.rowImageMarginTop + "%;margin-bottom:" + this.styling.rowImageMarginBottom + "%;",
-                            t = this.styling.rowImgBorderRadiusIsPixels ? "px" : "%";
-                        return e += "border-radius: " + this.styling.rowImgBorderRadiusTopLeft + 0 + t + " " + this.styling.rowImgBorderRadiusTopRight + 0 + t + " " + this.styling.rowImgBorderRadiusBottomRight + 0 + t + " " + this.styling.rowImgBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowImgBorderIsOn && (e += "border: " + this.styling.rowImgBorderWidth + "px " + this.styling.rowImgBorderStyle + " " + this.styling.rowImgBorderColor + ";"), e
+                        var e = "width:" + this.rowImageStyling.rowImageWidth + "%;margin-top:" + this.rowImageStyling.rowImageMarginTop + "%;margin-bottom:" + this.rowImageStyling.rowImageMarginBottom + "%;",
+                            t = this.rowImageStyling.rowImgBorderRadiusIsPixels ? "px" : "%";
+                        return e += "border-radius: " + this.rowImageStyling.rowImgBorderRadiusTopLeft + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusTopRight + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusBottomRight + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusBottomLeft + 0 + t + ";", this.rowImageStyling.rowImgOverflowIsOn && (e += "overflow:hidden;"), this.rowImageStyling.rowImgBorderIsOn && (e += "border: " + this.rowImageStyling.rowImgBorderWidth + "px " + this.rowImageStyling.rowImgBorderStyle + " " + this.rowImageStyling.rowImgBorderColor + ";"), e
                     },
                     rows: function() {
                         return this.$store.state.app.rows
@@ -14155,6 +15080,7 @@
                             isActive: !1,
                             isVisible: !0,
                             multipleUseVariable: 0,
+							initMultipleTimesMinus: 0,
 							selectedThisManyTimesProp: 0,
                             defaultAspectWidth: this.row.defaultAspectWidth,
                             defaultAspectHeight: this.row.defaultAspectHeight,
@@ -14230,6 +15156,17 @@
                                 for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
+					playBgm: function(e, t) {
+						var p = this.app.bgmIsPlaying,
+							s = document.getElementById('bgm'),
+							o = s.src.split("/").pop().split("?")[0];
+						if (o == t) {
+							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+						} else {
+							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+						}
+					},
                     activateObject: function(e, t) {
 						if (!(e.selectOnce && e.isActive)) {
 							for (var g = 0; g < e.scores.length; g++)
@@ -14381,7 +15318,7 @@
 											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
@@ -14405,7 +15342,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -14434,55 +15371,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															nH = this.activated.indexOf(eid);
-															var bC = this.checkRequireds(coS);
-															this.activated.splice(nH, 1);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(nH, 0, eid);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														nH = this.activated.indexOf(eid);
+														var bC = this.checkRequireds(coS);
+														this.activated.splice(nH, 1);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
-																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																		
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																		
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -14492,16 +15427,16 @@
 									}
 									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
 												coR = this.app.rows[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice;
+											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 											var d = coR.currentChoices - 1;
 											if (d > coR.allowedChoices) {
 												var u = d - coR.allowedChoices;
@@ -14509,7 +15444,6 @@
 													if (u > 0 && coR.objects[v].isActive) {
 														this.activateObject(coR.objects[v], coR);
 														u--;
-														console.log("u:", u)
 													}
 												}
 											}											
@@ -14523,6 +15457,12 @@
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 										}
 									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -14533,7 +15473,7 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															this.$set(coS, "discountIsOn", false)
+															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 														}
 													}
 									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
@@ -14548,13 +15488,14 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable) {
+															if (!coS.isNotDiscountable && !coS.discountIsOn) {
 																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
 																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
 																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
 																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
 																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
 																this.$set(coS, "discountIsOn", true);
+																this.$set(coS, "discountedFrom", e.id);
 															}
 														}
 													}
@@ -14683,7 +15624,7 @@
 											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												var bRO = this.checkRequireds(coO);
 												this.activated.push(eid);
 												var bRT = this.checkRequireds(coO);
@@ -14706,7 +15647,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -14734,55 +15675,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															this.activated.push(eid);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(this.activated.indexOf(eid), 1);
-															if (bC !== bE) {
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														this.activated.push(eid);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(this.activated.indexOf(eid), 1);
+														if (bC !== bE) {
+															19 == C.length ? C += coO.title : C+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																				}																			
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
+																				}
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
 																				}
-																				
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}
+																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
-																}
+																	}
 															}
 														}
 													}
@@ -14795,10 +15734,10 @@
 										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
 									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -14832,6 +15771,22 @@
 										} else {
 											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var co = this.app.compR[e.scrollRowId],
+													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+												coR.$el.scrollIntoView({ behavior: 'smooth' });
+											}
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 									this.activated.push(eid), t.currentChoices += 1
@@ -14973,7 +15928,7 @@
 										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											nR = this.activated.indexOf(eid);
 											var bRO = this.checkRequireds(coO);
 											this.activated.splice(nR, 1);
@@ -14997,7 +15952,7 @@
 												if (e.discountOther) {
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b];
-														if (coS.discountIsOn) {
+														if (coS.discountIsOn && coS.discountedFrom == e.id) {
 															var coSDiscount = parseInt(coS.value) - coS.discountScore;
 															for (var m = 0; m < this.app.pointTypes.length; m++)
 																if (this.app.pointTypes[m].id == coS.id) {
@@ -15026,55 +15981,53 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														nH = this.activated.indexOf(eid);
-														var bC = this.checkRequireds(coS);
-														this.activated.splice(nH, 1);
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													nH = this.activated.indexOf(eid);
+													var bC = this.checkRequireds(coS);
+													this.activated.splice(nH, 1);
+													var bE = this.checkRequireds(coS);
+													this.activated.splice(nH, 0, eid);
+													if (bC !== bE) {
+														19 == h.length ? h += coO.title : h+= ", " + coO.title;
+														if (bC) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																		}
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																		}																		
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -15084,16 +16037,16 @@
 								}
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 								if (e.multiplyPointtypeIsOnCheck)
-									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 								if (e.textfieldIsOn)
 									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
 											coR = this.app.rows[co.rows];
-										coR.allowedChoices -= e.numbAddToAllowChoice;
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 										var d = coR.currentChoices - 1;
 										if (d > coR.allowedChoices) {
 											var u = d - coR.allowedChoices;
@@ -15114,6 +16067,12 @@
 										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 									}
 								}
+								if (e.setBgmIsOn) {
+									if (e.bgmId) {
+										this.app.bgmIsPlaying = !1;
+										this.playBgm(e, e.bgmId)
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -15124,7 +16083,7 @@
 														coO = coR.objects[co.objects];
 													for (var c = 0; c < coO.scores.length; c++) {
 														var coS = coO.scores[c];
-														this.$set(coS, "discountIsOn", false)
+														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
@@ -15167,6 +16126,22 @@
 										} else {
 											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var co = this.app.compR[e.scrollRowId],
+													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+												coR.$el.scrollIntoView({ behavior: 'smooth' });
+											}
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -15263,7 +16238,7 @@
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid);
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
@@ -15288,56 +16263,54 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														var bC = this.checkRequireds(coS),
-															fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-															aFI = this.activated[fI].split("/ON#");
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bE) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													var bC = this.checkRequireds(coS),
+														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+														aFI = this.activated[fI].split("/ON#");
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													var bE = this.checkRequireds(coS);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													if (bC !== bE) {
+														19 == C.length ? C += coO.title : C+= ", " + coO.title;
+														if (bE) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -15377,6 +16350,12 @@
 											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
 										} else {
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -15493,7 +16472,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
@@ -15519,54 +16498,52 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
-															var bE = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bE) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
+														var bE = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bE) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -15763,7 +16740,16 @@
                         },
                         expression: "dialog"
                     }
-                }, [o("v-card", [o("v-card-title", {
+                }, [e.state.saveWait ? [o("v-col", {
+					staticClass: "col-full"
+				}, [o("v-progress-circular", {
+					staticClass: "v-progress-circular-top",
+					attrs: {
+						size: 50,
+						color: "primary",
+						indeterminate: true
+					}
+				})])] : e._e(), o("v-card", [o("v-card-title", {
                     staticClass: "headline"
                 }, [e._v("Load/Save Project")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
                     attrs: {
@@ -16036,7 +17022,10 @@
                 computed: {
                     app: function() {
                         return this.$store.state.app
-                    }
+                    },
+					state: function() {
+						return this.$store.state
+					}
                 },
                 methods: {
                     uploadFile: function() {
@@ -16048,6 +17037,7 @@
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
 							if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
 							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
+							if (e.app.darkMode) e.$set(e.$vuetify.theme, "isDark", e.app.darkMode);
 							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
 							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000FF"); else if (e.app.styling.selFilterBorderColor.length == 7) e.$set(e.app.styling, "selFilterBorderColor", e.app.styling.selFilterBorderColor + "FF");
@@ -16060,16 +17050,32 @@
 							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000FF"); else if (e.app.styling.reqFilterCTextColor.length == 7) e.$set(e.app.styling, "reqFilterCTextColor", e.app.styling.reqFilterCTextColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
+							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
+							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							e.$set(e.app, "comp", []);
 							e.$set(e.app, "compR", []);
 							e.$set(e.app, "compG", []);
+							e.$set(e.app, "compODG", []);
+							e.$set(e.app, "compRDG", []);
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
 								e.app.compR[g] = {rows: b};
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateFilterIsOn) e.$set(e.app.rows[b], "privateFilterIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateTextIsOn) e.$set(e.app.rows[b], "privateTextIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectImageIsOn) e.$set(e.app.rows[b], "privateObjectImageIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectIsOn) e.$set(e.app.rows[b], "privateObjectIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowImageIsOn) e.$set(e.app.rows[b], "privateRowImageIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowIsOn) e.$set(e.app.rows[b], "privateRowIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
 									e.app.comp[d] = {rows: b, objects: c};
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
 									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
 									}
@@ -16078,6 +17084,14 @@
 							for (var f = 0; f < e.app.groups.length; f++) {
 								var r = e.app.groups[f].id;
 								e.app.compG[r] = {groups: f};
+							}
+							for (var h = 0; h < e.app.objectDesignGroups.length; h++) {
+								var i = e.app.objectDesignGroups[h].id;
+								e.app.compODG[i] = {designGroups: h};
+							}
+							for (var h = 0; h < e.app.rowDesignGroups.length; h++) {
+								var i = e.app.rowDesignGroups[h].id;
+								e.app.compRDG[i] = {designGroups: h};
 							}
                         }, t.readAsText(this.files[0]);
                     },
@@ -16092,6 +17106,7 @@
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
 							if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
 							if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
+							if (e.app.darkMode) e.$set(e.$vuetify.theme, "isDark", e.app.darkMode);
 							if ("object" === typeof e.app.styling.barIconColor && "undefined" !== typeof e.app.styling.barIconColor.hexa) e.$set(e.app.styling, "barIconColor", e.app.styling.barIconColor.hexa);
 							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
 							if ("undefined" === typeof e.app.styling.selFilterBorderColor) e.$set(e.app.styling, "selFilterBorderColor", "#000000FF"); else if (e.app.styling.selFilterBorderColor.length == 7) e.$set(e.app.styling, "selFilterBorderColor", e.app.styling.selFilterBorderColor + "FF");
@@ -16104,16 +17119,32 @@
 							if ("undefined" === typeof e.app.styling.reqFilterCTextColor) e.$set(e.app.styling, "reqFilterCTextColor", "#000000FF"); else if (e.app.styling.reqFilterCTextColor.length == 7) e.$set(e.app.styling, "reqFilterCTextColor", e.app.styling.reqFilterCTextColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATitleColor) e.$set(e.app.styling, "reqFilterATitleColor", "#000000FF"); else if (e.app.styling.reqFilterATitleColor.length == 7) e.$set(e.app.styling, "reqFilterATitleColor", e.app.styling.reqFilterATitleColor + "FF");
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
+							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
+							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							e.$set(e.app, "comp", []);
 							e.$set(e.app, "compR", []);
 							e.$set(e.app, "compG", []);
+							e.$set(e.app, "compODG", []);
+							e.$set(e.app, "compRDG", []);
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
 								e.app.compR[g] = {rows: b};
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateFilterIsOn) e.$set(e.app.rows[b], "privateFilterIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateTextIsOn) e.$set(e.app.rows[b], "privateTextIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectImageIsOn) e.$set(e.app.rows[b], "privateObjectImageIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectIsOn) e.$set(e.app.rows[b], "privateObjectIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowImageIsOn) e.$set(e.app.rows[b], "privateRowImageIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowIsOn) e.$set(e.app.rows[b], "privateRowIsOn", !0);
+								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
 									e.app.comp[d] = {rows: b, objects: c};
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !0);
+									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
 									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
 									}
@@ -16122,6 +17153,14 @@
 							for (var f = 0; f < e.app.groups.length; f++) {
 								var r = e.app.groups[f].id;
 								e.app.compG[r] = {groups: f};
+							}
+							for (var h = 0; h < e.app.objectDesignGroups.length; h++) {
+								var i = e.app.objectDesignGroups[h].id;
+								e.app.compODG[i] = {designGroups: h};
+							}
+							for (var h = 0; h < e.app.rowDesignGroups.length; h++) {
+								var i = e.app.rowDesignGroups[h].id;
+								e.app.compRDG[i] = {designGroups: h};
 							}
 						} else {
 							e.text = "There is no data in local storage", e.snackbar = !0;
@@ -16135,6 +17174,8 @@
 						sv.comp = [];
 						sv.compR = [];
 						sv.compG = [];
+						sv.compODG = [];
+						sv.compRDG = [];
                         var t = JSON.stringify(sv),
                             o = new Blob([t], {
                                 type: "text/plain"
@@ -16144,10 +17185,14 @@
                         s.download = e + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
                     },
                     saveFileFinished: function(e) {
-						var sv = JSON.parse(JSON.stringify(this.app));
+						var sv = JSON.parse(JSON.stringify(this.app)),
+							ts = this;
 						sv.comp = [];
 						sv.compR = [];
 						sv.compG = [];
+						sv.compODG = [];
+						sv.compRDG = [];
+						this.$set(this.state, "saveWait", !0);
 						var t = new co.a, o = JSON.parse(JSON.stringify(sv)), i = "", m = "", ext = "";
 						this.app.styling.backgroundImage && this.app.styling.backgroundImage.length > 30 && (m = this.getMime(this.app.styling.backgroundImage), ext = this.getExt(m), i = P()(this.app.styling.backgroundImage.split(",")[1], m), t.file("images/Bg." + ext, i, {
 							binary: !0
@@ -16190,11 +17235,14 @@
                                 this.app.rows[s].objects[r].image.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].image.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "." + ext, i, {
                                     binary: !0
                                 }), o.rows[s].objects[r].image = "images/R" + (s + 1) + "C" + (r + 1) + "." + ext);
+								if ("undefined" !== typeof this.app.rows[s].objects[r].bgImage) this.app.rows[s].objects[r].bgImage.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].bgImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].bgImage.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "_Change." + ext, i, {
+                                    binary: !0
+                                }), o.rows[s].objects[r].bgImage = "images/R" + (s + 1) + "C" + (r + 1) + "_Change." + ext);
                                 for (var a = 0; a < this.app.rows[s].objects[r].addons.length; a++) this.app.rows[s].objects[r].addons[a].image.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].addons[a].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].addons[a].image.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext, i, {
                                     binary: !0
                                 }), o.rows[s].objects[r].addons[a].image = "images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
                             }
-                        }				
+                        }
 						for (s = 0; s < this.app.backpack.length; s++) {
 							this.app.backpack[s].image.length > 30 && (m = this.getMime(this.app.backpack[s].image), ext = this.getExt(m), i = P()(this.app.backpack[s].image.split(",")[1], m), t.file("images/BR" + (s + 1) + "." + ext, i, {
                                 binary: !0
@@ -16233,8 +17281,12 @@
                         t.file(e + ".json", l), t.generateAsync({
                             type: "blob"
                         }).then((function(e) {
-                            uo.a.saveAs(e, "CYOA.zip")
-                        }))
+                            uo.a.saveAs(e, "CYOA.zip"),
+							ts.$set(ts.state, "saveWait", !1)
+                        })).catch((error => {
+							console.log(error),
+							ts.$set(ts.state, "saveWait", !1)
+						}))
                     },
 					getMime: function(e) {
 						return e.match(/^data:(image\/[^;]+);/)[1];
@@ -16253,6 +17305,7 @@
             go = ho,
             bo = o("cc20"),
             vo = o("23a7"),
+			pg = o("490a"),
             mo = Object(w["a"])(go, eo, to, !1, null, null, null),
             fo = mo.exports;
         x()(mo, {
@@ -16268,7 +17321,8 @@
             VFileInput: vo["a"],
             VRow: S["a"],
             VSpacer: O["a"],
-			VSnackbar: Ct["a"]
+			VSnackbar: Ct["a"],
+			VProgressCircular: pg["a"]
         });
         var wo = function() {
                 var e = this,
@@ -16794,7 +17848,7 @@
                         }
                     }
                 }, [e._v("Symbols and Image Compression")])], 1), o("v-col", {
-                    staticClass: "col-lg-12"
+                    staticClass: "col-lg-6"
                 }, [o("p", [e._v("Will show you a list of ID's and the names of the choices they belong to.")]), o("v-btn", {
                     staticStyle: {
                         color: e.$vuetify.theme.isDark ? "white" : "black"
@@ -16804,7 +17858,18 @@
                             e.currentComponent = "appIdSearch"
                         }
                     }
-                }, [e._v("Id / Name list")])], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-spacer"), o("v-btn", {
+                }, [e._v("Id / Name list")])], 1), o("v-col", {
+                    staticClass: "col-lg-6"
+                }, [o("p", [e._v("In Design Groups, you can manage Private Styling in a granular way.")]), o("v-btn", {
+                    staticStyle: {
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
+                    },
+                    on: {
+                        click: function(t) {
+                            e.currentComponent = "appDesignGroup"
+                        }
+                    }
+                }, [e._v("Manage Design Groups")])], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -17825,6 +18890,85 @@
                     })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
                             attrs: {
                                 "hide-details": "",
+                                label: "Row Id",
+                                filled: "",
+								items: e.app.rows,
+								"item-text": "id",
+								"item-value": "id",
+								multiple: true
+                            },
+                            model: {
+                                value: t.rowElements,
+                                callback: function(o) {
+									if ("undefined" === typeof t.rowElements) e.$set(t, "rowElements", []);
+									if ("undefined" !== typeof e.app.compG[t.id]) {
+										var coG = e.app.compG[t.id],
+											tElements = t.rowElements.map(el => el.id),
+											setT = new Set(tElements),
+											setO = new Set(o),
+											newElement;
+										if (t.rowElements.length > o.length) {
+											for (var a of setT) {
+												if (!setO.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== e.app.compR[newElement]) {
+												var co = e.app.compR[newElement],
+													coR = e.app.rows[co.rows];
+												for (var a = 0; a < coR.groups.length; a++) {
+													if (coR.groups[a].id == t.id) {
+														coR.groups.splice(a, 1);
+													}
+												}
+												for (var b = 0; b < t.rowElements.length; b++) {
+													if (t.rowElements[b].id == coR.id) e.$delete(t.rowElements, b), b--;
+												}
+												for (var c = 0; c < coR.objects.length; c++) {
+													for (var d = 0; d < coR.objects[c].groups.length; d++) {
+														if (coR.objects[c].groups[d].id == t.id) {
+															coR.objects[c].groups.splice(d, 1);
+															
+														}
+													}
+													for (var f = 0; f < t.elements.length; f++) {
+														if (t.elements[f].id == coR.objects[c].id) e.$delete(t.elements, f), f--;
+													}
+												}
+											}
+										} else {
+											for (var a of setO) {
+												if (!setT.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== typeof e.app.compR[newElement]) {
+												var co = e.app.compR[newElement],
+													coR = e.app.rows[co.rows];
+												if ("undefined" === typeof coR.groups) e.$set(coR, "groups", []);
+												coR.groups.push({id: t.id});
+												t.rowElements.push({id: coR.id})
+												for (var b = 0; b < coR.objects.length; b++) {
+													var l = !0;
+													for (var c = 0; c < coR.objects[b].groups.length; c++) {
+														if (coR.objects[b].groups[c].id == t.id) l = !1;
+													}
+													if (l) {
+														coR.objects[b].groups.push({id: t.id});
+														t.elements.push({id: coR.objects[b].id});
+													}
+												}
+											}
+										}
+									}
+                                },
+                                expression: "rowElements.id"
+                            }
+                        })], 1), o("v-col", [o("v-select", {
+                            attrs: {
+                                "hide-details": "",
                                 label: "Object Id",
                                 filled: "",
 								items: e.app.rows.flatMap(row => row.objects),
@@ -17836,9 +18980,19 @@
                                 value: t.elements,
                                 callback: function(o) {
 									if ("undefined" !== typeof t.elements) {
+										var tElements = t.elements.map(el => el.id),
+											setT = new Set(tElements),
+											setO = new Set(o),
+											newElement;
 										if (t.elements.length > o.length) {
-											if ("undefined" !== e.app.comp[t.elements[o.length].id]) {
-												var co = e.app.comp[t.elements[o.length].id],
+											for (var a of setT) {
+												if (!setO.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== typeof e.app.comp[newElement]) {
+												var co = e.app.comp[newElement],
 													coR = e.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												for (var a = 0; a < coO.groups.length; a++) {
@@ -17846,25 +19000,37 @@
 														coO.groups.splice(a, 1);
 													}
 												}
+												if ("undefined" !== typeof coR.groups) {
+													for (var b = 0; b < coR.groups.length; b++) {
+														if (coR.groups[b].id == t.id) {
+															coR.groups.splice(b, 1);
+														}
+													}
+												}
+												for (var c = 0; c < t.elements.length; c++) {
+													if (t.elements[c].id == coO.id) e.$delete(t.elements, c), c--;
+												}
+												if ("undefined" !== typeof t.rowElements) {
+													for (var d = 0; d < t.rowElements.length; d++) {
+														if (t.rowElements[d].id == coR.id) e.$delete(t.rowElements, d), d--;
+													}
+												}
 											}
 										} else {
-											if ("undefined" !== e.app.comp[o[o.length - 1]]) {
-												var co = e.app.comp[o[o.length - 1]],
+											for (var a of setO) {
+												if (!setT.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== e.app.comp[newElement]) {
+												var co = e.app.comp[newElement],
 													coR = e.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												coO.groups.push({id: t.id});
+												t.elements.push({id: coO.id});
 											}
 										}
-									}
-									var newElements = [];
-									o.forEach((id) => {
-										newElements.push({id: id});
-									});
-									for (var b in t.elements) {
-										if (!o.includes(b)) e.$delete(t.elements, b);
-									}
-									for (var c in newElements) {
-										e.$set(t.elements, c, newElements[c]);
 									}
                                 },
                                 expression: "element.id"
@@ -18208,6 +19374,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -18238,6 +19405,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -18394,6 +19562,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#6B594698",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -18424,6 +19593,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -18582,6 +19752,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#FFFFFFFF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -18612,6 +19783,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#F99090FF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -18770,6 +19942,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -18800,6 +19973,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -18956,6 +20130,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#FBED37FF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -18986,6 +20161,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFD7C0FF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -19149,6 +20325,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#FFB500FF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -19179,6 +20356,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#333333FF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -19344,6 +20522,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#FFA52CFF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -19374,6 +20553,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#86007DFF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -19539,6 +20719,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#C8E6B2FF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -19569,6 +20750,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !0,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#C8E6B2FF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -20087,6 +21269,7 @@
                                 selFilterSepiaIsOn: !1,
                                 selFilterSepia: 0,
                                 selBgColorIsOn: !0,
+								selOverlayOnImage: !1,
                                 selFilterBgColor: "#70FF7EFF",
 								selBorderColorIsOn: !1,
 								selFilterBorderColor: "#000000FF",
@@ -20117,6 +21300,7 @@
                                 reqFilterSepiaIsOn: !1,
                                 reqFilterSepia: 0,
                                 reqBgColorIsOn: !1,
+								reqOverlayOnImage: !1,
                                 reqFilterBgColor: "#FFFFFFFF",
 								reqBorderColorIsOn: !1,
 								reqFilterBorderColor: "#000000FF",
@@ -20576,6 +21760,399 @@
             VDialog: B["a"],
             VRow: S["a"]
         });
+		var Gsi = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        scrollable: "",
+                        "max-width": "1200px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", [o("v-card-title", {
+                    staticClass: "headline"
+                }, [e._v("Design Groups")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
+					staticClass: "col-6 headline"
+				}, [e._v("Row Design Groups")], 1), o("v-col", {
+					staticClass: "cal-6 headline"
+				}, [e._v("Choice Design Groups")], 1)], 1), o("v-row", {
+					attrs: {
+						cols: 12
+					}
+				}, [o("v-col", {
+					attrs: {
+						cols: 6
+					}
+				}, [e._l(e.rowDesignGroups, (function(t, i) {
+                    return o("v-col", {
+                        key: t.index,
+                        staticClass: "mt-2"
+                    }, [o("v-row", [o("v-col", [o("v-text-field", {
+                        attrs: {
+                            "hide-details": "",
+                            label: "Id",
+                            filled: ""
+                        },
+                        model: {
+                            value: t.id,
+                            callback: function(o) {
+								e.app.compRDG[o] = e.app.compRDG[t.id], e.$delete(e.app.compRDG, t.id), e.$set(t, "id", o)
+                            },
+                            expression: "group.id"
+                        }
+                    })], 1), o("v-col", [o("v-text-field", {
+                        attrs: {
+                            "hide-details": "",
+                            label: "Name",
+                            filled: ""
+                        },
+                        model: {
+                            value: t.name,
+                            callback: function(o) {
+                                e.$set(t, "name", o)
+                            },
+                            expression: "group.name"
+                        }
+                    })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                            attrs: {
+                                "hide-details": "",
+                                label: "Row Id",
+                                filled: "",
+								items: e.app.rows,
+								"item-text": "id",
+								"item-value": "id",
+								multiple: true
+                            },
+                            model: {
+                                value: t.elements,
+                                callback: function(o) {
+									if ("undefined" !== typeof t.elements) {
+										var tElements = t.elements.map(el => el.id),
+											setT = new Set(tElements),
+											setO = new Set(o),
+											newElement;
+										if (t.elements.length > o.length) {
+											for (var a of setT) {
+												if (!setO.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											console.log(newElement);
+											if ("undefined" !== e.app.compR[newElement]) {
+												var co = e.app.compR[newElement],
+													coR = e.app.rows[co.rows];
+												for (var a = 0; a < coR.rowDesignGroups.length; a++) {
+													if (coR.rowDesignGroups[a].id == t.id) {
+														coR.rowDesignGroups.splice(a, 1);
+													}
+												}
+												for (var b = 0; b < t.elements.length; b++) {
+													if (t.elements[b].id == coR.id) e.$delete(t.elements, b), b--;
+												}
+												for (var c = 0; c < coR.objects.length; c++) {
+													for (var d = 0; d < coR.objects[c].rowDesignGroups.length; d++) {
+														if (coR.objects[c].rowDesignGroups[d].id == t.id) {
+															coR.objects[c].rowDesignGroups.splice(d, 1);
+															
+														}
+													}
+													for (var f = 0; f < t.elements.length; f++) {
+														if (t.elements[f].id == coR.objects[c].id) e.$delete(t.elements, f), f--;
+													}
+												}
+											}
+										} else {
+											for (var a of setO) {
+												if (!setT.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== typeof e.app.compR[newElement]) {
+												var co = e.app.compR[newElement],
+													coR = e.app.rows[co.rows];
+												if ("undefined" === typeof coR.rowDesignGroups) e.$set(coR, "rowDesignGroups", []);
+												coR.rowDesignGroups.push({id: t.id});
+												t.elements.push({id: coR.id});
+											}
+										}
+									}
+                                },
+                                expression: "elements.id"
+                            }
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+							staticStyle: {
+								color: e.$vuetify.theme.isDark ? "white" : "black"
+							},
+							on: {
+								click: function(o) {
+									e.row = t,
+									e.currentComponent = "appRowDesignGroupSettings"
+								}
+							}
+						}, [e._v("Set Design")])], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(t) {
+                                return e.deleteRowDesignGroup(i)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1)], 1), o("v-divider")], 1)
+                }), 1)], 1), o("v-col", {
+					attrs: {
+						cols: 6
+					}
+				}, [e._l(e.objectDesignGroups, (function(t, i) {
+                    return o("v-col", {
+                        key: t.index,
+                        staticClass: "mt-2"
+                    }, [o("v-row", [o("v-col", [o("v-text-field", {
+                        attrs: {
+                            "hide-details": "",
+                            label: "Id",
+                            filled: ""
+                        },
+                        model: {
+                            value: t.id,
+                            callback: function(o) {
+								e.app.compODG[o] = e.app.compODG[t.id], e.$delete(e.app.compODG, t.id), e.$set(t, "id", o)
+                            },
+                            expression: "group.id"
+                        }
+                    })], 1), o("v-col", [o("v-text-field", {
+                        attrs: {
+                            "hide-details": "",
+                            label: "Name",
+                            filled: ""
+                        },
+                        model: {
+                            value: t.name,
+                            callback: function(o) {
+                                e.$set(t, "name", o)
+                            },
+                            expression: "group.name"
+                        }
+                    })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                            attrs: {
+                                "hide-details": "",
+                                label: "Object Id",
+                                filled: "",
+								items: e.app.rows.flatMap(row => row.objects),
+								"item-text": "id",
+								"item-value": "id",
+								multiple: true
+                            },
+                            model: {
+                                value: t.elements,
+                                callback: function(o) {
+									if ("undefined" !== typeof t.elements) {
+										var tElements = t.elements.map(el => el.id),
+											setT = new Set(tElements),
+											setO = new Set(o),
+											newElement;
+										if (t.elements.length > o.length) {
+											for (var a of setT) {
+												if (!setO.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== typeof e.app.comp[newElement]) {
+												var co = e.app.comp[newElement],
+													coR = e.app.rows[co.rows],
+													coO = coR.objects[co.objects];
+												for (var a = 0; a < coO.objectDesignGroups.length; a++) {
+													if (coO.groups[a].id == t.id) {
+														coO.groups.splice(a, 1);
+													}
+												}
+												for (var c = 0; c < t.elements.length; c++) {
+													if (t.elements[c].id == coO.id) e.$delete(t.elements, c), c--;
+												}
+											}
+										} else {
+											for (var a of setO) {
+												if (!setT.has(a)) {
+													newElement = a;
+													break
+												}
+											}
+											if ("undefined" !== e.app.comp[newElement]) {
+												var co = e.app.comp[newElement],
+													coR = e.app.rows[co.rows],
+													coO = coR.objects[co.objects];
+												if ("undefined" === typeof coO.objectDesignGroups) e.$set(coO, "objectDesignGroups", []);
+												coO.objectDesignGroups.push({id: t.id});
+												t.elements.push({id: coO.id});
+											}
+										}
+									}
+                                },
+                                expression: "elements.id"
+                            }
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+							staticStyle: {
+								color: e.$vuetify.theme.isDark ? "white" : "black"
+							},
+							on: {
+								click: function(o) {
+									e.row = t,
+									e.currentComponent = "appObjectDesginGroupSettings"
+								}
+							}
+						}, [e._v("Set Design")])], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(t) {
+                                return e.deleteObjectDesignGroup(i)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1)], 1), o("v-divider")], 1)
+                }), 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-col", {
+                    staticClass: "col-md-6"
+                }, [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.createNewRowDesignGroup
+                    }
+                }, [e._v("Create new Row Group")])], 1), o("v-col", {
+                    staticClass: "col-md-4"
+                }, [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.createNewObjectDesignGroup
+                    }
+                }, [e._v("Create new Choice Group")])], 1), o("v-col", {
+                    staticClass: "col-md-2"
+                }, [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1), o(e.currentComponent, {
+                    tag: "component",
+					attrs: {
+						row: e.row
+					},
+                    on: {
+                        cleanCurrentComponent: function(t) {
+                            e.currentComponent = t
+                        }
+                    }
+                })], 1)
+            },
+            Gri = [],
+            Gai = {
+                data: function() {
+                    return {
+						currentComponent: "",
+                        dialog: !0
+                    }
+                },
+				components: {
+					appRowDesignGroupSettings: dFt,
+					appObjectDesginGroupSettings: oFt,
+				},
+                computed: {
+                    rowDesignGroups: function() {
+                        return this.$store.state.app.rowDesignGroups
+                    },
+					objectDesignGroups: function() {
+						return this.$store.state.app.objectDesignGroups
+					},
+					app: function() {
+						return this.$store.state.app
+					}
+                },
+                methods: {
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    },
+                    addElement: function(e) {
+                        e.push({
+                            id: ""
+                        })
+                    },
+                    createNewRowDesignGroup: function() {
+						if ("undefined" === typeof this.app.rowDesignGroups) this.$set(this.app, "rowDesignGroups", {});
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        this.$store.commit({
+                            type: "addNewRowDesignGroup",
+                            id: e,
+                            name: "Design Group " + (this.rowDesignGroups.length + 1),
+							elements: [],
+							styling: {}
+                        });
+						this.app.compRDG[e] = {designGroups: this.rowDesignGroups.length - 1};
+                    },
+					createNewObjectDesignGroup: function() {
+						if ("undefined" === typeof this.app.objectDesignGroups) this.$set(this.app, "objectDesignGroups", {});
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        this.$store.commit({
+                            type: "addNewObjectDesignGroup",
+                            id: e,
+                            name: "Design Group " + (this.objectDesignGroups.length + 1),
+							elements: [],
+							styling: {}
+                        });
+						this.app.compODG[e] = {designGroups: this.objectDesignGroups.length - 1};
+                    },
+                    deleteGroupElement: function(e, t) {
+                        t.splice(e, 1)
+                    },
+					deleteRowDesignGroup: function(e) {
+						this.$delete(this.app.compRDG, this.rowDesignGroups[e].id);
+                        this.app.rowDesignGroups.splice(e, 1);
+                    },
+					deleteObjectDesignGroup: function(e) {
+						this.$delete(this.app.compODG, this.objectDesignGroups[e].id);
+                        this.app.objectDesignGroups.splice(e, 1);
+                    }
+                }
+            },
+            Gni = Gai,
+            Gci = Object(w["a"])(Gni, Gsi, Gri, !1, null, null, null),
+            Gdi = Gci.exports;
+        x()(Gci, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VDivider: li["a"],
+            VRow: S["a"],
+			VSelect: K["a"],
+            VTextField: R["a"]
+        });
 		var SMi = function() {
                 var e = this,
                     t = e.$createElement,
@@ -20653,8 +22230,7 @@
 					model: {
 						value: e.vuetify.theme.isDark,
 						callback: function(o) {
-							if ("undefined" === typeof e.app.styling.barIconColor) e.$set(e.app.styling, "barIconColor", "#0000008A");
-							e.$set(e.vuetify.theme, "isDark", o);
+							e.$set(e.vuetify.theme, "isDark", o), e.$set(e.app, "darkMode", o);
 						},
 						expression: "vuetify.theme.isDark"
 					}
@@ -20733,7 +22309,8 @@
                     appDefaults: Oi,
                     appSymbols: Ko,
                     appWords: $i,
-                    appIdSearch: Li
+                    appIdSearch: Li,
+					appDesignGroup: Gdi
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -21599,8 +23176,8 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: e.checkRequireds(t) || (t.isPrivateStyling ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
-                            expression: "checkRequireds(object) || (object.isPrivateStyling ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn)"
+                            value: e.checkRequireds(t) || (t.privateFilterIsOn ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
+                            expression: "checkRequireds(object) || (object.privateFilterIsOn ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn)"
                         }],
                         key: t.index,
                         staticClass: "nopadding",
@@ -21641,7 +23218,7 @@
                     t = e.$createElement,
                     o = e._self._c || t;
                 return o("span", [e.checkRequireds(e.row) ? o("span", {
-                    staticClass: "row pa-0",
+                    staticClass: "row pa-0" + (e.object.isActive && e.app.styling.selOverlayOnImage ? " bg-overlay" : "") + (e.app.styling.reqOverlayOnImage && !e.checkRequireds(e.object) ? " bg-overlay" : ""),
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
@@ -22501,28 +24078,156 @@
                 },
                 computed: {
                     styling: function() {
-                        return this.object.isPrivateStyling ? this.object.styling : this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
+                        return this.$store.state.app.styling
                     },
+					objectStyling: function() {
+						if (this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.privateObjectIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling
+					},
+					objectImageStyling: function() {
+						if (this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					filterStyling: function() {
+						if (this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.privateFilterIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					backgroundStyling: function() {
+						if (this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					textStyling: function() {
+						if (this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					rowStyling: function() {
+						if (this.row.privateRowIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateRowIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectTitle + '";font-size: ' + this.styling.objectTitleTextSize + "%;text-align: " + this.styling.objectTitleAlign + ";color: " + (!e && this.styling.reqCTitleColorIsOn ? this.styling.reqFilterCTitleColor : (this.object.isActive && this.styling.selCTitleColorIsOn ? this.styling.selFilterCTitleColor : this.styling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.filterStyling.objectTitleColor)) + ";"
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.styling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
                     },
                     multiChoiceButton: function() {
-                        return "color: " + this.styling.scoreTextColor + ";"
+                        return "color: " + this.textStyling.scoreTextColor + ";"
                     },
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.objectText + '";text-align: ' + this.styling.objectTextAlign + ";font-size: " + this.styling.objectTextTextSize + "%;color: " + (!e && this.styling.reqCTextColorIsOn ? this.styling.reqFilterCTextColor : (this.object.isActive && this.styling.selCTextColorIsOn ? this.styling.selFilterCTextColor : this.styling.objectTextColor)) + ";padding: " + this.styling.objectTextPadding + "px;"
+                        return 'font-family: "' + this.textStyling.objectText + '";text-align: ' + this.textStyling.objectTextAlign + ";font-size: " + this.textStyling.objectTextTextSize + "%;color: " + (!e && this.filterStyling.reqCTextColorIsOn ? this.filterStyling.reqFilterCTextColor : (this.object.isActive && this.filterStyling.selCTextColorIsOn ? this.filterStyling.selFilterCTextColor : this.textStyling.objectTextColor)) + ";padding: " + this.textStyling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
                         var e = "margin-top: 0px;margin-bottom: 0px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
-                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
+                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
                     findRowTitle: function() {
                         var e = "";
@@ -22534,34 +24239,26 @@
                         return e
                     },
                     objectBackground: function() {
-                        var e = (this.styling.objectBorderImage ? 'border-image: url("' + this.styling.objectBorderImage + '") ' + this.styling.objectBorderImageSliceTop + ' ' + this.styling.objectBorderImageSliceRight + ' ' + this.styling.objectBorderImageSliceBottom + ' ' + this.styling.objectBorderImageSliceLeft + ' / ' + this.styling.objectBorderImageWidth + 'px ' + this.styling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.objectBorderImageWidth + 'px !important; ' : "") + (this.styling.objectBackgroundImage ? 'background-image: url("' + this.styling.objectBackgroundImage + '");' + (this.styling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : (this.styling.objectBgColorIsOn ? "background-color: " + this.styling.objectBgColor + " ;" : "")) + "margin:" + this.styling.objectMargin + "px; " + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.styling.selBgColorIsOn ? "background-color: " + this.styling.selFilterBgColor + " !important;" : "") : ""),
-                            t = this.styling.objectBorderRadiusIsPixels ? "px" : "%",
+                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px !important; ' : "") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + " ;" : "") + "margin:" + this.objectStyling.objectMargin + "px; " + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + " !important;" : "") : ""),
+							t = this.objectStyling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-                        this.styling.objectGradientIsOn && (e += this.styling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.styling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectBorderRadiusTopLeft + 0 + t + " " + this.styling.objectBorderRadiusTopRight + 0 + t + " " + this.styling.objectBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.styling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn) || (!o && this.styling.reqBorderColorIsOn)) && (e += "border: " + this.styling.objectBorderWidth + "px " + this.styling.objectBorderStyle + " " + (!o && this.styling.reqBorderColorIsOn ? this.styling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.styling.selBorderColorIsOn ? this.styling.selFilterBorderColor : this.styling.objectBorderColor)) + ";"), e += "filter: ", this.styling.objectDropShadowIsOn && (e += "drop-shadow(" + this.styling.objectDropShadowH + "px " + this.styling.objectDropShadowV + "px " + this.styling.objectDropShadowBlur + "px " + this.styling.objectDropShadowColor + ")");
-                        if (this.object.isActive && o) e += this.styling.selFilterBlurIsOn ? "blur(" + this.styling.selFilterBlur + "px)" : "", e += this.styling.selFilterBrightIsOn ? "brightness(" + this.styling.selFilterBright + "%)" : "", e += this.styling.selFilterContIsOn ? "contrast(" + this.styling.selFilterCont + "%)" : "", e += this.styling.selFilterGrayIsOn ? "grayscale(" + this.styling.selFilterGray + "%)" : "", e += this.styling.selFilterHueIsOn ? "hue-rotate(" + this.styling.selFilterHue + "deg)" : "", e += this.styling.selFilterInvertIsOn ? "invert(" + this.styling.selFilterInvert + "%)" : "", e += this.styling.selFilterOpacIsOn ? "opacity(" + this.styling.selFilterOpac + "%)" : "", e += this.styling.selFilterSaturIsOn ? "saturate(" + this.styling.selFilterSatur + ")" : "", e += this.styling.selFilterSepiaIsOn ? "sepia(" + this.styling.selFilterSepia + "%)" : "", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnSelect + ")");
-                        else if (!o) {
-                            if (e += this.styling.reqFilterBlurIsOn ? "blur(" + this.styling.reqFilterBlur + "px)" : "", e += this.styling.reqFilterBrightIsOn ? "brightness(" + this.styling.reqFilterBright + "%)" : "", e += this.styling.reqFilterContIsOn ? "contrast(" + this.styling.reqFilterCont + "%)" : "", e += this.styling.reqFilterGrayIsOn ? "grayscale(" + this.styling.reqFilterGray + "%)" : "", e += this.styling.reqFilterHueIsOn ? "hue-rotate(" + this.styling.reqFilterHue + "deg)" : "", e += this.styling.reqFilterInvertIsOn ? "invert(" + this.styling.reqFilterInvert + "%)" : "", e += this.styling.reqFilterOpacIsOn ? "opacity(" + this.styling.reqFilterOpac + "%)" : "", e += this.styling.reqFilterSaturIsOn ? "saturate(" + this.styling.reqFilterSatur + ")" : "", e += this.styling.reqFilterSepiaIsOn ? "sepia(" + this.styling.reqFilterSepia + "%)" : "", e += this.styling.reqBgColorIsOn ? ";background-color: " + this.styling.reqFilterBgColor + " !important" : ";background-color: " + this.styling.objectBgColor + " !important", this.styling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.styling.objectGradientOnReq + ")"), this.object.isActive) this.activateObject(this.object, this.row);
-                            else if (this.object.isSelectableMultiple)
-                                for (var i = 0; i < this.object.numMultipleTimesPluss - this.object.numMultipleTimesMinus; i++) this.selectedOneLess(this.object, this.row);
-                            if ((this.object.multiplyPointtypeIsOnCheck || this.object.dividePointtypeIsOnCheck) && this.multiplyOrDivide(this.object), this.object.activateOtherChoice) {
-								if ("undefined" !== typeof this.app.comp[this.object.activateThisChoice]) {
-									var co = this.app.comp[this.object.activateThisChoice],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									coO.isActive && this.setFalse(coO);
-								}
-							}
-                        }
-                        return e += ";", e
+						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
+						if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
+						else if (!o) {
+							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;");
+							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
+							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor + " !important" : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
+						}
+						return e += ";", e
                     },
                     objectImage: function() {
-                        var e = "width:" + this.styling.objectImageWidth + "%;margin-top:" + this.styling.objectImageMarginTop + "%;margin-bottom:" + this.styling.objectImageMarginBottom + "%;";
-                        this.styling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.styling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
-                        var t = this.styling.objectImgBorderRadiusIsPixels ? "px" : "%";
-                        return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.styling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectImgBorderIsOn && (e += "border: " + this.styling.objectImgBorderWidth + "px " + this.styling.objectImgBorderStyle + " " + this.styling.objectImgBorderColor + ";"), e
+                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+                        var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
+                        return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
                     scoreText: function() {
-                        return 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";color: " + this.styling.scoreTextColor + ";"
+                        return 'font-family: "' + this.textStyling.scoreText + '";font-size: ' + this.textStyling.scoreTextSize + "%;text-align: " + this.textStyling.scoreTextAlign + ";color: " + this.textStyling.scoreTextColor + ";"
                     },
                     app: function() {
                         return this.$store.state.app
@@ -22721,6 +24418,17 @@
                                 for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
+					playBgm: function(e, t) {
+						var p = this.app.bgmIsPlaying,
+							s = document.getElementById('bgm'),
+							o = s.src.split("/").pop().split("?")[0];
+						if (o == t) {
+							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+						} else {
+							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+						}
+					},
                     activateObject: function(e, t) {
 						if (!(e.selectOnce && e.isActive)) {
 							for (var g = 0; g < e.scores.length; g++)
@@ -22872,7 +24580,7 @@
 											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
@@ -22896,7 +24604,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -22925,55 +24633,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															nH = this.activated.indexOf(eid);
-															var bC = this.checkRequireds(coS);
-															this.activated.splice(nH, 1);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(nH, 0, eid);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														nH = this.activated.indexOf(eid);
+														var bC = this.checkRequireds(coS);
+														this.activated.splice(nH, 1);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
-																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																		
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																		
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -22983,16 +24689,16 @@
 									}
 									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
 												coR = this.app.rows[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice;
+											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 											var d = coR.currentChoices - 1;
 											if (d > coR.allowedChoices) {
 												var u = d - coR.allowedChoices;
@@ -23000,7 +24706,6 @@
 													if (u > 0 && coR.objects[v].isActive) {
 														this.activateObject(coR.objects[v], coR);
 														u--;
-														console.log("u:", u)
 													}
 												}
 											}											
@@ -23014,6 +24719,12 @@
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 										}
 									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -23024,7 +24735,7 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															this.$set(coS, "discountIsOn", false)
+															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 														}
 													}
 									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
@@ -23039,13 +24750,14 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable) {
+															if (!coS.isNotDiscountable && !coS.discountIsOn) {
 																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
 																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
 																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
 																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
 																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
 																this.$set(coS, "discountIsOn", true);
+																this.$set(coS, "discountedFrom", e.id);
 															}
 														}
 													}
@@ -23174,7 +24886,7 @@
 											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												var bRO = this.checkRequireds(coO);
 												this.activated.push(eid);
 												var bRT = this.checkRequireds(coO);
@@ -23197,7 +24909,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -23225,55 +24937,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															this.activated.push(eid);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(this.activated.indexOf(eid), 1);
-															if (bC !== bE) {
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														this.activated.push(eid);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(this.activated.indexOf(eid), 1);
+														if (bC !== bE) {
+															19 == C.length ? C += coO.title : C+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																				}																			
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
+																				}
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
 																				}
-																				
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}
+																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
-																}
+																	}
 															}
 														}
 													}
@@ -23286,10 +24996,10 @@
 										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
 									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -23337,6 +25047,13 @@
 													}
 												}
 											}
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 									this.activated.push(eid), t.currentChoices += 1
@@ -23478,7 +25195,7 @@
 										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											nR = this.activated.indexOf(eid);
 											var bRO = this.checkRequireds(coO);
 											this.activated.splice(nR, 1);
@@ -23502,7 +25219,7 @@
 												if (e.discountOther) {
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b];
-														if (coS.discountIsOn) {
+														if (coS.discountIsOn && coS.discountedFrom == e.id) {
 															var coSDiscount = parseInt(coS.value) - coS.discountScore;
 															for (var m = 0; m < this.app.pointTypes.length; m++)
 																if (this.app.pointTypes[m].id == coS.id) {
@@ -23531,55 +25248,53 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														nH = this.activated.indexOf(eid);
-														var bC = this.checkRequireds(coS);
-														this.activated.splice(nH, 1);
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													nH = this.activated.indexOf(eid);
+													var bC = this.checkRequireds(coS);
+													this.activated.splice(nH, 1);
+													var bE = this.checkRequireds(coS);
+													this.activated.splice(nH, 0, eid);
+													if (bC !== bE) {
+														19 == h.length ? h += coO.title : h+= ", " + coO.title;
+														if (bC) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																		}
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																		}																		
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -23589,16 +25304,16 @@
 								}
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 								if (e.multiplyPointtypeIsOnCheck)
-									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 								if (e.textfieldIsOn)
 									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
 											coR = this.app.rows[co.rows];
-										coR.allowedChoices -= e.numbAddToAllowChoice;
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 										var d = coR.currentChoices - 1;
 										if (d > coR.allowedChoices) {
 											var u = d - coR.allowedChoices;
@@ -23613,12 +25328,18 @@
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 								if (e.changeBackground) {
-										if (e.changeBgImage) {
-											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
-										} else {
-											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
-										}
+									if (e.changeBgImage) {
+										this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
+									} else {
+										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 									}
+								}
+								if (e.setBgmIsOn) {
+									if (e.bgmId) {
+										this.app.bgmIsPlaying = !1;
+										this.playBgm(e, e.bgmId)
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -23629,7 +25350,7 @@
 														coO = coR.objects[co.objects];
 													for (var c = 0; c < coO.scores.length; c++) {
 														var coS = coO.scores[c];
-														this.$set(coS, "discountIsOn", false)
+														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
@@ -23657,7 +25378,7 @@
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
 										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
 									}
-							}							
+							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) {
 									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -23686,6 +25407,13 @@
 													}
 												}
 											}
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -23782,7 +25510,7 @@
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid);
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
@@ -23807,56 +25535,54 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														var bC = this.checkRequireds(coS),
-															fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-															aFI = this.activated[fI].split("/ON#");
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bE) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													var bC = this.checkRequireds(coS),
+														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+														aFI = this.activated[fI].split("/ON#");
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													var bE = this.checkRequireds(coS);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													if (bC !== bE) {
+														19 == C.length ? C += coO.title : C+= ", " + coO.title;
+														if (bE) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -23896,6 +25622,12 @@
 											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
 										} else {
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -24012,7 +25744,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
@@ -24038,54 +25770,52 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
-															var bE = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bE) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
+														var bE = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bE) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -24379,11 +26109,63 @@
                         return this.$store.state.objectWidths
                     },
                     rowTitle: function() {
-                        return 'font-family: "' + this.styling.rowTitle + '";font-size: ' + this.styling.rowTitleTextSize + "%;text-align: " + this.styling.rowTitleAlign + ";color: " + this.styling.rowTitleColor + ";"
+                        return 'font-family: "' + this.textStyling.rowTitle + '";font-size: ' + this.textStyling.rowTitleTextSize + "%;text-align: " + this.textStyling.rowTitleAlign + ";color: " + this.textStyling.rowTitleColor + ";"
                     },
                     styling: function() {
-                        return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
+                        return this.$store.state.app.styling
                     },
+					rowStyling: function() {
+						if (this.row.privateRowIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateRowIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					textStyling: function() {
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					rowImageStyling: function() {
+						if (this.row.privateRowImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateRowImageIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					backgroundStyling: function() {
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     resultArray: function() {
                         var e, t, o = [];
                         if ("standard" == this.type) {
@@ -24419,25 +26201,25 @@
                         return o
                     },
                     rowBody: function() {
-                        var e = "margin-top: " + this.styling.rowBodyMarginTop + "px;margin-bottom:" + this.styling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
-                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.styling.rowBodyMarginSides + "%;margin-right: " + this.styling.rowBodyMarginSides + "%;", e
+                        var e = "margin-top: " + this.rowStyling.rowBodyMarginTop + "px;margin-bottom:" + this.rowStyling.rowBodyMarginBottom + "px;" + (this.row.isPrivateStyling ? (this.styling.backgroundImage ? 'background-image: url("' + this.styling.backgroundImage + '");background-color: ' + this.styling.backgroundColor + (this.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : "background-color: " + this.styling.backgroundColor + ";" ) : "" );
+                        return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
                     rowText: function() {
-                        var e = 'font-family: "' + this.styling.rowText + '";text-align: ' + this.styling.rowTextAlign + ";font-size: " + this.styling.rowTextTextSize + "%;color: " + this.styling.rowTextColor + ";padding-top: " + this.styling.rowTextPaddingX + "px;padding-bottom: " + this.styling.rowTextPaddingX + "px;";
-                        return this.row.isEditModeOn || (e += "padding-left: " + this.styling.rowTextPaddingY + "%;padding-right: " + this.styling.rowTextPaddingY + "%;"), e
+                        var e = 'font-family: "' + this.textStyling.rowText + '";text-align: ' + this.textStyling.rowTextAlign + ";font-size: " + this.textStyling.rowTextTextSize + "%;color: " + this.textStyling.rowTextColor + ";padding-top: " + this.rowStyling.rowTextPaddingX + "px;padding-bottom: " + this.rowStyling.rowTextPaddingX + "px;";
+                        return this.row.isEditModeOn || (e += "padding-left: " + this.rowStyling.rowTextPaddingY + "%;padding-right: " + this.rowStyling.rowTextPaddingY + "%;"), e
                     },
                     rowButton: function() {
-                        return "padding-left: " + this.styling.rowButtonYPadding + "px;padding-right: " + this.styling.rowButtonYPadding + "px;padding-top: " + this.styling.rowButtonXPadding + "px;padding-bottom: " + this.styling.rowButtonXPadding + "px;color:black;;"
+                        return "padding-left: " + this.rowStyling.rowButtonYPadding + "px;padding-right: " + this.rowStyling.rowButtonYPadding + "px;padding-top: " + this.rowStyling.rowButtonXPadding + "px;padding-bottom: " + this.rowStyling.rowButtonXPadding + "px;color:black;;"
                     },
                     rowBackground: function() {
-                        var e = (this.styling.rowBorderImage ? 'border-image: url("' + this.styling.rowBorderImage + '") ' + this.styling.rowBorderImageSliceTop + ' ' + this.styling.rowBorderImageSliceRight + ' ' + this.styling.rowBorderImageSliceBottom + ' ' + this.styling.rowBorderImageSliceLeft + ' / ' + this.styling.rowBorderImageWidth + 'px '+ this.styling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.styling.rowBorderImageWidth + 'px !important; ' : "") + (this.styling.rowBackgroundImage ? 'background-image: url("' + this.styling.rowBackgroundImage + '");' + (this.styling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.styling.rowBgColorIsOn ? "background-color: " + this.styling.rowBgColor + ";" : "") + "margin-left:" + this.styling.rowMargin + "%;margin-right: " + this.styling.rowMargin + "%;",
-                            t = this.styling.rowBorderRadiusIsPixels ? "px" : "%";
-                        return this.styling.rowGradientIsOn && (e += this.styling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.styling.rowGradient + ");" : ""), e += "border-radius: " + this.styling.rowBorderRadiusTopLeft + 0 + t + " " + this.styling.rowBorderRadiusTopRight + 0 + t + " " + this.styling.rowBorderRadiusBottomRight + 0 + t + " " + this.styling.rowBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowBorderIsOn && (e += "border: " + this.styling.rowBorderWidth + "px " + this.styling.rowBorderStyle + " " + this.styling.rowBorderColor + ";"), this.styling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.styling.rowDropShadowH + "px " + this.styling.rowDropShadowV + "px " + this.styling.rowDropShadowBlur + "px " + this.styling.rowDropShadowColor + ");"), e
+                        var e = (this.rowStyling.rowBorderImage ? 'border-image: url("' + this.rowStyling.rowBorderImage + '") ' + this.rowStyling.rowBorderImageSliceTop + ' ' + this.rowStyling.rowBorderImageSliceRight + ' ' + this.rowStyling.rowBorderImageSliceBottom + ' ' + this.rowStyling.rowBorderImageSliceLeft + ' / ' + this.rowStyling.rowBorderImageWidth + 'px '+ this.rowStyling.rowBorderImageRepeat + '; border-style: solid; padding: ' + this.rowStyling.rowBorderImageWidth + 'px !important; ' : "") + (this.backgroundStyling.rowBackgroundImage ? 'background-image: url("' + this.backgroundStyling.rowBackgroundImage + '");' + (this.backgroundStyling.isRowBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.backgroundStyling.rowBgColorIsOn ? "background-color: " + this.backgroundStyling.rowBgColor + ";" : "") + "margin-left:" + this.rowStyling.rowMargin + "%;margin-right: " + this.rowStyling.rowMargin + "%;",
+                            t = this.rowStyling.rowBorderRadiusIsPixels ? "px" : "%";
+                        return this.rowStyling.rowGradientIsOn && (e += this.rowStyling.rowGradientIsOn ? ";background-image: linear-gradient(" + this.rowStyling.rowGradient + ");" : ""), e += "border-radius: " + this.rowStyling.rowBorderRadiusTopLeft + 0 + t + " " + this.rowStyling.rowBorderRadiusTopRight + 0 + t + " " + this.rowStyling.rowBorderRadiusBottomRight + 0 + t + " " + this.rowStyling.rowBorderRadiusBottomLeft + 0 + t + ";", this.rowStyling.rowOverflowIsOn && (e += "overflow:hidden;"), this.rowStyling.rowBorderIsOn && (e += "border: " + this.rowStyling.rowBorderWidth + "px " + this.rowStyling.rowBorderStyle + " " + this.rowStyling.rowBorderColor + ";"), this.rowStyling.rowDropShadowIsOn && (e += "filter: drop-shadow(" + this.rowStyling.rowDropShadowH + "px " + this.rowStyling.rowDropShadowV + "px " + this.rowStyling.rowDropShadowBlur + "px " + this.rowStyling.rowDropShadowColor + ");"), e
                     },
                     rowImage: function() {
-                        var e = "width:" + this.styling.rowImageWidth + "%;margin-top:" + this.styling.rowImageMarginTop + "%;margin-bottom:" + this.styling.rowImageMarginBottom + "%;",
-                            t = this.styling.rowImgBorderRadiusIsPixels ? "px" : "%";
-                        return e += "border-radius: " + this.styling.rowImgBorderRadiusTopLeft + 0 + t + " " + this.styling.rowImgBorderRadiusTopRight + 0 + t + " " + this.styling.rowImgBorderRadiusBottomRight + 0 + t + " " + this.styling.rowImgBorderRadiusBottomLeft + 0 + t + ";", this.styling.rowImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.rowImgBorderIsOn && (e += "border: " + this.styling.rowImgBorderWidth + "px " + this.styling.rowImgBorderStyle + " " + this.styling.rowImgBorderColor + ";"), e
+                        var e = "width:" + this.rowImageStyling.rowImageWidth + "%;margin-top:" + this.rowImageStyling.rowImageMarginTop + "%;margin-bottom:" + this.rowImageStyling.rowImageMarginBottom + "%;",
+                            t = this.rowImageStyling.rowImgBorderRadiusIsPixels ? "px" : "%";
+                        return e += "border-radius: " + this.rowImageStyling.rowImgBorderRadiusTopLeft + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusTopRight + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusBottomRight + 0 + t + " " + this.rowImageStyling.rowImgBorderRadiusBottomLeft + 0 + t + ";", this.rowImageStyling.rowImgOverflowIsOn && (e += "overflow:hidden;"), this.rowImageStyling.rowImgBorderIsOn && (e += "border: " + this.rowImageStyling.rowImgBorderWidth + "px " + this.rowImageStyling.rowImgBorderStyle + " " + this.rowImageStyling.rowImgBorderColor + ";"), e
                     },
                     rows: function() {
                         return this.$store.state.app.rows
@@ -24512,6 +26294,8 @@
                             objectWidth: "",
                             isActive: !1,
                             isVisible: !0,
+							multipleUseVariable: 0,
+							initMultipleTimesMinus: 0,
 							selectedThisManyTimesProp: 0,
                             defaultAspectWidth: this.row.defaultAspectWidth,
                             defaultAspectHeight: this.row.defaultAspectHeight,
@@ -24586,6 +26370,17 @@
                                 for (var i = 0; i < this.app.pointTypes.length; i++) this.app.pointTypes[i].id == e.scores[o].id && this.app.pointTypes[i].belowZeroNotAllowed && this.app.pointTypes[i].startingSum + parseInt(e.scores[o].value) < 0 && (t = !1);
                         return t
                     },
+					playBgm: function(e, t) {
+						var p = this.app.bgmIsPlaying,
+							s = document.getElementById('bgm'),
+							o = s.src.split("/").pop().split("?")[0];
+						if (o == t) {
+							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+						} else {
+							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+						}
+					},
                     activateObject: function(e, t) {
 						if (!(e.selectOnce && e.isActive)) {
 							for (var g = 0; g < e.scores.length; g++)
@@ -24737,7 +26532,7 @@
 											var co = this.app.comp[af[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
@@ -24761,7 +26556,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -24790,55 +26585,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															nH = this.activated.indexOf(eid);
-															var bC = this.checkRequireds(coS);
-															this.activated.splice(nH, 1);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(nH, 0, eid);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														nH = this.activated.indexOf(eid);
+														var bC = this.checkRequireds(coS);
+														this.activated.splice(nH, 1);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(nH, 0, eid);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
-																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																		
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																		
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -24848,16 +26641,16 @@
 									}
 									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 									if (e.textfieldIsOn)
 										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
 												coR = this.app.rows[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice;
+											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 											var d = coR.currentChoices - 1;
 											if (d > coR.allowedChoices) {
 												var u = d - coR.allowedChoices;
@@ -24865,7 +26658,6 @@
 													if (u > 0 && coR.objects[v].isActive) {
 														this.activateObject(coR.objects[v], coR);
 														u--;
-														console.log("u:", u)
 													}
 												}
 											}											
@@ -24879,6 +26671,12 @@
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 										}
 									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
+										}
+									}
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 											for (var a = 0; a < this.app.groups.length; a++)
@@ -24889,7 +26687,7 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															this.$set(coS, "discountIsOn", false)
+															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 														}
 													}
 									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
@@ -24904,13 +26702,14 @@
 															coO = coR.objects[co.objects];
 														for (var c = 0; c < coO.scores.length; c++) {
 															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable) {
+															if (!coS.isNotDiscountable && !coS.discountIsOn) {
 																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
 																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
 																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
 																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
 																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
 																this.$set(coS, "discountIsOn", true);
+																this.$set(coS, "discountedFrom", e.id);
 															}
 														}
 													}
@@ -25039,7 +26838,7 @@
 											var co = this.app.comp[aF[0]],
 												coR = this.app.rows[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO !== e) {
+											if (coO.id !== e.id) {
 												var bRO = this.checkRequireds(coO);
 												this.activated.push(eid);
 												var bRT = this.checkRequireds(coO);
@@ -25062,7 +26861,7 @@
 													if (e.discountOther) {
 														for (var b = 0; b < coO.scores.length; b++) {
 															var coS = coO.scores[b];
-															if (coS.discountIsOn) {
+															if (coS.discountIsOn && coS.discountedFrom == e.id) {
 																var coSDiscount = parseInt(coS.value) - coS.discountScore;
 																for (var m = 0; m < this.app.pointTypes.length; m++)
 																	if (this.app.pointTypes[m].id == coS.id) {
@@ -25090,55 +26889,53 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															this.activated.push(eid);
-															var bE = this.checkRequireds(coS);
-															this.activated.splice(this.activated.indexOf(eid), 1);
-															if (bC !== bE) {
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-																if (bC) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														this.activated.push(eid);
+														var bE = this.checkRequireds(coS);
+														this.activated.splice(this.activated.indexOf(eid), 1);
+														if (bC !== bE) {
+															19 == C.length ? C += coO.title : C+= ", " + coO.title;
+															if (bC) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																				}																			
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
+																				}
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nC > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
 																				}
-																				
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nC > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																			}
+																			
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
-																}
+																	}
 															}
 														}
 													}
@@ -25151,10 +26948,10 @@
 										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis - this.app.pointTypes[m].startingSum, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
 									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, console.log("Multiply:"));
+										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -25188,6 +26985,13 @@
 										} else {
 											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 									this.activated.push(eid), t.currentChoices += 1
@@ -25329,7 +27133,7 @@
 										var co = this.app.comp[af[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											nR = this.activated.indexOf(eid);
 											var bRO = this.checkRequireds(coO);
 											this.activated.splice(nR, 1);
@@ -25353,7 +27157,7 @@
 												if (e.discountOther) {
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b];
-														if (coS.discountIsOn) {
+														if (coS.discountIsOn && coS.discountedFrom == e.id) {
 															var coSDiscount = parseInt(coS.value) - coS.discountScore;
 															for (var m = 0; m < this.app.pointTypes.length; m++)
 																if (this.app.pointTypes[m].id == coS.id) {
@@ -25382,55 +27186,53 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														nH = this.activated.indexOf(eid);
-														var bC = this.checkRequireds(coS);
-														this.activated.splice(nH, 1);
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													nH = this.activated.indexOf(eid);
+													var bC = this.checkRequireds(coS);
+													this.activated.splice(nH, 1);
+													var bE = this.checkRequireds(coS);
+													this.activated.splice(nH, 0, eid);
+													if (bC !== bE) {
+														19 == h.length ? h += coO.title : h+= ", " + coO.title;
+														if (bC) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																		}
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nh > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																		}																		
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -25440,16 +27242,16 @@
 								}
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 								if (e.multiplyPointtypeIsOnCheck)
-									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, console.log("Multiply:" + e.startingSumAtMultiply));
+									for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
 								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum *= e.divideWithThis, console.log("Multiply:"));
+									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 								if (e.textfieldIsOn)
 									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
 											coR = this.app.rows[co.rows];
-										coR.allowedChoices -= e.numbAddToAllowChoice;
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
 										var d = coR.currentChoices - 1;
 										if (d > coR.allowedChoices) {
 											var u = d - coR.allowedChoices;
@@ -25470,6 +27272,12 @@
 										this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
 									}
 								}
+								if (e.setBgmIsOn) {
+									if (e.bgmId) {
+										this.app.bgmIsPlaying = !1;
+										this.playBgm(e, e.bgmId);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -25480,7 +27288,7 @@
 														coO = coR.objects[co.objects];
 													for (var c = 0; c < coO.scores.length; c++) {
 														var coS = coO.scores[c];
-														this.$set(coS, "discountIsOn", false)
+														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
@@ -25523,6 +27331,13 @@
 										} else {
 											this.$set(e, "bgColorOrigin", this.app.styling.backgroundColor);
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -25619,7 +27434,7 @@
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects],
 											nR = this.activated.indexOf(eid);
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
@@ -25644,56 +27459,54 @@
 												for (var b = 0; b < coO.scores.length; b++) {
 													var coS = coO.scores[b],
 														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-														var bC = this.checkRequireds(coS),
-															fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-															aFI = this.activated[fI].split("/ON#");
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bE) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
+													var bC = this.checkRequireds(coS),
+														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+														aFI = this.activated[fI].split("/ON#");
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													var bE = this.checkRequireds(coS);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													if (bC !== bE) {
+														19 == C.length ? C += coO.title : C+= ", " + coO.title;
+														if (bE) {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
+																			else {
+																				this.app.pointTypes[m].startingSum += coSValue;
 																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																	
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
-															}
+																}
+														} else {
+															for (var m = 0; m < this.app.pointTypes.length; m++)
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																			}
+																			else {
+																				this.app.pointTypes[m].startingSum -= coSValue;
+																			}
+																		}
+																		if (coO.forcedActivated && nC > 0) {
+																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																		}																	
+																	} else {
+																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																	}
+																}
 														}
 													}
 												}
@@ -25733,6 +27546,12 @@
 											this.$set(this.app.styling, "backgroundImage", e.bgImageOrigin);
 										} else {
 											this.$set(this.app.styling, "backgroundColor", e.bgColorOrigin);
+										}
+									}
+									if (e.setBgmIsOn) {
+										if (e.bgmId) {
+											this.app.bgmIsPlaying = !1;
+											this.playBgm(e, e.bgmId);
 										}
 									}
 								}
@@ -25849,7 +27668,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO !== e) {
+										if (coO.id !== e.id) {
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
@@ -25875,54 +27694,52 @@
 													for (var b = 0; b < coO.scores.length; b++) {
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														if (JSON.stringify(coS).includes('"' + e.id + '"')) {
-															var bC = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
-															var bE = this.checkRequireds(coS);
-															parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
-															if (bC !== bE) {
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-																if (bE) {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum += coSValue;
-																					}
+														var bC = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 1);
+														var bE = this.checkRequireds(coS);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														if (bC !== bE) {
+															19 == h.length ? h += coO.title : h+= ", " + coO.title;
+															if (bE) {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																			}
-																		}
-																} else {
-																	for (var m = 0; m < this.app.pointTypes.length; m++)
-																		if (this.app.pointTypes[m].id == coS.id) {
-																			if (coO.isMultipleUseVariable) {
-																				for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																					if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																						coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																					}
-																					else {
-																						this.app.pointTypes[m].startingSum -= coSValue;
-																					}
+																				else {
+																					this.app.pointTypes[m].startingSum += coSValue;
 																				}
-																				if (coO.forcedActivated && nh > 0) {
-																					if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																					this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																				}																	
-																			} else {
-																				(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
-																}
+																	}
+															} else {
+																for (var m = 0; m < this.app.pointTypes.length; m++)
+																	if (this.app.pointTypes[m].id == coS.id) {
+																		if (coO.isMultipleUseVariable) {
+																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																				}
+																				else {
+																					this.app.pointTypes[m].startingSum -= coSValue;
+																				}
+																			}
+																			if (coO.forcedActivated && nh > 0) {
+																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																			}																	
+																		} else {
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																		}
+																	}
 															}
 														}
 													}
@@ -26524,6 +28341,21 @@
                         },
                         expression: "styling.selBgColorIsOn"
                     }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Overlay on Image?",
+						disabled: !e.styling.selBgColorIsOn
+                    },
+                    model: {
+                        value: e.styling.selOverlayOnImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "selOverlayOnImage", t)
+                        },
+                        expression: "styling.selOverlayOnImage"
+                    }
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
@@ -26968,6 +28800,21 @@
                         },
                         expression: "styling.reqBgColorIsOn"
                     }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        dense: "",
+                        "hide-details": "",
+                        label: "Overlay on Image?",
+						disabled: !e.styling.reqBgColorIsOn
+                    },
+                    model: {
+                        value: e.styling.reqOverlayOnImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "reqOverlayOnImage", t)
+                        },
+                        expression: "styling.reqOverlayOnImage"
+                    }
                 }), o("v-color-picker", {
                     staticClass: "mx-auto",
                     attrs: {
@@ -27241,6 +29088,7 @@
                     model: {
                         value: e.styling.rowBgColorIsOn,
                         callback: function(t) {
+							console.log(e),
                             e.$set(e.styling, "rowBgColorIsOn", t)
                         },
                         expression: "styling.rowBgColorIsOn"
@@ -30787,7 +32635,7 @@
 											}
 											var s = t.app.rows.indexOf(e);
 											for (var f = s + 1; f < t.app.rows.length; f++) {
-												t.app.comp[t.app.rows[f].id].rows -= 1;
+												t.app.compR[t.app.rows[f].id].rows -= 1;
 												for (var b = 0; b < t.app.rows[f].objects.length; b++) {
 													if ("undefined" !== typeof t.app.comp[t.app.rows[f].objects[b].id]) {
 														t.app.comp[t.app.rows[f].objects[b].id].rows -= 1;
@@ -30809,7 +32657,7 @@
 							var s = t.app.rows.indexOf(e);
 							for (var f = s + 1; f < t.app.rows.length; f++) {
 								for (var b = 0; b < t.app.rows[f].objects.length; b++) {
-									t.app.comp[t.app.rows[f].id].rows -= 1;
+									t.app.compR[t.app.rows[f].id].rows -= 1;
 									if ("undefined" !== typeof t.app.comp[t.app.rows[f].objects[b].id]) {
 										t.app.comp[t.app.rows[f].objects[b].id].rows -= 1;
 									}
@@ -32293,8 +34141,12 @@
 						comp: [],
 						compR: [],
 						compG: [],
+						compODG: [],
+						compRDG: [],
                         words: [],
                         groups: [],
+						rowDesignGroups: [],
+						objectDesignGroups: [],
                         chapters: [],
                         activated: [],
                         rows: [],
@@ -32422,6 +34274,7 @@
                             selFilterSepiaIsOn: !1,
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
+							selOverlayOnImage: !1,
                             selFilterBgColor: "#70FF7EFF",
 							selBorderColorIsOn: !1,
 							selFilterBorderColor: "#000000FF",
@@ -32452,6 +34305,7 @@
                             reqFilterSepiaIsOn: !1,
                             reqFilterSepia: 0,
                             reqBgColorIsOn: !1,
+							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
 							reqFilterBorderColor: "#000000FF",
@@ -32563,8 +34417,223 @@
                         text: "12 per Row",
                         value: "col-xl-1"
                     }],
-					objectNamesCache: [],
-					rowNamesCache: []
+					saveWait: !1,
+					filterStyling: {
+						selFilterBlurIsOn: !1,
+						selFilterBlur: 0,
+						selFilterBrightIsOn: !1,
+						selFilterBright: 100,
+						selFilterContIsOn: !1,
+						selFilterCont: 100,
+						selFilterGrayIsOn: !1,
+						selFilterGray: 0,
+						selFilterHueIsOn: !1,
+						selFilterHue: 0,
+						selFilterInvertIsOn: !1,
+						selFilterInvert: 0,
+						selFilterOpacIsOn: !1,
+						selFilterOpac: 100,
+						selFilterSaturIsOn: !1,
+						selFilterSatur: 1,
+						selFilterSepiaIsOn: !1,
+						selFilterSepia: 0,
+						selBgColorIsOn: !0,
+						selOverlayOnImage: !1,
+						selFilterBgColor: "#70FF7EFF",
+						selBorderColorIsOn: !1,
+						selFilterBorderColor: "#000000FF",
+						selCTitleColorIsOn: !1,
+						selFilterCTitleColor: "#000000FF",
+						selCTextColorIsOn: !1,
+						selFilterCTextColor: "#000000FF",
+						selATitleColorIsOn: !1,
+						selFilterATitleColor: "#000000FF",
+						selATextColorIsOn: !1,
+						selFilterATextColor: "#000000FF",
+						reqFilterBlurIsOn: !1,
+						reqFilterBlur: 0,
+						reqFilterBrightIsOn: !1,
+						reqFilterBright: 100,
+						reqFilterContIsOn: !1,
+						reqFilterCont: 100,
+						reqFilterGrayIsOn: !1,
+						reqFilterGray: 0,
+						reqFilterHueIsOn: !1,
+						reqFilterHue: 0,
+						reqFilterInvertIsOn: !1,
+						reqFilterInvert: 0,
+						reqFilterOpacIsOn: !0,
+						reqFilterOpac: 50,
+						reqFilterSaturIsOn: !1,
+						reqFilterSatur: 1,
+						reqFilterSepiaIsOn: !1,
+						reqFilterSepia: 0,
+						reqBgColorIsOn: !1,
+						reqOverlayOnImage: !1,
+						reqFilterBgColor: "#FFFFFFFF",
+						reqBorderColorIsOn: !1,
+						reqFilterBorderColor: "#000000FF",
+						reqCTitleColorIsOn: !1,
+						reqFilterCTitleColor: "#000000FF",
+						reqCTextColorIsOn: !1,
+						reqFilterCTextColor: "#000000FF",
+						reqATitleColorIsOn: !1,
+						reqFilterATitleColor: "#000000FF",
+						reqATextColorIsOn: !1,
+						reqFilterATextColor: "#000000FF",
+						reqFilterVisibleIsOn: !1
+					},
+					textStyling: {
+						rowTitle: "Times New Roman",
+						rowText: "Times New Roman",
+						objectTitle: "Times New Roman",
+						objectText: "Times New Roman",
+						addonTitle: "Times New Roman",
+						addonText: "Times New Roman",
+						scoreText: "Times New Roman",
+						rowTitleTextSize: 200,
+						rowTextTextSize: 100,
+						objectTitleTextSize: 200,
+						objectTextTextSize: 100,
+						addonTitleTextSize: 200,
+						addonTextTextSize: 100,
+						scoreTextSize: 75,
+						rowTitleColor: "#000000",
+						rowTextColor: "#000000",
+						objectTitleColor: "#000000",
+						objectTextColor: "#000000",
+						addonTitleColor: "#000000",
+						addonTextColor: "#000000",
+						scoreTextColor: "#000000",
+						rowTitleAlign: "center",
+						rowTextAlign: "center",
+						objectTitleAlign: "center",
+						objectTextAlign: "center",
+						addonTitleAlign: "center",
+						addonTextAlign: "center",
+						scoreTextAlign: "center"
+					},
+					objectImageStyling: {
+						objectImgBorderStyle: "solid",
+						objectImgBorderWidth: 2,
+						objectImageWidth: 100,
+						objectImageMarginTop: 0,
+						objectImageMarginBottom: 0,
+						objectImgBorderRadiusTopLeft: 0,
+						objectImgBorderRadiusTopRight: 0,
+						objectImgBorderRadiusBottomRight: 0,
+						objectImgBorderRadiusBottomLeft: 0,
+						objectImgBorderRadiusIsPixels: !0,
+						objectImgBorderIsOn: !1,
+						objectImgOverflowIsOn: !1,
+						objectImgBorderColor: "red",
+						objectImgObjectFillStyle: null,
+						objectImgObjectFillIsOn: null
+					},
+					rowImageStyling: {
+						rowImgBorderStyle: "solid",
+						rowImgBorderWidth: 2,
+						rowImageWidth: 100,
+						rowImageMarginTop: 0,
+						rowImageMarginBottom: 0,
+						rowImgBorderRadiusTopLeft: 0,
+						rowImgBorderRadiusTopRight: 0,
+						rowImgBorderRadiusBottomRight: 0,
+						rowImgBorderRadiusBottomLeft: 0,
+						rowImgBorderRadiusIsPixels: !0,
+						rowImgBorderIsOn: !1,
+						rowImgOverflowIsOn: !1,
+						rowImgBorderColor: "red"
+					},
+					backgroundStyling: {
+						backgroundColor: "#FFFFFFFF",
+						rowBgColorIsOn: !1,
+						rowBgColor: "#FFFFFFFF",
+						objectBgColorIsOn: !1,
+						objectBgColor: "#FFFFFFFF",
+						isBackgroundRepeat: !1,
+						backgroundImage: "",
+						isRowBackgroundRepeat: !1,
+						rowBackgroundImage: "",
+						isObjectBackgroundRepeat: !1
+					},
+					objectStyling: {
+						objectHeight: !0,
+						objectDesignIsAdvanced: !1,
+						objectMargin: 10,
+						objectTextPadding: 10,
+						objectBorderStyle: "solid",
+						objectBorderWidth: 2,
+						objectBorderIsOn: !1,
+						objectDropShadowH: 0,
+						objectDropShadowV: 0,
+						objectDropShadowBlur: 0,
+						objectDropShadowSpread: 0,
+						objectDropShadowIsOn: !1,
+						objectBorderRadiusTopLeft: 0,
+						objectBorderRadiusTopRight: 0,
+						objectBorderRadiusBottomRight: 0,
+						objectBorderRadiusBottomLeft: 0,
+						objectBorderRadiusIsPixels: !0,
+						objectOverflowIsOn: !0,
+						objectMargin: 10,
+						objectTextPadding: 10,
+						objectBorderStyle: "solid",
+						objectDropShadowColor: "grey",
+						objectGradientIsOn: null,
+						objectGradient: null,
+						objectGradientOnSelect: null,
+						objectGradientOnReq: null,
+						objectBorderColor: "red",
+						objectBorderImage: "",
+						objectBorderImageRepeat: "stretch",
+						objectBorderImageWidth: 5,
+						objectBorderImageSliceTop: 5,
+						objectBorderImageSliceBottom: 5,
+						objectBorderImageSliceLeft: 5,
+						objectBorderImageSliceRight: 5,
+					},
+					rowStyling: {
+						rowDesignIsAdvanced: !1,
+						rowMargin: 10,
+						rowBodyMarginSides: 1,
+						rowBodyMarginTop: 25,
+						rowBodyMarginBottom: 25,
+						rowTextPaddingY: 5,
+						rowTextPaddingX: 10,
+						rowOverflowIsOn: !0,
+						rowDropShadowH: 0,
+						rowDropShadowV: 0,
+						rowDropShadowBlur: 0,
+						rowDropShadowSpread: 0,
+						rowDropShadowColor: "grey",
+						rowButtonXPadding: 0,
+						rowButtonYPadding: 0,
+						rowDropShadowIsOn: !1,
+						rowBorderRadiusTopLeft: 0,
+						rowBorderRadiusTopRight: 0,
+						rowBorderRadiusBottomRight: 0,
+						rowBorderRadiusBottomLeft: 0,
+						rowBorderRadiusIsPixels: !0,
+						rowBorderStyle: "solid",
+						rowBorderWidth: 2,
+						rowBorderIsOn: !1,
+						rowBorderColor: "red",
+						rowMargin: 10,
+						rowBodyMarginSides: 1,
+						rowBodyMarginBottom: 25,
+						rowBodyMarginTop: 25,
+						rowGradientIsOn: null,
+						rowGradient: null,
+						rowDropShadowColor: "grey",
+						rowBorderImage: "",
+						rowBorderImageRepeat: "stretch",
+						rowBorderImageWidth: 5,
+						rowBorderImageSliceTop: 5,
+						rowBorderImageSliceBottom: 5,
+						rowBorderImageSliceLeft: 5,
+						rowBorderImageSliceRight: 5,
+					}
                 },
                 getters: {
                     checkRequireds: function(e, t) {
@@ -32739,7 +34808,7 @@
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
                         for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++) {
-							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange), t = 0; t < e.app.rows[o].objects.length; t++) {
+							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
 								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) 
 									e.app.rows[o].objects[t].scores[r].isActive = !1, e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
@@ -32777,6 +34846,22 @@
                             elements: []
                         })
                     },
+					addNewRowDesignGroup: function(e, t) {
+						e.app.rowDesignGroups.push({
+                            id: t.id,
+                            name: t.name,
+                            elements: [],
+							styling: {}
+                        })
+					},
+					addNewObjectDesignGroup: function(e, t) {
+						e.app.objectDesignGroups.push({
+                            id: t.id,
+                            name: t.name,
+                            elements: [],
+							styling: {}
+                        })
+					},
                     addNewVariable: function(e, t) {
                         e.app.variables.push({
                             id: t.id,
