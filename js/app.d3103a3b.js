@@ -225,7 +225,7 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: " ",
+                        href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
                 }, [e._v(" Ver 1.4.0 ")])]), o("v-col", {
@@ -33498,15 +33498,15 @@
                 }, [e._v("Update: 20.07.2024")]), o("v-col", {
                     staticClass: "pb-0",
 					staticStyle: {
-                        color: "red"
+                        color: "blue"
                     },
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" New Features: ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" Added a feature to Auto-save in local storage. "), o("br"), o("br"), e._v(" Added requirements to check how many choices have been selected in rows/entire. "), o("br"), o("br"), e._v(" Added a feature to set Border Color and Text Color in Filter design. "), o("br"), o("br"), e._v(" Added a feature to apply a discount to all Choices within Groups. "), o("br"), o("br"), e._v(" Added a feature to set the initial value of points applied when using Clean Activated. "), o("br"), o("br"), e._v(" Added a feature to customize the color of each point text in the point bar. ")]), o("v-col", {
                     staticClass: "pb-0",
@@ -33514,12 +33514,12 @@
                         color: "red"
                     },
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" Fixed: ")]), o("v-col", {
                     staticClass: "pb-0",
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. "), o("br"), o("br"), e._v(" Fixed an issue where the choices in hidden rows weren't deselected automatically. "), o("br"), o("br"), e._v(" Fixed an issue where 'X of these is selected' couldn't be set X to 0. "), o("br"), o("br"), e._v(" Fixed an issue where words were not resetting with Clean Activated. "), o("br"), o("br"), e._v(" Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices. "), o("br"), o("br"), e._v(" A slight performance improvement. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
@@ -34305,7 +34305,7 @@
 						href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
 						target: "_blank"
 					}
-				}, [e._v(" 1.2.3 "), o("a", {
+				}, [e._v(" 1.2.3, ")]), o("a", {
 					attrs: {
 						href: "https://mega.nz/file/KrgXABxY#sta057FzKv3g3BBOdAxd4TtVAFain5e7OBd2SDOB9Ws",
 						target: "_blank"
