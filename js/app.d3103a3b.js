@@ -6588,7 +6588,15 @@
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
-                            e.$set(e.row, "isPrivateStyling", t)
+                            e.$set(e.row, "isPrivateStyling", t);
+							if (!t) {
+								e.$set(e.row, "privateFilterIsOn", !1);
+								e.$set(e.row, "privateTextIsOn", !1);
+								e.$set(e.row, "privateObjectImageIsOn", !1);
+								e.$set(e.row, "privateObjectIsOn", !1);
+								e.$set(e.row, "privateBackgroundIsOn", !1);
+								e.$set(e.row, "styling", {});
+							}
                         },
                         expression: "row.isPrivateStyling"
                     }
@@ -13427,7 +13435,17 @@
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
-                            e.$set(e.row, "isPrivateStyling", t)
+                            e.$set(e.row, "isPrivateStyling", t);
+							if (!t) {
+								e.$set(e.row, "privateFilterIsOn", !1);
+								e.$set(e.row, "privateTextIsOn", !1);
+								e.$set(e.row, "privateObjectImageIsOn", !1);
+								e.$set(e.row, "privateObjectIsOn", !1);
+								e.$set(e.row, "privateRowImageIsOn", !1);
+								e.$set(e.row, "privateRowIsOn", !1);
+								e.$set(e.row, "privateBackgroundIsOn", !1);
+								e.$set(e.row, "styling", {});
+							}
                         },
                         expression: "row.isPrivateStyling"
                     }
