@@ -17233,14 +17233,14 @@
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
 									e.app.comp[d] = {rows: b, objects: c};
-									if ("undefined" === typeof e.app.rows[b].objects[c].styling) e.$set(e.app.rows[b].objects[c], "styling", {});
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
-									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
-										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
+									if (e.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
+										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
+										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(e.app.rows[b].objects[c].numMultipleTimesMinus));
 									}
 								}
 							}
@@ -17309,8 +17309,9 @@
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
-									if (e.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
-										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", e.app.rows[b].objects[c].numMultipleTimesMinus);
+									if (e.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
+										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
+										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(e.app.rows[b].objects[c].numMultipleTimesMinus));
 									}
 								}
 							}

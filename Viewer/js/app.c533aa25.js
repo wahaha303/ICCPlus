@@ -6753,8 +6753,8 @@
 							if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateRowIsOn) t.$set(t.app.rows[b], "privateRowIsOn", !0);
 							if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateBackgroundIsOn) t.$set(t.app.rows[b], "privateBackgroundIsOn", !0);
 							if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateBackgroundIsOn) t.$set(t.app.rows[b], "privateBackgroundIsOn", !0);
-							if ("undefined" === typeof t.app.objectDesignGroups) t.$set(t.app, "objectDesignGroups", {});
-							if ("undefined" === typeof t.app.rowDesignGroups) t.$set(t.app, "rowDesignGroups", {});
+							if ("undefined" === typeof t.app.objectDesignGroups) t.$set(t.app, "objectDesignGroups", []);
+							if ("undefined" === typeof t.app.rowDesignGroups) t.$set(t.app, "rowDesignGroups", []);
 							for (var c = 0; c < t.app.rows[b].objects.length; c++) {
 								var d = t.app.rows[b].objects[c].id;
 								t.app.comp[d] = {rows: b, objects: c};
@@ -6763,8 +6763,9 @@
 								if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateObjectImageIsOn) t.$set(t.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
 								if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateObjectIsOn) t.$set(t.app.rows[b].objects[c], "privateObjectIsOn", !0);
 								if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateBackgroundIsOn) t.$set(t.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
-								if (t.app.rows[b].objects[c].isMultipleUseVariable && "undefined" === typeof t.app.rows[b].objects[c].initMultipleTimesMinus) {
-									t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", t.app.rows[b].objects[c].numMultipleTimesMinus);
+								if (t.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof t.app.rows[b].objects[c].initMultipleTimesMinus) {
+									t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
+									t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(t.app.rows[b].objects[c].numMultipleTimesMinus));
 								}
 							}
 						}
@@ -6959,9 +6960,13 @@
                         backpack: [],
 						comp: [],
 						compR: [],
-						compG: [],
+						compG: [],						
+						compODG: [],
+						compRDG: [],
                         words: [],
                         groups: [],
+						rowDesignGroups: [],
+						objectDesignGroups: [],
                         chapters: [],
                         activated: [],
                         rows: [],
@@ -7022,7 +7027,7 @@
                             backgroundImage: "",
                             rowBackgroundImage: "",
                             objectBackgroundImage: "",
-							rowBorderImage: "",
+                            rowBorderImage: "",
                             rowBorderImageRepeat: "stretch",
                             rowBorderImageWidth: 5,
 							rowBorderImageSliceTop: 5,
@@ -7086,18 +7091,17 @@
                             selFilterSepia: 0,
                             selBgColorIsOn: !0,
 							selOverlayOnImage: !1,
-							selFilterBgColor: "#70FF7EFF",
-							selBorderColorIsOn: !1,
-							selFilterBorderColor: "#000000",
-							selCTitleColorIsOn: !1,
-							selFilterCTitleColor: "#000000",
-							selCTextColorIsOn: !1,
-							selFilterCTextColor: "#000000",
-							selATitleColorIsOn: !1,
-							selFilterATitleColor: "#000000",
-							selATextColorIsOn: !1,
-							selFilterATextColor: "#000000",
                             selFilterBgColor: "#70FF7EFF",
+							selBorderColorIsOn: !1,
+							selFilterBorderColor: "#000000FF",
+							selCTitleColorIsOn: !1,
+							selFilterCTitleColor: "#000000FF",
+							selCTextColorIsOn: !1,
+							selFilterCTextColor: "#000000FF",
+							selATitleColorIsOn: !1,
+							selFilterATitleColor: "#000000FF",
+							selATextColorIsOn: !1,
+							selFilterATextColor: "#000000FF",
                             reqFilterBlurIsOn: !1,
                             reqFilterBlur: 0,
                             reqFilterBrightIsOn: !1,
@@ -7120,15 +7124,16 @@
 							reqOverlayOnImage: !1,
                             reqFilterBgColor: "#FFFFFFFF",
 							reqBorderColorIsOn: !1,
-							reqFilterBorderColor: "#000000",
+							reqFilterBorderColor: "#000000FF",
 							reqCTitleColorIsOn: !1,
-							reqFilterCTitleColor: "#000000",
+							reqFilterCTitleColor: "#000000FF",
 							reqCTextColorIsOn: !1,
-							reqFilterCTextColor: "#000000",
+							reqFilterCTextColor: "#000000FF",
 							reqATitleColorIsOn: !1,
-							reqFilterATitleColor: "#000000",
+							reqFilterATitleColor: "#000000FF",
 							reqATextColorIsOn: !1,
-                            reqFilterVisibleIsOn: !1,
+							reqFilterATextColor: "#000000FF",
+							reqFilterVisibleIsOn: !1,
                             rowBorderRadiusTopLeft: 0,
                             rowBorderRadiusTopRight: 0,
                             rowBorderRadiusBottomRight: 0,
