@@ -1,3 +1,10 @@
+const OBJECT_ID_LEN = 4;
+const ROW_ID_LEN = 4;
+const GROUP_ID_LEN = 2;
+const POINT_ID_LEN = 2;
+const VAR_ID_LEN = 2;
+const WORD_ID_LEN = 2;
+
 (function(e) {
     function t(t) {
         for (var i, a, n = t[0], l = t[1], c = t[2], d = 0, u = []; d < n.length; d++) a = n[d], Object.prototype.hasOwnProperty.call(s, a) && s[a] && u.push(s[a][0]), s[a] = 0;
@@ -11116,9 +11123,10 @@
 						if ("undefined" !== typeof this.app.compR[this.newRow]) {
 							var co = this.app.compR[this.newRow],
 								coR = this.app.rows[co.rows];
-							coR.objects.push(JSON.parse(JSON.stringify(this.row)));
-                            for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
-							coR.objects[coR.objects.length - 1].id = t;
+							const _obj = cloneAndSet(this.row, { 
+								id: microId(OBJECT_ID_LEN) 
+							});
+							coR.objects.push(_obj);
 							this.app.comp[t] = {rows: co.rows, objects: coR.objects.length - 1};
 						}
                     },
@@ -11511,7 +11519,7 @@
                     },
                     createNewAddon: function() {
                         this.object.addons.push({
-                            id: "",
+                            id: microId(OBJECT_ID_LEN),
                             title: this.app.defaultAddonTitle,
                             text: this.app.defaultAddonText,
                             template: "",
@@ -13087,11 +13095,12 @@
 						}
                     },
                     cloneObject: function() {
-                        this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
-                        this.row.objects[this.row.objects.indexOf(this.object) + 1].id = e;
-						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
-						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
+						const _idx = this.row.objects.indexOf(this.object) + 1;
+						const _id = microId(OBJECT_ID_LEN);
+						const _obj = cloneAndSet(this.object, { id: _id });
+                        this.row.objects.splice(_idx, 0, _obj);
+						this.app.comp[_id] = {rows: this.app.rows.indexOf(this.row), objects: _idx};
+						for (var b = _idx + 1; b < this.row.objects.length; b++) {
 							this.app.comp[this.row.objects[b].id].objects = b;
 						}
                     },
@@ -13692,9 +13701,10 @@
 							var co = this.app.compR[this.newRow],
 								coR = this.app.rows[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
-								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
-								coR.objects[coR.objects.length - 1].id = i;
+								const _row = cloneAndSet(this.row.objects[o], {
+									id: microId(OBJECT_ID_LEN)
+								});
+								coR.objects.push(_row);
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1};
 							}
 						}
@@ -14650,9 +14660,10 @@
 							var co = this.app.compR[this.newRow],
 								coR = this.app.rows[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
-								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
-								coR.objects[coR.objects.length - 1].id = i;
+								const _row = cloneAndSet(this.row.objects[o], {
+									id: microId(OBJECT_ID_LEN)
+								});
+								coR.objects.push(_row);
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1};
 							}
 						}
@@ -15154,9 +15165,9 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(OBJECT_ID_LEN);
                         this.row.objects.push({
-                            id: e,
+                            id: _id,
                             title: this.app.defaultChoiceTitle,
                             text: this.app.defaultChoiceText,
                             image: "",
@@ -15178,7 +15189,7 @@
 						if ("undefined" !== typeof this.app.compR[this.row.id]) {
 							var co = this.app.compR[this.row.id],
 								coR = this.app.rows[co.rows];
-							this.app.comp[e] = {rows: co.rows, objects: this.row.objects.length - 1};
+							this.app.comp[_id] = {rows: co.rows, objects: this.row.objects.length - 1};
 						}
                     },
                     buttonActivate: function() {
@@ -17653,13 +17664,13 @@
                         })
                     },
                     createNewGroup: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(GROUP_ID_LEN);
                         this.$store.commit({
                             type: "addNewGroup",
-                            id: e,
+                            id: _id,
                             name: "Group " + (this.groups.length + 1)
                         });
-						this.app.compG[e] = {groups: this.groups.length - 1};
+						this.app.compG[_id] = {groups: this.groups.length - 1};
                     },
                     deleteGroupElement: function(e, t) {
                         t.splice(e, 1)
@@ -18547,10 +18558,9 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewPointType: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.$store.commit({
                             type: "addNewPointType",
-                            id: e,
+                            id: microId(POINT_ID_LEN),
                             name: "Points",
                             startingSum: 0,
 							initValue: 0,
@@ -18996,10 +19006,9 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewVariable: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.$store.commit({
                             type: "addNewVariable",
-                            id: e,
+                            id: microId(VAR_ID_LEN),
                             isTrue: !1
                         })
                     },
@@ -19280,13 +19289,13 @@
                         })
                     },
                     createNewGroup: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(GROUP_ID_LEN);
                         this.$store.commit({
                             type: "addNewGroup",
-                            id: e,
+                            id: _id,
                             name: "Group " + (this.groups.length + 1)
                         });
-						this.app.compG[e] = {groups: this.groups.length - 1};
+						this.app.compG[_id] = {groups: this.groups.length - 1};
                     },
                     deleteGroupElement: function(e, t) {
                         t.splice(e, 1)
@@ -21296,13 +21305,13 @@
                         }
                     },
                     cloneRow: function(e) {
-                        this.backpack.splice(this.backpack.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
-                        this.backpack[this.backpack.indexOf(e) + 1].id = t;
-                        for (var s = 0; s < this.backpack[this.backpack.indexOf(e) + 1].objects.length; s++) {
-                            t = "";
-                            for (var r = 0; r < 4; r++) t += o.charAt(Math.floor(Math.random() * o.length));
-                            this.backpack[this.backpack.indexOf(e) + 1].objects[s].id = t
+						const _idx = this.backpack.indexOf(e) + 1;
+						const _obj = cloneAndSet(e, {
+							id: microId(ROW_ID_LEN)
+						});
+                        this.backpack.splice(_idx, 0, _obj);
+                        for (var s = 0; s < this.backpack[_idx].objects.length; s++) {
+                            this.backpack[_idx].objects[s].id = microId(OBJECT_ID_LEN);
                         }
                     },
                     moveRowDown: function(e) {
@@ -21316,9 +21325,8 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewBackpackRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.backpack.push({
-                            id: e,
+                            id: microId(ROW_ID_LEN),
                             title: "The Row",
                             titleText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             objectWidth: "col-md-3",
@@ -21847,10 +21855,9 @@
                     },
                     createNewWord: function() {
                         "undefined" === typeof this.$store.state.app.words && (this.$store.state.app.words = []);
-                        for (var e = "#", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.$store.commit({
                             type: "addNewWord",
-                            id: e,
+                            id: "#" + microId(WORD_ID_LEN),
                             replaceText: ""
                         })
                     },
@@ -22288,27 +22295,27 @@
                     },
                     createNewRowDesignGroup: function() {
 						if ("undefined" === typeof this.app.rowDesignGroups) this.$set(this.app, "rowDesignGroups", {});
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(GROUP_ID_LEN);
                         this.$store.commit({
                             type: "addNewRowDesignGroup",
-                            id: e,
+                            id: _id,
                             name: "Design Group " + (this.rowDesignGroups.length + 1),
 							elements: [],
 							styling: {}
                         });
-						this.app.compRDG[e] = {designGroups: this.rowDesignGroups.length - 1};
+						this.app.compRDG[_id] = {designGroups: this.rowDesignGroups.length - 1};
                     },
 					createNewObjectDesignGroup: function() {
 						if ("undefined" === typeof this.app.objectDesignGroups) this.$set(this.app, "objectDesignGroups", {});
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(GROUP_ID_LEN);
                         this.$store.commit({
                             type: "addNewObjectDesignGroup",
-                            id: e,
+                            id: _id,
                             name: "Design Group " + (this.objectDesignGroups.length + 1),
 							elements: [],
 							styling: {}
                         });
-						this.app.compODG[e] = {designGroups: this.objectDesignGroups.length - 1};
+						this.app.compODG[_id] = {designGroups: this.objectDesignGroups.length - 1};
                     },
                     deleteGroupElement: function(e, t) {
                         t.splice(e, 1)
@@ -26094,10 +26101,10 @@
 						}
                     },
                     cloneObject: function() {
-                        this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
-                        this.row.objects[this.row.objects.length - 1].id = e;
-						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
+						const _id = microId(OBJECT_ID_LEN);
+						const _obj = cloneAndSet(this.object, { id: _id });
+                        this.row.objects.push(_obj);
+                        this.app.comp[_id] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
 							this.app.comp[this.row.objects[b].id].objects = b;
 						}
@@ -26549,9 +26556,9 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(OBJECT_ID_LEN);
                         this.row.objects.push({
-                            id: e,
+                            id: _id,
                             title: this.app.defaultChoiceTitle,
                             text: this.app.defaultChoiceText,
                             image: "",
@@ -26571,7 +26578,7 @@
                         });
 						for (var b = 0; b < this.app.rows.length; b++) {
 							if (this.app.rows[b].id == this.row.id) {
-								this.app.comp[e] = {rows: b, objects: this.row.objects.length - 1};
+								this.app.comp[_id] = {rows: b, objects: this.row.objects.length - 1};
 								break
 							}
 						}
@@ -29676,13 +29683,13 @@
                         })
                     },
                     createNewGroup: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var _id = microId(GROUP_ID_LEN);
                         this.$store.commit({
                             type: "addNewGroup",
-                            id: e,
+                            id: _id,
                             name: "Group " + (this.groups.length + 1)
                         });
-						this.app.compG[e] = {groups: this.groups.length - 1};
+						this.app.compG[_id] = {groups: this.groups.length - 1};
                     },
                     deleteGroupElement: function(e, t) {
                         t.splice(e, 1)
@@ -32921,16 +32928,17 @@
                 },
                 methods: {
                     cloneRow: function(e) {
-                        this.app.rows.splice(this.app.rows.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
-                        this.app.rows[this.app.rows.indexOf(e) + 1].id = t;
-                        for (var s = 0; s < this.app.rows[this.app.rows.indexOf(e) + 1].objects.length; s++) {
-                            t = "";
-                            for (var r = 0; r < 4; r++) t += o.charAt(Math.floor(Math.random() * o.length));
-                            this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].id = t;
-							this.app.comp[t] = {rows: this.app.rows.indexOf(e) + 1, objects: s};
+						const _idx = this.app.rows.indexOf(e) + 1;
+						const _idR = microId(ROW_ID_LEN);
+						const _row = cloneAndSet(e, { id: _idR });
+                        this.app.rows.splice(_idx, 0, _row);
+						this.app.compR[_idR] = {rows: _idx};
+                        for (var s = 0; s < this.app.rows[_idx].objects.length; s++) {
+							const _idO = microId(OBJECT_ID_LEN);
+                            this.app.rows[_idx].objects[s].id = _idO;
+							this.app.comp[_idO] = {rows: _idx, objects: s};
                         }
-						for (var b = this.app.rows.indexOf(e) + 2; b < this.app.rows.length; b++) {
+						for (var b = _idx + 1; b < this.app.rows.length; b++) {
 							for (var c = 0; c < this.app.rows[b].objects.length; c++) {
 								this.app.comp[this.app.rows[b].objects[c].id] = {rows: b, objects: c};
 							}
@@ -32945,10 +32953,14 @@
                         })
                     },
                     createNewRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
-                        var i = JSON.parse(JSON.stringify(this.app.styling));
-                        i.backgroundImage = "", i.rowBackgroundImage = "", i.objectBackgroundImage = "", this.app.rows.push({
-                            id: e,
+                        var _styling = cloneAndSet(this.app.styling, {
+							backgroundImage: "",
+							rowBackgroundImage: "",
+							objectBackgroundImage: ""
+						});
+						var _id = microId(ROW_ID_LEN);
+                        this.app.rows.push({
+                            id: _id,
                             title: this.app.defaultRowTitle,
                             titleText: this.app.defaultRowText,
                             objectWidth: "col-md-3",
@@ -32972,9 +32984,9 @@
                             isEditModeOn: !1,
                             isRequirementOpen: !1,
                             objects: [],
-                            styling: i
+                            styling: _styling
                         });
-						this.app.compR[e] = {rows: this.app.rows.length - 1};
+						this.app.compR[_id] = {rows: this.app.rows.length - 1};
                     },
                     deleteRow: function(e) {
                         var t = this;
