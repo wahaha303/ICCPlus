@@ -4037,6 +4037,7 @@
                         })
                     },
                     buttonActivate: function() {
+						console.log(this.row);
                         if (this.row.btnPointAddon && "sumaddon" == this.row.buttonTypeRadio)
                             for (var e = Math.floor(Math.random() * (this.row.randomMax - this.row.randomMin) + this.row.randomMin), t = 0; t < this.app.pointTypes.length; t++) this.app.pointTypes[t].id == this.row.pointTypeRandom && (this.app.pointTypes[t].startingSum += e);
                         else if (this.row.buttonRandom) {
@@ -5586,6 +5587,9 @@
 								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
 							}
 						}
+                    },
+					updateActivated: function() {
+                        this.$emit("activatedWasChanged", this.activated)
                     },
                     duplicateRow: function(e) {
 						var c, i, j, s, fr, fo, y, z, zx, zy, zz, nR = 0, nF = 0;
