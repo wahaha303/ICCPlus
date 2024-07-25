@@ -17259,7 +17259,11 @@
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].styling) {
 										e.$set(e.app.rows[b].objects[c], "styling", {});
-										e.$set(e.app.rows[b].objects[c], "styling", e.app.styling);
+										e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !1);
 									}
 									if (e.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
@@ -17334,7 +17338,11 @@
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].styling) {
 										e.$set(e.app.rows[b].objects[c], "styling", {});
-										e.$set(e.app.rows[b].objects[c], "styling", e.app.styling);
+										e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !1);
+										e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !1);
 									}
 									if (e.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
