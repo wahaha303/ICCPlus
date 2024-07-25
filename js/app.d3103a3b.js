@@ -225,10 +225,10 @@
                     }
                 }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/KrgXABxY#sta057FzKv3g3BBOdAxd4TtVAFain5e7OBd2SDOB9Ws",
+                        href: " ",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.3.5 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.4.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,33 +236,33 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 20.07.2024")]), o("v-col", {
+                }, [e._v("Update: 25.07.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
 					},
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" New Feature: ")]), o("v-col", {
+                    staticClass: "pt-0 pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to hide choices in the Backpack. "), o("br"), e._v(" Added a feature to hide the button that displays the Backpack. "), o("br"), e._v(" Added a feature where the player can input their own words when selecting choice. "), o("br"), e._v(" Added a feature to check how many choices from groups have been selected. "), o("br"), e._v(" Added a feature to choose whether points will be shown on the points bar/choices. "), o("br"), e._v(" Added a feature to change the scroll position when a choice is selected. "), o("br"), e._v(" Added a feature to set background music when a choice is selected. "), o("br"), e._v(" Added a feature to change the background-color or background-image when a choice is selected. "), o("br"), e._v(" Added a feature to choose whether the filter color will overlay on background-image. "), o("br"), e._v(" Added a feature to manage Private Styles separately for each design feature. "), o("br"), e._v(" Added a feature to manage Private Styles for design groups globally. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
 					},
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
                 }, [e._v(" Fixed: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0 text-left",
+                    staticClass: "pt-0 pb-0",
                     attrs: {
-                        cols: "6"
+                        cols: "12"
                     }
-                }, [e._v(" Added a feature to Auto-save in local storage. "), o("br"), e._v(" Added requirements to check how many choices have been selected in rows/entire. "), o("br"), e._v(" Added a feature to set Border Color and Text Color in Filter design. "), o("br"), e._v(" Added a feature to apply a discount to all Choices within Groups. "), o("br"), e._v(" Added a feature to set the initial value of points applied when using Clean Activated. "), o("br"), e._v(" Added a feature to customize the color of each point text in the point bar. ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0 text-left",
-                    attrs: {
-                        cols: "6"
-                    }
-                }, [e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. "), o("br"), e._v(" Fixed an issue where the choices in hidden rows weren't deselected automatically. "), o("br"), e._v(" Fixed an issue where 'X of these is selected' couldn't be set X to 0. "), o("br"), e._v(" Fixed an issue where words were not resetting with Clean Activated. "), o("br"), e._v(" Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices. "), o("br"), e._v(" A slight performance improvement. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the browser would freeze when saving project with separate images. "), o("br"), e._v(" Fixed issues with 'Clean Activated' feature. "), o("br"), e._v(" Fixed issues with 'Scores Updated On'. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -2683,6 +2683,18 @@
 							} else {
 								e.$set(e.app, "hideBackpackBtn", e.app.hideBackpackBtn - 1)
 							}
+                        },
+                        expression: "object.BackpackButton"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "This choice will not appear in backpack."
+                    },
+                    model: {
+						value: e.object.isNotResult,
+                        callback: function(t) {
+							e.$set(e.object, "isNotResult", t)
                         },
                         expression: "object.BackpackButton"
                     }
@@ -8986,6 +8998,7 @@
 									}
 								});
 							}
+							e.$delete(e.styling, "backgroundImage");
                         },
                         expression: "row.privateBackgroundIsOn"
                     }
@@ -11309,7 +11322,6 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									console.log(coD);
 									if (coD.privateBackgroundIsOn) return coD.styling;
 								}
 							}
@@ -11319,7 +11331,6 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									console.log(coD);
 									if (coD.privateBackgroundIsOn) return coD.styling;
 								}
 							}
@@ -15034,7 +15045,7 @@
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
                                 for (e = 0; e < this.rows[t].objects.length; e++) {
-									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
                         else
                             for (t = 0; t < this.rows.length; t++)
@@ -17359,7 +17370,7 @@
 						this.app.styling.objectBorderImage && this.app.styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.styling.objectBorderImage.split(",")[1], m), t.file("images/OB." + ext, i, {
 							binary: !0
 						}), o.styling.objectBorderImage = "images/OB." + ext);
-                        for (s = 0; s < this.app.rows.length; s++) {
+                        for (var s = 0; s < this.app.rows.length; s++) {
 							this.app.rows[s].styling && this.app.rows[s].styling.rowBackgroundImage && this.app.rows[s].styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.rows[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.rowBackgroundImage.split(",")[1], m), t.file("images/R" + (s + 1) + "_RBg." + ext, i, {
                                 binary: !0
                             }), o.rows[s].styling.rowBackgroundImage = "images/R" + (s + 1) + "_RBg." + ext);
@@ -17393,7 +17404,7 @@
                                 }), o.rows[s].objects[r].addons[a].image = "images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
                             }
                         }
-						for (s = 0; s < this.app.backpack.length; s++) {
+						for (var s = 0; s < this.app.backpack.length; s++) {
 							this.app.backpack[s].image.length > 30 && (m = this.getMime(this.app.backpack[s].image), ext = this.getExt(m), i = P()(this.app.backpack[s].image.split(",")[1], m), t.file("images/BR" + (s + 1) + "." + ext, i, {
                                 binary: !0
                             }), o.backpack[s].image = "images/BR" + (s + 1) + "." + ext);
@@ -17423,6 +17434,28 @@
                                     binary: !0
                                 }), o.backpack[s].objects[r].addons[a].image = "images/BR" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
 							}
+						}
+						for (var s = 0; s < this.app.rowDesignGroups.length; s++) {
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBackgroundImage && this.app.rowDesignGroups[s].styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBackgroundImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_RBg." + ext, i, {
+                                binary: !0
+                            }), o.rowDesignGroups[s].styling.rowBackgroundImage = "images/RD" + (s + 1) + "_RBg." + ext);
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBackgroundImage && this.app.rowDesignGroups[s].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBackgroundImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_OBg." + ext, i, {
+                                binary: !0
+                            }), o.rowDesignGroups[s].styling.objectBackgroundImage = "images/RD" + (s + 1) + "_OBg." + ext);
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBorderImage && this.app.rowDesignGroups[s].styling.rowBorderImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBorderImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_RB." + ext, i, {
+                                binary: !0
+                            }), o.rowDesignGroups[s].styling.rowBorderImage = "images/RD" + (s + 1) + "_RB." + ext);
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBorderImage && this.app.rowDesignGroups[s].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBorderImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_OB." + ext, i, {
+                                binary: !0
+                            }), o.rowDesignGroups[s].styling.objectBorderImage = "images/RD" + (s + 1) + "_OB." + ext);
+                        }
+						for (var r = 0; r < this.app.objectDesignGroups.length; r++) {
+							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBackgroundImage && this.app.objectDesignGroups[r].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBackgroundImage.split(",")[1], m), t.file("images/OD" + (r + 1) + "_OBg." + ext, i, {
+								binary: !0
+							}), o.objectDesignGroups[r].styling.objectBackgroundImage = "images/OD" + (r + 1) + "_OBg." + ext);
+							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBorderImage && this.app.objectDesignGroups[r].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBorderImage.split(",")[1], m), t.file("images/OD" + "_OB." + ext, i, {
+								binary: !0
+							}), o.objectDesignGroups[r].styling.objectBorderImage = "images/OD" + (r + 1) + "_OB." + ext);
 						}
                         var n = JSON.stringify(o),
                             l = new Blob([n], {
@@ -26403,7 +26436,7 @@
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
                                 for (e = 0; e < this.rows[t].objects.length; e++) {
-									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
                         else
                             for (t = 0; t < this.rows.length; t++)
@@ -33448,7 +33481,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("20.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 20.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Added a feature to Auto-save in local storage. "), o("br"), o("br"), e._v(" Added requirements to check how many choices have been selected in rows/entire. "), o("br"), o("br"), e._v(" Added a feature to set Border Color and Text Color in Filter design. "), o("br"), o("br"), e._v(" Added a feature to apply a discount to all Choices within Groups. "), o("br"), o("br"), e._v(" Added a feature to set the initial value of points applied when using Clean Activated. "), o("br"), o("br"), e._v(" Added a feature to customize the color of each point text in the point bar. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where Forces Another Choice couldn't be used with multi-select. "), o("br"), o("br"), e._v(" Fixed an issue where the choices in hidden rows weren't deselected automatically. "), o("br"), o("br"), e._v(" Fixed an issue where 'X of these is selected' couldn't be set X to 0. "), o("br"), o("br"), e._v(" Fixed an issue where words were not resetting with Clean Activated. "), o("br"), o("br"), e._v(" Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices. "), o("br"), o("br"), e._v(" A slight performance improvement. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -34194,10 +34267,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://mega.nz/file/KrgXABxY#sta057FzKv3g3BBOdAxd4TtVAFain5e7OBd2SDOB9Ws",
+                        href: "",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.3.5")]), o("br"), e._v(" https://mega.nz/file/KrgXABxY#sta057FzKv3g3BBOdAxd4TtVAFain5e7OBd2SDOB9Ws "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.4.0")]), o("br"), e._v("  "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -34232,7 +34305,12 @@
 						href: "https://mega.nz/file/3qRVlTBJ#_0gcHk-6OMjAuHmznXXp_y_0t6p5VBVMo-40ePxwi4U",
 						target: "_blank"
 					}
-				}, [e._v(" 1.2.3 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+				}, [e._v(" 1.2.3 "), o("a", {
+					attrs: {
+						href: "https://mega.nz/file/KrgXABxY#sta057FzKv3g3BBOdAxd4TtVAFain5e7OBd2SDOB9Ws",
+						target: "_blank"
+					}
+				}, [e._v(" 1.3.5 ")])])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -34874,7 +34952,8 @@
 						backgroundImage: "",
 						isRowBackgroundRepeat: !1,
 						rowBackgroundImage: "",
-						isObjectBackgroundRepeat: !1
+						isObjectBackgroundRepeat: !1,
+						objectBackgroundImage: ""
 					},
 					objectStyling: {
 						objectHeight: !0,

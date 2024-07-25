@@ -3908,7 +3908,7 @@
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
                                 for (e = 0; e < this.rows[t].objects.length; e++) {
-									if (this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
                         else
                             for (t = 0; t < this.rows.length; t++)

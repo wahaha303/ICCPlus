@@ -27,6 +27,18 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to apply a discount to all Choices within Groups.
  - Added a feature to set the initial value of points applied when using Clean Activated.
  - Added a feature to customize the color of each point text in the point bar.
+ - Added a feature to hide choices in the Backpack.
+ - Added a feature to hide the button that displays the Backpack.
+ - Added a feature where the player can input their own words when selecting choice.
+ - Added a feature to check how many choices from groups have been selected.
+ - Added a feature to choose whether points will be shown on the points bar/choices.
+ - Added a feature to change the scroll position when a choice is selected.
+ - Added a feature to set background music when a choice is selected.
+ - Added a feature to change the background-color or background-image when a choice is selected.
+ - Added a feature to choose whether the filter color will overlay on background-image.
+ - Added a feature to manage Private Styles separately for each design feature.
+ - Added a feature to manage Private Styles for design groups globally.
+ 
 
 ## Fixed
 
@@ -58,4 +70,7 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where words were not resetting with Clean Activated.
  - Fixed an issue where Manage Groups didn't synchronize with the Group settings in Choices.
  - A slight performance improvement
+ - Fixed an issue where the browser would freeze when saving project with separate images.
+ - Fixed issues with 'Clean Activated' feature.
+ - Fixed issues with 'Scores Updated On'.
 
