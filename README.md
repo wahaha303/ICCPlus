@@ -38,6 +38,10 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to choose whether the filter color will overlay on background-image.
  - Added a feature to manage Private Styles separately for each design feature.
  - Added a feature to manage Private Styles for design groups globally.
+ - Added a feature to set whether the background music should loop or not.
+ - Added a feature to display titles of Rows/Choices in the Groups/Design Groups settings.
+ - Added a feature to import custom words using the import choices feature.
+ - Added a feature to set the length of Row/Choice IDs to be generated in global settings.
  
 
 ## Fixed
@@ -73,4 +77,15 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where the browser would freeze when saving project with separate images.
  - Fixed issues with 'Clean Activated' feature.
  - Fixed issues with 'Scores Updated On'.
-
+ - Fixed an issue where points were not properly refunded when choices were canceled.
+ - Fixed an issue where Private Styling doesn't work properly.
+ - Fixed an issue where Debug Title doesn't be shown in copy rows features.
+ - Fixed an issue where hidden rows in Backpack were still occupying space.
+ - Fixed an issue in Choice Design Groups where a choice once set was not being canceled.
+ - Fixed an issue where choices created in Backpack could not be deleted.
+ - Fixed an issue where choices were not canceled when some requirements were not met.
+ - Fixed an issue where project file was not being saved.
+ - Fixed an issue where Rows/Choices were not being deleted correctly.
+ - Fixed an issue where Addons were not affected by Design Groups.
+ - Fixed an issue where Design Groups were not being properly loaded in the Viewer.
+ 
