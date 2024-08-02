@@ -26,11 +26,15 @@
   </head>
   <body>
     <noscript><strong>We're sorry but the Interactive CYOA Creator doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
+	<script>
+        var bgmPlayer;var retryCount = 0;function onYouTubeIframeAPIReady() {bgmPlayer = new YT.Player("bgm", {height: "0",width: "0",videoId: ""})}
+		function loadYouTubeIframeAPI() {(window.YT && YT.Player) ? onYouTubeIframeAPIReady() : retryCount < 5 ? retryCount++ && setTimeout(loadYouTubeIframeAPI, 1000) : console.error("Failed to load YouTube Iframe API after multiple attempts.")}
+		document.addEventListener("DOMContentLoaded", function() {(window.YT && YT.Player) ? onYouTubeIframeAPIReady() : setTimeout(loadYouTubeIframeAPI, 1000)});
+    </script>
 	<div style="display:none" id="bgm"></div>
     <div id=app></div>
     <script src=js/html-to-image.min.js></script>
     <script src=js/chunk-vendors.ae283b72.js></script>    
     <script src=js/app.d3103a3b.js></script>
-	<script>var bgmPlayer;function onYouTubeIframeAPIReady() {bgmPlayer = new YT.Player("bgm", {height: "0", width: "0", videoId: ""})}</script>
   </body>
 </html>

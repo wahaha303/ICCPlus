@@ -23379,7 +23379,6 @@
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
-									console.log(co, coR, coO);
 									if (coO.discountOther) {
 										if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue && "undefined" !== typeof coO.discountGroups)
 											for (var c = 0; c < this.app.groups.length; c++)

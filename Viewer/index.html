@@ -23,6 +23,11 @@
 </head>
 <body><noscript><strong>We're sorry but the CYOA doesn't work properly without JavaScript enabled.
             Please enable it to continue.</strong></noscript>
+	<script>
+        var bgmPlayer;var retryCount = 0;function onYouTubeIframeAPIReady() {bgmPlayer = new YT.Player("bgm", {height: "0",width: "0",videoId: ""})}
+		function loadYouTubeIframeAPI() {(window.YT && YT.Player) ? onYouTubeIframeAPIReady() : retryCount < 5 ? retryCount++ && setTimeout(loadYouTubeIframeAPI, 1000) : console.error("Failed to load YouTube Iframe API after multiple attempts.")}
+		document.addEventListener("DOMContentLoaded", function() {(window.YT && YT.Player) ? onYouTubeIframeAPIReady() : setTimeout(loadYouTubeIframeAPI, 1000)});
+    </script>
     <div style="display:none" id="bgm"></div>
 	<div id=indicator> Loading 0.0 MB</div>
 	<div id="lm"><div id=app></div></div>
