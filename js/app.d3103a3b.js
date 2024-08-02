@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.4.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.5.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 25.07.2024")]), o("v-col", {
+                }, [e._v("Update: 01.08.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -249,7 +249,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Added a feature to hide choices in the Backpack. "), o("br"), e._v(" Added a feature to hide the button that displays the Backpack. "), o("br"), e._v(" Added a feature where the player can input their own words when selecting choice. "), o("br"), e._v(" Added a feature to check how many choices from groups have been selected. "), o("br"), e._v(" Added a feature to choose whether points will be shown on the points bar/choices. "), o("br"), e._v(" Added a feature to change the scroll position when a choice is selected. "), o("br"), e._v(" Added a feature to set background music when a choice is selected. "), o("br"), e._v(" Added a feature to change the background-color or background-image when a choice is selected. "), o("br"), e._v(" Added a feature to choose whether the filter color will overlay on background-image. "), o("br"), e._v(" Added a feature to manage Private Styles separately for each design feature. "), o("br"), e._v(" Added a feature to manage Private Styles for design groups globally. ")]), o("v-col", {
+                }, [e._v(" Added a feature to set whether the background music should loop or not. "), o("br"), e._v(" Added a feature to display titles of Rows/Choices in the Groups/Design Groups settings. "), o("br"), e._v(" Added a feature to import custom words using the import choices feature. "), o("br"), e._v(" Added a feature to set the length of Row/Choice IDs to be generated in global settings. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -262,7 +262,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Fixed an issue where the browser would freeze when saving project with separate images. "), o("br"), e._v(" Fixed issues with 'Clean Activated' feature. "), o("br"), e._v(" Fixed issues with 'Scores Updated On'. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where points were not properly refunded when choices were canceled. "), o("br"), e._v(" Fixed an issue where Private Styling doesn't work properly. "), o("br"), e._v(" Fixed an issue where Debug Title doesn't be shown in copy rows features. "), o("br"), e._v(" Fixed an issue where hidden rows in Backpack were still occupying space. "), o("br"), e._v(" Fixed an issue in Choice Design Groups where a choice once set was not being canceled. "), o("br"), e._v(" Fixed an issue where choices created in Backpack could not be deleted. "), o("br"), e._v(" Fixed an issue where choices were not canceled when some requirements were not met. "), o("br"), e._v(" Fixed an issue where project file was not being saved. "), o("br"), e._v(" Fixed an issue where Rows/Choices were not being deleted correctly. "), o("br"), e._v(" Fixed an issue where Addons were not affected by Design Groups. "), o("br"), e._v(" Fixed an issue where Design Groups were not being properly loaded in the Viewer. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -1320,7 +1320,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: e.checkRequireds(t) || e.row.isEditModeOn || (t.privateFilterIsOn ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
+                            value: e.checkRequireds(t) || e.row.isEditModeOn || !e.filterStyling(e.row, t),
                             expression: "\n          checkRequireds(object) ||\n          row.isEditModeOn || (object.privateFilterIsOn ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn) \n        "
                         }],
                         key: t.index,
@@ -2273,7 +2273,7 @@
                         "item-text": "id",
                         "item-value": "id",
                         filled: "",
-						multiple: true,
+						multiple: !0,
 						label: "Id of the groups that will be discounted"
                     },
                     model: {
@@ -2409,7 +2409,7 @@
                 })] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
-                        label: "Selecting this choice will scroll to the row"
+                        label: "Selecting this choice will scroll to the row."
                     },
                     model: {
                         value: e.object.scrollToRow,
@@ -2437,7 +2437,7 @@
                 }) : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
-                        label: "Selecting this choice will change background"
+                        label: "Selecting this choice will change background."
                     },
                     model: {
                         value: e.object.changeBackground,
@@ -2497,7 +2497,7 @@
                 })] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
-                        label: "Selecting this choice will set Background Music"
+                        label: "Selecting this choice will set Background Music."
                     },
                     model: {
                         value: e.object.setBgmIsOn,
@@ -2506,7 +2506,19 @@
                         },
                         expression: "object.setBgmIsOn"
                     }
-                }), e.object.setBgmIsOn ? o("v-text-field", {
+                }), e.object.setBgmIsOn ? [o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "No loop?"
+                    },
+                    model: {
+                        value: e.object.bgmNoLoop,
+                        callback: function(t) {
+                            e.$set(e.object, "bgmNoLoop", t)
+                        },
+                        expression: "object.bgmNoLoop"
+                    }
+                }), o("v-text-field", {
                     attrs: {
                         "hide-details": "",
                         label: "Youtube Video ID (e.g., naktUDBaHuw)",
@@ -2519,7 +2531,7 @@
                         },
                         expression: "object.bgmId"
                     }
-                }) : e._e(), o("v-checkbox", {
+                })] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
                         label: "Word will be changed to something else at select."
@@ -3543,7 +3555,7 @@
 						items: e.app.groups,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selGroups,
@@ -3583,7 +3595,7 @@
 						items: e.app.rows,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selRows,
@@ -4619,13 +4631,59 @@
 					object: function() {
 						return this.$parent.object
 					},
+                    textStyling: function() {
+						if (this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					filterStyling: function() {
+						if (this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.privateFilterIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : this.styling.addonTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : this.styling.addonTextColor)) + ";"
+                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -5137,7 +5195,7 @@
 						items: e.app.groups,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: e.required.selGroups,
@@ -5219,7 +5277,7 @@
 						items: e.app.rows,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: e.required.selRows,
@@ -5572,7 +5630,7 @@
 						items: e.app.groups,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selGroups,
@@ -5612,7 +5670,7 @@
 						items: e.app.rows,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selRows,
@@ -6230,7 +6288,7 @@
 						items: e.app.groups,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selGroups,
@@ -6270,7 +6328,7 @@
 						items: e.app.rows,
 						"item-text": "id",
 						"item-value": "id",
-						multiple: true
+						multiple: !0
                     },
                     model: {
                         value: t.selRows,
@@ -9950,7 +10008,7 @@
 							text: "space"
 						}]
                     }
-                },				
+                },
 				components: {
                     PictureInput: $["a"]
                 },
@@ -11126,7 +11184,7 @@
 							var co = this.app.compR[this.newRow],
 								coR = this.app.rows[co.rows];
 							coR.objects.push(JSON.parse(JSON.stringify(this.row)));
-                            for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+                            for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.objectIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
 							coR.objects[coR.objects.length - 1].id = t;
 							this.app.comp[t] = {rows: co.rows, objects: coR.objects.length - 1};
 						}
@@ -11446,7 +11504,7 @@
                     }
                 },
                 created: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.$set(this.object, "selectedThisManyTimesProp", this.object.multipleUseVariable))
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), "undefined" !== typeof this.object.multipleUseVariable && (this.$set(this.object, "selectedThisManyTimesProp", this.object.multipleUseVariable));
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -11572,17 +11630,17 @@
 												break
 											}
 											var s = t.objects.indexOf(t.object);
-											if ("undefined" !== typeof t.app.comp[t.object.id]) {
-												var co = t.app.comp[t.object.id],
-													coR = t.app.rows[co.rows];
-											}
-											for (var i = s + 1; s < coR.length; s++) {
-												if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
-													t.app.comp[coR.objects[s]].objects = s;
+											if ("undefined" !== typeof t.app.compR[t.row.id]) {
+												var co = t.app.compR[t.row.id],
+													coR = co.type == "backpack" ? t.app.backpack[co.rows] : t.app.rows[co.rows];
+												for (var i = s + 1; s < coR.length; s++) {
+													if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
+														t.app.comp[coR.objects[s]].objects = s;
+													}
 												}
+												t.$delete(t.app.comp, t.object.id);
+												t.objects.splice(t.objects.indexOf(t.object), 1);
 											}
-											t.$delete(t.app.comp, t.object.id);
-											t.objects.splice(t.objects.indexOf(t.object), 1);
 										case 4:
 										case "end":
 											return o.stop()
@@ -11591,9 +11649,9 @@
 							})))()
 						} else {
 							var s = t.objects.indexOf(t.object);
-							if ("undefined" !== typeof t.app.comp[t.object.id]) {
-								var co = t.app.comp[t.object.id],
-									coR = t.app.rows[co.rows];
+							if ("undefined" !== typeof t.app.compR[t.row.id]) {
+								var co = t.app.compR[t.row.id],
+									coR = co.type == "backpack" ? t.app.backpack[co.rows] : t.app.rows[co.rows];
 								for (var i = s + 1; s < coR.length; s++) {
 									if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
 										t.app.comp[coR.objects[s]].objects = s;
@@ -11621,13 +11679,30 @@
                     },
 					playBgm: function(e, t) {
 						var p = this.app.bgmIsPlaying,
-							s = document.getElementById('bgm'),
-							o = s.src.split("/").pop().split("?")[0];
-						if (o == t) {
-							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+							s = bgmPlayer.playerInfo.videoData.video_id,
+							o = bgmPlayer.playerInfo.playerState;
+						if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
+						if (s == t) {
+							if (this.app.bgmObjectId == e.id) {
+								if (p) {
+									if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+									else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							} else {
+								if (p) {
+									bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							}
 						} else {
-							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+							if (p) {
+								e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								bgmPlayer.playVideo();
+								this.$set(this.app, "bgmObjectId", e.id);
+							}
 						}
 					},
                     activateObject: function(e, t) {
@@ -11647,8 +11722,8 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]))
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -11783,10 +11858,12 @@
 												coO = coR.objects[co.objects];
 											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
+												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -11822,7 +11899,6 @@
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
-																			
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 																		}
@@ -11837,8 +11913,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -11858,7 +11936,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -11876,9 +11954,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -11909,7 +11987,7 @@
 														u--;
 													}
 												}
-											}											
+											}
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -11968,7 +12046,7 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]))
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)));
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -12095,8 +12173,10 @@
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 											this.activated.push(eid);
+											t.currentChoices += 1;
 											var bC = this.checkRequireds(coS);
 											this.activated.splice(this.activated.indexOf(eid), 1);
+											t.currentChoices -= 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
 												19 == C.length ? C += coO.title : C+= ", " + coO.title;
@@ -12115,9 +12195,9 @@
 																if (coO.forcedActivated && nC > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}																			
+																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 															}
 														}
 												} else {
@@ -12138,7 +12218,7 @@
 																}
 																
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 															}
 														}
 												}
@@ -12190,7 +12270,7 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																		
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 																		}
@@ -12204,8 +12284,10 @@
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
+														t.currentChoices += 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(this.activated.indexOf(eid), 1);
+														t.currentChoices -= 1;
 														if (bC !== bE) {
 															19 == C.length ? C += coO.title : C+= ", " + coO.title;
 															if (bC) {
@@ -12223,9 +12305,9 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																			
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -12246,7 +12328,7 @@
 																			}
 																			
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -12310,21 +12392,21 @@
 												coR.$el.scrollIntoView({ behavior: 'smooth' });
 											}
 										}
-									}									
+									}
 									if (e.setBgmIsOn) {
 										if (e.bgmId) {
 											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId);
 										}
-									}									
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]))
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -12461,8 +12543,10 @@
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);											
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -12513,8 +12597,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -12534,7 +12620,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -12552,9 +12638,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -12585,7 +12671,7 @@
 													u--;
 												}
 											}
-										}											
+										}
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -12642,9 +12728,15 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+											}
+										}
 									}
-							}							
+							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) {
 									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -12777,9 +12869,9 @@
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 											if (bRO !== bRT) {
 												if (coO.isMultipleUseVariable) {
 													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -12801,9 +12893,9 @@
 													var bC = this.checkRequireds(coS),
 														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 														aFI = this.activated[fI].split("/ON#");
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 													if (bC !== bE) {
 														19 == C.length ? C += coO.title : C+= ", " + coO.title;
 														if (bE) {
@@ -12821,7 +12913,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
@@ -12841,7 +12933,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																	}
@@ -12873,7 +12965,12 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+											}
+										}
 									}
 							}
 							if (e.isActive == !0) {
@@ -13016,9 +13113,9 @@
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 												var bRT = this.checkRequireds(coO);
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -13038,9 +13135,9 @@
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bE) {
@@ -13058,7 +13155,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
@@ -13078,7 +13175,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
@@ -13097,11 +13194,27 @@
                     },
                     cloneObject: function() {
                         this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects[this.row.objects.indexOf(this.object) + 1].id = e;
 						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
 							this.app.comp[this.row.objects[b].id].objects = b;
+						}
+						for (var c = 0; c < this.object.groups.length; c++) {
+							if ("undefined" !== typeof this.app.compG[this.object.groups[c].id]) {
+								var co = this.app.compG[this.object.groups[c].id],
+									coG = this.app.groups[co.groups];
+								coG.elements.push({id: e});
+							}
+						}
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var d = 0; d < this.object.objectDesignGroups.length; d++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[d].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[d].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									coD.elements.push({id: e});
+								}
+							}
 						}
                     },
                     updateActivated: function() {
@@ -13116,7 +13229,7 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         })
-                    },					
+                    },
 					duplicateRow: function(e) {
 						var c, i, j, s, fr, fo, y, z, zx, zy, zz, nR = 0, nF = 0;
 						for (var b = 0; b < this.app.rows.length; b++) {
@@ -13146,7 +13259,7 @@
 														zx = y[0].split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 													else
 														zx = y[0].split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
-												}													
+												}
 												else if ("or" == fo.requireds[i].type)
 													for (c = 0; c < fo.requireds[i].orRequired.length; c++) {
 														y = fo.requireds[i].orRequired[c].req.split("/ON#");
@@ -13250,7 +13363,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
-							this.app.compR[this.app.rows[m].id] = {rows: m};
+							this.app.compR[this.app.rows[m].id] = {rows: m, type: "app"};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[d] = {rows: m, objects: n};
@@ -13353,6 +13466,14 @@
                         filled: "",
                         label: "Copy this row's objects into..."
                     },
+					scopedSlots: {
+						item: ({item, attrs}) => [
+							o("div", {
+								staticClass: "v-list-item__content"
+							}, [o("div", {
+								staticClass: "v-list-item__title"
+							}, [e._v(("undefined" !== typeof item.debugTitle ? item.debugTitle + " " : "") + item.title)])])],
+					},
                     model: {
                         value: e.newRow,
                         callback: function(t) {
@@ -13712,9 +13833,23 @@
 								coR = this.app.rows[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
 								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
+								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < this.app.objectIdLength; r++) i += s.charAt(Math.floor(Math.random() * s.length));
 								coR.objects[coR.objects.length - 1].id = i;
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1};
+								for (var c = 0; c < coR.objects[coR.objects.length - 1].groups.length; c++) {
+									if ("undefined" !== typeof this.app.compG[coR.objects[coR.objects.length - 1].groups[c].id]) {
+										var co = this.app.compG[coR.objects[coR.objects.length - 1].groups[c].id],
+											coG = this.app.groups[co.groups];
+										coG.elements.push({id: e});
+									}
+								}
+								for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
+									if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
+										var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
+											coD = this.app.groups[co.designGroups];
+										coD.elements.push({id: e});
+									}
+								}
 							}
 						}
                     },
@@ -13822,7 +13957,6 @@
                     model: {
                         value: e.dialog,
                         callback: function(t) {
-							console.log(e, t, o),
                             e.dialog = t
                         },
                         expression: "dialog"
@@ -14074,7 +14208,6 @@
                     model: {
                         value: e.dialog,
                         callback: function(t) {
-							console.log(e, t, o),
                             e.dialog = t
                         },
                         expression: "dialog"
@@ -14670,9 +14803,23 @@
 								coR = this.app.rows[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
 								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < 4; r++) i += s.charAt(Math.floor(Math.random() * s.length));
+								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < this.app.objectIdLength; r++) i += s.charAt(Math.floor(Math.random() * s.length));
 								coR.objects[coR.objects.length - 1].id = i;
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1};
+								for (var c = 0; c < coR.objects[coR.objects.length - 1].groups.length; c++) {
+									if ("undefined" !== typeof this.app.compG[coR.objects[coR.objects.length - 1].groups[c].id]) {
+										var co = this.app.compG[coR.objects[coR.objects.length - 1].groups[c].id],
+											coG = this.app.groups[co.groups];
+										coG.elements.push({id: e});
+									}
+								}
+								for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
+									if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
+										var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
+											coD = this.app.groups[co.designGroups];
+										coD.elements.push({id: e});
+									}
+								}
 							}
 						}
                     },
@@ -15163,6 +15310,29 @@
                     }
                 },
                 methods: {
+					filterStyling: function(e, t) {
+						if (t.privateFilterIsOn) return t.styling.reqFilterVisibleIsOn;
+						if (e.privateFilterIsOn) return e.styling.reqFilterVisibleIsOn;
+						if ("undefined" !== typeof t.objectDesignGroups) {
+							for (var a = 0; a < t.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[t.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[t.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling.reqFilterVisibleIsOn;
+								}
+							}
+						}
+						if ("undefined" !== typeof e.rowDesignGroups) {
+							for (var a = 0; a < e.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[e.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[e.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling.reqFilterVisibleIsOn;
+								}
+							}
+						}
+						return this.$store.state.app.styling.reqFilterVisibleIsOn;
+					},
                     handleResize: function() {
                         this.window.width = window.innerWidth, this.window.height = window.innerHeight
                     },
@@ -15173,7 +15343,7 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects.push({
                             id: e,
                             title: this.app.defaultChoiceTitle,
@@ -15263,13 +15433,30 @@
                     },
 					playBgm: function(e, t) {
 						var p = this.app.bgmIsPlaying,
-							s = document.getElementById('bgm'),
-							o = s.src.split("/").pop().split("?")[0];
-						if (o == t) {
-							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+							s = bgmPlayer.playerInfo.videoData.video_id,
+							o = bgmPlayer.playerInfo.playerState;
+						if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
+						if (s == t) {
+							if (this.app.bgmObjectId == e.id) {
+								if (p) {
+									if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+									else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							} else {
+								if (p) {
+									bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							}
 						} else {
-							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+							if (p) {
+								e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								bgmPlayer.playVideo();
+								this.$set(this.app, "bgmObjectId", e.id);
+							}
 						}
 					},
                     activateObject: function(e, t) {
@@ -15289,8 +15476,8 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]))
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -15425,10 +15612,12 @@
 												coO = coR.objects[co.objects];
 											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
+												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -15464,7 +15653,6 @@
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
-																			
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 																		}
@@ -15479,8 +15667,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -15500,7 +15690,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -15518,9 +15708,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -15551,7 +15741,7 @@
 														u--;
 													}
 												}
-											}											
+											}
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -15610,7 +15800,7 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]))
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)));
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -15737,8 +15927,10 @@
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 											this.activated.push(eid);
+											t.currentChoices += 1;
 											var bC = this.checkRequireds(coS);
 											this.activated.splice(this.activated.indexOf(eid), 1);
+											t.currentChoices -= 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
 												19 == C.length ? C += coO.title : C+= ", " + coO.title;
@@ -15757,9 +15949,9 @@
 																if (coO.forcedActivated && nC > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}																			
+																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 															}
 														}
 												} else {
@@ -15780,7 +15972,7 @@
 																}
 																
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 															}
 														}
 												}
@@ -15832,7 +16024,7 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																		
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 																		}
@@ -15846,8 +16038,10 @@
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
+														t.currentChoices += 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(this.activated.indexOf(eid), 1);
+														t.currentChoices -= 1;
 														if (bC !== bE) {
 															19 == C.length ? C += coO.title : C+= ", " + coO.title;
 															if (bC) {
@@ -15865,9 +16059,9 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																			
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -15888,7 +16082,7 @@
 																			}
 																			
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -15952,21 +16146,21 @@
 												coR.$el.scrollIntoView({ behavior: 'smooth' });
 											}
 										}
-									}									
+									}
 									if (e.setBgmIsOn) {
 										if (e.bgmId) {
 											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId);
 										}
-									}									
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]))
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -16103,8 +16297,10 @@
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);											
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -16155,8 +16351,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -16176,7 +16374,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -16194,9 +16392,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -16227,7 +16425,7 @@
 													u--;
 												}
 											}
-										}											
+										}
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -16284,7 +16482,13 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+											}
+										}
 									}
 							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
@@ -16419,9 +16623,9 @@
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 											if (bRO !== bRT) {
 												if (coO.isMultipleUseVariable) {
 													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -16443,9 +16647,9 @@
 													var bC = this.checkRequireds(coS),
 														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 														aFI = this.activated[fI].split("/ON#");
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 													if (bC !== bE) {
 														19 == C.length ? C += coO.title : C+= ", " + coO.title;
 														if (bE) {
@@ -16463,7 +16667,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
@@ -16483,7 +16687,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																	}
@@ -16515,7 +16719,12 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+											}
+										}
 									}
 							}
 							if (e.isActive == !0) {
@@ -16658,9 +16867,9 @@
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 												var bRT = this.checkRequireds(coO);
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -16680,9 +16889,9 @@
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bE) {
@@ -16700,7 +16909,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
@@ -16720,7 +16929,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
@@ -16769,7 +16978,7 @@
 														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 													else
 														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
-												}													
+												}
 												else if ("or" == fo.requireds[i].type)
 													for (c = 0; c < fo.requireds[i].orRequired.length; c++) {
 														y = fo.requireds[i].orRequired[c].req.split("/ON#");
@@ -16873,7 +17082,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
-							this.app.compR[this.app.rows[m].id] = {rows: m};
+							this.app.compR[this.app.rows[m].id] = {rows: m, type: "backpack"};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
@@ -17233,6 +17442,8 @@
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
 							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
+							if ("undefined" === typeof e.app.rowIdLength) e.$set(e.app, "rowIdLength", 4);
+							if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							e.$set(e.app, "comp", []);
 							e.$set(e.app, "compR", []);
@@ -17241,7 +17452,7 @@
 							e.$set(e.app, "compRDG", []);
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
-								e.app.compR[g] = {rows: b};
+								e.app.compR[g] = {rows: b, type: "app"};
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateFilterIsOn) e.$set(e.app.rows[b], "privateFilterIsOn", !0);
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateTextIsOn) e.$set(e.app.rows[b], "privateTextIsOn", !0);
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectImageIsOn) e.$set(e.app.rows[b], "privateObjectImageIsOn", !0);
@@ -17251,7 +17462,7 @@
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
-									e.app.comp[d] = {rows: b, objects: c};
+									e.app.comp[d] = {rows: b, objects: c, type: "app"};
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
@@ -17269,6 +17480,22 @@
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(e.app.rows[b].objects[c].numMultipleTimesMinus));
 									}
+									if (e.app.rows[b].objects[c].isMultipleUseVariable) {
+										for (var g = 0; g < e.app.rows[b].objects[c].scores.length; g++) {
+											if ("undefined" === typeof e.app.rows[b].objects[c].scores[g].isActiveMul) {
+												e.$set(e.app.rows[b].objects[c].scores[g], "isActiveMul", []);
+												for (var h = 0; h <= e.app.rows[b].objects[c].multipleUseVariable - 1; h++) e.app.rows[b].objects[c].scores[g].isActiveMul[h] = !0;
+											}
+										}
+									}
+								}
+							}
+							for (var b = 0; b < e.app.backpack.length; b++) {
+								var g = e.app.backpack[b].id;
+								e.app.compR[g] = {rows: b, type: "backpack"};
+								for (var c = 0; c < e.app.backpack[b].objects.length; c++) {
+									var d = e.app.backpack[b].objects[c].id;
+									e.app.comp[d] = {rows: b, objects: c};
 								}
 							}
 							for (var f = 0; f < e.app.groups.length; f++) {
@@ -17311,6 +17538,8 @@
 							if ("undefined" === typeof e.app.styling.reqFilterATextColor) e.$set(e.app.styling, "reqFilterATextColor", "#000000FF"); else if (e.app.styling.reqFilterATextColor.length == 7) e.$set(e.app.styling, "reqFilterATextColor", e.app.styling.reqFilterATextColor + "FF");
 							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
 							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
+							if ("undefined" === typeof e.app.rowIdLength) e.$set(e.app, "rowIdLength", 4);
+							if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							e.$set(e.app, "comp", []);
 							e.$set(e.app, "compR", []);
@@ -17319,7 +17548,7 @@
 							e.$set(e.app, "compRDG", []);
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
-								e.app.compR[g] = {rows: b};
+								e.app.compR[g] = {rows: b, type: "app"};
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateFilterIsOn) e.$set(e.app.rows[b], "privateFilterIsOn", !0);
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateTextIsOn) e.$set(e.app.rows[b], "privateTextIsOn", !0);
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectImageIsOn) e.$set(e.app.rows[b], "privateObjectImageIsOn", !0);
@@ -17329,7 +17558,7 @@
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
-									e.app.comp[d] = {rows: b, objects: c};
+									e.app.comp[d] = {rows: b, objects: c, type: "app"};
 									if ("undefined" === typeof e.app.rows[b].objects[c].styling) e.$set(e.app.rows[b].objects[c], "styling", {});
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
@@ -17348,6 +17577,22 @@
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
 										e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(e.app.rows[b].objects[c].numMultipleTimesMinus));
 									}
+									if (e.app.rows[b].objects[c].isMultipleUseVariable) {
+										for (var g = 0; g < e.app.rows[b].objects[c].scores.length; g++) {
+											if ("undefined" === typeof e.app.rows[b].objects[c].scores[g].isActiveMul) {
+												e.$set(e.app.rows[b].objects[c].scores[g], "isActiveMul", []);
+												for (var h = 0; h <= e.app.rows[b].objects[c].multipleUseVariable - 1; h++) e.app.rows[b].objects[c].scores[g].isActiveMul[h] = !0;
+											}
+										}
+									}
+								}
+							}
+							for (var b = 0; b < e.app.backpack.length; b++) {
+								var g = e.app.backpack[b].id;
+								e.app.compR[g] = {rows: b, type: "backpack"};
+								for (var c = 0; c < e.app.backpack[b].objects.length; c++) {
+									var d = e.app.backpack[b].objects[c].id;
+									e.app.comp[d] = {rows: b, objects: c};
 								}
 							}
 							for (var f = 0; f < e.app.groups.length; f++) {
@@ -17370,14 +17615,15 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     saveFile: function(e) {
-						var sv = JSON.parse(JSON.stringify(this.app));
-						sv.comp = [];
-						sv.compR = [];
-						sv.compG = [];
-						sv.compODG = [];
-						sv.compRDG = [];
-                        var t = JSON.stringify(sv),
-                            o = new Blob([t], {
+						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
+							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
+								if (exceptedList.includes(key)) {
+									return undefined;
+								}
+								return value;
+							})),
+							t = JSON.stringify(sv),
+							o = new Blob([t], {
                                 type: "text/plain"
                             }),
                             i = document.createEvent("MouseEvents"),
@@ -17385,13 +17631,14 @@
                         s.download = e + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
                     },
                     saveFileFinished: function(e) {
-						var sv = JSON.parse(JSON.stringify(this.app)),
+						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
+							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
+								if (exceptedList.includes(key)) {
+									return undefined;
+								}
+								return value;
+							})),
 							ts = this;
-						sv.comp = [];
-						sv.compR = [];
-						sv.compG = [];
-						sv.compODG = [];
-						sv.compRDG = [];
 						this.$set(this.state, "saveWait", !0);
 						var t = new co.a, o = JSON.parse(JSON.stringify(sv)), i = "", m = "", ext = "";
 						this.app.styling.backgroundImage && this.app.styling.backgroundImage.length > 30 && (m = this.getMime(this.app.styling.backgroundImage), ext = this.getExt(m), i = P()(this.app.styling.backgroundImage.split(",")[1], m), t.file("images/Bg." + ext, i, {
@@ -17521,6 +17768,9 @@
 							'x-icon': 'ico'
 						}
 						return (mt[ext] ? mt[ext] : ext);
+					},
+					cloneApp: function(e) {
+						
 					}
                 }
             },
@@ -17700,6 +17950,20 @@
                         t.splice(e, 1)
                     },
                     deleteGroup: function(e) {
+						for (var a = 0; a < this.groups[e].elements.length; a++) {
+							if ("undefined" !== typeof this.app.comp[this.groups[e].elements[a].id]) {
+								var co = this.app.comp[this.groups[e].elements[a].id],
+									coR = this.app.rows[co.rows],
+									coO = coR.objects[co.objects];
+								console.log(coO);
+								for (var b = 0; b < coO.groups.length; b++) {
+									if (coO.groups[b].id == this.groups[e].id) {
+										coO.groups.splice(b, 1);
+										break
+									}
+								}
+							}
+						}
 						this.$delete(this.app.compG, this.groups[e].id);
                         this.groups.splice(e, 1);
                     }
@@ -19117,8 +19381,27 @@
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
-								multiple: true
+								multiple: !0
                             },
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + ("undefined" !== typeof item.debugTitle ? item.debugTitle + " " : "") + item.title)])])]],
+							},
                             model: {
                                 value: t.rowElements,
                                 callback: function(o) {
@@ -19151,7 +19434,6 @@
 													for (var d = 0; d < coR.objects[c].groups.length; d++) {
 														if (coR.objects[c].groups[d].id == t.id) {
 															coR.objects[c].groups.splice(d, 1);
-															
 														}
 													}
 													for (var f = 0; f < t.elements.length; f++) {
@@ -19196,8 +19478,27 @@
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
-								multiple: true
+								multiple: !0
                             },
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + item.title)])])]],
+							},
                             model: {
                                 value: t.elements,
                                 callback: function(o) {
@@ -19327,6 +19628,20 @@
                         t.splice(e, 1)
                     },
                     deleteGroup: function(e) {
+						for (var a = 0; a < this.groups[e].elements.length; a++) {
+							if ("undefined" !== typeof this.app.comp[this.groups[e].elements[a].id]) {
+								var co = this.app.comp[this.groups[e].elements[a].id],
+									coR = this.app.rows[co.rows],
+									coO = coR.objects[co.objects];
+								console.log(coO);
+								for (var b = 0; b < coO.groups.length; b++) {
+									if (coO.groups[b].id == this.groups[e].id) {
+										coO.groups.splice(b, 1);
+										break
+									}
+								}
+							}
+						}
 						this.$delete(this.app.compG, this.groups[e].id);
                         this.groups.splice(e, 1);
                     }
@@ -21321,37 +21636,68 @@
                 },
                 methods: {
                     deleteRow: function(e) {
-                        this.backpack.splice(this.backpack.indexOf(e), 1)
+						var s = this.backpack.indexOf(e);
+						for (var f = s + 1; f < this.backpack.length; f++) {
+							for (var b = 0; b < this.backpack[f].objects.length; b++) {
+								this.app.compR[this.backpack[f].id].rows -= 1;
+								if ("undefined" !== typeof this.app.comp[this.backpack[f].objects[b].id]) {
+									this.app.comp[this.backpack[f].objects[b].id].rows -= 1;
+								}
+							}
+						}
+						for (var c = 0; c < e.objects.length; c++) {
+							this.$delete(this.app.comp, e.objects[c].id);
+						}
+						this.$delete(this.app.compR, e.id);
+                        this.backpack.splice(this.backpack.indexOf(e), 1);
                     },
                     moveRowUp: function(e) {
                         var t = this.backpack.indexOf(e);
                         if (t > 0) {
                             var o = this.backpack[t];
-                            this.$set(this.backpack, t, this.backpack[t - 1]), this.$set(this.backpack, t - 1, o)
+                            this.$set(this.backpack, t, this.backpack[t - 1]), this.$set(this.backpack, t - 1, o);
+							this.app.compR[this.backpack[t - 1].id].rows = t - 1;
+							this.app.compR[this.backpack[t].id].rows = t;
+							for (var b = 0; b < this.backpack[t - 1].objects.length; b++) {
+								this.app.comp[this.backpack[t - 1].objects[b].id].rows = t - 1;
+							}
+							for (var c = 0; c < this.backpack[t].objects.length; c++) {
+								this.app.comp[this.backpack[t].objects[c].id].rows = t;
+							}
                         }
                     },
                     cloneRow: function(e) {
                         this.backpack.splice(this.backpack.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.rowIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
                         this.backpack[this.backpack.indexOf(e) + 1].id = t;
+						this.app.compR[t] = {rows: this.backpack.indexOf(e) + 1, type: "backpack"};
                         for (var s = 0; s < this.backpack[this.backpack.indexOf(e) + 1].objects.length; s++) {
                             t = "";
-                            for (var r = 0; r < 4; r++) t += o.charAt(Math.floor(Math.random() * o.length));
-                            this.backpack[this.backpack.indexOf(e) + 1].objects[s].id = t
+                            for (var r = 0; r < this.app.objectIdLength; r++) t += o.charAt(Math.floor(Math.random() * o.length));
+                            this.backpack[this.backpack.indexOf(e) + 1].objects[s].id = t;
+							this.app.comp[t] = {rows: this.backpack.indexOf(e) + 1, objects: s};
                         }
                     },
                     moveRowDown: function(e) {
                         var t = this.backpack.indexOf(e);
                         if (-1 !== t && t < this.backpack.length - 1) {
                             var o = this.backpack[t];
-                            this.$set(this.backpack, t, this.backpack[t + 1]), this.$set(this.backpack, t + 1, o)
+                            this.$set(this.backpack, t, this.backpack[t + 1]), this.$set(this.backpack, t + 1, o);
+							this.app.compR[this.backpack[t + 1].id].rows = t + 1;
+							this.app.compR[this.backpack[t].id].rows = t;
+							for (var b = 0; b < this.backpack[t + 1].objects.length; b++) {
+								this.app.comp[this.backpack[t + 1].objects[b].id].rows = t + 1;
+							}
+							for (var c = 0; c < this.backpack[t].objects.length; c++) {
+								this.app.comp[this.backpack[t].objects[c].id].rows = t;
+							}
                         }
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewBackpackRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.rowIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.backpack.push({
                             id: e,
                             title: "The Row",
@@ -21536,7 +21882,8 @@
 								reqFilterATextColor: "#000000FF",
                                 reqFilterVisibleIsOn: !1
                             }
-                        })
+                        });
+						this.app.compR[e] = {rows: this.backpack.length - 1, type: "backpack"};
                     }
                 }
             },
@@ -22053,8 +22400,27 @@
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
-								multiple: true
-                            },
+								multiple: !0
+                            },							
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + ("undefined" !== typeof item.debugTitle ? item.debugTitle + " " : "") + item.title)])])]],
+							},
                             model: {
                                 value: t.elements,
                                 callback: function(o) {
@@ -22176,8 +22542,27 @@
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
-								multiple: true
-                            },
+								multiple: !0
+                            },							
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + item.title)])])]],
+							},
                             model: {
                                 value: t.elements,
                                 callback: function(o) {
@@ -22198,8 +22583,8 @@
 													coR = e.app.rows[co.rows],
 													coO = coR.objects[co.objects];
 												for (var a = 0; a < coO.objectDesignGroups.length; a++) {
-													if (coO.groups[a].id == t.id) {
-														coO.groups.splice(a, 1);
+													if (coO.objectDesignGroups[a].id == t.id) {
+														coO.objectDesignGroups.splice(a, 1);
 													}
 												}
 												for (var c = 0; c < t.elements.length; c++) {
@@ -22349,10 +22734,37 @@
                         t.splice(e, 1)
                     },
 					deleteRowDesignGroup: function(e) {
+						for (var a = 0; a < this.rowDesignGroups[e].elements.length; a++) {
+							if ("undefined" !== typeof this.app.compR[this.rowDesignGroups[e].elements[a].id]) {
+								var co = this.app.compR[this.rowDesignGroups[e].elements[a].id],
+									coR = this.app.rows[co.rows];
+								console.log(coR);
+								for (var b = 0; b < coR.rowDesignGroups.length; b++) {
+									if (coR.rowDesignGroups[b].id == this.rowDesignGroups[e].id) {
+										coR.rowDesignGroups.splice(b, 1);
+										break
+									}
+								}
+							}
+						}
 						this.$delete(this.app.compRDG, this.rowDesignGroups[e].id);
                         this.app.rowDesignGroups.splice(e, 1);
                     },
 					deleteObjectDesignGroup: function(e) {
+						for (var a = 0; a < this.objectDesignGroups[e].elements.length; a++) {
+							if ("undefined" !== typeof this.app.comp[this.objectDesignGroups[e].elements[a].id]) {
+								var co = this.app.comp[this.objectDesignGroups[e].elements[a].id],
+									coR = this.app.rows[co.rows],
+									coO = coR.objects[co.objects];
+								console.log(coO);
+								for (var b = 0; b < coO.objectDesignGroups.length; b++) {
+									if (coO.objectDesignGroups[b].id == this.objectDesignGroups[e].id) {
+										coO.objectDesignGroups.splice(b, 1);
+										break
+									}
+								}
+							}
+						}
 						this.$delete(this.app.compODG, this.objectDesignGroups[e].id);
                         this.app.objectDesignGroups.splice(e, 1);
                     }
@@ -22456,7 +22868,39 @@
 						},
 						expression: "vuetify.theme.isDark"
 					}
-				})], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+				}), o("v-text-field", {
+					staticClass: "pb-2",
+                    attrs: {
+                        dense: "",
+                        label: "Length of Row Id to be generated",
+                        filled: "",
+                        "hide-details": "",
+                        type: "number"
+                    },
+                    model: {
+                        value: e.app.rowIdLength,
+                        callback: function(t) {
+                            e.$set(e.app, "rowIdLength", t)
+                        },
+                        expression: "styling.rowIdLength"
+                    }
+                }), o("v-text-field", {
+					staticClass: "pb-2",
+                    attrs: {
+                        dense: "",
+                        label: "Length of Choice Id to be generated",
+                        filled: "",
+                        "hide-details": "",
+                        type: "number"
+                    },
+                    model: {
+                        value: e.app.rowIdLength,
+                        callback: function(t) {
+                            e.$set(e.app, "objectIdLength", t)
+                        },
+                        expression: "styling.objectIdLength"
+                    }
+                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -22482,16 +22926,6 @@
 					}
                 },
                 methods: {
-					getCurrentTimestamp() {
-					  const now = new Date();
-					  const year = now.getFullYear();
-					  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-					  const day = String(now.getDate()).padStart(2, '0');
-					  const hours = String(now.getHours()).padStart(2, '0');
-					  const minutes = String(now.getMinutes()).padStart(2, '0');
-					  const seconds = String(now.getSeconds()).padStart(2, '0');
-					  return `${year}${month}${day}_${hours}${minutes}${seconds}`;
-					},
 					saveAutomatically: function(e) {
 						this.$store.commit("saveAutomatically", e)
 					},
@@ -22513,7 +22947,8 @@
             VContainer: k["a"],
             VDialog: B["a"],
             VRow: S["a"],
-			VSwitch: L["a"]
+			VSwitch: L["a"],
+			VTextField: R["a"]
         });
         var Wi = {
                 data: function() {
@@ -22845,7 +23280,19 @@
                     },
                     activated: function() {
                         for (var e = [], t = 0; t < this.rows.length; t++)
-                            for (var o = 0; o < this.rows[t].objects.length; o++) (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) ? e.push(this.rows[t].objects[o].id) : this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable ? e.push(this.rows[t].objects[o].id + "/ON#" + this.rows[t].objects[o].multipleUseVariable) : this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image.length > 0 && e.push(this.rows[t].objects[o].id + "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#"));
+                            for (var o = 0; o < this.rows[t].objects.length; o++) {
+								if (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) {
+									if (this.rows[t].objects[o].textfieldIsOn && this.rows[t].objects[o].customTextfieldIsOn) {
+										e.push(this.rows[t].objects[o].id + "/WORD#" + this.rows[t].objects[o].wordChangeSelect);
+									} else {
+										e.push(this.rows[t].objects[o].id);
+									}
+								} else if (this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable) {
+									e.push(this.rows[t].objects[o].id + "/ON#" + this.rows[t].objects[o].multipleUseVariable);
+								} else if (this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image.length > 0) {
+									e.push(this.rows[t].objects[o].id + "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#"));
+								}
+							}
                         return e
                     },
                     app: function() {
@@ -22864,6 +23311,34 @@
                     }
                 },
                 methods: {
+					playBgm: function(e, t) {
+						var p = this.app.bgmIsPlaying,
+							s = bgmPlayer.playerInfo.videoData.video_id,
+							o = bgmPlayer.playerInfo.playerState;
+						if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
+						if (s == t) {
+							if (this.app.bgmObjectId == e.id) {
+								if (p) {
+									if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+									else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							} else {
+								if (p) {
+									bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							}
+						} else {
+							if (p) {
+								e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								bgmPlayer.playVideo();
+								this.$set(this.app, "bgmObjectId", e.id);
+							}
+						}
+					},
                     cleanActivated: function() {
                         this.$store.commit({
                             type: "cleanActivated"
@@ -22871,9 +23346,10 @@
 						this.$set(this.app, "cancelForcedActivated", []);
 						if (this.newActivated.length > 0) {
 							var e = this.newActivated.split(",");
-							this.app.activated = e;
+							this.app.activated = e.map(item => item.split("/WORD")[0]);
 							for (var a = 0; a < e.length; a++) {
 								var ea = e[a].split("/ON#");
+								ea.length > 1 ? ea = ea : ea = ea[0].split("/WORD#");
 								if ("undefined" !== this.app.comp[ea[0]]) {
 									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
@@ -22893,6 +23369,7 @@
 							}
 							for (var b = 0; b < e.length; b++) {
 								var eb = e[b].split("/ON#");
+								eb.length > 1 ? eb = eb : eb = eb[0].split("/WORD#");
 								if ("undefined" !== this.app.comp[eb[0]]) {
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
@@ -23031,15 +23508,23 @@
 												this.app.rows[m].allowedChoices += coO.numbAddToAllowChoice, isNaN(this.app.rows[m].allowedChoicesChange) && (this.app.rows[m].allowedChoicesChange = 0), this.app.rows[m].allowedChoicesChange += coO.numbAddToAllowChoice;
 												}
 											}
+									if (coO.setBgmIsOn) {
+										if (coO.bgmId) {
+											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+											this.app.bgmIsPlaying = !0;
+											this.playBgm(coO, coO.bgmId);
+										}
+									}
 									if (coO.isImageUpload)
 										for (var g = 0; g < e.length; g++) coO.id == e[g].split("/IMG#")[0] && (coO.image = e[g].split("/IMG#")[1].replaceAll("/CHAR#", ","), e.splice(g, 1));
 									if (coO.textfieldIsOn)
-										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == coO.idOfTheTextfieldWord && (this.app.words[m].replaceText = coO.wordChangeSelect);
+										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == coO.idOfTheTextfieldWord && (coO.customTextfieldIsOn ? (this.app.words[m].replaceText = eb[1], coO.wordChangeSelect = eb[1]) : this.app.words[m].replaceText = coO.wordChangeSelect);
 									coR.currentChoices += 1;
 								}
 							}
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
+								en.length > 1 ? en = en : en = en[0].split("/WORD#");
 								if ("undefined" !== this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
@@ -23133,6 +23618,12 @@
                             cols: "12"
                         }
                     }, [o("app-Row", {
+						directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: e.checkRequireds(t),
+                            expression: "checkRequireds(row)"
+                        }],
                         attrs: {
                             row: t,
                             type: e.type
@@ -23398,7 +23889,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: e.checkRequireds(t) || (t.privateFilterIsOn ? !t.styling.reqFilterVisibleIsOn : !e.styling.reqFilterVisibleIsOn),
+                            value: e.checkRequireds(t) || !e.filterStyling(e.row, t),
                             expression: "checkRequireds(object) || (object.privateFilterIsOn ?\n           !object.styling.reqFilterVisibleIsOn : !styling.reqFilterVisibleIsOn)"
                         }],
                         key: t.index,
@@ -23962,13 +24453,59 @@
                     object: function() {
 						return this.$parent.object
 					},
+					textStyling: function() {
+						if (this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.privateTextIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateTextIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					filterStyling: function() {
+						if (this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.privateFilterIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonTitle + '";font-size: ' + this.styling.addonTitleTextSize + "%;text-align: " + this.styling.addonTitleAlign + ";color: " + (!e && this.styling.reqATitleColorIsOn ? this.styling.reqFilterATitleColor : (this.object.isActive && this.styling.selATitleColorIsOn ? this.styling.selFilterATitleColor : this.styling.addonTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";"
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.styling.addonText + '";font-size: ' + this.styling.addonTextTextSize + "%;text-align: " + this.styling.addonTextAlign + ";color: " + (!e && this.styling.reqATextColorIsOn ? this.styling.reqFilterATextColor : (this.object.isActive && this.styling.selATextColorIsOn ? this.styling.selFilterATextColor : this.styling.addonTextColor)) + ";"
+                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";"
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -24642,13 +25179,30 @@
                     },
 					playBgm: function(e, t) {
 						var p = this.app.bgmIsPlaying,
-							s = document.getElementById('bgm'),
-							o = s.src.split("/").pop().split("?")[0];
-						if (o == t) {
-							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+							s = bgmPlayer.playerInfo.videoData.video_id,
+							o = bgmPlayer.playerInfo.playerState;
+						if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
+						if (s == t) {
+							if (this.app.bgmObjectId == e.id) {
+								if (p) {
+									if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+									else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							} else {
+								if (p) {
+									bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							}
 						} else {
-							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+							if (p) {
+								e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								bgmPlayer.playVideo();
+								this.$set(this.app, "bgmObjectId", e.id);
+							}
 						}
 					},
                     activateObject: function(e, t) {
@@ -24668,8 +25222,8 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]))
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -24804,10 +25358,12 @@
 												coO = coR.objects[co.objects];
 											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
+												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -24843,7 +25399,6 @@
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
-																			
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 																		}
@@ -24858,8 +25413,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -24879,7 +25436,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -24897,9 +25454,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -24930,7 +25487,7 @@
 														u--;
 													}
 												}
-											}											
+											}
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -24989,7 +25546,7 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]))
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)));
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -25116,8 +25673,10 @@
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 											this.activated.push(eid);
+											t.currentChoices += 1;
 											var bC = this.checkRequireds(coS);
 											this.activated.splice(this.activated.indexOf(eid), 1);
+											t.currentChoices -= 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
 												19 == C.length ? C += coO.title : C+= ", " + coO.title;
@@ -25136,9 +25695,9 @@
 																if (coO.forcedActivated && nC > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}																			
+																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 															}
 														}
 												} else {
@@ -25159,7 +25718,7 @@
 																}
 																
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 															}
 														}
 												}
@@ -25211,7 +25770,7 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																		
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 																		}
@@ -25225,8 +25784,10 @@
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
+														t.currentChoices += 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(this.activated.indexOf(eid), 1);
+														t.currentChoices -= 1;
 														if (bC !== bE) {
 															19 == C.length ? C += coO.title : C+= ", " + coO.title;
 															if (bC) {
@@ -25244,9 +25805,9 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																			
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -25267,7 +25828,7 @@
 																			}
 																			
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -25344,14 +25905,14 @@
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId);
 										}
-									}									
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]))
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -25488,8 +26049,10 @@
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);											
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -25540,8 +26103,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -25561,7 +26126,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -25579,9 +26144,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -25612,7 +26177,7 @@
 													u--;
 												}
 											}
-										}											
+										}
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -25669,7 +26234,13 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+											}
+										}
 									}
 							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
@@ -25810,9 +26381,9 @@
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 											if (bRO !== bRT) {
 												if (coO.isMultipleUseVariable) {
 													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -25834,9 +26405,9 @@
 													var bC = this.checkRequireds(coS),
 														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 														aFI = this.activated[fI].split("/ON#");
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 													if (bC !== bE) {
 														19 == C.length ? C += coO.title : C+= ", " + coO.title;
 														if (bE) {
@@ -25854,7 +26425,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
@@ -25874,7 +26445,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																	}
@@ -25906,7 +26477,12 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+											}
+										}
 									}
 							}
 							if (e.isActive == !0) {
@@ -26049,9 +26625,9 @@
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 												var bRT = this.checkRequireds(coO);
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -26071,9 +26647,9 @@
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bE) {
@@ -26091,7 +26667,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
@@ -26111,7 +26687,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
@@ -26130,11 +26706,27 @@
                     },
                     cloneObject: function() {
                         this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects[this.row.objects.length - 1].id = e;
 						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
 							this.app.comp[this.row.objects[b].id].objects = b;
+						}
+						for (var c = 0; c < this.object.groups.length; c++) {
+							if ("undefined" !== typeof this.app.compG[this.object.groups[c].id]) {
+								var co = this.app.compG[this.object.groups[c].id],
+									coG = this.app.groups[co.groups];
+								coG.elements.push({id: e});
+							}
+						}
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var d = 0; d < this.object.objectDesignGroups.length; d++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[d].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[d].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									coD.elements.push({id: e});
+								}
+							}
 						}
                     },
                     updateActivated: function() {
@@ -26179,7 +26771,7 @@
 														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR) + "/ON#" + y[1];
 													else
 														zx = fo.requireds[i].reqId.split("/D#"), fo.requireds[i].reqId = zx[0] + "/D#" + (zx.length > 1 ? (parseInt(zx[1]) + 1) : nR);
-												}													
+												}
 												else if ("or" == fo.requireds[i].type)
 													for (c = 0; c < fo.requireds[i].orRequired.length; c++) {
 														y = fo.requireds[i].orRequired[c].req.split("/ON#");
@@ -26283,7 +26875,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
-							this.app.compR[this.app.rows[m].id] = {rows: m};
+							this.app.compR[this.app.rows[m].id] = {rows: m, type: "app"};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
 							}
@@ -26574,6 +27166,29 @@
                     }
                 },
                 methods: {
+					filterStyling: function(e, t) {
+						if (t.privateFilterIsOn) return t.styling.reqFilterVisibleIsOn;
+						if (e.privateFilterIsOn) return e.styling.reqFilterVisibleIsOn;
+						if ("undefined" !== typeof t.objectDesignGroups) {
+							for (var a = 0; a < t.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[t.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[t.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling.reqFilterVisibleIsOn;
+								}
+							}
+						}
+						if ("undefined" !== typeof e.rowDesignGroups) {
+							for (var a = 0; a < e.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[e.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[e.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateFilterIsOn) return coD.styling.reqFilterVisibleIsOn;
+								}
+							}
+						}
+						return this.$store.state.app.styling.reqFilterVisibleIsOn;
+					},
                     handleResize: function() {
                         this.window.width = window.innerWidth, this.window.height = window.innerHeight
                     },
@@ -26584,7 +27199,7 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         this.row.objects.push({
                             id: e,
                             title: this.app.defaultChoiceTitle,
@@ -26602,7 +27217,8 @@
                             requireds: [],
                             addons: [],
                             scores: [],
-                            groups: []
+                            groups: [],
+							styling: {}
                         });
 						for (var b = 0; b < this.app.rows.length; b++) {
 							if (this.app.rows[b].id == this.row.id) {
@@ -26672,13 +27288,30 @@
                     },
 					playBgm: function(e, t) {
 						var p = this.app.bgmIsPlaying,
-							s = document.getElementById('bgm'),
-							o = s.src.split("/").pop().split("?")[0];
-						if (o == t) {
-							if (p) s.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-							else s.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+							s = bgmPlayer.playerInfo.videoData.video_id,
+							o = bgmPlayer.playerInfo.playerState;
+						if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
+						if (s == t) {
+							if (this.app.bgmObjectId == e.id) {
+								if (p) {
+									if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+									else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							} else {
+								if (p) {
+									bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+								} else {
+									if (o == 1) bgmPlayer.pauseVideo();
+								}
+							}
 						} else {
-							if (p) s.src = "https://www.youtube.com/embed/" + t + "?autoplay=1&loop=1&controls=0&enablejsapi=1&playlist=" + t;
+							if (p) {
+								e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								bgmPlayer.playVideo();
+								this.$set(this.app, "bgmObjectId", e.id);
+							}
 						}
 					},
                     activateObject: function(e, t) {
@@ -26698,8 +27331,8 @@
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]))
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -26834,10 +27467,12 @@
 												coO = coR.objects[co.objects];
 											if (coO.id !== e.id) {
 												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
+												var bRO = this.checkRequireds(coO);
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -26873,7 +27508,6 @@
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
-																			
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 																		}
@@ -26888,8 +27522,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -26909,7 +27545,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -26927,9 +27563,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -26960,7 +27596,7 @@
 														u--;
 													}
 												}
-											}											
+											}
 										}
 									if (e.backpackBtnRequirement)
 										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -27019,7 +27655,7 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]))
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)));
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -27146,8 +27782,10 @@
 											var coS = coO.scores[b],
 												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 											this.activated.push(eid);
+											t.currentChoices += 1;
 											var bC = this.checkRequireds(coS);
 											this.activated.splice(this.activated.indexOf(eid), 1);
+											t.currentChoices -= 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
 												19 == C.length ? C += coO.title : C+= ", " + coO.title;
@@ -27166,9 +27804,9 @@
 																if (coO.forcedActivated && nC > 0) {
 																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}																			
+																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 															}
 														}
 												} else {
@@ -27189,7 +27827,7 @@
 																}
 																
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 															}
 														}
 												}
@@ -27241,7 +27879,7 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																		
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 																		}
@@ -27255,8 +27893,10 @@
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
 														this.activated.push(eid);
+														t.currentChoices += 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(this.activated.indexOf(eid), 1);
+														t.currentChoices -= 1;
 														if (bC !== bE) {
 															19 == C.length ? C += coO.title : C+= ", " + coO.title;
 															if (bC) {
@@ -27274,9 +27914,9 @@
 																			if (coO.forcedActivated && nC > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}																			
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -27297,7 +27937,7 @@
 																			}
 																			
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -27374,14 +28014,14 @@
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId);
 										}
-									}									
+									}
 									this.activated.push(eid), t.currentChoices += 1
 								}
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]))
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].setValue = !1);
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -27518,8 +28158,10 @@
 												nR = this.activated.indexOf(eid);
 												var bRO = this.checkRequireds(coO);											
 												this.activated.splice(nR, 1);
+												t.currentChoices -= 1;
 												var bRT = this.checkRequireds(coO);
 												this.activated.splice(nR, 0, eid);
+												t.currentChoices += 1;
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -27570,8 +28212,10 @@
 														var bC = this.checkRequireds(coS);
 														nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
 														var bE = this.checkRequireds(coS);
 														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bC) {
@@ -27591,7 +28235,7 @@
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
 																		}
 																	}
 															} else {
@@ -27609,9 +28253,9 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																		
+																			}
 																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
+																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
 																		}
 																	}
 															}
@@ -27642,7 +28286,7 @@
 													u--;
 												}
 											}
-										}											
+										}
 									}
 								if (e.backpackBtnRequirement)
 									this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
@@ -27699,9 +28343,15 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+											}
+										}
 									}
-							}							
+							}
 							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
 								if (e.isActive == !1) {
 									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
@@ -27718,6 +28368,21 @@
 											var a = this.app.styling.backgroundColor;
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
 											this.$set(e, "changedBgColorCode", a);
+										}
+									}
+									if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+												var p = this.$parent.$parent.$children,
+													co = this.app.compR[e.scrollRowId];
+												for (var a = 0; a < p.length; a++) {
+													if (this.$parent == p[a]) {
+														coR = p[co.rows + a];
+														coR.$el.scrollIntoView({behavior: 'smooth'});
+														break
+													}
+												}
+											}
 										}
 									}
 									if (e.setBgmIsOn) {
@@ -27825,9 +28490,9 @@
 											var bRO = this.checkRequireds(coO),
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 												aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 											if (bRO !== bRT) {
 												if (coO.isMultipleUseVariable) {
 													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -27849,9 +28514,9 @@
 													var bC = this.checkRequireds(coS),
 														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
 														aFI = this.activated[fI].split("/ON#");
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 1);
+													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 													if (bC !== bE) {
 														19 == C.length ? C += coO.title : C+= ", " + coO.title;
 														if (bE) {
@@ -27869,7 +28534,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																	}
@@ -27889,7 +28554,7 @@
 																		if (coO.forcedActivated && nC > 0) {
 																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}																	
+																		}
 																	} else {
 																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																	}
@@ -27921,7 +28586,12 @@
 							if ("undefined" !== typeof e.scores) {
 								for (var i = 0; i < e.scores.length; i++)
 									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										this.app.pointTypes[s].id == e.scores[i].id && this.checkRequireds(e.scores[i]) && (this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)));
+										if (this.app.pointTypes[s].id == e.scores[i].id) {
+											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+											}
+										}
 									}
 							}
 							if (e.isActive == !0) {
@@ -28064,9 +28734,9 @@
 												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 												var bRT = this.checkRequireds(coO);
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 												if (bRO !== bRT) {
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
@@ -28086,9 +28756,9 @@
 														var coS = coO.scores[b],
 															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 														var bC = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : this.activated.splice(fI, 1);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
 														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]);
+														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
 														if (bC !== bE) {
 															19 == h.length ? h += coO.title : h+= ", " + coO.title;
 															if (bE) {
@@ -28106,7 +28776,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
 																		}
@@ -28126,7 +28796,7 @@
 																			if (coO.forcedActivated && nh > 0) {
 																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}																	
+																			}
 																		} else {
 																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
 																		}
@@ -28279,7 +28949,7 @@
 							}
 						}
 						for (var m = nF; m < this.app.rows.length; m++) {
-							this.app.compR[this.app.rows[m].id] = {rows: m};
+							this.app.compR[this.app.rows[m].id] = {rows: m, type: "backpack"};
 							for (var n = 0; n < this.app.rows[m].objects.length; n++) {
 								var d = this.app.rows[m].objects[n].id;
 								this.app.comp[this.app.rows[m].objects[n].id] = {rows: m, objects: n};
@@ -28330,6 +29000,9 @@
                 methods: {
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
+                    },
+					checkRequireds: function(e) {
+                        return this.$store.getters.checkRequireds(e)
                     },
                     print: function() {
 						var e = this;
@@ -29723,6 +30396,20 @@
                         t.splice(e, 1)
                     },
                     deleteGroup: function(e) {
+						for (var a = 0; a < this.groups[e].elements.length; a++) {
+							if ("undefined" !== typeof this.app.comp[this.groups[e].elements[a].id]) {
+								var co = this.app.comp[this.groups[e].elements[a].id],
+									coR = this.app.rows[co.rows],
+									coO = coR.objects[co.objects];
+								console.log(coO);
+								for (var b = 0; b < coO.groups.length; b++) {
+									if (coO.groups[b].id == this.groups[e].id) {
+										coO.groups.splice(b, 1);
+										break
+									}
+								}
+							}
+						}
 						this.$delete(this.app.compG, this.groups[e].id);
                         this.groups.splice(e, 1);
                     }
@@ -31946,7 +32633,7 @@
 							text: "space"
 						}]
                     }
-                },				
+                },
 				components: {
                     PictureInput: $["a"]
                 },
@@ -32957,15 +33644,40 @@
                 methods: {
                     cloneRow: function(e) {
                         this.app.rows.splice(this.app.rows.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.rowIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
                         this.app.rows[this.app.rows.indexOf(e) + 1].id = t;
+						this.app.compR[t] = {rows: (this.app.rows.indexOf(e) + 1), type: "app"};
+						if ("undefined" !== typeof this.app.rows[this.app.rows.indexOf(e) + 1].rowDesignGroups) {
+							for (var f = 0; f < this.app.rows[this.app.rows.indexOf(e) + 1].rowDesignGroups.length; f++) {
+								var co = this.app.compRDG[this.app.rows[this.app.rows.indexOf(e) + 1].rowDesignGroups[f].id],
+									coD = this.app.rowDesignGroups[co.designGroups];
+								coD.elements.push({id: t});
+							}
+						}
                         for (var s = 0; s < this.app.rows[this.app.rows.indexOf(e) + 1].objects.length; s++) {
                             t = "";
-                            for (var r = 0; r < 4; r++) t += o.charAt(Math.floor(Math.random() * o.length));
+                            for (var r = 0; r < this.app.objectIdLength; r++) t += o.charAt(Math.floor(Math.random() * o.length));
                             this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].id = t;
 							this.app.comp[t] = {rows: this.app.rows.indexOf(e) + 1, objects: s};
+							for (var c = 0; c < this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups.length; c++) {
+								if ("undefined" !== typeof this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups[c].id]) {
+									var co = this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups[c].id],
+										coG = this.app.groups[co.groups];
+									coG.elements.push({id: t});
+								}
+							}
+							if ("undefined" !== typeof this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups) {
+								for (var d = 0; d < this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups.length; d++) {
+									if ("undefined" !== typeof this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups[d].id]) {
+										var co = this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups[d].id],
+											coD = this.app.objectDesignGroups[co.designGroups];
+										coD.elements.push({id: t});
+									}
+								}
+							}
                         }
 						for (var b = this.app.rows.indexOf(e) + 2; b < this.app.rows.length; b++) {
+							this.app.compR[this.app.rows[b].id] = {rows: b, type: "app"};
 							for (var c = 0; c < this.app.rows[b].objects.length; c++) {
 								this.app.comp[this.app.rows[b].objects[c].id] = {rows: b, objects: c};
 							}
@@ -32980,7 +33692,7 @@
                         })
                     },
                     createNewRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.rowIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
                         var i = JSON.parse(JSON.stringify(this.app.styling));
                         i.backgroundImage = "", i.rowBackgroundImage = "", i.objectBackgroundImage = "", this.app.rows.push({
                             id: e,
@@ -33009,7 +33721,7 @@
                             objects: [],
                             styling: i
                         });
-						this.app.compR[e] = {rows: this.app.rows.length - 1};
+						this.app.compR[e] = {rows: this.app.rows.length - 1, type: "app"};
                     },
                     deleteRow: function(e) {
                         var t = this;
@@ -33036,7 +33748,7 @@
 											for (var c = 0; c < e.objects.length; c++) {
 												t.$delete(t.app.comp, e.objects[c].id);
 											}
-											t.$delete(t.app.comp, e.id);
+											t.$delete(t.app.compR, e.id);
 											t.$store.commit("deleteRow", e);
 										case 4:
 										case "end":
@@ -33057,7 +33769,7 @@
 							for (var c = 0; c < e.objects.length; c++) {
 								t.$delete(t.app.comp, e.objects[c].id);
 							}
-							t.$delete(t.app.comp, e.id);
+							t.$delete(t.app.compR, e.id);
 							t.$store.commit("deleteRow", e);
 						}
                     },
@@ -33273,7 +33985,7 @@
                         icon: "",
                         "x-large": "",
                         color: e.$vuetify.theme.isDark ? "white" : "black"
-                    },					
+                    },
 					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
@@ -33520,7 +34232,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("20.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("25.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 25.07.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to hide choices in the Backpack. "), o("br"), o("br"), e._v(" Added a feature to hide the button that displays the Backpack. "), o("br"), o("br"), e._v(" Added a feature where the player can input their own words when selecting choice. "), o("br"), o("br"), e._v(" Added a feature to check how many choices from groups have been selected. "), o("br"), o("br"), e._v(" Added a feature to choose whether points will be shown on the points bar/choices. "), o("br"), o("br"), e._v(" Added a feature to change the scroll position when a choice is selected. "), o("br"), o("br"), e._v(" Added a feature to set background music when a choice is selected. "), o("br"), o("br"), e._v(" Added a feature to change the background-color or background-image when a choice is selected. "), o("br"), o("br"), e._v(" Added a feature to choose whether the filter color will overlay on background-image. "), o("br"), o("br"), e._v(" Added a feature to manage Private Styles separately for each design feature. "), o("br"), o("br"), e._v(" Added a feature to manage Private Styles for design groups globally. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where the browser would freeze when saving project with separate images. "), o("br"), o("br"), e._v(" Fixed issues with 'Clean Activated' feature. "), o("br"), o("br"), e._v(" Fixed issues with 'Scores Updated On'. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("20.07.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -33741,7 +34493,7 @@
                         cols: "12"
                     }
                 }, [e._v(" Interactive CYOA Creator Plus First Release ")]), o("v-col", {
-                    staticClass: "pb-0",					
+                    staticClass: "pb-0",
 					staticStyle: {
                         color: "blue"
                     },
@@ -34309,7 +35061,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.4.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.5.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -34579,6 +35331,8 @@
 						compG: [],
 						compODG: [],
 						compRDG: [],
+						rowIdLength: 4,
+						objectIdLength: 4,
                         words: [],
                         groups: [],
 						rowDesignGroups: [],
@@ -34588,7 +35342,7 @@
                         rows: [],
                         pointTypes: [],
                         variables: [],
-						cancelForcedActivated: [],						
+						cancelForcedActivated: [],
 						autoSaveIsOn: !1,
 						autoSaveInterval: null,
 						checkDeleteRow: !0,
@@ -35246,8 +36000,18 @@
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
                         for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
-								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) 
-									e.app.rows[o].objects[t].scores[r].isActive = !1, e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
+									if (e.app.rows[o].objects[t].isSelectableMultiple) {
+										if (e.app.rows[o].objects[t].isMultipleUseVariable) {
+											for (var k = 0; k <= e.app.rows[o].objects[t].multipleUseVariable - 1; k++) {
+												e.app.rows[o].objects[t].scores[r].isActiveMul[k] = !1;
+											}
+										}
+									} else {
+										e.app.rows[o].objects[t].scores[r].isActive = !1;
+									}
+									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+								}
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
 									if (e.app.rows[o].objects[t].isMultipleUseVariable)
 										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus;
@@ -35263,6 +36027,7 @@
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
+						bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
@@ -35337,10 +36102,13 @@
 							if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval);
 							e.app.autoSaveInterval = setInterval(() => {
 								if (e.app.saveInLocalStorage) {
-									var sv = JSON.parse(JSON.stringify(e.app));
-									sv.comp = [];
-									sv.compR = [];
-									sv.compG = [];
+									var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
+										sv = JSON.parse(JSON.stringify(e.app, (key, value) => {
+											if (exceptedList.includes(key)) {
+												return undefined;
+											}
+											return value;
+										}));
 									localStorage.setItem("Auto-save", JSON.stringify(sv));
 								} else {
 									const now = new Date();
@@ -35351,10 +36119,13 @@
 									const minutes = String(now.getMinutes()).padStart(2, '0');
 									const seconds = String(now.getSeconds()).padStart(2, '0');
 									const timestamp = `${year}${month}${day}_${hours}${minutes}${seconds}`;
-									var sv = JSON.parse(JSON.stringify(e.app));
-									sv.comp = [];
-									sv.compR = [];
-									sv.compG = [];
+									var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
+										sv = JSON.parse(JSON.stringify(e.app, (key, value) => {
+											if (exceptedList.includes(key)) {
+												return undefined;
+											}
+											return value;
+										}));
 									var t = JSON.stringify(sv),
 										o = new Blob([t], {
 											type: "text/plain"

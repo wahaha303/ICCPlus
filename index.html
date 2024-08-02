@@ -3,10 +3,12 @@
   <head>
     <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
-	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name=viewport content="width=device-width,initial-scale=1">
     <script src="/favi/favi.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/libavif.js@latest/dist/libavif.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
     <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
         integrity=sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm crossorigin=anonymous>
     <script src=https://unpkg.com/vue-select@latest></script>
@@ -24,10 +26,11 @@
   </head>
   <body>
     <noscript><strong>We're sorry but the Interactive CYOA Creator doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
-	<div style="display:none"><iframe id="bgm" width="0" height="0" frameborder="0" allow="autoplay; fullscreen;"></iframe></div>
+	<div style="display:none" id="bgm"></div>
     <div id=app></div>
     <script src=js/html-to-image.min.js></script>
     <script src=js/chunk-vendors.ae283b72.js></script>    
     <script src=js/app.d3103a3b.js></script>
+	<script>var bgmPlayer;function onYouTubeIframeAPIReady() {bgmPlayer = new YT.Player("bgm", {height: "0", width: "0", videoId: ""})}</script>
   </body>
 </html>
