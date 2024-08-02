@@ -6502,7 +6502,7 @@
 							for (var a = 0; a < e.length; a++) {
 								var ea = e[a].split("/ON#");
 								ea.length > 1 ? ea = ea : ea = ea[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[ea[0]]) {
+								if ("undefined" !== typeof this.app.comp[ea[0]]) {
 									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
@@ -6522,7 +6522,7 @@
 							for (var b = 0; b < e.length; b++) {
 								var eb = e[b].split("/ON#");
 								eb.length > 1 ? eb = eb : eb = eb[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[eb[0]]) {
+								if ("undefined" !== typeof this.app.comp[eb[0]]) {
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
@@ -6531,7 +6531,7 @@
 											for (var c = 0; c < this.app.groups.length; c++)
 												for (var d = 0; d < this.app.groups[c].elements.length; d++)
 													if ("undefined" !== typeof this.app.comp[this.app.groups[c].elements[d].id]) {
-														var coT = this.app.comp[this.app.groups[a].elements[d].id],
+														var coT = this.app.comp[this.app.groups[c].elements[d].id],
 															coTR = this.app.rows[coT.rows],
 															coTO = coTR.objects[coT.objects];
 														for (var f = 0; f < coTO.scores.length; f++) {
@@ -6677,7 +6677,7 @@
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
 								en.length > 1 ? en = en : en = en[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[en[0]]) {
+								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
@@ -6990,11 +6990,11 @@
 							i = JSON.parse(e);
 							t.$store.commit("loadApp", i);
 							for (var a = 0; a < t.app.pointTypes.length; a++) if ("undefined" === typeof t.app.pointTypes[a].initValue) t.app.pointTypes[a].initValue = t.app.pointTypes[a].startingSum;
-							t.$set(t.app, "comp", []);
-							t.$set(t.app, "compR", []);
-							t.$set(t.app, "compG", []);
-							t.$set(t.app, "compODG", []);
-							t.$set(t.app, "compRDG", []);
+							t.$set(t.app, "comp", {});
+							t.$set(t.app, "compR", {});
+							t.$set(t.app, "compG", {});
+							t.$set(t.app, "compODG", {});
+							t.$set(t.app, "compRDG", {});
 							for (var b = 0; b < t.app.rows.length; b++) {
 								var g = t.app.rows[b].id;
 								t.app.compR[g] = {rows: b, type: "app"};
@@ -7233,11 +7233,11 @@
                         isDesignOpen: !1,
                         isViewerVersion: !1,
                         backpack: [],
-						comp: [],
-						compR: [],
-						compG: [],
-						compODG: [],
-						compRDG: [],
+						comp: {},
+						compR: {},
+						compG: {},
+						compODG: {},
+						compRDG: {},
                         words: [],
                         groups: [],
 						rowDesignGroups: [],

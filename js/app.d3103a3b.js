@@ -17445,11 +17445,11 @@
 							if ("undefined" === typeof e.app.rowIdLength) e.$set(e.app, "rowIdLength", 4);
 							if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
-							e.$set(e.app, "comp", []);
-							e.$set(e.app, "compR", []);
-							e.$set(e.app, "compG", []);
-							e.$set(e.app, "compODG", []);
-							e.$set(e.app, "compRDG", []);
+							e.$set(e.app, "comp", {});
+							e.$set(e.app, "compR", {});
+							e.$set(e.app, "compG", {});
+							e.$set(e.app, "compODG", {});
+							e.$set(e.app, "compRDG", {});
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
 								e.app.compR[g] = {rows: b, type: "app"};
@@ -17462,7 +17462,7 @@
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
-									e.app.comp[d] = {rows: b, objects: c, type: "app"};
+									e.app.comp[d] = {rows: b, objects: c};
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
@@ -17541,11 +17541,11 @@
 							if ("undefined" === typeof e.app.rowIdLength) e.$set(e.app, "rowIdLength", 4);
 							if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
 							for (var a = 0; a < e.app.pointTypes.length; a++) if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
-							e.$set(e.app, "comp", []);
-							e.$set(e.app, "compR", []);
-							e.$set(e.app, "compG", []);
-							e.$set(e.app, "compODG", []);
-							e.$set(e.app, "compRDG", []);
+							e.$set(e.app, "comp", {});
+							e.$set(e.app, "compR", {});
+							e.$set(e.app, "compG", {});
+							e.$set(e.app, "compODG", {});
+							e.$set(e.app, "compRDG", {});
 							for (var b = 0; b < e.app.rows.length; b++) {
 								var g = e.app.rows[b].id;
 								e.app.compR[g] = {rows: b, type: "app"};
@@ -17558,7 +17558,7 @@
 								if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
-									e.app.comp[d] = {rows: b, objects: c, type: "app"};
+									e.app.comp[d] = {rows: b, objects: c};
 									if ("undefined" === typeof e.app.rows[b].objects[c].styling) e.$set(e.app.rows[b].objects[c], "styling", {});
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
@@ -23350,7 +23350,7 @@
 							for (var a = 0; a < e.length; a++) {
 								var ea = e[a].split("/ON#");
 								ea.length > 1 ? ea = ea : ea = ea[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[ea[0]]) {
+								if ("undefined" !== typeof this.app.comp[ea[0]]) {
 									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
@@ -23370,16 +23370,17 @@
 							for (var b = 0; b < e.length; b++) {
 								var eb = e[b].split("/ON#");
 								eb.length > 1 ? eb = eb : eb = eb[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[eb[0]]) {
+								if ("undefined" !== typeof this.app.comp[eb[0]]) {
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
+									console.log(co, coR, coO);
 									if (coO.discountOther) {
 										if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue && "undefined" !== typeof coO.discountGroups)
 											for (var c = 0; c < this.app.groups.length; c++)
 												for (var d = 0; d < this.app.groups[c].elements.length; d++)
 													if ("undefined" !== typeof this.app.comp[this.app.groups[c].elements[d].id]) {
-														var coT = this.app.comp[this.app.groups[a].elements[d].id],
+														var coT = this.app.comp[this.app.groups[c].elements[d].id],
 															coTR = this.app.rows[coT.rows],
 															coTO = coTR.objects[coT.objects];
 														for (var f = 0; f < coTO.scores.length; f++) {
@@ -23525,7 +23526,7 @@
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
 								en.length > 1 ? en = en : en = en[0].split("/WORD#");
-								if ("undefined" !== this.app.comp[en[0]]) {
+								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
 										coO = coR.objects[co.objects];
@@ -35326,11 +35327,11 @@
                         isDesignOpen: !1,
                         isViewerVersion: !1,
                         backpack: [],
-						comp: [],
-						compR: [],
-						compG: [],
-						compODG: [],
-						compRDG: [],
+						comp: {},
+						compR: {},
+						compG: {},
+						compODG: {},
+						compRDG: {},
 						rowIdLength: 4,
 						objectIdLength: 4,
                         words: [],
