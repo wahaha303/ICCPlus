@@ -13843,11 +13843,13 @@
 										coG.elements.push({id: e});
 									}
 								}
-								for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
-									if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
-										var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
-											coD = this.app.groups[co.designGroups];
-										coD.elements.push({id: e});
+								if ("undefined" !== typeof coR.objects[coR.objects.length - 1].objectDesignGroups) {
+									for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
+										if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
+											var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
+												coD = this.app.groups[co.designGroups];
+											coD.elements.push({id: e});
+										}
 									}
 								}
 							}
@@ -14813,11 +14815,13 @@
 										coG.elements.push({id: e});
 									}
 								}
-								for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
-									if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
-										var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
-											coD = this.app.groups[co.designGroups];
-										coD.elements.push({id: e});
+								if ("undefined" !== typeof coR.objects[coR.objects.length - 1].objectDesignGroups) {
+									for (var d = 0; d < coR.objects[coR.objects.length - 1].objectDesignGroups.length; d++) {
+										if ("undefined" !== typeof this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id]) {
+											var co = this.app.compODG[coR.objects[coR.objects.length - 1].objectDesignGroups[d].id],
+												coD = this.app.groups[co.designGroups];
+											coD.elements.push({id: e});
+										}
 									}
 								}
 							}
@@ -15362,7 +15366,8 @@
                             addons: [],
                             scores: [],
                             groups: [],
-							styling: {}
+							styling: {},
+							objectDesignGroups: []
                         });
 						if ("undefined" !== typeof this.app.compR[this.row.id]) {
 							var co = this.app.compR[this.row.id],
@@ -22894,7 +22899,7 @@
                         type: "number"
                     },
                     model: {
-                        value: e.app.rowIdLength,
+                        value: e.app.objectIdLength,
                         callback: function(t) {
                             e.$set(e.app, "objectIdLength", t)
                         },
@@ -27219,7 +27224,8 @@
                             addons: [],
                             scores: [],
                             groups: [],
-							styling: {}
+							styling: {},
+							objectDesignGroups: []
                         });
 						for (var b = 0; b < this.app.rows.length; b++) {
 							if (this.app.rows[b].id == this.row.id) {
@@ -33720,7 +33726,8 @@
                             isEditModeOn: !1,
                             isRequirementOpen: !1,
                             objects: [],
-                            styling: i
+                            styling: i,
+							rowDesignGroups: []
                         });
 						this.app.compR[e] = {rows: this.app.rows.length - 1, type: "app"};
                     },
