@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.5.4 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.5.5 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -1915,7 +1915,10 @@
                     model: {
                         value: e.object.isSelectableMultiple,
                         callback: function(t) {
-                            e.$set(e.object, "isSelectableMultiple", t)
+                            e.$set(e.object, "isSelectableMultiple", t);
+							if (!t) {
+								e.$set(e.object, "isMultipleUseVariable", t), e.$set(e.object, "multipleScoreId", "");
+							}
                         },
                         expression: "object.isSelectableMultiple"
                     }
@@ -1927,8 +1930,7 @@
                     model: {
                         value: e.object.isMultipleUseVariable,
                         callback: function(t) {
-                            e.$set(e.object, "isMultipleUseVariable", t),
-							e.$set(e.object, "multipleScoreId", "")
+                            e.$set(e.object, "isMultipleUseVariable", t), e.$set(e.object, "multipleScoreId", "");
                         },
                         expression: "object.isMultipleUseVariable"
                     }
@@ -12045,7 +12047,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -12405,7 +12407,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -15231,7 +15233,7 @@
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
 													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+										else if (this.rows[t].objects[e].isSelectableMultiple && ("undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
@@ -15804,7 +15806,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -16164,7 +16166,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -17468,6 +17470,7 @@
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
 									e.app.comp[d] = {rows: b, objects: c};
+									if (!e.app.rows[b].objects[c].isSelectableMultiple && e.app.rows[b].objects[c].isMultipleUseVariable) e.$set(e.app.rows[b].objects[c], "isMultipleUseVariable", !1);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
@@ -17564,6 +17567,7 @@
 								for (var c = 0; c < e.app.rows[b].objects.length; c++) {
 									var d = e.app.rows[b].objects[c].id;
 									e.app.comp[d] = {rows: b, objects: c};
+									if (!e.app.rows[b].objects[c].isSelectableMultiple && e.app.rows[b].objects[c].isMultipleUseVariable) e.$set(e.app.rows[b].objects[c], "isMultipleUseVariable", !1);
 									if ("undefined" === typeof e.app.rows[b].objects[c].styling) e.$set(e.app.rows[b].objects[c], "styling", {});
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
@@ -23540,14 +23544,15 @@
 											if (this.app.pointTypes[j].id == coS.id) {
 												if (coO.isMultipleUseVariable) {
 													for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
+														if ("undefined" === typeof coS.isActiveMul) this.$set(coS, "isActiveMul", []);
 														if (ee > 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
 														} else if (ee < 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
 														}
 													}
 												} else {
-													this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+													this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActive = !0);
 												}
 											}
 										}
@@ -25550,7 +25555,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -25916,7 +25921,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -27088,7 +27093,7 @@
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
 													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+										else if (this.rows[t].objects[e].isSelectableMultiple && ("undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
@@ -27660,7 +27665,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -28026,7 +28031,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -35068,7 +35073,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.5.4")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.5.5")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"

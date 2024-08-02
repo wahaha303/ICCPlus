@@ -2568,7 +2568,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -2934,7 +2934,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -4061,7 +4061,7 @@
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
 													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-										else if (this.rows[t].objects[e].isSelectableMultiple && (console.log("Mul"), "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
+										else if (this.rows[t].objects[e].isSelectableMultiple && ("undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
@@ -4626,7 +4626,7 @@
 														}
 													}
 									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]))
+										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -4992,7 +4992,7 @@
 								e.isActive = !e.isActive, this.updateActivated()
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
-									if (this.checkRequireds(e.scores[a]))
+									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
 								var ee = 0, EE = 0;
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -6687,14 +6687,15 @@
 											if (this.app.pointTypes[j].id == coS.id) {
 												if (coO.isMultipleUseVariable) {
 													for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
+														if ("undefined" === typeof coS.isActiveMul) this.$set(coS, "isActiveMul", []);
 														if (ee > 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
 														} else if (ee < 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
 														}
 													}
 												} else {
-													this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)));
+													this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActive = !0);
 												}
 											}
 										}
@@ -7011,6 +7012,7 @@
 								for (var c = 0; c < t.app.rows[b].objects.length; c++) {
 									var d = t.app.rows[b].objects[c].id;
 									t.app.comp[d] = {rows: b, objects: c};
+									if (!t.app.rows[b].objects[c].isSelectableMultiple && t.app.rows[b].objects[c].isMultipleUseVariable) t.$set(t.app.rows[b].objects[c], "isMultipleUseVariable", !1);
 									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateFilterIsOn) t.$set(t.app.rows[b].objects[c], "privateFilterIsOn", !0);
 									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateTextIsOn) t.$set(t.app.rows[b].objects[c], "privateTextIsOn", !0);
 									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateObjectImageIsOn) t.$set(t.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
@@ -7685,8 +7687,18 @@
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
                         for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
-								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) 
-									e.app.rows[o].objects[t].scores[r].isActive = !1, e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
+									if (e.app.rows[o].objects[t].isSelectableMultiple) {
+										if (e.app.rows[o].objects[t].isMultipleUseVariable) {
+											for (var k = 0; k <= e.app.rows[o].objects[t].multipleUseVariable - 1; k++) {
+												e.app.rows[o].objects[t].scores[r].isActiveMul[k] = !1;
+											}
+										}
+									} else {
+										e.app.rows[o].objects[t].scores[r].isActive = !1;
+									}
+									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+								}
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
 									if (e.app.rows[o].objects[t].isMultipleUseVariable)
 										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus;
