@@ -7702,7 +7702,7 @@
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
-						bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+						if (e.app.bgmIsPlaying) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
                     },
                     addNewPointType: function(t, e) {
                         t.app.pointTypes.push({

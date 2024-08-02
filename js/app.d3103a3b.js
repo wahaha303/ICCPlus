@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.5.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.5.3 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -35068,7 +35068,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.5.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.5.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -36034,7 +36034,7 @@
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
-						bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+						if (e.app.bgmIsPlaying) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
