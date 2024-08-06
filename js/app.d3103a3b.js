@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.6.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.6.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -18454,7 +18454,7 @@
 						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
 								if (exceptedList.includes(key)) {
-									return undefined;
+									return {};
 								}
 								return value;
 							})),
@@ -18470,7 +18470,7 @@
 						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
 								if (exceptedList.includes(key)) {
-									return undefined;
+									return {};
 								}
 								return value;
 							})),
@@ -36278,7 +36278,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.6.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.6.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -37383,7 +37383,7 @@
 									var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 										sv = JSON.parse(JSON.stringify(e.app, (key, value) => {
 											if (exceptedList.includes(key)) {
-												return undefined;
+												return {};
 											}
 											return value;
 										}));
@@ -37400,7 +37400,7 @@
 									var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 										sv = JSON.parse(JSON.stringify(e.app, (key, value) => {
 											if (exceptedList.includes(key)) {
-												return undefined;
+												return {};
 											}
 											return value;
 										}));

@@ -7341,7 +7341,85 @@
 								t.app.compRDG[i] = {designGroups: h};
 								if ("undefined" === typeof t.app.rowDesignGroups[h].activatedId) t.$set(t.app.rowDesignGroups[h], "activatedId", "");
 							}
+						} else if (4 == this.readyState && 404 == this.status) {
+							for (var a = 0; a < t.app.pointTypes.length; a++) {
+								if ("undefined" === typeof t.app.pointTypes[a].initValue) t.app.pointTypes[a].initValue = t.app.pointTypes[a].startingSum;
+								if ("" != t.app.pointTypes[a].activatedId && "undefined" === typeof t.app.pointTypes[a].isNotShownPointBar) t.app.pointTypes[a].isNotShownPointBar = !0;
+								if ("" != t.app.pointTypes[a].activatedId && "undefined" === typeof t.app.pointTypes[a].isNotShownObjects) t.app.pointTypes[a].isNotShownObjects = !0;
+							}
+							t.$set(t.app, "comp", {});
+							t.$set(t.app, "compR", {});
+							t.$set(t.app, "compG", {});
+							t.$set(t.app, "compODG", {});
+							t.$set(t.app, "compRDG", {});
+							for (var b = 0; b < t.app.rows.length; b++) {
+								var g = t.app.rows[b].id;
+								t.app.compR[g] = {rows: b, type: "app"};
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateFilterIsOn) t.$set(t.app.rows[b], "privateFilterIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateTextIsOn) t.$set(t.app.rows[b], "privateTextIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateObjectImageIsOn) t.$set(t.app.rows[b], "privateObjectImageIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateObjectIsOn) t.$set(t.app.rows[b], "privateObjectIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateRowImageIsOn) t.$set(t.app.rows[b], "privateRowImageIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateRowIsOn) t.$set(t.app.rows[b], "privateRowIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateBackgroundIsOn) t.$set(t.app.rows[b], "privateBackgroundIsOn", !0);
+								if (t.app.rows[b].isPrivateStyling && "undefined" === typeof t.app.rows[b].privateBackgroundIsOn) t.$set(t.app.rows[b], "privateBackgroundIsOn", !0);
+								if ("undefined" === typeof t.app.rowDesignGroups) t.$set(t.app, "rowDesignGroups", []);
+								if ("undefined" === typeof t.app.objectDesignGroups) t.$set(t.app, "objectDesignGroups", []);
+								if (t.app.rows[b].textIsRemoved) {
+									if ("undefined" === typeof t.app.rows[b].objectTextRemoved) t.$set(t.app.rows[b], "objectTextRemoved", !0);
+									if ("undefined" === typeof t.app.rows[b].addonTextRemoved) t.$set(t.app.rows[b], "addonTextRemoved", !0);
+								}
+								for (var c = 0; c < t.app.rows[b].objects.length; c++) {
+									var d = t.app.rows[b].objects[c].id;
+									t.app.comp[d] = {rows: b, objects: c, type: "app"};
+									if (!t.app.rows[b].objects[c].isSelectableMultiple && t.app.rows[b].objects[c].isMultipleUseVariable) t.$set(t.app.rows[b].objects[c], "isMultipleUseVariable", !1);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateFilterIsOn) t.$set(t.app.rows[b].objects[c], "privateFilterIsOn", !0);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateTextIsOn) t.$set(t.app.rows[b].objects[c], "privateTextIsOn", !0);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateObjectImageIsOn) t.$set(t.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateObjectIsOn) t.$set(t.app.rows[b].objects[c], "privateObjectIsOn", !0);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].privateBackgroundIsOn) t.$set(t.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
+									if (t.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof t.app.rows[b].objects[c].styling) {
+										t.$set(t.app.rows[b].objects[c], "styling", {});
+										t.$set(t.app.rows[b].objects[c], "privateFilterIsOn", !1);
+										t.$set(t.app.rows[b].objects[c], "privateTextIsOn", !1);
+										t.$set(t.app.rows[b].objects[c], "privateObjectImageIsOn", !1);
+										t.$set(t.app.rows[b].objects[c], "privateObjectIsOn", !1);
+										t.$set(t.app.rows[b].objects[c], "privateBackgroundIsOn", !1);
+									}
+									if (t.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof t.app.rows[b].objects[c].initMultipleTimesMinus) {
+										t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
+										t.$set(t.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(t.app.rows[b].objects[c].numMultipleTimesMinus));
+									}
+								}
+							}
+							for (var b = 0; b < t.app.backpack.length; b++) {
+								var g = t.app.backpack[b].id;
+								t.app.compR[g] = {rows: b, type: "backpack"};
+								if (t.app.backpack[b].textIsRemoved) {
+									if ("undefined" === typeof t.app.backpack[b].objectTextRemoved) t.$set(t.app.backpack[b], "objectTextRemoved", !0);
+									if ("undefined" === typeof t.app.backpack[b].addonTextRemoved) t.$set(t.app.backpack[b], "addonTextRemoved", !0);
+								}
+								for (var c = 0; c < t.app.backpack[b].objects.length; c++) {
+									var d = t.app.backpack[b].objects[c].id;
+									t.app.comp[d] = {rows: b, objects: c, type: "backpack"};
+								}
+							}
+							for (var f = 0; f < t.app.groups.length; f++) {
+								var r = t.app.groups[f].id;
+								t.app.compG[r] = {groups: f};
+							}
+							for (var h = 0; h < t.app.objectDesignGroups.length; h++) {
+									var i = t.app.objectDesignGroups[h].id;
+									t.app.compODG[i] = {designGroups: h};
+									if ("undefined" === typeof t.app.objectDesignGroups[h].activatedId) t.$set(t.app.objectDesignGroups[h], "activatedId", "");
+								}
+							for (var h = 0; h < t.app.rowDesignGroups.length; h++) {
+								var i = t.app.rowDesignGroups[h].id;
+								t.app.compRDG[i] = {designGroups: h};
+								if ("undefined" === typeof t.app.rowDesignGroups[h].activatedId) t.$set(t.app.rowDesignGroups[h], "activatedId", "");
+							}
 						}
+						
 					};
 					e.addEventListener('progress', function(e) {
 						indicator.innerHTML = " Loading " + `${(e.loaded / 1e6).toFixed(1)} MB`;
