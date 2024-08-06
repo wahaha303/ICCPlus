@@ -7344,7 +7344,7 @@
 								t.app.compRDG[i] = {designGroups: h};
 								if ("undefined" === typeof t.app.rowDesignGroups[h].activatedId) t.$set(t.app.rowDesignGroups[h], "activatedId", "");
 							}
-						} else if (4 == this.readyState && 404 == this.status) {
+						} else if ((4 == this.readyState && 404 == this.status) || (4 == this.readyState && 0 == this.status)) {
 							for (var a = 0; a < t.app.pointTypes.length; a++) {
 								if ("undefined" === typeof t.app.pointTypes[a].initValue) t.app.pointTypes[a].initValue = t.app.pointTypes[a].startingSum;
 								if ("" != t.app.pointTypes[a].activatedId && "undefined" === typeof t.app.pointTypes[a].isNotShownPointBar) t.app.pointTypes[a].isNotShownPointBar = !0;
