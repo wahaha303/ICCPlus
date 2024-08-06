@@ -7,7 +7,7 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature that automatically converts PNG or JPEG files larger than 500KB to WebP format upon set Choce/Row images.
  - Added a feature to set Border-Image in Manage Choice/Row Design.
  - Added a feature to download images of backpacks by splitting them if the size is too large for successful download.
- - Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., id/ON#3).
+ - Added a feature to manipulate choices that can be selected multiple times using 'Force another choice active' (e.g., ID/ON#3).
  - Added a loading animation to the viewer.
  - Added a feature that 'X of these is selected' requirement.
  - Added a feature that 'Forces another choice active' at random.
@@ -42,6 +42,14 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to display titles of Rows/Choices in the Groups/Design Groups settings.
  - Added a feature to import custom words using the import choices feature.
  - Added a feature to set the length of Row/Choice IDs to be generated in global settings.
+ - Added a feature to change the order of Scores/Requirements/Addons in the choices.
+ - Added a feature to set ID to activate the Design Groups.
+ - Added an option in 'Force Active' that keeps other choices active when a choice is deselected.
+ - Expanded the 'Remove the text of the choices' Feature:
+   - Now can choose which contents to remove from the title, image, text, score, requirement, or addon.
+ - Added a feature to allow users to use the 'Remove the contents of the choices'.
+ - Added a feature to mute background music when a choice is selected.
+ - Added a feature to hide the requirement when it is met.
  
 
 ## Fixed
@@ -88,4 +96,8 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where Rows/Choices were not being deleted correctly.
  - Fixed an issue where Addons were not affected by Design Groups.
  - Fixed an issue where Design Groups were not being properly loaded in the Viewer.
+ - Fixed an issue where Scroll feature did not work properly in the Viewer.
+ - Fixed an issue where background changes were not reset when 'Clean Activated' was used.
+ - Fixed an issue where 'Id Needed To Show' in 'Points' did not work properly.
+ - Fixed an issue where choices set to 1 per row were being forced to 2 per row in mobile environments.
  
