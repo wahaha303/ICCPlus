@@ -19693,7 +19693,9 @@
                             startingSum: 0,
 							initValue: 0,
                             activatedId: "",
-                            afterText: ""
+                            afterText: "",
+							isNotShownPointBar: !1,
+							isNotShownObjects: !1
                         })
                     },
 					changePointOrderLeft: function(e) {
@@ -23214,7 +23216,26 @@
                         model: {
                             value: t.id,
                             callback: function(o) {
-								e.app.compRDG[o] = e.app.compRDG[t.id], e.$delete(e.app.compRDG, t.id), e.$set(t, "id", o)
+								e.app.compRDG[o] = e.app.compRDG[t.id], e.$delete(e.app.compRDG, t.id);
+								for (var a = 0; a < t.elements.length; a++) {
+									if ("undefined" !== typeof e.app.compR[t.elements[a].id]) {
+										var co = e.app.compR[t.elements[a].id],
+											coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows];
+										for (var b = 0; b < coR.rowDesignGroups.length; b++) {
+											if (coR.rowDesignGroups[b].id == t.id) {
+												coR.rowDesignGroups[b].id = o;
+											}
+										}
+										for (var c = 0; c < coR.objects.length; c++) {
+											for (var d = 0; d < coR.objects[c].rowDesignGroups.length; d++) {
+												if (coR.objects[c].rowDesignGroups[d].id == t.id) {
+													coR.objects[c].rowDesignGroups[d].id = o;
+												}
+											}
+										}
+									}
+								}
+								e.$set(t, "id", o);
                             },
                             expression: "group.id"
                         }
@@ -23289,7 +23310,6 @@
 													break
 												}
 											}
-											console.log(newElement);
 											if ("undefined" !== e.app.compR[newElement]) {
 												var co = e.app.compR[newElement],
 													coR = e.app.rows[co.rows];
@@ -23305,7 +23325,6 @@
 													for (var d = 0; d < coR.objects[c].rowDesignGroups.length; d++) {
 														if (coR.objects[c].rowDesignGroups[d].id == t.id) {
 															coR.objects[c].rowDesignGroups.splice(d, 1);
-															
 														}
 													}
 													for (var f = 0; f < t.elements.length; f++) {
@@ -23370,7 +23389,20 @@
                         model: {
                             value: t.id,
                             callback: function(o) {
-								e.app.compODG[o] = e.app.compODG[t.id], e.$delete(e.app.compODG, t.id), e.$set(t, "id", o)
+								e.app.compODG[o] = e.app.compODG[t.id], e.$delete(e.app.compODG, t.id);
+								for (var a = 0; a < t.elements.length; a++) {
+									if ("undefined" !== typeof e.app.comp[t.elements[a].id]) {
+										var co = e.app.comp[t.elements[a].id],
+											coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+											coO = coR.objects[co.objects];
+										for (var b = 0; b < coO.objectDesignGroups.length; b++) {
+											if (coO.objectDesignGroups[b].id == t.id) {
+												coO.objectDesignGroups[b].id = o;
+											}
+										}
+									}
+								}
+								e.$set(t, "id", o);
                             },
                             expression: "group.id"
                         }
@@ -23625,7 +23657,6 @@
 								var co = this.app.comp[this.objectDesignGroups[e].elements[a].id],
 									coR = this.app.rows[co.rows],
 									coO = coR.objects[co.objects];
-								console.log(coO);
 								for (var b = 0; b < coO.objectDesignGroups.length; b++) {
 									if (coO.objectDesignGroups[b].id == this.objectDesignGroups[e].id) {
 										coO.objectDesignGroups.splice(b, 1);
@@ -37319,7 +37350,9 @@
                             initValue: t.initValue,
                             activatedId: t.activatedId,
                             afterText: t.afterText,
-                            beforeText: t.name + ":"
+                            beforeText: t.name + ":",
+							isNotShownPointBar: t.isNotShownPointBar,
+							isNotShownObjects: t.isNotShownObjects
                         })
                     },
                     addNewGroup: function(e, t) {
