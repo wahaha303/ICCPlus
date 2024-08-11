@@ -1988,6 +1988,32 @@
 						}
 						return this.$store.state.app.styling;
 					},
+					rowBodyBgColor: function() {
+						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return !1;
+					},
+					rowBodyBgImage: function() {
+						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return !1;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
@@ -2006,7 +2032,9 @@
                         return 'font-family: "' + this.textStyling.objectText + '";text-align: ' + this.textStyling.objectTextAlign + ";font-size: " + this.textStyling.objectTextTextSize + "%;color: " + (!e && this.filterStyling.reqCTextColorIsOn ? this.filterStyling.reqFilterCTextColor : (this.object.isActive && this.filterStyling.selCTextColorIsOn ? this.filterStyling.selFilterCTextColor : this.textStyling.objectTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;"
                     },
                     rowBody: function() {
-                        var e = "margin-top: 0px;margin-bottom: 0px;"
+                        var e = "margin-top: 0px;margin-bottom: 0px;";
+						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;");
+						if (this.rowBodyBgColor !== !1) e += "background-color: " + this.rowBodyBgColor.backgroundColor + ";";
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
                     findRowTitle: function() {
@@ -4293,6 +4321,32 @@
 						}
 						return this.$store.state.app.styling;
 					},
+					rowBodyBgColor: function() {
+						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return !1;
+					},
+					rowBodyBgImage: function() {
+						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return !1;
+					},
                     resultArray: function() {
                         var e, t, o = [];
                         if ("standard" == this.type) {
@@ -4329,6 +4383,8 @@
                     },
                     rowBody: function() {
                         var e = "margin-top: " + this.rowStyling.rowBodyMarginTop + "px;margin-bottom:" + this.rowStyling.rowBodyMarginBottom + "px;";
+						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;");
+						if (this.rowBodyBgColor !== !1) e += "background-color: " + this.rowBodyBgColor.backgroundColor + ";";
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
                     rowText: function() {

@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.7.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.7.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -17433,7 +17433,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -17446,7 +17446,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -27856,7 +27856,7 @@
 						if (this.row.privateRowIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -27869,7 +27869,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -27882,7 +27882,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -30258,7 +30258,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -30271,7 +30271,7 @@
 						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
-								if ("undefined" !== typeof this.app.compRDG[this.object.rowDesignGroups[a].id]) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
@@ -39229,7 +39229,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.7.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.7.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
