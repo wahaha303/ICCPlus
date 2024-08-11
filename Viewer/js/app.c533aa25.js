@@ -1189,7 +1189,7 @@
                 }) : t._e()]), i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize((t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue) + " " + t.score.afterText, t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize((t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " " + t.score.afterText, t.sanitizeArg))
                     }
                 })])])], 1) : t.pointType.iconIsOn && t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -1197,7 +1197,7 @@
                 }, [i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue) + " ", t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " ", t.sanitizeArg))
                     }
                 })]), i("div", {
                     style: t.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -1224,7 +1224,7 @@
                 }, [i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue) + " " + t.score.afterText + " ", t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize(t.score.beforeText + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " " + t.score.afterText + " ", t.sanitizeArg))
                     }
                 })])])], 1) : t._e()], 1)
             },
@@ -1840,7 +1840,11 @@
                             allowedAttributes: false,
                             allowedStyles: false
                         },
-                        currentComponent: ""
+                        currentComponent: "",
+						scoreUpdate: "",
+						exceptedObjects: [],
+						exceptedScores: [],
+						linkedObjects: []
                     }
                 },
                 components: {
@@ -2209,7 +2213,7 @@
 										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o != 2) bgmPlayer.pauseVideo();
 									}
 								} else {
 									if (p) {
@@ -2234,9 +2238,488 @@
 							}
 						}
 					},
+					updateScoresC: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						var nH = 0, nh = 0, nR = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						for (var f = 0; f < this.activated.length; f++) {
+							var af = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[af[0]]) {
+								var co = this.app.comp[af[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (coS.discountIsOn && coS.discountedFrom == e.id) {
+												var coSDiscount = parseInt(coS.value) - coS.discountScore;
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSDiscount;
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
+														}
+													}
+												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											}
+										}
+									}
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+											bC = !1, bE = !1;
+										var nH = this.activated.indexOf(eid);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										bC = this.checkRequireds(coS);											
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 1);
+										t.currentChoices -= 1;
+										bE = this.checkRequireds(coS);
+										this.activated.splice(nH, 0, eid);
+										t.currentChoices += 1;
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresC(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						} 
+					},
+					updateScoresS: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (coS.discountIsOn && coS.discountedFrom == e.id) {
+												var coSDiscount = parseInt(coS.value) - coS.discountScore;
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														var nC = 0;
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSDiscount;
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
+														}
+													}
+												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											}
+										}
+									}
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+										var nH = this.activated.indexOf(eid);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 1);
+										t.currentChoices -= 1;
+										var bC = this.checkRequireds(coS);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 0, eid);
+										t.currentChoices += 1;
+										var bE = this.checkRequireds(coS);
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											var nC = 0;
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+															
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresS(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
+					updateScoresMulC: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						var nC = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects],
+									nR = this.activated.indexOf(eid);
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										var bC = this.checkRequireds(coS);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										var bE = !1;
+										if (e.id == this.exceptedScores[0]) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+												aFI = this.activated[fI].split("/ON#");
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+											bE = this.checkRequireds(coS);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, eid), t.currentChoices += 1);
+										} else {
+											var nH = this.activated.indexOf(eid);
+											this.activated.splice(nH, 1);
+											t.currentChoices -= 1;
+											var bE = this.checkRequireds(coS);
+											this.activated.splice(nH, 0, eid);
+											t.currentChoices += 1;
+										}
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresMulC(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
+					updateScoresMulS: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						var nC = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects],
+									nR = this.activated.indexOf(eid);
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+											bC = !1, bE = !1;
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										if (e.id == this.exceptedScores[0]) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+												aFI = this.activated[fI].split("/ON#");
+											aFI[1] > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+											bC = this.checkRequireds(coS);
+											for (var a = 0; a < tmpScores.length; a++) {
+												for (var n = 0; n < this.app.pointTypes.length; n++) {
+													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+												}
+											}
+											aFI[1] > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, eid), t.currentChoices += 1);
+											bE = this.checkRequireds(coS);
+										} else {
+											this.activated.splice(nR, 1);
+											t.currentChoices -= 1;
+											bC = this.checkRequireds(coS);
+											for (var a = 0; a < tmpScores.length; a++) {
+												for (var n = 0; n < this.app.pointTypes.length; n++) {
+													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+												}
+											}
+											this.activated.splice(nR, 0, eid);
+											t.currentChoices += 1;
+											bE = this.checkRequireds(coS);
+										}
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresMulS(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-						if (!(e.selectOnce && e.isActive)) {
+						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
 							for (var g = 0; g < e.scores.length; g++)
 								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
 									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
@@ -2246,24 +2729,25 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
+							var tmpScores = [];
+							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
+											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
 												var rndV = e.activatedRandom[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 													var co = this.app.comp[rndV[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													coO.forcedActivated = !1;
+													if (!e.isAllowDeselect) coO.forcedActivated = !1;
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -2275,25 +2759,25 @@
 															}
 															if (EE > 0) {
 																for (var n = 0; n < EE; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (EE < 0) {
 																for (var pp = 0; pp < -1 * EE; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														} else {
 															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														}
@@ -2309,7 +2793,10 @@
 													var co = this.app.comp[pv[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													coO.forcedActivated = !1;
+													if (!e.isAllowDeselect) coO.forcedActivated = !1;
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -2321,25 +2808,25 @@
 															}
 															if (EE > 0) {
 																for (var n = 0; n < EE; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (EE < 0) {
 																for (var pp = 0; pp < -1 * EE; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														} else {
 															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														}
@@ -2371,23 +2858,21 @@
 														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
-									var h = "Scores Updated On: ",
-										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
 										var af = this.activated[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[af[0]]) {
 											var co = this.app.comp[af[0]],
 												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);
-												this.activated.splice(nR, 1);
+											if (!this.exceptedObjects.includes(coO.id)) {
+												var nH = this.activated.indexOf(eid);
+												this.activated.splice(nH, 1);
 												t.currentChoices -= 1;
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(nR, 0, eid);
+												var bR = this.checkRequireds(coO);
+												this.activated.splice(nH, 0, eid);
 												t.currentChoices += 1;
-												if (bRO !== bRT) {
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
@@ -2401,107 +2886,21 @@
 														this.activateObject(coO, coR);
 													}
 													f--;
-												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
-																		}
-																	}
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														nH = this.activated.indexOf(eid);
-														this.activated.splice(nH, 1);
-														t.currentChoices -= 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														t.currentChoices += 1;
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !1;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !0;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
 												}
 											}
 										}
 									}
-									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
-									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
-									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+									if (e.multiplyPointtypeIsOnCheck) {
+										e.multiplyPointtypeIsOnCheck = !1;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
+									}
+									if (e.dividePointtypeIsOnCheck) {
+										e.dividePointtypeIsOnCheck = !1;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+									}
 									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -2531,13 +2930,30 @@
 											this.$set(e, "changedBgColorCode", a);
 										}
 									}
-									if (e.setBgmIsOn) {
+									if (e.changePointBar) {
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barBackgroundColor;
+											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+											this.$set(e, "changedBarBgColor", a);
+										}
+										if (e.changeBarTextColorIsOn) {
+											var a = this.app.styling.barTextColor;
+											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+											this.$set(e, "changedBarTextColor", a);
+										}
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barIconColor;
+											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+											this.$set(e, "changedBarIconColor", a);
+										}
+									}
+									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 										if (e.bgmId) {
 											this.app.bgmIsPlaying = !1;
 											this.playBgm(e, e.bgmId, 0);
 										}
 									}
-									if (e.muteBgm) {
+									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 										if ("undefined" !== typeof bgmPlayer.unMute) {
 											bgmPlayer.unMute();
 										}
@@ -2577,7 +2993,7 @@
 											}
 										}
 									}
-									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
 								} else {
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
@@ -2602,7 +3018,8 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -2615,12 +3032,12 @@
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
 											this.$set(e, 'activatedRandom', []);
-											for (v = rd.length - 1; v > 0; v--) {
+											for (var v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
 											e.activatedRandom = rd.slice(0, nAR);
-											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
 												var rndV = e.activatedRandom[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 													var co = this.app.comp[rndV[0]],
@@ -2628,22 +3045,23 @@
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = rndV[1], ee > 0) {
+															var ee = rndV[1];
+															if (ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	this.selectedOneLess(coO, coR);
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															}
 														} else {
 															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
 														}
 													} else {
 														if (nAR + a < rd.length) {
@@ -2663,24 +3081,28 @@
 													var co = this.app.comp[yv[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = yv[1], ee > 0) {
+															var ee = yv[1];
+															if (ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	this.selectedOneLess(coO, coR);
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															}
 														} else {
 															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
@@ -2698,7 +3120,8 @@
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = yf[1], ee > 0) {
+														var ee = yf[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -2717,88 +3140,15 @@
 														for (var T = 0; T < coO.groups.length; T++) coO.isActive && this.activateObject(coO, coR)
 											}
 										}
-									var C = "Scores Updated On: ",
-										nC = 0;
-									if (this.activated.length == 0) {
-										if ("undefined" !== typeof this.app.comp[e.id]) {
-											var co = this.app.comp[e.id],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-										}
-										for (var b = 0; b < coO.scores.length; b++) {
-											var coS = coO.scores[b],
-												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											this.activated.push(eid);
-											t.currentChoices += 1;
-											var bC = this.checkRequireds(coS);
-											this.activated.splice(this.activated.indexOf(eid), 1);
-											t.currentChoices -= 1;
-											var bE = this.checkRequireds(coS);
-											if (bC !== bE) {
-												19 == C.length ? C += coO.title : C+= ", " + coO.title;
-												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
-																		}
-																	}
-																}
-																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-															}
-														}
-												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
-																		}
-																	}
-																}
-																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-															}
-														}
-												}
-											}
-										}
-									}
 									for (var f = 0; f < this.activated.length; f++) {
 										var aF = this.activated[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[aF[0]]) {
 											var co = this.app.comp[aF[0]],
 												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												var bRO = this.checkRequireds(coO);
-												this.activated.push(eid);
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(this.activated.indexOf(eid), 1);
-												if (bRO !== bRT) {
+											if (!this.exceptedObjects.includes(coO.id)) {
+												if (!this.checkRequireds(coO)) {
+													this.exceptedObjects.push(coO.id);
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
@@ -2812,103 +3162,23 @@
 														this.activateObject(coO, coR);
 													}
 													f--;
-												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
-																		}
-																	}
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														this.activated.push(eid);
-														t.currentChoices += 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(this.activated.indexOf(eid), 1);
-														t.currentChoices -= 1;
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																			
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
 												}
 											}
 										}
 									}
-									if ("Scores Updated On: " !== C) this.text = C + ".", this.snackbar = !0;
-									if (e.multiplyPointtypeIsOn)
-										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+									if (e.multiplyPointtypeIsOn) {
+										e.multiplyPointtypeIsOnCheck = !0;
+										for (var m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
 													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
 												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
+									}
+									if (e.dividePointtypeIsOn) {
+										e.dividePointtypeIsOnCheck = !0;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
+									}
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -2921,7 +3191,7 @@
 											}
 										}
 									if (e.textfieldIsOn) {
-										for (m = 0; m < this.app.words.length; m++) {
+										for (var m = 0; m < this.app.words.length; m++) {
 											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
 												if (e.customTextfieldIsOn) {
 													e.wordChangeSelect = prompt(e.wordPromptText);
@@ -2944,6 +3214,23 @@
 											var a = this.app.styling.backgroundColor;
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
 											this.$set(e, "changedBgColorCode", a);
+										}
+									}
+									if (e.changePointBar) {
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barBackgroundColor;
+											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+											this.$set(e, "changedBarBgColor", a);
+										}
+										if (e.changeBarTextColorIsOn) {
+											var a = this.app.styling.barTextColor;
+											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+											this.$set(e, "changedBarTextColor", a);
+										}
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barIconColor;
+											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+											this.$set(e, "changedBarIconColor", a);
 										}
 									}
 									if (e.scrollToRow) {
@@ -2973,14 +3260,14 @@
 											}
 										}
 									}
-									if (e.setBgmIsOn) {
+									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 										if (e.bgmId) {
 											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId, 0);
 										}
 									}
-									if (e.muteBgm) {
+									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 										if ("undefined" !== typeof bgmPlayer.mute) {
 											bgmPlayer.mute();
 										}
@@ -3008,23 +3295,21 @@
 											}
 										}
 									}
-									this.activated.push(eid), t.currentChoices += 1
 								}
-								e.isActive = !e.isActive, this.updateActivated()
+								e.isActive = !e.isActive, this.updateActivated();
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var ee = 0, EE = 0;
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
+										for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
 											var rndV = e.activatedRandom[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 												var co = this.app.comp[rndV[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												coO.forcedActivated = !1;
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -3036,25 +3321,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = rndV[1], ee > 0) {
+														var ee = rndV[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -3070,7 +3356,10 @@
 												var co = this.app.comp[pv[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												coO.forcedActivated = !1;
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
+												if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+													if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+												}
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -3082,25 +3371,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = pv[1], ee > 0) {
+														var ee = pv[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -3132,138 +3422,49 @@
 													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
-								var h = "Scores Updated On: ",
-										nH = 0, nh = 0, nR = 0;
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
-												this.activated.splice(nR, 1);
-												t.currentChoices -= 1;
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(nR, 0, eid);
-												t.currentChoices += 1;
-												if (bRO !== bRT) {
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
+								for (var f = 0; f < this.activated.length; f++) {
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+											coO = coR.objects[co.objects];
+										if (!this.exceptedObjects.includes(coO.id)) {
+											var nH = this.activated.indexOf(eid);
+											this.activated.splice(nH, 1);
+											t.currentChoices -= 1;
+											var bR = this.checkRequireds(coO);
+											this.activated.splice(nH, 0, eid);
+											t.currentChoices += 1;
+											if (!bR) {
+												this.exceptedObjects.push(coO.id);
+												if (coO.isMultipleUseVariable) {
+													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+														coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 													}
-													f--;
+													if (coO.forcedActivated) {
+														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+														this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+													}
 												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																			
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
-																		}
-																	}
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														nH = this.activated.indexOf(eid);
-														this.activated.splice(nH, 1);
-														t.currentChoices -= 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														t.currentChoices += 1;
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !1;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !0;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
+													if (coO.forcedActivated) coO.forcedActivated = !1;
+													this.activateObject(coO, coR);
 												}
+												f--;
 											}
 										}
 									}
-									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
-								if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
-								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+								}
+								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+								if (e.multiplyPointtypeIsOnCheck) {
+									e.multiplyPointtypeIsOnCheck = !1;
+									for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
+								}
+								if (e.dividePointtypeIsOnCheck) {
+									e.dividePointtypeIsOnCheck = !1;
+									for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+								}
 								if (e.textfieldIsOn)
-									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+									for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
@@ -3293,6 +3494,23 @@
 										this.$set(e, "changedBgColorCode", a);
 									}
 								}
+								if (e.changePointBar) {
+									if (e.changeBarBgColorIsOn) {
+										var a = this.app.styling.barBackgroundColor;
+										this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+										this.$set(e, "changedBarBgColor", a);
+									}
+									if (e.changeBarTextColorIsOn) {
+										var a = this.app.styling.barTextColor;
+										this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+										this.$set(e, "changedBarTextColor", a);
+									}
+									if (e.changeBarIconColorIsOn) {
+										var a = this.app.styling.barIconColor;
+										this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+										this.$set(e, "changedBarIconColor", a);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -3306,13 +3524,13 @@
 														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
-								if (e.setBgmIsOn) {
+								if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 									if (e.bgmId) {
 										this.app.bgmIsPlaying = !1;
 										this.playBgm(e, e.bgmId, 0)
 									}
 								}
-								if (e.muteBgm) {
+								if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 									if ("undefined" !== typeof bgmPlayer.unMute) {
 										bgmPlayer.unMute();
 									}
@@ -3341,7 +3559,9 @@
 								}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
+							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -3349,508 +3569,413 @@
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
                         var s = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s) {
-							var eid, eidNum
-							if (e.isMultipleUseVariable) {
-								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
-								eidNum = parseInt(e.multipleUseVariable) + 1;
-							} else {
-								eid = e.id;
-							}
-							if ("undefined" !== typeof e.scores) {
-								for (var i = 0; i < e.scores.length; i++)
-									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										if (this.app.pointTypes[s].id == e.scores[i].id) {
-											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+						if (!this.linkedObjects.includes(e.id)) {
+							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+							else
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (s) {
+								var eid, eidNum
+								if (e.isMultipleUseVariable) {
+									eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+									eidNum = parseInt(e.multipleUseVariable) + 1;
+								} else {
+									eid = e.id;
+								}
+								var tmpScores = [];
+								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if ("undefined" !== typeof e.scores) {
+									for (var i = 0; i < e.scores.length; i++)
+										for (var s = 0; s < this.app.pointTypes.length; s++) {
+											if (this.app.pointTypes[s].id == e.scores[i].id) {
+												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												}
 											}
 										}
-									}
-							}
-							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-										y = e.activateThisChoice.split(",");
-										var RD = y.slice(),
-											rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-											nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-										if ("undefined" === typeof e.activatedRandomMul) this.$set(e, 'activatedRandomMul', []);
-										for (var v = rd.length - 1; v > 0; v--) {
-											var rnd = Math.floor(Math.random() * (v + 1));
-											[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+								}
+								if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
+									if (e.isActive == !1) {
+										e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
 										}
-										e.activatedRandomMul.push(rd.slice(0, nAR));
-										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
-												var co = this.app.comp[aRM[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-													if (coO.isSelectableMultiple) {
-														if (ee = aRM[1], ee > 0) {
-															for (var n = 0; n < ee; n++) {
-																this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
-															}
-														} else if (ee < 0) {
-															for (var pp = 0; pp < -1 * ee; pp++) {
-																coO.numMultipleTimesMinus--;
-																this.selectedOneLess(coO, coR);
-																coO.forcedActivated = !0;
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.scrollToRow) {
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$parent.$parent.$children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$parent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR.$el.offsetParent) {
+																			coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
 															}
 														}
-													} else {
-														if (!coO.isActive) this.activateObject(coO, coR);
-														coO.forcedActivated = !0;
-													}
-												} else {
-													if (nAR + a < rd.length) {
-														e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1, rd[nAR + a]);
-														a++, v--;
-													} else {
-														e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1);
-														b--, v--;
 													}
 												}
 											}
 										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
 									} else {
-										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											var yv = y[v].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yv[0]]) {
-												var co = this.app.comp[yv[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-													if (coO.isSelectableMultiple) {
-														if (ee = yv[1], ee > 0) {
-															for (var n = 0; n < ee; n++) {
-																this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
-																coO.forcedActivated = !0;
+										this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
+									}
+									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											var y = e.activateThisChoice.split(",");
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+											if ("undefined" === typeof e.activatedRandomMul) this.$set(e, 'activatedRandomMul', []);
+											for (var v = rd.length - 1; v > 0; v--) {
+												var rnd = Math.floor(Math.random() * (v + 1));
+												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+											}
+											e.activatedRandomMul.push(rd.slice(0, nAR));
+											for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
+												var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+													var co = this.app.comp[aRM[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+														if (coO.isSelectableMultiple) {
+															var ee = aRM[1];
+															if (ee > 0) {
+																for (var n = 0; n < ee; n++) {
+																	this.selectedOneMore(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																}
+															} else if (ee < 0) {
+																for (var pp = 0; pp < -1 * ee; pp++) {
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																	this.selectedOneLess(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																}
 															}
-														} else if (ee < 0) {
-															for (var pp = 0; pp < -1 * ee; pp++) {
-																coO.numMultipleTimesMinus--;
-																this.selectedOneLess(coO, coR);
-																coO.forcedActivated = !0;
+														} else {
+															if (!coO.isActive) this.activateObject(coO, coR);
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
+														}
+													} else {
+														if (nAR + a < rd.length) {
+															e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1, rd[nAR + a]);
+															a++, v--;
+														} else {
+															e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1);
+															b--, v--;
+														}
+													}
+												}
+											}
+										} else {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
+													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+														if (coO.isSelectableMultiple) {
+															var ee = yv[1];
+															if (ee > 0) {
+																for (var n = 0; n < ee; n++) {
+																	this.selectedOneMore(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																}
+															} else if (ee < 0) {
+																for (var pp = 0; pp < -1 * ee; pp++) {
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																	this.selectedOneLess(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																}
+															}
+														} else {
+															if (e.selectedThisManyTimesProp == 1) {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 														}
 													} else {
-														if (e.selectedThisManyTimesProp == 1) {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
+														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
+													}
+												}
+											}
+										}
+									}
+									for (var f = 0; f < this.activated.length; f++) {
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+												coO = coR.objects[co.objects],
+												nR = this.activated.indexOf(eid);
+											if (!this.exceptedObjects.includes(coO.id)) {
+												var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
+												if (fI !== -1) var aFI = this.activated[fI].split("/ON#");
+												fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.push(eid), t.currentChoices += 1);
+												var bR = this.checkRequireds(coO);
+												fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1);
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
+													if (coO.isMultipleUseVariable) {
+														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+														}
+														if (coO.forcedActivated) {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															coO.forcedActivated = !1;
+														}
+													} else {
+														if (coO.forcedActivated) coO.forcedActivated = !1;
+														this.activateObject(coO, coR);
+													}
+													f--;
+												}
+											}
+										}
+									}
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
+								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
+							}
+						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
+                    },
+                    selectedOneLess: function(e, t) {
+						var rowType = this.app.compR[t.id].type;
+                        var s = !0;
+						if (!this.linkedObjects.includes(e.id)) {
+							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+							else
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (s) {
+								var eid, eidNum;
+								if (e.isMultipleUseVariable) {
+									eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+									eidNum = parseInt(e.multipleUseVariable) + 1;
+								} else {
+									eid = e.id;
+								}
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if ("undefined" !== typeof e.scores) {
+									for (var i = 0; i < e.scores.length; i++)
+										for (var s = 0; s < this.app.pointTypes.length; s++) {
+											if (this.app.pointTypes[s].id == e.scores[i].id) {
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												}
+											}
+										}
+								}
+								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
+										for (var v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
+											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+												var co = this.app.comp[aRM[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
+												if (coO.isSelectableMultiple) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
+														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == aRM[0]) {
+																EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																break
+															}
+														}
+														if (EE > 0) {
+															for (var n = 0; n < EE; n++) {
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
+															}
+														} else if (EE < 0) {
+															for (var pp = 0; pp < -1 * EE; pp++) {
+																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+															}
+														}
+													} else {
+														var ee = aRM[1];
+														if (ee > 0) {
+															for (var n = 0; n < ee; n++) {
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
+															}
+														} else if (ee < 0) {
+															for (var pp = 0; pp < -1 * ee; pp++) {
+																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+															}
 														}
 													}
 												} else {
-													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
+													if (coO.isActive && !e.isNotDeactivate) this.activateObject(coO, coR);
+												}
+											}
+										}
+										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
+									} else {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+											var pv = p[v].split("/ON#");
+											if ("undefined" !== this.app.comp[pv[0]]) {
+												var co = this.app.comp[pv[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+													if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+												}
+												if (e.selectedThisManyTimesProp == 0 && !e.isAllowDeselect) coO.forcedActivated = !1;
+												if (coO.isSelectableMultiple) {
+													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
+														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+															var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+															if (cFA[0] == pv[0]) {
+																EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																break
+															}
+														}
+														if (EE > 0) {
+															for (var n = 0; n < EE; n++) {
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
+															}
+														} else if (EE < 0) {
+															for (var pp = 0; pp < -1 * EE; pp++) {
+																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
+																if (!e.isAllowDeselect) coR.numMultipleTimesMinus++;
+															}
+														}
+													} else {
+														var ee = pv[1];
+														if (ee > 0) {
+															for (var n = 0; n < ee; n++) {
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
+															}
+														} else if (ee < 0) {
+															for (var pp = 0; pp < -1 * ee; pp++) {
+																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+															}
+														}
+													}
+												} else {
+													if (e.selectedThisManyTimesProp == 0) {
+														if (coO.isActive && !e.isNotDeactivate) this.activateObject(coO, coR);
+													}
 												}
 											}
 										}
 									}
 								}
-								var C = "Scores Updated On: ",
-									nC = 0;
 								for (var f = 0; f < this.activated.length; f++) {
 									var aF = this.activated[f].split("/ON#");
 									if ("undefined" !== typeof this.app.comp[aF[0]]) {
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-											coO = coR.objects[co.objects],
-											nR = this.activated.indexOf(eid);
-										if (coO.id !== e.id) {
-											var bRO = this.checkRequireds(coO),
-												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
-											if (fI !== -1) var aFI = this.activated[fI].split("/ON#");
-											fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.push(eid), t.currentChoices += 1);
-											var bRT = this.checkRequireds(coO);
-											fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1);
-											if (bRO !== bRT) {
-												if (coO.isMultipleUseVariable) {
-													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-														coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+											coO = coR.objects[co.objects];
+										if (!this.exceptedObjects.includes(coO.id)) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
+											if (fI !== -1) {
+												var	aFI = this.activated[fI].split("/ON#");
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+												var bR = this.checkRequireds(coO);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
+													if (coO.isMultipleUseVariable) {
+														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+														}
+														if (coO.forcedActivated) {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															coO.forcedActivated = !1;
+														}
+													} else {
+														if (coO.forcedActivated) coO.forcedActivated = !1;
+														this.activateObject(coO, coR);
 													}
-													if (coO.forcedActivated) {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-													}
-												} else {
-													if (coO.forcedActivated) coO.forcedActivated = !1;
-													this.activateObject(coO, coR);
+													f--;
 												}
-												f--;
+											}
+										}
+									}
+								}
+								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.isActive == !0) {
+									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
 											} else {
-												for (var b = 0; b < coO.scores.length; b++) {
-													var coS = coO.scores[b],
-														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													var bC = this.checkRequireds(coS),
-														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
-													if (fI !== -1) var aFI = this.activated[fI].split("/ON#");
-													fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.push(eid), t.currentChoices += 1);
-													var bE = this.checkRequireds(coS);
-													fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1);
-													if (bC !== bE) {
-														19 == C.length ? C += coO.title : C+= ", " + coO.title;
-														if (bC) {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum += coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !1;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nC > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																	}
-																}
-														} else {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum -= coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !0;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nC > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
-																	}
-																}
-														}
-													}
-												}
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0);
 											}
 										}
 									}
+									else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								}
-								if ("Scores Updated On: " !== C) this.text = C + ".", this.snackbar = !0;
-								if (e.isActive == !1) {
-									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
-															}
-															waitScroll();
-															break
-														}
-													}
-												}
-											}
-										}
-									}
-									if (e.setBgmIsOn) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-								}
-								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
 						}
-                    },
-                    selectedOneLess: function(e, t) {
-						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s) {
-							var eid, eidNum;
-							if (e.isMultipleUseVariable) {
-								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
-								eidNum = parseInt(e.multipleUseVariable) + 1;
-							} else {
-								eid = e.id;
-							}
-							if ("undefined" !== typeof e.scores) {
-								for (var i = 0; i < e.scores.length; i++)
-									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										if (this.app.pointTypes[s].id == e.scores[i].id) {
-											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
-											}
-										}
-									}
-							}
-							if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-								if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
-									for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-										var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[aRM[0]]) {
-											var co = this.app.comp[aRM[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											coO.forcedActivated = !1;
-											if (coO.isSelectableMultiple) {
-												if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
-													for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-														var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-														if (cFA[0] == aRM[0]) {
-															EE = parseInt(aRM[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-															break
-														}
-													}
-													if (EE > 0) {
-														for (var n = 0; n < EE; n++) {
-															coO.numMultipleTimesMinus--;
-															if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
-														}
-													} else if (EE < 0) {
-														for (var pp = 0; pp < -1 * EE; pp++) {
-															this.selectedOneMore(coO, coR);
-															if (!e.isNotDeactivate) coO.numMultipleTimesMinus++;
-														}
-													}
-												} else {
-													if (ee = aRM[1], ee > 0) {
-														for (var n = 0; n < ee; n++) {
-															coO.numMultipleTimesMinus--;
-															if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
-														}
-													} else if (ee < 0) {
-														for (var pp = 0; pp < -1 * ee; pp++) {
-															if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-															coO.numMultipleTimesMinus++;
-														}
-													}
-												}
-											} else {
-												if (coO.isActive && !e.isNotDeactivate) this.activateObject(coO, coR);
-											}
-										}
-									}
-									e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
-								} else {
-									for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-										var pv = p[v].split("/ON#");
-										if ("undefined" !== this.app.comp[pv[0]]) {
-											var co = this.app.comp[pv[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
-											if (coO.isSelectableMultiple) {
-												if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
-													for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-														var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-														if (cFA[0] == pv[0]) {
-															EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-															break
-														}
-													}
-													if (EE > 0) {
-														for (var n = 0; n < EE; n++) {
-															coO.numMultipleTimesMinus--;
-															if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
-														}
-													} else if (EE < 0) {
-														for (var pp = 0; pp < -1 * EE; pp++) {
-															if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-															coR.numMultipleTimesMinus++;
-														}
-													}
-												} else {
-													if (ee = pv[1], ee > 0) {
-														for (var n = 0; n < ee; n++) {
-															coO.numMultipleTimesMinus--;
-															if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
-														}
-													} else if (ee < 0) {
-														for (var pp = 0; pp < -1 * ee; pp++) {
-															if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-															coO.numMultipleTimesMinus++;
-														}
-													}
-												}
-											} else {
-												if (e.selectedThisManyTimesProp == 0) {
-													if (coO.isActive && !e.isNotDeactivate) this.activateObject(coO, coR);
-												}
-											}
-										}
-									}
-								}
-							}
-							var h = "Scores Updated On: ",
-								nh = 0;
-							for (var f = 0; f < this.activated.length; f++) {
-								var aF = this.activated[f].split("/ON#");
-								if ("undefined" !== typeof this.app.comp[aF[0]]) {
-									var co = this.app.comp[aF[0]],
-										coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-										coO = coR.objects[co.objects];
-									if (coO.id !== e.id) {
-										var bRO = this.checkRequireds(coO),
-											fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
-										if (fI !== -1) {
-											var	aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-											if (bRO !== bRT) {
-												if (coO.isMultipleUseVariable) {
-													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-														coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-													}
-													if (coO.forcedActivated) {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-													}
-												} else {
-													if (coO.forcedActivated) coO.forcedActivated = !1;
-													this.activateObject(coO, coR);
-												}
-												f--;
-											} else {
-												for (var b = 0; b < coO.scores.length; b++) {
-													var coS = coO.scores[b],
-														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													var bC = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-													if (bC !== bE) {
-														19 == h.length ? h += coO.title : h+= ", " + coO.title;
-														if (bC) {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum += coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !1;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nh > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																	}
-																}
-														} else {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum -= coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !0;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nh > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
-																	}
-																}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
-							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
-									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.setBgmIsOn) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-								}
-								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
-							}
-						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     cloneObject: function() {
                         this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
@@ -4090,7 +4215,11 @@
                             allowedTags: ["address", "article", "aside", "footer", "header", "h1", "h2", "h3", "h4", "h5", "h6", "hgroup", "main", "nav", "section", "blockquote", "dd", "div", "dl", "dt", "figcaption", "figure", "hr", "li", "main", "ol", "p", "pre", "ul", "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn", "em", "i", "kbd", "mark", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr", "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "font", "iframe", "img"],
                             allowedAttributes: false,
                             allowedStyles: false
-                        }
+                        },
+						scoreUpdate: "",
+						exceptedObjects: [],
+						exceptedScores: [],
+						linkedObjects: []
                     }
                 },
                 components: {
@@ -4398,7 +4527,7 @@
 										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o != 2) bgmPlayer.pauseVideo();
 									}
 								} else {
 									if (p) {
@@ -4423,9 +4552,488 @@
 							}
 						}
 					},
+					updateScoresC: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						var nH = 0, nh = 0, nR = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						for (var f = 0; f < this.activated.length; f++) {
+							var af = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[af[0]]) {
+								var co = this.app.comp[af[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (coS.discountIsOn && coS.discountedFrom == e.id) {
+												var coSDiscount = parseInt(coS.value) - coS.discountScore;
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSDiscount;
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
+														}
+													}
+												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											}
+										}
+									}
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+											bC = !1, bE = !1;
+										var nH = this.activated.indexOf(eid);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										bC = this.checkRequireds(coS);											
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 1);
+										t.currentChoices -= 1;
+										bE = this.checkRequireds(coS);
+										this.activated.splice(nH, 0, eid);
+										t.currentChoices += 1;
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nh > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresC(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						} 
+					},
+					updateScoresS: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (coS.discountIsOn && coS.discountedFrom == e.id) {
+												var coSDiscount = parseInt(coS.value) - coS.discountScore;
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														var nC = 0;
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSDiscount;
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
+														}
+													}
+												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											}
+										}
+									}
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+										var nH = this.activated.indexOf(eid);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 1);
+										t.currentChoices -= 1;
+										var bC = this.checkRequireds(coS);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										this.activated.splice(nH, 0, eid);
+										t.currentChoices += 1;
+										var bE = this.checkRequireds(coS);
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											var nC = 0;
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+															
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresS(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
+					updateScoresMulC: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						var nC = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects],
+									nR = this.activated.indexOf(eid);
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+											}
+										}
+										var bC = this.checkRequireds(coS);
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										var bE = !1;
+										if (e.id == this.exceptedScores[0]) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+												aFI = this.activated[fI].split("/ON#");
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+											bE = this.checkRequireds(coS);
+											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, eid), t.currentChoices += 1);
+										} else {
+											var nH = this.activated.indexOf(eid);
+											this.activated.splice(nH, 1);
+											t.currentChoices -= 1;
+											var bE = this.checkRequireds(coS);
+											this.activated.splice(nH, 0, eid);
+											t.currentChoices += 1;
+										}
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresMulC(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
+					updateScoresMulS: function(e, t, o, i) {
+						var tmpScores = o,
+							count = i;
+						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
+						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
+						var nC = 0,
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						for (var f = 0; f < this.activated.length; f++) {
+							var aF = this.activated[f].split("/ON#");
+							if ("undefined" !== typeof this.app.comp[aF[0]]) {
+								var co = this.app.comp[aF[0]],
+									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects],
+									nR = this.activated.indexOf(eid);
+								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+									for (var b = 0; b < coO.scores.length; b++) {
+										var coS = coO.scores[b],
+											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+											bC = !1, bE = !1;
+										for (var a = 0; a < tmpScores.length; a++) {
+											for (var n = 0; n < this.app.pointTypes.length; n++) {
+												this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
+											}
+										}
+										if (e.id == this.exceptedScores[0]) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
+												aFI = this.activated[fI].split("/ON#");
+											aFI[1] > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+											bC = this.checkRequireds(coS);
+											for (var a = 0; a < tmpScores.length; a++) {
+												for (var n = 0; n < this.app.pointTypes.length; n++) {
+													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+												}
+											}
+											aFI[1] > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, eid), t.currentChoices += 1);
+											bE = this.checkRequireds(coS);
+										} else {
+											this.activated.splice(nR, 1);
+											t.currentChoices -= 1;
+											bC = this.checkRequireds(coS);
+											for (var a = 0; a < tmpScores.length; a++) {
+												for (var n = 0; n < this.app.pointTypes.length; n++) {
+													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
+												}
+											}
+											this.activated.splice(nR, 0, eid);
+											t.currentChoices += 1;
+											bE = this.checkRequireds(coS);
+										}
+										if (bC !== bE) {
+											this.exceptedScores.push(coO.id);
+											tmpScores = [];
+											19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+											if (bC) {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum += coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !1;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											} else {
+												for (var m = 0; m < this.app.pointTypes.length; m++)
+													if (this.app.pointTypes[m].id == coS.id) {
+														if (coO.isMultipleUseVariable) {
+															for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																	coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																}
+																else {
+																	this.app.pointTypes[m].startingSum -= coSValue;
+																	tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																		coS.isActiveMul[ee] = !0;
+																	}
+																}
+															}
+															if (coO.forcedActivated && nC > 0) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+															}
+														} else {
+															(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
+														}
+													}
+											}
+											count++;
+											this.updateScoresMulS(coO, coR, tmpScores, count);
+										}
+									}
+								}
+							}
+						}
+						if (i == 0) {
+							this.$set(this, "exceptedScores", []);
+							if ("Scores Updated On: " !== this.scoreUpdate) this.text = this.scoreUpdate + ".", this.snackbar = !0;
+							this.$set(this, "scoreUpdate", "");
+						}
+					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-						if (!(e.selectOnce && e.isActive)) {
+						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
 							for (var g = 0; g < e.scores.length; g++)
 								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
 									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
@@ -4435,24 +5043,25 @@
 							var i = this,
 								s = this.checkRequireds(e),
 								o = this.checkPoints(e);
-							var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id
+							var tmpScores = [];
+							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices)
 								for (var r = 0; r < t.objects.length; r++) t.objects[r].isActive && t.currentChoices + 1 > t.allowedChoices && this.activateObject(t.objects[r], t);
 							if (s && o && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 								if (this.activated.includes(eid)) {
 									for (var a = 0; a < e.scores.length; a++)
 										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
+											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
 									var ee = 0, EE = 0;
 									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (v = e.activatedRandom.length - 1; v >= 0; v--) {
+											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
 												var rndV = e.activatedRandom[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 													var co = this.app.comp[rndV[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													coO.forcedActivated = !1;
+													if (!e.isAllowDeselect) coO.forcedActivated = !1;
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -4464,25 +5073,25 @@
 															}
 															if (EE > 0) {
 																for (var n = 0; n < EE; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (EE < 0) {
 																for (var pp = 0; pp < -1 * EE; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														} else {
 															if (ee = rndV[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														}
@@ -4498,7 +5107,10 @@
 													var co = this.app.comp[pv[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													coO.forcedActivated = !1;
+													if (!e.isAllowDeselect) coO.forcedActivated = !1;
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
 													if (coO.isSelectableMultiple) {
 														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -4510,25 +5122,25 @@
 															}
 															if (EE > 0) {
 																for (var n = 0; n < EE; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (EE < 0) {
 																for (var pp = 0; pp < -1 * EE; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														} else {
 															if (ee = pv[1], ee > 0) {
 																for (var n = 0; n < ee; n++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
 																	if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															}
 														}
@@ -4560,23 +5172,21 @@
 														for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 											}
 										}
-									var h = "Scores Updated On: ",
-										nH = 0, nh = 0, nR = 0;
 									for (var f = 0; f < this.activated.length; f++) {
 										var af = this.activated[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[af[0]]) {
 											var co = this.app.comp[af[0]],
 												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);
-												this.activated.splice(nR, 1);
+											if (!this.exceptedObjects.includes(coO.id)) {
+												var nH = this.activated.indexOf(eid);
+												this.activated.splice(nH, 1);
 												t.currentChoices -= 1;
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(nR, 0, eid);
+												var bR = this.checkRequireds(coO);
+												this.activated.splice(nH, 0, eid);
 												t.currentChoices += 1;
-												if (bRO !== bRT) {
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
@@ -4590,107 +5200,21 @@
 														this.activateObject(coO, coR);
 													}
 													f--;
-												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
-																		}
-																	}
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														nH = this.activated.indexOf(eid);
-														this.activated.splice(nH, 1);
-														t.currentChoices -= 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														t.currentChoices += 1;
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !1;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !0;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
 												}
 											}
 										}
 									}
-									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
-									if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
-									if (e.dividePointtypeIsOnCheck)
-										for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+									if (e.multiplyPointtypeIsOnCheck) {
+										e.multiplyPointtypeIsOnCheck = !1;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
+									}
+									if (e.dividePointtypeIsOnCheck) {
+										e.dividePointtypeIsOnCheck = !1;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+									}
 									if (e.textfieldIsOn)
-										for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -4720,13 +5244,30 @@
 											this.$set(e, "changedBgColorCode", a);
 										}
 									}
-									if (e.setBgmIsOn) {
+									if (e.changePointBar) {
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barBackgroundColor;
+											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+											this.$set(e, "changedBarBgColor", a);
+										}
+										if (e.changeBarTextColorIsOn) {
+											var a = this.app.styling.barTextColor;
+											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+											this.$set(e, "changedBarTextColor", a);
+										}
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barIconColor;
+											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+											this.$set(e, "changedBarIconColor", a);
+										}
+									}
+									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 										if (e.bgmId) {
 											this.app.bgmIsPlaying = !1;
 											this.playBgm(e, e.bgmId, 0);
 										}
 									}
-									if (e.muteBgm) {
+									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 										if ("undefined" !== typeof bgmPlayer.unMute) {
 											bgmPlayer.unMute();
 										}
@@ -4766,7 +5307,7 @@
 											}
 										}
 									}
-									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1
+									this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
 								} else {
 									if (e.discountOther)
 										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
@@ -4791,7 +5332,8 @@
 													}
 									for (var g = 0; g < e.scores.length; g++)
 										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0);
+											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
 									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 									if (e.duplicateRow) {
@@ -4804,12 +5346,12 @@
 												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
 												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
 											this.$set(e, 'activatedRandom', []);
-											for (v = rd.length - 1; v > 0; v--) {
+											for (var v = rd.length - 1; v > 0; v--) {
 												var rnd = Math.floor(Math.random() * (v + 1));
 												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
 											}
 											e.activatedRandom = rd.slice(0, nAR);
-											for (a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
 												var rndV = e.activatedRandom[v].split("/ON#");
 												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 													var co = this.app.comp[rndV[0]],
@@ -4817,22 +5359,23 @@
 														coO = coR.objects[co.objects];
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = rndV[1], ee > 0) {
+															var ee = rndV[1];
+															if (ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	this.selectedOneLess(coO, coR);
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															}
 														} else {
 															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
 														}
 													} else {
 														if (nAR + a < rd.length) {
@@ -4852,24 +5395,28 @@
 													var co = this.app.comp[yv[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
 													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
 														if (coO.isSelectableMultiple) {
-															if (ee = yv[1], ee > 0) {
+															var ee = yv[1];
+															if (ee > 0) {
 																for (var n = 0; n < ee; n++) {
 																	this.selectedOneMore(coO, coR);
-																	coO.numMultipleTimesMinus++;
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															} else if (ee < 0) {
 																for (var pp = 0; pp < -1 * ee; pp++) {
-																	coO.numMultipleTimesMinus--;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																	this.selectedOneLess(coO, coR);
-																	coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
 																}
 															}
 														} else {
 															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
 														}
 													} else {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
@@ -4887,7 +5434,8 @@
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
 													if (coO.isSelectableMultiple) {
-														if (ee = yf[1], ee > 0) {
+														var ee = yf[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
 																coO.numMultipleTimesMinus--;
 																this.selectedOneLess(coO, coR);
@@ -4906,88 +5454,15 @@
 														for (var T = 0; T < coO.groups.length; T++) coO.isActive && this.activateObject(coO, coR)
 											}
 										}
-									var C = "Scores Updated On: ",
-										nC = 0;
-									if (this.activated.length == 0) {
-										if ("undefined" !== typeof this.app.comp[e.id]) {
-											var co = this.app.comp[e.id],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-										}
-										for (var b = 0; b < coO.scores.length; b++) {
-											var coS = coO.scores[b],
-												coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-											this.activated.push(eid);
-											t.currentChoices += 1;
-											var bC = this.checkRequireds(coS);
-											this.activated.splice(this.activated.indexOf(eid), 1);
-											t.currentChoices -= 1;
-											var bE = this.checkRequireds(coS);
-											if (bC !== bE) {
-												19 == C.length ? C += coO.title : C+= ", " + coO.title;
-												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
-																		}
-																	}
-																}
-																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-															}
-														}
-												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
-																		}
-																	}
-																}
-																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-															}
-														}
-												}
-											}
-										}
-									}
 									for (var f = 0; f < this.activated.length; f++) {
 										var aF = this.activated[f].split("/ON#");
 										if ("undefined" !== typeof this.app.comp[aF[0]]) {
 											var co = this.app.comp[aF[0]],
 												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												var bRO = this.checkRequireds(coO);
-												this.activated.push(eid);
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(this.activated.indexOf(eid), 1);
-												if (bRO !== bRT) {
+											if (!this.exceptedObjects.includes(coO.id)) {
+												if (!this.checkRequireds(coO)) {
+													this.exceptedObjects.push(coO.id);
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
@@ -5001,103 +5476,23 @@
 														this.activateObject(coO, coR);
 													}
 													f--;
-												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
-																		}
-																	}
-																19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														this.activated.push(eid);
-														t.currentChoices += 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(this.activated.indexOf(eid), 1);
-														t.currentChoices -= 1;
-														if (bC !== bE) {
-															19 == C.length ? C += coO.title : C+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																				}
-																			}
-																			if (coO.forcedActivated && nC > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																			}
-																			
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
 												}
 											}
 										}
 									}
-									if ("Scores Updated On: " !== C) this.text = C + ".", this.snackbar = !0;
-									if (e.multiplyPointtypeIsOn)
-										for (e.multiplyPointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++)
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+									if (e.multiplyPointtypeIsOn) {
+										e.multiplyPointtypeIsOnCheck = !0;
+										for (var m = 0; m < this.app.pointTypes.length; m++)
 											if (this.app.pointTypes[m].id == e.pointTypeToMultiply)
 												if (e.multiplyPointtypeIsId)
 													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
 												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-									if (e.dividePointtypeIsOn)
-										for (e.dividePointtypeIsOnCheck = !0, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
+									}
+									if (e.dividePointtypeIsOn) {
+										e.dividePointtypeIsOnCheck = !0;
+										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum /= e.divideWithThis, e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis);
+									}
 									if (e.addToAllowChoice)
 										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 											var co = this.app.compR[e.idOfAllowChoice],
@@ -5110,7 +5505,7 @@
 											}
 										}
 									if (e.textfieldIsOn) {
-										for (m = 0; m < this.app.words.length; m++) {
+										for (var m = 0; m < this.app.words.length; m++) {
 											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
 												if (e.customTextfieldIsOn) {
 													e.wordChangeSelect = prompt(e.wordPromptText);
@@ -5133,6 +5528,23 @@
 											var a = this.app.styling.backgroundColor;
 											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
 											this.$set(e, "changedBgColorCode", a);
+										}
+									}
+									if (e.changePointBar) {
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barBackgroundColor;
+											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+											this.$set(e, "changedBarBgColor", a);
+										}
+										if (e.changeBarTextColorIsOn) {
+											var a = this.app.styling.barTextColor;
+											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+											this.$set(e, "changedBarTextColor", a);
+										}
+										if (e.changeBarBgColorIsOn) {
+											var a = this.app.styling.barIconColor;
+											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+											this.$set(e, "changedBarIconColor", a);
 										}
 									}
 									if (e.scrollToRow) {
@@ -5162,14 +5574,14 @@
 											}
 										}
 									}
-									if (e.setBgmIsOn) {
+									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 										if (e.bgmId) {
 											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(e, e.bgmId, 0);
 										}
 									}
-									if (e.muteBgm) {
+									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 										if ("undefined" !== typeof bgmPlayer.mute) {
 											bgmPlayer.mute();
 										}
@@ -5197,23 +5609,21 @@
 											}
 										}
 									}
-									this.activated.push(eid), t.currentChoices += 1
 								}
-								e.isActive = !e.isActive, this.updateActivated()
+								e.isActive = !e.isActive, this.updateActivated();
 							} else if (this.activated.includes(eid)) {
 								for (var a = 0; a < e.scores.length; a++)
 									if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1);
-								var ee = 0, EE = 0;
+										for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-										for (v = e.activatedRandom.length - 1; v >= 0; v--) {
+										for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
 											var rndV = e.activatedRandom[v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[rndV[0]]) {
 												var co = this.app.comp[rndV[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												coO.forcedActivated = !1;
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -5225,25 +5635,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = rndV[1], ee > 0) {
+														var ee = rndV[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -5259,7 +5670,10 @@
 												var co = this.app.comp[pv[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												coO.forcedActivated = !1;
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
+												if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+													if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+												}
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -5271,25 +5685,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = pv[1], ee > 0) {
+														var ee = pv[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -5321,138 +5736,49 @@
 													for (var c = 0; c < coO.groups.length; c++) coO.groups[c].id == pf[0] && coO.isActive && this.activateObject(coO, coR);
 										}
 									}
-								var h = "Scores Updated On: ",
-										nH = 0, nh = 0, nR = 0;
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (coO.id !== e.id) {
-												nR = this.activated.indexOf(eid);
-												var bRO = this.checkRequireds(coO);											
-												this.activated.splice(nR, 1);
-												t.currentChoices -= 1;
-												var bRT = this.checkRequireds(coO);
-												this.activated.splice(nR, 0, eid);
-												t.currentChoices += 1;
-												if (bRO !== bRT) {
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
+								for (var f = 0; f < this.activated.length; f++) {
+									var af = this.activated[f].split("/ON#");
+									if ("undefined" !== typeof this.app.comp[af[0]]) {
+										var co = this.app.comp[af[0]],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+											coO = coR.objects[co.objects];
+										if (!this.exceptedObjects.includes(coO.id)) {
+											var nH = this.activated.indexOf(eid);
+											this.activated.splice(nH, 1);
+											t.currentChoices -= 1;
+											var bR = this.checkRequireds(coO);
+											this.activated.splice(nH, 0, eid);
+											t.currentChoices += 1;
+											if (!bR) {
+												this.exceptedObjects.push(coO.id);
+												if (coO.isMultipleUseVariable) {
+													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+														coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 													}
-													f--;
+													if (coO.forcedActivated) {
+														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+														this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+													}
 												} else {
-													if (e.discountOther) {
-														for (var b = 0; b < coO.scores.length; b++) {
-															var coS = coO.scores[b];
-															if (coS.discountIsOn && coS.discountedFrom == e.id) {
-																var coSDiscount = parseInt(coS.value) - coS.discountScore;
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSDiscount;
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																			
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
-																		}
-																	}
-																19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															}
-														}
-													}
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														nH = this.activated.indexOf(eid);
-														this.activated.splice(nH, 1);
-														t.currentChoices -= 1;
-														var bE = this.checkRequireds(coS);
-														this.activated.splice(nH, 0, eid);
-														t.currentChoices += 1;
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bC) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !1;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !0;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0);
-																		}
-																	}
-															}
-														}
-													}
+													if (coO.forcedActivated) coO.forcedActivated = !1;
+													this.activateObject(coO, coR);
 												}
+												f--;
 											}
 										}
 									}
-									if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
-								if (e.multiplyPointtypeIsOnCheck)
-										for (e.multiplyPointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
-								if (e.dividePointtypeIsOnCheck)
-									for (e.dividePointtypeIsOnCheck = !1, m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+								}
+								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+								if (e.multiplyPointtypeIsOnCheck) {
+									e.multiplyPointtypeIsOnCheck = !1;
+									for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumaAtMultiply / e.multiplyWithThis));
+								}
+								if (e.dividePointtypeIsOnCheck) {
+									e.dividePointtypeIsOnCheck = !1;
+									for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+								}
 								if (e.textfieldIsOn)
-									for (m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+									for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
 								if (e.addToAllowChoice)
 									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 										var co = this.app.compR[e.idOfAllowChoice],
@@ -5482,6 +5808,23 @@
 										this.$set(e, "changedBgColorCode", a);
 									}
 								}
+								if (e.changePointBar) {
+									if (e.changeBarBgColorIsOn) {
+										var a = this.app.styling.barBackgroundColor;
+										this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+										this.$set(e, "changedBarBgColor", a);
+									}
+									if (e.changeBarTextColorIsOn) {
+										var a = this.app.styling.barTextColor;
+										this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+										this.$set(e, "changedBarTextColor", a);
+									}
+									if (e.changeBarIconColorIsOn) {
+										var a = this.app.styling.barIconColor;
+										this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+										this.$set(e, "changedBarIconColor", a);
+									}
+								}
 								if (e.discountOther)
 									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
 										for (var a = 0; a < this.app.groups.length; a++)
@@ -5495,13 +5838,13 @@
 														if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 													}
 												}
-								if (e.setBgmIsOn) {
+								if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 									if (e.bgmId) {
 										this.app.bgmIsPlaying = !1;
 										this.playBgm(e, e.bgmId, 0)
 									}
 								}
-								if (e.muteBgm) {
+								if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 									if ("undefined" !== typeof bgmPlayer.unMute) {
 										bgmPlayer.unMute();
 									}
@@ -5530,7 +5873,9 @@
 								}
 								this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1
 							}
+							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -5538,322 +5883,256 @@
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
                         var s = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s) {
-							var eid, eidNum
-							if (e.isMultipleUseVariable) {
-								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
-								eidNum = parseInt(e.multipleUseVariable) + 1;
-							} else {
-								eid = e.id;
-							}
-							if ("undefined" !== typeof e.scores) {
-								for (var i = 0; i < e.scores.length; i++)
-									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										if (this.app.pointTypes[s].id == e.scores[i].id) {
-											if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-											if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-												this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
-											}
-										}
-									}
-							}
-							if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
-								if (e.isActive == !1) {
-									e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
-															}
-															waitScroll();
-															break
-														}
-													}
-												}
-											}
-										}
-									}
-									if (e.setBgmIsOn) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
+						if (!this.linkedObjects.includes(e.id)) {
+							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+							else
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (s) {
+								var eid, eidNum
+								if (e.isMultipleUseVariable) {
+									eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable));
+									eidNum = parseInt(e.multipleUseVariable) + 1;
+								} else {
+									eid = e.id;
 								}
-								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
-								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-									if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-										y = e.activateThisChoice.split(",");
-										var RD = y.slice(),
-											rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-											nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-										if ("undefined" === typeof e.activatedRandomMul) this.$set(e, 'activatedRandomMul', []);
-										for (var v = rd.length - 1; v > 0; v--) {
-											var rnd = Math.floor(Math.random() * (v + 1));
-											[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+								var tmpScores = [];
+								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if ("undefined" !== typeof e.scores) {
+									for (var i = 0; i < e.scores.length; i++)
+										for (var s = 0; s < this.app.pointTypes.length; s++) {
+											if (this.app.pointTypes[s].id == e.scores[i].id) {
+												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
+													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
+													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												}
+											}
 										}
-										e.activatedRandomMul.push(rd.slice(0, nAR));
-										for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
-											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
-												var co = this.app.comp[aRM[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-													if (coO.isSelectableMultiple) {
-														if (ee = aRM[1], ee > 0) {
-															for (var n = 0; n < ee; n++) {
-																this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
-															}
-														} else if (ee < 0) {
-															for (var pp = 0; pp < -1 * ee; pp++) {
-																coO.numMultipleTimesMinus--;
-																this.selectedOneLess(coO, coR);
-																coO.forcedActivated = !0;
+								}
+								if (e.selectedThisManyTimesProp > e.numMultipleTimesMinus) {
+									if (e.isActive == !1) {
+										e.isActive = !0, t.currentChoices += 1, this.activated.push(e.id + "/ON#" + e.multipleUseVariable);
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+										}
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.scrollToRow) {
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$parent.$parent.$children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$parent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR.$el.offsetParent) {
+																			coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
 															}
 														}
-													} else {
-														if (!coO.isActive) this.activateObject(coO, coR);
-														coO.forcedActivated = !0;
-													}
-												} else {
-													if (nAR + a < rd.length) {
-														e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1, rd[nAR + a]);
-														a++, v--;
-													} else {
-														e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1);
-														b--, v--;
 													}
 												}
+											}
+										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
 											}
 										}
 									} else {
-										for (y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-											var yv = y[v].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yv[0]]) {
-												var co = this.app.comp[yv[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-												if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-													if (coO.isSelectableMultiple) {
-														if (ee = yv[1], ee > 0) {
-															for (var n = 0; n < ee; n++) {
-																this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
-																coO.forcedActivated = !0;
+										this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable - 1)), (e.id + "/ON#" + e.multipleUseVariable));
+									}
+									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											var y = e.activateThisChoice.split(",");
+											var RD = y.slice(),
+												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+											if ("undefined" === typeof e.activatedRandomMul) this.$set(e, 'activatedRandomMul', []);
+											for (var v = rd.length - 1; v > 0; v--) {
+												var rnd = Math.floor(Math.random() * (v + 1));
+												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+											}
+											e.activatedRandomMul.push(rd.slice(0, nAR));
+											for (var a = 0, b = 0, v = 0; v < nAR + b; v++) {
+												var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp - 1][v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[aRM[0]]) {
+													var co = this.app.comp[aRM[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+														if (coO.isSelectableMultiple) {
+															var ee = aRM[1];
+															if (ee > 0) {
+																for (var n = 0; n < ee; n++) {
+																	this.selectedOneMore(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																}
+															} else if (ee < 0) {
+																for (var pp = 0; pp < -1 * ee; pp++) {
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																	this.selectedOneLess(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																}
 															}
-														} else if (ee < 0) {
-															for (var pp = 0; pp < -1 * ee; pp++) {
-																coO.numMultipleTimesMinus--;
-																this.selectedOneLess(coO, coR);
-																coO.forcedActivated = !0;
+														} else {
+															if (!coO.isActive) this.activateObject(coO, coR);
+															if (!e.isAllowDeselect) coO.forcedActivated = !0;
+														}
+													} else {
+														if (nAR + a < rd.length) {
+															e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1, rd[nAR + a]);
+															a++, v--;
+														} else {
+															e.activatedRandomMul[e.selectedThisManyTimesProp - 1].splice(v, 1);
+															b--, v--;
+														}
+													}
+												}
+											}
+										} else {
+											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+												var yv = y[v].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yv[0]]) {
+													var co = this.app.comp[yv[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+													}
+													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+														if (coO.isSelectableMultiple) {
+															var ee = yv[1];
+															if (ee > 0) {
+																for (var n = 0; n < ee; n++) {
+																	this.selectedOneMore(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																}
+															} else if (ee < 0) {
+																for (var pp = 0; pp < -1 * ee; pp++) {
+																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																	this.selectedOneLess(coO, coR);
+																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																}
+															}
+														} else {
+															if (e.selectedThisManyTimesProp == 1) {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 														}
 													} else {
-														if (e.selectedThisManyTimesProp == 1) {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															coO.forcedActivated = !0;
-														}
-													}
-												} else {
-													if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-													coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
-												}
-											}
-										}
-									}
-								}
-								var C = "Scores Updated On: ",
-									nC = 0;
-								for (var f = 0; f < this.activated.length; f++) {
-									var aF = this.activated[f].split("/ON#");
-									if ("undefined" !== typeof this.app.comp[aF[0]]) {
-										var co = this.app.comp[aF[0]],
-											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-											coO = coR.objects[co.objects],
-											nR = this.activated.indexOf(eid);
-										if (coO.id !== e.id) {
-											var bRO = this.checkRequireds(coO),
-												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-												aFI = this.activated[fI].split("/ON#");
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-											var bRT = this.checkRequireds(coO);
-											parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-											if (bRO !== bRT) {
-												if (coO.isMultipleUseVariable) {
-													for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-														coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-													}
-													if (coO.forcedActivated) {
 														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-													}
-												} else {
-													if (coO.forcedActivated) coO.forcedActivated = !1;
-													this.activateObject(coO, coR);
-												}
-												f--;
-											} else {
-												for (var b = 0; b < coO.scores.length; b++) {
-													var coS = coO.scores[b],
-														coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-													var bC = this.checkRequireds(coS),
-														fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id),
-														aFI = this.activated[fI].split("/ON#");
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-													var bE = this.checkRequireds(coS);
-													parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-													if (bC !== bE) {
-														19 == C.length ? C += coO.title : C+= ", " + coO.title;
-														if (bE) {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum += coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !1;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nC > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																	}
-																}
-														} else {
-															for (var m = 0; m < this.app.pointTypes.length; m++)
-																if (this.app.pointTypes[m].id == coS.id) {
-																	if (coO.isMultipleUseVariable) {
-																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																			if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																				coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																			}
-																			else {
-																				this.app.pointTypes[m].startingSum -= coSValue;
-																				for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																					coS.isActiveMul[ee] = !0;
-																				}
-																			}
-																		}
-																		if (coO.forcedActivated && nC > 0) {
-																			if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																			this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																		}
-																	} else {
-																		(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
-																	}
-																}
-														}
+														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
 											}
 										}
 									}
+									for (var f = 0; f < this.activated.length; f++) {
+										var aF = this.activated[f].split("/ON#");
+										if ("undefined" !== typeof this.app.comp[aF[0]]) {
+											var co = this.app.comp[aF[0]],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+												coO = coR.objects[co.objects],
+												nR = this.activated.indexOf(eid);
+											if (!this.exceptedObjects.includes(coO.id)) {
+												var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
+												if (fI !== -1) var aFI = this.activated[fI].split("/ON#");
+												fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.push(eid), t.currentChoices += 1);
+												var bR = this.checkRequireds(coO);
+												fI !== -1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1);
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
+													if (coO.isMultipleUseVariable) {
+														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+														}
+														if (coO.forcedActivated) {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															coO.forcedActivated = !1;
+														}
+													} else {
+														if (coO.forcedActivated) coO.forcedActivated = !1;
+														this.activateObject(coO, coR);
+													}
+													f--;
+												}
+											}
+										}
+									}
+									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
 								}
-								if ("Scores Updated On: " !== C) this.text = C + ".", this.snackbar = !0;
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
 						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     selectedOneLess: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
                         var s = !0;
-                        if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-                        else
-                            for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
-                        if (s) {
-							var eid, eidNum;
-							if (e.isMultipleUseVariable) {
-								eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
-								eidNum = parseInt(e.multipleUseVariable) + 1;
-							} else {
-								eid = e.id;
-							}
-							if ("undefined" !== typeof e.scores) {
-								for (var i = 0; i < e.scores.length; i++)
-									for (var s = 0; s < this.app.pointTypes.length; s++) {
-										if (this.app.pointTypes[s].id == e.scores[i].id) {
-											if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-												this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-												e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+						if (!this.linkedObjects.includes(e.id)) {
+							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+							else
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (s) {
+								var eid, eidNum;
+								if (e.isMultipleUseVariable) {
+									eid = e.id + "/ON#" + (parseInt(e.multipleUseVariable) + 1);
+									eidNum = parseInt(e.multipleUseVariable) + 1;
+								} else {
+									eid = e.id;
+								}
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if ("undefined" !== typeof e.scores) {
+									for (var i = 0; i < e.scores.length; i++)
+										for (var s = 0; s < this.app.pointTypes.length; s++) {
+											if (this.app.pointTypes[s].id == e.scores[i].id) {
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
+													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
+													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												}
 											}
 										}
-									}
-							}
-							if (e.isActive == !0) {
-								if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-									e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
-									if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.setBgmIsOn) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
 								}
-								else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
 								if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 									if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
-										for (v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
+										for (var v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
 											var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
 											if ("undefined" !== typeof this.app.comp[aRM[0]]) {
 												var co = this.app.comp[aRM[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												coO.forcedActivated = !1;
+												if (!e.isAllowDeselect) coO.forcedActivated = !1;
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -5865,25 +6144,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
-																this.selectedOneMore(coO, coR);
-																if (!e.isNotDeactivate) coO.numMultipleTimesMinus++;
+																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = aRM[1], ee > 0) {
+														var ee = aRM[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -5894,13 +6174,16 @@
 										}
 										e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 									} else {
-										for (p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+										for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
 											var pv = p[v].split("/ON#");
 											if ("undefined" !== this.app.comp[pv[0]]) {
 												var co = this.app.comp[pv[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												if (e.selectedThisManyTimesProp == 0) coO.forcedActivated = !1;
+												if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+													if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+												}
+												if (e.selectedThisManyTimesProp == 0 && !e.isAllowDeselect) coO.forcedActivated = !1;
 												if (coO.isSelectableMultiple) {
 													if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
 														for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
@@ -5912,25 +6195,26 @@
 														}
 														if (EE > 0) {
 															for (var n = 0; n < EE; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (EE < 0) {
 															for (var pp = 0; pp < -1 * EE; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coR.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coR.numMultipleTimesMinus++;
 															}
 														}
 													} else {
-														if (ee = pv[1], ee > 0) {
+														var ee = pv[1];
+														if (ee > 0) {
 															for (var n = 0; n < ee; n++) {
-																coO.numMultipleTimesMinus--;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																if (!e.isNotDeactivate) this.selectedOneLess(coO, coR);
 															}
 														} else if (ee < 0) {
 															for (var pp = 0; pp < -1 * ee; pp++) {
 																if (!e.isNotDeactivate) this.selectedOneMore(coO, coR);
-																coO.numMultipleTimesMinus++;
+																if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
 															}
 														}
 													}
@@ -5943,23 +6227,21 @@
 										}
 									}
 								}
-								var h = "Scores Updated On: ",
-									nh = 0;
 								for (var f = 0; f < this.activated.length; f++) {
 									var aF = this.activated[f].split("/ON#");
 									if ("undefined" !== typeof this.app.comp[aF[0]]) {
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
-										if (coO.id !== e.id) {
-											var bRO = this.checkRequireds(coO),
-												fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
+										if (!this.exceptedObjects.includes(coO.id)) {
+											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-												var bRT = this.checkRequireds(coO);
-												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-												if (bRO !== bRT) {
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) - 1) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
+												var bR = this.checkRequireds(coO);
+												parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
+												if (!bR) {
+													this.exceptedObjects.push(coO.id);
 													if (coO.isMultipleUseVariable) {
 														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
@@ -5967,79 +6249,47 @@
 														if (coO.forcedActivated) {
 															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															coO.forcedActivated = !1;
 														}
 													} else {
 														if (coO.forcedActivated) coO.forcedActivated = !1;
 														this.activateObject(coO, coR);
 													}
 													f--;
-												} else {
-													for (var b = 0; b < coO.scores.length; b++) {
-														var coS = coO.scores[b],
-															coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
-														var bC = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1]) + 1) : (this.activated.splice(fI, 0, aFI[0] + "/ON#" + aFI[1]), t.currentChoices += 1);
-														var bE = this.checkRequireds(coS);
-														parseInt(aFI[1]) > 1 ? this.activated[fI] = aFI[0] + "/ON#" + (parseInt(aFI[1])) : (this.activated.splice(fI, 1), t.currentChoices -= 1);
-														if (bC !== bE) {
-															19 == h.length ? h += coO.title : h+= ", " + coO.title;
-															if (bE) {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum += coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !1;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue);
-																		}
-																	}
-															} else {
-																for (var m = 0; m < this.app.pointTypes.length; m++)
-																	if (this.app.pointTypes[m].id == coS.id) {
-																		if (coO.isMultipleUseVariable) {
-																			for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																				if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																					coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																				}
-																				else {
-																					this.app.pointTypes[m].startingSum -= coSValue;
-																					for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																						coS.isActiveMul[ee] = !0;
-																					}
-																				}
-																			}
-																			if (coO.forcedActivated && nh > 0) {
-																				if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-																				this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																			}
-																		} else {
-																			(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue);
-																		}
-																	}
-															}
-														}
-													}
 												}
 											}
 										}
 									}
 								}
-								if ("Scores Updated On: " !== h) this.text = h + ".", this.snackbar = !0;
+								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.isActive == !0) {
+									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
+									}
+									else this.$set(this.activated, this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), (e.id + "/ON#" + e.multipleUseVariable));
+								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
 						}
+						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
@@ -6733,7 +6983,7 @@
 										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o != 2) bgmPlayer.pauseVideo();
 									}
 								} else {
 									if (p) {
@@ -6938,11 +7188,33 @@
 											this.$set(coO, "changedBgColorCode", a);
 										}
 									}
-									if (coO.setBgmIsOn) {
+									if (coO.changePointBar) {
+										if (coO.changeBarBgColorIsOn) {
+											var a = this.app.styling.barBackgroundColor;
+											this.$set(this.app.styling, "barBackgroundColor", coO.changedBarBgColor);
+											this.$set(coO, "changedBarBgColor", a);
+										}
+										if (coO.changeBarTextColorIsOn) {
+											var a = this.app.styling.barTextColor;
+											this.$set(this.app.styling, "barTextColor", coO.changedBarTextColor);
+											this.$set(coO, "changedBarTextColor", a);
+										}
+										if (coO.changeBarBgColorIsOn) {
+											var a = this.app.styling.barIconColor;
+											this.$set(this.app.styling, "barIconColor", coO.changedBarIconColor);
+											this.$set(coO, "changedBarIconColor", a);
+										}
+									}
+									if (coO.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 										if (coO.bgmId) {
 											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
 											this.app.bgmIsPlaying = !0;
 											this.playBgm(coO, coO.bgmId, 0);
+										}
+									}
+									if (coO.muteBgm && "undefined" !== typeof bgmPlayer) {
+										if ("undefined" !== typeof bgmPlayer.mute) {
+											bgmPlayer.mute();
 										}
 									}
 									if (coO.isImageUpload)
@@ -6961,19 +7233,51 @@
 										coO = coR.objects[co.objects];
 									for (var h = 0; h < coO.scores.length; h++) {
 										var coS = coO.scores[h];
-										for (var j = 0; j < this.app.pointTypes.length; j++) {
-											if (this.app.pointTypes[j].id == coS.id) {
-												if (coO.isMultipleUseVariable) {
-													for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
-														if ("undefined" === typeof coS.isActiveMul) this.$set(coS, "isActiveMul", []);
-														if (ee > 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
-														} else if (ee < 0) {
-															this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
+										if (coS.requireds.length <= 0) {
+											for (var j = 0; j < this.app.pointTypes.length; j++) {
+												if (this.app.pointTypes[j].id == coS.id) {
+													if (coO.isMultipleUseVariable) {
+														for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
+															if ("undefined" === typeof coS.isActiveMul) this.$set(coS, "isActiveMul", []);
+															if (ee > 0) {
+																this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
+															} else if (ee < 0) {
+																this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
+															}
 														}
+													} else {
+														this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0);
 													}
-												} else {
-													this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActive = !0);
+												}
+											}
+										}
+									}
+								}
+							}
+							for (var n = 0; n < e.length; n++) {
+								var en = e[n].split("/ON#");
+								en.length > 1 ? en = en : en = en[0].split("/WORD#");
+								if ("undefined" !== typeof this.app.comp[en[0]]) {
+									var co = this.app.comp[en[0]],
+										coR = this.app.rows[co.rows],
+										coO = coR.objects[co.objects];
+									for (var h = 0; h < coO.scores.length; h++) {
+										var coS = coO.scores[h];
+										if (coS.requireds.length > 0) {
+											for (var j = 0; j < this.app.pointTypes.length; j++) {
+												if (this.app.pointTypes[j].id == coS.id) {
+													if (coO.isMultipleUseVariable) {
+														for (var ee = en[1], k = 0; k < Math.abs(ee); k++) {
+															if ("undefined" === typeof coS.isActiveMul) this.$set(coS, "isActiveMul", []);
+															if (ee > 0) {
+																this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
+															} else if (ee < 0) {
+																this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore : parseInt(coS.value))) && (coS.isActiveMul[k] = !0);
+															}
+														}
+													} else {
+														this.checkRequireds(coS) && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0);
+													}
 												}
 											}
 										}
@@ -7101,7 +7405,10 @@
                         return this.$store.state.app
                     },
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + this.app.styling.backgroundColor + ';'
+						var bgColor = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgColor : this.app.styling.backgroundColor,
+							bgImage = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgImage : this.app.styling.backgroundImage,
+							bgRepeat = this.app.styling.useBackpackDesign ? this.app.styling.isBackpackBgRepeat : this.app.styling.isBackgroundRepeat;
+                        return bgImage ? 'background-image: url("' + bgImage + '");background-color: ' + bgColor + (bgRepeat ? ";background-repeat: repeat;" : ";background-size: cover;") : 'background-color: ' + bgColor + ';'
                     }
                 },
                 methods: {
@@ -7114,14 +7421,17 @@
                     print: function() {
 						var e = this;
 						console.log(e.$refs.printThis);
-						if (e.app.styling.backgroundImage) {
-							e.$refs.printThis.style.backgroundImage = 'url("' + e.app.styling.backgroundImage + '")';
-							e.styling.isBackgroundRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
+						var bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
+							bgImage = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgImage : e.app.styling.backgroundImage,
+							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat;
+						if (bgImage) {
+							e.$refs.printThis.style.backgroundImage = 'url("' + bgImage + '")';
+							bgRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
 							e.$refs.printThis.style.backgroundPosition = 'center';
 							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: e.app.styling.backgroundImage ? undefined : e.app.styling.backgroundColor,
+							backgroundColor: bgImage ? undefined : bgColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
@@ -7133,7 +7443,7 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
-							if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
+							if (bgImage) e.$refs.printThis.removeAttribute('style');
 						}).catch(function(error) {
 							console.log('Fail to generate image, Segmenting and recreating the image...', error);
 							var maxLength = 6e6;
@@ -7179,8 +7489,8 @@
 									tempDiv.innerHTML = part;
 									e.$refs.printThis.appendChild(tempDiv);
 									htmlToImage.toBlob(tempDiv, {
-										backgroundImage: e.app.styling.backgroundImage,
-										backgroundColor: e.app.styling.backgroundColor,
+										backgroundImage: bgImage,
+										backgroundColor: bgColor,
 										type: "image/webp",
 										quality: 0.9
 									}).then(function(t) {
@@ -7193,11 +7503,12 @@
 										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 										s.dispatchEvent(i);
 										e.$refs.printThis.removeChild(tempDiv);
-										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
+										if (bgImage) e.$refs.printThis.removeAttribute('style');
 									}).catch(function(error) {
 										console.log('Fail to generate image', error);
 										e.$refs.printThis.removeChild(tempDiv);
-										if (e.app.styling.backgroundImage) e.$refs.printThis.removeAttribute('style');
+										if (bgImage) e.$refs.printThis.removeAttribute('style');
+										alert('Failed to download the image.\nPlease try again with a different browser.');
 									});
 								});
 							}
@@ -7425,7 +7736,7 @@
 						
 					};
 					e.addEventListener('progress', function(e) {
-						indicator.innerHTML = " Loading " + `${(e.loaded / 1e6).toFixed(1)} MB`;
+						indicator.innerHTML = " Loading<br>" + `${(e.loaded / 1e6).toFixed(1)} MB`;
 					});
 					e.addEventListener('loadend', function() {
 						setTimeout(function() {
@@ -8137,13 +8448,30 @@
 										e.app.rows[o].objects[t].changedBgColorCode = a;
 									}
 								}
+								if (e.app.rows[o].objects[t].isActive && e.app.rows[o].objects[t].changePointBar) {
+									if (e.app.rows[o].objects[t].changeBarBgColorIsOn) {
+										var a = e.app.styling.barBackgroundColor;
+										e.app.styling.barBackgroundColor = e.app.rows[o].objects[t].changedBarBgColor;
+										e.app.rows[o].objects[t].changedBarBgColor = a;
+									}
+									if (e.app.rows[o].objects[t].changeBarTextColorIsOn) {
+										var a = e.app.styling.barTextColor;
+										e.app.styling.barTextColor = e.app.rows[o].objects[t].changedBarTextColor;
+										e.app.rows[o].objects[t].changedBarTextColor = a;
+									}
+									if (e.app.rows[o].objects[t].changeBarIconColorIsOn) {
+										var a = e.app.styling.barIconColor;
+										e.app.styling.barIconColor = e.app.rows[o].objects[t].changedBarIconColor;
+										e.app.rows[o].objects[t].changedBarIconColor = a;
+									}
+								}
 								e.app.rows[o].objects[t].isActive = 0, e.app.rows[o].objects[t].forcedActivated = !1;
 							}
 							e.app.rows[o].currentChoices = 0;
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
-						if (e.app.bgmIsPlaying) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+						if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
                     },
                     addNewPointType: function(t, e) {
                         t.app.pointTypes.push({

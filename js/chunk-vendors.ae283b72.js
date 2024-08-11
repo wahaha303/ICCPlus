@@ -35038,7 +35038,7 @@
                     },
                     onKeyPress: function(t) {
                         var e = this;
-                        if (!this.multiple && this.isInteractive && !this.disableLookup) {
+                        if (this.isInteractive && !this.disableLookup) {
                             var n = 1e3,
                                 r = performance.now();
                             r - this.keyboardLookupLastTime > n && (this.keyboardLookupPrefix = ""), this.keyboardLookupPrefix += t.key.toLowerCase(), this.keyboardLookupLastTime = r;
@@ -35046,7 +35046,7 @@
                                     var n = (e.getText(t) || "").toString();
                                     return n.toLowerCase().startsWith(e.keyboardLookupPrefix)
                                 })),
-                                o = this.allItems[i]; - 1 !== i && (this.lastItem = Math.max(this.lastItem, i + 5), this.setValue(this.returnObject ? o : this.getValue(o)), this.$nextTick((function() {
+                                o = this.allItems[i]; - 1 !== i && (this.lastItem = Math.max(this.lastItem, i + 5), this.$nextTick((function() {
                                 return e.$refs.menu.getTiles()
                             })), setTimeout((function() {
                                 return e.setMenuIndex(i)

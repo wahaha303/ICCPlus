@@ -50,7 +50,17 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added a feature to allow users to use the 'Remove the contents of the choices'.
  - Added a feature to mute background music when a choice is selected.
  - Added a feature to hide the requirement when it is met.
- 
+ - Added a feature to set the row background in the row private settings.
+ - Added a feature to import/export design settings.
+ - Added a feature to hide score value.
+ - Added a feature to toggle 'Show Score/Hide Value' for all choices.
+ - Added a feature to manage backpack design.
+ - Added a feature to change the design of point bar when a choice is selected.
+ - Added a feature to set filter designs for unselected choices.
+ - Added an option in 'Force Active' to make other choices deselectable.
+ - Added a feature to change focus in the dropdown menu based on key inputs.
+ - Added a feature to put the font name directly for using custom fonts.
+
 
 ## Fixed
 
@@ -100,4 +110,7 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where background changes were not reset when 'Clean Activated' was used.
  - Fixed an issue where 'Id Needed To Show' in 'Points' did not work properly.
  - Fixed an issue where choices set to 1 per row were being forced to 2 per row in mobile environments.
+ - Fixed an issue where changing the Group/Design group's ID did not apply to choices.
+ - Fixed an issue where problems occurred when conditions were not met due to score changes.
+ - Fixed an issue where the score was sometimes not updated correctly after using the Import Choices.
  
