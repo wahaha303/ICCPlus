@@ -17349,7 +17349,8 @@
                         },
 						scoreUpdate: "",
 						exceptedObjects: [],
-						exceptedScores: []
+						exceptedScores: [],
+						linkedObjects: []
                     }
                 },
                 components: {
@@ -27721,7 +27722,8 @@
                         currentComponent: "",
 						scoreUpdate: "",
 						exceptedObjects: [],
-						exceptedScores: []
+						exceptedScores: [],
+						linkedObjects: []
                     }
                 },
                 components: {
@@ -30180,7 +30182,8 @@
                         },
 						scoreUpdate: "",
 						exceptedObjects: [],
-						exceptedScores: []
+						exceptedScores: [],
+						linkedObjects: []
                     }
                 },
                 components: {
