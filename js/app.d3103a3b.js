@@ -13401,7 +13401,7 @@
 								var co = this.app.comp[aF[0]],
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects];
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									if (e.discountOther) {
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
@@ -13527,7 +13527,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -13637,7 +13637,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
@@ -17866,7 +17866,7 @@
 								var co = this.app.comp[aF[0]],
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects];
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									if (e.discountOther) {
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
@@ -17992,7 +17992,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -18102,7 +18102,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
@@ -28287,7 +28287,7 @@
 								var co = this.app.comp[aF[0]],
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects];
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									if (e.discountOther) {
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
@@ -28413,7 +28413,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -28523,7 +28523,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
@@ -30691,7 +30691,7 @@
 								var co = this.app.comp[aF[0]],
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects];
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									if (e.discountOther) {
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
@@ -30817,7 +30817,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -30927,7 +30927,7 @@
 									coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
-								if (!this.exceptedScores.includes(coO.id) || this.exceptedScores.indexOf(coO.id) == 0) {
+								if (!this.exceptedScores.includes(coO.id)) {
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
