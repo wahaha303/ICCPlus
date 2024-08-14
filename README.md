@@ -1,10 +1,10 @@
 # Interactive CYOA Creator Plus
 
-Stable Version:
+Stable Version:<br>
 Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
 
-Early Access Version: 
-<i>Stability is not guaranteed. It is strongly recommended to back-up the project file before use.</i>
+Early Access Version:<br>
+<i>Stability is not guaranteed. It is strongly recommended to back-up the project file before use.</i><br>
 Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_EarlyAccess/)
 
 ## New Features
