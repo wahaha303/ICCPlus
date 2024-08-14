@@ -1,8 +1,10 @@
 # Interactive CYOA Creator Plus
 
-Stable Version: Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
+Stable Version:
+Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
 
-Early Access Version: Stability is not guaranteed. It is strongly recommended to back-up the project file before use.
+Early Access Version: 
+<i>Stability is not guaranteed. It is strongly recommended to back-up the project file before use.</i>
 Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_EarlyAccess/)
 
 ## New Features
@@ -122,6 +124,5 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where 'Will make another choice unselected' feature was not working correctly.
  - Fixed an issue where 'Multiply/Divide' features were not working correctly.
  - Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly.
- - Fixed an issue where 'Will make another choice unselected' did not work with groups.
  - Fixed an issue where choices activated by 'Forces another choice active' were de-selectable.
  
