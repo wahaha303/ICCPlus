@@ -1,6 +1,9 @@
 # Interactive CYOA Creator Plus
 
-Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
+Stable Version: Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
+
+Early Access Version: Stability is not guaranteed. It is strongly recommended to back-up the project file before use.
+Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_EarlyAccess/)
 
 ## New Features
 
@@ -60,6 +63,9 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Added an option in 'Force Active' to make other choices deselectable.
  - Added a feature to change focus in the dropdown menu based on key inputs.
  - Added a feature to put the font name directly for using custom fonts.
+ - Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated.
+ - Added a feature to use the modulo operator in 'point comparison' requirements.
+ - Added a feature to import a project directly from a 'CYOA.zip' file.
 
 
 ## Fixed
@@ -113,4 +119,9 @@ Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)
  - Fixed an issue where changing the Group/Design group's ID did not apply to choices.
  - Fixed an issue where problems occurred when conditions were not met due to score changes.
  - Fixed an issue where the score was sometimes not updated correctly after using the Import Choices.
+ - Fixed an issue where 'Will make another choice unselected' feature was not working correctly.
+ - Fixed an issue where 'Multiply/Divide' features were not working correctly.
+ - Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly.
+ - Fixed an issue where 'Will make another choice unselected' did not work with groups.
+ - Fixed an issue where choices activated by 'Forces another choice active' were de-selectable.
  
