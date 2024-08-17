@@ -68,6 +68,8 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated.
  - Added a feature to use the modulo operator in 'point comparison' requirements.
  - Added a feature to import a project directly from a 'CYOA.zip' file.
+ - Added a feature to merge duplicate images when saving a project as a zip file.
+ - Added a feature to increase or decrease the 'Number of requirements' for 'X of these'.
  - Added an option in Global Settings to enable or disable automatic image conversion.
 
 
