@@ -3941,7 +3941,7 @@
                     }
                 }, [o("v-icon", {
                     on: {
-                        click: function(o) {                            
+                        click: function(o) {
                             t.orRequired.push({req: ""});
                         }
                     }
@@ -5797,7 +5797,7 @@
                     }
                 }, [o("v-icon", {
                     on: {
-                        click: function(t) {                            
+                        click: function(t) {
                             e.required.orRequired.push({req: ""});
                         }
                     }
@@ -6425,7 +6425,7 @@
                     }
                 }, [o("v-icon", {
                     on: {
-                        click: function(o) {                            
+                        click: function(o) {
                             t.orRequired.push({req: ""});
                         }
                     }
@@ -7263,7 +7263,7 @@
                     }
                 }, [o("v-icon", {
                     on: {
-                        click: function(o) {                            
+                        click: function(o) {
                             t.orRequired.push({req: ""});
                         }
                     }
