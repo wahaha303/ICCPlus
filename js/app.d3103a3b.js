@@ -223,12 +223,12 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Download Latest Viewer : "), o("a", {
+                }, [e._v(" Download pre-release Viewer : "), o("a", {
                     attrs: {
-                        href: "https://github.com/wahaha303/ICCPlus/releases/latest",
+                        href: "https://github.com/wahaha303/ICCPlus/releases/tag/v.1.8.1-pre-release",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.7.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.8.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 11.08.2024")]), o("v-col", {
+                }, [e._v("Update: 14.08.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to set the row background in the row private settings. "), o("br"), e._v(" Added a feature to import/export design settings. "), o("br"), e._v(" Added a feature to hide score value. "), o("br"), e._v(" Added a feature to toggle 'Show Score/Hide Value' for all choices. "), o("br"), e._v(" Added a feature to manage backpack design. "), o("br"), e._v(" Added a feature to change the design of point bar when a choice is selected. "), o("br"), e._v(" Added a feature to set filter designs for unselected choices. "), o("br"), e._v(" Added an option in 'Force Active' to make other choices deselectable. "), o("br"), e._v(" Added a feature to change focus in the dropdown menu based on key inputs. "), o("br"), e._v(" Added a feature to put the font name directly for using custom fonts. ")]), o("v-col", {
+                }, [e._v(" Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated. "), o("br"), e._v(" Added a feature to use the modulo operator in 'point comparison' requirements. "), o("br"), e._v(" Added a feature to directly load a project from the 'CYOA.zip' file. "), o("br"), e._v(" Added a feature to copy/paste requirement. "), o("br"), e._v(" Added a feature to merge duplicate images when saving a project as a zip file. "), o("br"), e._v(" Added an option in Global Settings to enable or disable automatic image conversion. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where changing the Group/Design group's ID did not apply to choices. "), o("br"), e._v(" Fixed an issue where problems occurred when conditions were not met due to score changes. "), o("br"), e._v(" Fixed an issue where the score was sometimes not updated correctly after using the Import Choices. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where 'Will make another choice unselected' feature was not working correctly. "), o("br"), e._v(" Fixed an issue where 'Multiply/Divide' features were not working correctly. "), o("br"), e._v(" Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly. "), o("br"), e._v(" Fixed an issue where choices activated by 'Forces another choice active' were de-selectable. "), o("br"), e._v(" Fixed an issue where image split downloads do not work correctly in the Firefox browser. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -537,6 +537,7 @@
 					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
+							e.$set(e.app, "printThis", !0);
                             e.currentComponent = "appBackpackPreview"
                         }
                     }
@@ -3101,7 +3102,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -3109,10 +3115,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -3120,7 +3131,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -3247,7 +3258,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -3255,10 +3271,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -3266,7 +3287,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e()], 1), o("v-col", {
+                })] : e._e()], 1), o("v-col", {
                     staticClass: "pa-1"
                 }, [!e.row.objectTitleRemoved ? o("h3", {
                     style: e.objectTitle,
@@ -3453,7 +3474,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -3461,10 +3487,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -3472,7 +3503,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e()], 1), e._l(e.object.addons, (function(t) {
+                })] : e._e()], 1), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pt-0",
@@ -3553,7 +3584,29 @@
                             e.currentComponent = "appRequirement"
                         }
                     }
-                }, [e._v("mdi-key-plus")])], 1), o("v-spacer"), o("v-btn", {
+                }, [e._v("mdi-key-plus")])], 1), o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-btn", e._g({
+                                attrs: {
+                                    icon: ""
+                                }
+                            }, i), [o("v-icon", {
+                                on: {
+                                    click: function(t) {
+                                        e.$set(e.app, "tmpRequired", e.addon.required);
+                                    }
+                                }
+                            }, [e._v("mdi-clipboard-outline")])], 1)]
+                        }
+                    }], null, !1, 971814284)
+                }, [o("span", [e._v("Copy Requirement")])]), o("v-spacer"), o("v-btn", {
                     attrs: {
                         icon: ""
                     }
@@ -3868,11 +3921,35 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-row", {
+					staticClass: "ma-0 pa-0"
+				}, [o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {
+							if (t.orRequired.length > 1) {
+								t.orRequired.pop();
+							}
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {                            
+                            t.orRequired.push({req: ""});
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1)], 1), o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
-						label: "N",
+						label: "X",
 						filled: "",
 						min: 1,
 						max: t.orRequired.length
@@ -4162,7 +4239,24 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Create Requirement")]), o("v-card-text", [o("v-container", [o("v-row", [o("p", [e._v("Requirements are conditions that will decide if the player can select the choice or not, these use the ID of choices and variables, and the design of the filter placed on non-selectable choices can be changed in filter design.")]), o("v-card-text", {
+                }, [e._v("Create Requirement")]), o("v-card-text", [o("v-container", [o("v-row", [o("p", [e._v("Requirements are conditions that will decide if the player can select the choice or not, these use the ID of choices and variables, and the design of the filter placed on non-selectable choices can be changed in filter design.")]), o("v-col", {
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [o("v-btn", {
+                    staticClass: "btn",
+                    staticStyle: {
+                        color: e.$vuetify.theme.isDark ? "white" : "black"
+                    },
+                    attrs: {
+                        type: "button"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.pasteRequired(e.row, e.row.requireds)
+                        }
+                    }
+                }, [e._v("Paste the copied requirement")])], 1), o("v-card-text", {
                     staticClass: "mb-n5"
                 }, [e._v("Choice Requirements")]), o("v-col", {
                     attrs: {
@@ -4338,7 +4432,7 @@
                     }
                 }, [e._v("-= Less or equal")])], 1)], 1)], 1), o("v-card-text", {
                     staticClass: "mb-n5"
-                }, [e._v("'One of these' Requirements")]), o("v-col", [o("v-btn", {
+                }, [e._v("'X of these' Requirements")]), o("v-col", [o("v-btn", {
                     staticClass: "btn",
                     staticStyle: {
                         color: e.$vuetify.theme.isDark ? "white" : "black"
@@ -4364,7 +4458,7 @@
                             return e.addNewRequired(e.row.requireds, "or", !1, "")
                         }
                     }
-                }, [e._v("'One of these is not selected' Requirement")])], 1), o("v-col", {
+                }, [e._v("'X of these is not selected' Requirement")])], 1), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -4497,8 +4591,24 @@
 							selNum: this.numberOfSelection,
 							selFromOperators: "1",
 							more: []
-                        })
-                    }
+                        });
+                    },
+					pasteRequired: function(e, t) {
+						if ("undefined" !== typeof this.app.tmpRequired) {
+							if (this.app.tmpRequired.length > 1) {
+								for (var a = 0; a < this.app.tmpRequired.length; a++) {
+									t.push(this.app.tmpRequired[a]);
+								}
+							} else {
+								if (e.id == "") {
+									const o = Object.assign({}, this.app.tmpRequired, {requireds: []});
+									t.push(o);
+								} else {
+									t.push(this.app.tmpRequired);
+								}
+							}
+						}
+					}
                 }
             },
             f = m,
@@ -4823,6 +4933,9 @@
                     rows: function() {
                         return this.$store.state.app.rows
                     },
+					app: function() {
+                        return this.$store.state.app
+                    },
                     aspectHeight: {
                         get: function() {
                             for (var e = 0; e < this.rows.length; e++) {
@@ -4939,7 +5052,9 @@
                         this.img = e.compressed.blob, this.original = e.original, this.compressed = e.compressed
                     },
                     onImageChange: function(e) {
-                        this.row.image = e, this.autoCompressFlag = true, this.onChange(), this.rowWasChanged(), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.row.image = e;
+						this.app.compressImageAuto ? this.autoCompressFlag = true : this.autoCompressFlag = false;
+						this.onChange(), this.rowWasChanged(), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageRemoval: function() {
                         this.row.image = "", this.rowWasChanged()
@@ -5239,7 +5354,29 @@
                             e.currentComponent = "appRequirement"
                         }
                     }
-                }, [e._v("mdi-key-plus")])], 1), o("v-spacer"), o("v-btn", {
+                }, [e._v("mdi-key-plus")])], 1), o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-btn", e._g({
+                                attrs: {
+                                    icon: ""
+                                }
+                            }, i), [o("v-icon", {
+                                on: {
+                                    click: function(t) {
+                                        e.$set(e.app, "tmpRequired", e.required);
+                                    }
+                                }
+                            }, [e._v("mdi-clipboard-outline")])], 1)]
+                        }
+                    }], null, !1, 971814284)
+                }, [o("span", [e._v("Copy Requirement")])]), o("v-spacer"), o("v-btn", {
                     attrs: {
                         icon: ""
                     }
@@ -5640,7 +5777,31 @@
                         },
                         expression: "required.afterText"
                     }
-                }), o("v-text-field", {
+                }), o("v-row", {
+					staticClass: "ma-0 pa-0"
+				}, [o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(t) {
+							if (e.required.orRequired.length > 1) {
+								e.required.orRequired.pop();
+							}
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(t) {                            
+                            e.required.orRequired.push({req: ""});
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1)], 1), o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
@@ -6244,11 +6405,35 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-row", {
+					staticClass: "ma-0 pa-0"
+				}, [o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {
+							if (t.orRequired.length > 1) {
+								t.orRequired.pop();
+							}
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {                            
+                            t.orRequired.push({req: ""});
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1)], 1), o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
-						label: "N",
+						label: "X",
 						filled: "",
 						min: 1,
 						max: t.orRequired.length
@@ -6596,7 +6781,8 @@
             VRow: S["a"],
             VSelect: K["a"],
 			VSpacer: O["a"],
-            VTextField: R["a"]
+            VTextField: R["a"],
+            VTooltip: Q["a"]
         });
         var ce = function() {
                 var e = this,
@@ -6631,7 +6817,29 @@
                             e.currentComponent = "appRequirement"
                         }
                     }
-                }, [e._v("mdi-key-plus")])], 1), o("v-spacer"), o("v-btn", {
+                }, [e._v("mdi-key-plus")])], 1), o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "1000"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-btn", e._g({
+                                attrs: {
+                                    icon: ""
+                                }
+                            }, i), [o("v-icon", {
+                                on: {
+                                    click: function(t) {
+                                        e.$set(e.app, "tmpRequired", e.score.requireds);
+                                    }
+                                }
+                            }, [e._v("mdi-clipboard-outline")])], 1)]
+                        }
+                    }], null, !1, 971814284)
+                }, [o("span", [e._v("Copy Requirement")])]), o("v-spacer"), o("v-btn", {
                     attrs: {
                         icon: ""
                     }
@@ -7035,11 +7243,35 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-text-field", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-row", {
+					staticClass: "ma-0 pa-0"
+				}, [o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {
+							if (t.orRequired.length > 1) {
+								t.orRequired.pop();
+							}
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    on: {
+                        click: function(o) {                            
+                            t.orRequired.push({req: ""});
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1)], 1), o("v-text-field", {
 					attrs: {
 						"hide-details": "",
 						type: "number",
-						label: "N",
+						label: "X",
 						filled: "",
 						min: 1,
 						max: t.orRequired.length
@@ -7489,13 +7721,14 @@
         x()(he, {
             VBtn: C["a"],
             VCard: T["a"],
+			VCheckbox: ae["a"],
             VCol: I["a"],
             VIcon: J["a"],
             VRow: S["a"],
             VSelect: K["a"],
 			VSpacer: O["a"],
             VTextField: R["a"],
-			VCheckbox: ae["a"]
+			VTooltip: Q["a"]
         });
         var be = function() {
                 var e = this,
@@ -10708,16 +10941,16 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     onChange: function(e) {
-                        console.log(e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeBackground: function(e) {
-                        console.log(e), this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeObject: function(e) {
-                        console.log(e), this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeRow: function(e) {
-                        console.log(e), this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageRemoval: function() {
                         this.styling.backgroundImage = ""
@@ -11466,10 +11699,10 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
 					onChange: function(e) {
-						console.log(e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageChangeObject: function(e) {
-						console.log(e), this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalObject: function() {
 						this.styling.objectBorderImage = ""
@@ -12305,7 +12538,7 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
 					onBorderImageChangeRow: function(e) {
-						console.log(e), this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalRow: function() {
 						this.styling.rowBorderImage = ""
@@ -14284,7 +14517,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -19031,7 +19264,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -20488,7 +20721,8 @@
                         currentComponent: "",
 						snackbar: !1,
 						text: "",
-						imgMap: {}
+						imgMap: {},
+						dImage: {}
                     }
                 },
                 components: {
@@ -20866,20 +21100,30 @@
 							} else if (ext == "zip") {
 								var s = new co.a;
 								s.loadAsync(t.result).then(function(i) {
+									var jFile, p = [];
 									Object.keys(i.files).forEach(function(f) {
 										var file = i.files[f];
-										if (!f.endsWith(".json") && /\.[^\.]+$/.test(f)) {
-											file.async("blob").then(function(b) {
-												var r = new FileReader();
-												r.onload = function() {
-													var mimeType = e.getMimeFromBlob(f)
-													e.imgMap[f] = r.result.replace("data:application/octet-stream", "data:" + mimeType);
-												}, r.readAsDataURL(b);
-											});
-										}
 										if (f.endsWith(".json")) {
-											file.async("string").then(function(x) {
-												e.$store.commit("loadApp", JSON.parse(x));
+											jFile = file;
+										} else if (/\.[^\.]+$/.test(f)) {
+											p.push(
+												file.async("blob").then(function(b) {
+													return new Promise(function(resolve) {
+														var r = new FileReader();
+														r.onload = function() {
+															var mimeType = e.getMimeFromBlob(f);
+															e.imgMap[f] = r.result.replace("data:application/octet-stream", "data:" + mimeType);
+															resolve();
+														}, r.readAsDataURL(b);
+													});
+												})
+											);	
+										}
+									});
+									Promise.all(p).then(function() {
+										if (jFile) {
+											jFile.async("string").then(function(f) {
+												e.$store.commit("loadApp", JSON.parse(f));
 												e.initalizeApp(e);
 												e.replaceImages(e);
 												e.$set(e, "imgMap", {});
@@ -20942,6 +21186,16 @@
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     },
+					addImage: function(e, t, o, i) {
+						if (this.dImage.has(o)) {
+							return this.dImage.get(o);
+						}
+						else {
+							this.dImage.set(o, e);
+							i.file(e, t, { binary: !0 });
+							return e;
+						}
+					},
                     saveFile: function(e) {
 						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
@@ -20959,6 +21213,12 @@
                         s.download = e + ".json", s.href = window.URL.createObjectURL(o), s.dataset.downloadurl = ["text/json", s.download, s.href].join(":"), i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null), s.dispatchEvent(i)
                     },
                     saveFileFinished: function(e) {
+						this.$set(this.state, "saveWait", !0);
+						setTimeout(() => {
+							this.processImages(e);
+						}, 1000);
+                    },
+					processImages: function(e) {
 						var exceptedList = ['comp', 'compR', 'compG', 'compODG', 'compRDG'],
 							sv = JSON.parse(JSON.stringify(this.app, (key, value) => {
 								if (exceptedList.includes(key)) {
@@ -20967,110 +21227,51 @@
 								return value;
 							})),
 							ts = this;
-						this.$set(this.state, "saveWait", !0);
+						this.dImage = new Map();
 						var t = new co.a, o = JSON.parse(JSON.stringify(sv)), i = "", m = "", ext = "";
-						this.app.styling.backgroundImage && this.app.styling.backgroundImage.length > 30 && (m = this.getMime(this.app.styling.backgroundImage), ext = this.getExt(m), i = P()(this.app.styling.backgroundImage.split(",")[1], m), t.file("images/Bg." + ext, i, {
-							binary: !0
-						}), o.styling.backgroundImage = "images/Bg." + ext);
-						this.app.styling.rowBackgroundImage && this.app.styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.styling.rowBackgroundImage.split(",")[1], m), t.file("images/RBg." + ext, i, {
-							binary: !0
-						}), o.styling.rowBackgroundImage = "images/RBg." + ext);
-						this.app.styling.objectBackgroundImage && this.app.styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.styling.objectBackgroundImage.split(",")[1], m), t.file("images/OBg." + ext, i, {
-							binary: !0
-						}), o.styling.objectBackgroundImage = "images/OBg." + ext);
-						this.app.styling.rowBorderImage && this.app.styling.rowBorderImage.length > 30 && (m = this.getMime(this.app.styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.styling.rowBorderImage.split(",")[1], m), t.file("images/RB." + ext, i, {
-							binary: !0
-						}), o.styling.rowBorderImage = "images/RB." + ext);
-						this.app.styling.objectBorderImage && this.app.styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.styling.objectBorderImage.split(",")[1], m), t.file("images/OB." + ext, i, {
-							binary: !0
-						}), o.styling.objectBorderImage = "images/OB." + ext);
+						this.app.styling.backgroundImage && this.isDataURL(this.app.styling.backgroundImage) && (m = this.getMime(this.app.styling.backgroundImage), ext = this.getExt(m), i = P()(this.app.styling.backgroundImage.split(",")[1], m), o.styling.backgroundImage = this.addImage("images/Bg." + ext, i, o.styling.backgroundImage, t));
+						this.app.styling.rowBackgroundImage && this.isDataURL(this.app.styling.rowBackgroundImage) && (m = this.getMime(this.app.styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.styling.rowBackgroundImage.split(",")[1], m), o.styling.rowBackgroundImage = this.addImage("images/RBg." + ext, i, o.styling.rowBackgroundImage, t));
+						this.app.styling.objectBackgroundImage && this.isDataURL(this.app.styling.objectBackgroundImage) && (m = this.getMime(this.app.styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.styling.objectBackgroundImage.split(",")[1], m), o.styling.objectBackgroundImage = this.addImage("images/OBg." + ext, i, o.styling.objectBackgroundImage, t));
+						this.app.styling.rowBorderImage && this.isDataURL(this.app.styling.rowBorderImage) && (m = this.getMime(this.app.styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.styling.rowBorderImage.split(",")[1], m), o.styling.rowBorderImage = this.addImage("images/RB." + ext, i, o.styling.rowBorderImage, t));
+						this.app.styling.objectBorderImage && this.isDataURL(this.app.styling.objectBorderImage) && (m = this.getMime(this.app.styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.styling.objectBorderImage.split(",")[1], m), o.styling.objectBorderImage = this.addImage("images/OB." + ext, i, o.styling.objectBorderImage, t));
                         for (var s = 0; s < this.app.rows.length; s++) {
-							this.app.rows[s].styling && this.app.rows[s].styling.rowBackgroundImage && this.app.rows[s].styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.rows[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.rowBackgroundImage.split(",")[1], m), t.file("images/R" + (s + 1) + "_RBg." + ext, i, {
-                                binary: !0
-                            }), o.rows[s].styling.rowBackgroundImage = "images/R" + (s + 1) + "_RBg." + ext);
-							this.app.rows[s].styling && this.app.rows[s].styling.objectBackgroundImage && this.app.rows[s].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.rows[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.objectBackgroundImage.split(",")[1], m), t.file("images/R" + (s + 1) + "_OBg." + ext, i, {
-                                binary: !0
-                            }), o.rows[s].styling.objectBackgroundImage = "images/R" + (s + 1) + "_OBg." + ext);
-							this.app.rows[s].styling && this.app.rows[s].styling.rowBorderImage && this.app.rows[s].styling.rowBorderImage.length > 30 && (m = this.getMime(this.app.rows[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.rowBorderImage.split(",")[1], m), t.file("images/R" + (s + 1) + "_RB." + ext, i, {
-                                binary: !0
-                            }), o.rows[s].styling.rowBorderImage = "images/R" + (s + 1) + "_RB." + ext);
-							this.app.rows[s].styling && this.app.rows[s].styling.objectBorderImage && this.app.rows[s].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.rows[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.objectBorderImage.split(",")[1], m), t.file("images/R" + (s + 1) + "_OB." + ext, i, {
-                                binary: !0
-                            }), o.rows[s].styling.objectBorderImage = "images/R" + (s + 1) + "_OB." + ext);
-                            this.app.rows[s].image.length > 30 && (m = this.getMime(this.app.rows[s].image), ext = this.getExt(m), i = P()(this.app.rows[s].image.split(",")[1], m), t.file("images/R" + (s + 1) + "." + ext, i, {
-                                binary: !0
-                            }), o.rows[s].image = "images/R" + (s + 1) + "." + ext);
+							this.app.rows[s].styling && this.app.rows[s].styling.rowBackgroundImage && this.isDataURL(this.app.rows[s].styling.rowBackgroundImage) && (m = this.getMime(this.app.rows[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.rowBackgroundImage.split(",")[1], m), o.rows[s].styling.rowBackgroundImage = this.addImage("images/R" + (s + 1) + "_RBg." + ext, i, o.rows[s].styling.rowBackgroundImage, t));
+							this.app.rows[s].styling && this.app.rows[s].styling.objectBackgroundImage && this.isDataURL(this.app.rows[s].styling.objectBackgroundImage) && (m = this.getMime(this.app.rows[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.objectBackgroundImage.split(",")[1], m), o.rows[s].styling.objectBackgroundImage = this.addImage("images/R" + (s + 1) + "_OBg." + ext, i, o.rows[s].styling.objectBackgroundImage, t));
+							this.app.rows[s].styling && this.app.rows[s].styling.rowBorderImage && this.isDataURL(this.app.rows[s].styling.rowBorderImage) && (m = this.getMime(this.app.rows[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.rowBorderImage.split(",")[1], m), o.rows[s].styling.rowBorderImage = this.addImage("images/R" + (s + 1) + "_RB." + ext, i, o.rows[s].styling.rowBorderImage, t));
+							this.app.rows[s].styling && this.app.rows[s].styling.objectBorderImage && this.isDataURL(this.app.rows[s].styling.objectBorderImage) && (m = this.getMime(this.app.rows[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].styling.objectBorderImage.split(",")[1], m), o.rows[s].styling.objectBorderImage = this.addImage("images/R" + (s + 1) + "_OB." + ext, i, o.rows[s].styling.objectBorderImage, t));
+                            this.isDataURL(this.app.rows[s].image) && (m = this.getMime(this.app.rows[s].image), ext = this.getExt(m), i = P()(this.app.rows[s].image.split(",")[1], m), o.rows[s].image = this.addImage("images/R" + (s + 1) + "." + ext, i, o.rows[s].image, t));
                             for (var r = 0; r < this.app.rows[s].objects.length; r++) {
-								this.app.rows[s].objects[r].styling && this.app.rows[s].objects[r].styling.objectBackgroundImage && this.app.rows[s].objects[r].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].styling.objectBackgroundImage.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "_OBg." + ext, i, {
-                                    binary: !0
-                                }), o.rows[s].objects[r].styling.objectBackgroundImage = "images/R" + (s + 1) + "C" + (r + 1) + "_OBg." + ext);
-								this.app.rows[s].objects[r].styling && this.app.rows[s].objects[r].styling.objectBorderImage && this.app.rows[s].objects[r].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].styling.objectBorderImage.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "_OB." + ext, i, {
-                                    binary: !0
-                                }), o.rows[s].objects[r].styling.objectBorderImage = "images/R" + (s + 1) + "C" + (r + 1) + "_OB." + ext);
-                                this.app.rows[s].objects[r].image.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].image.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "." + ext, i, {
-                                    binary: !0
-                                }), o.rows[s].objects[r].image = "images/R" + (s + 1) + "C" + (r + 1) + "." + ext);
-								if ("undefined" !== typeof this.app.rows[s].objects[r].bgImage) this.app.rows[s].objects[r].bgImage.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].bgImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].bgImage.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "_Change." + ext, i, {
-                                    binary: !0
-                                }), o.rows[s].objects[r].bgImage = "images/R" + (s + 1) + "C" + (r + 1) + "_Change." + ext);
-                                for (var a = 0; a < this.app.rows[s].objects[r].addons.length; a++) this.app.rows[s].objects[r].addons[a].image.length > 30 && (m = this.getMime(this.app.rows[s].objects[r].addons[a].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].addons[a].image.split(",")[1], m), t.file("images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext, i, {
-                                    binary: !0
-                                }), o.rows[s].objects[r].addons[a].image = "images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
+								this.app.rows[s].objects[r].styling && this.app.rows[s].objects[r].styling.objectBackgroundImage && this.isDataURL(this.app.rows[s].objects[r].styling.objectBackgroundImage) && (m = this.getMime(this.app.rows[s].objects[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].styling.objectBackgroundImage.split(",")[1], m), o.rows[s].objects[r].styling.objectBackgroundImage = this.addImage("images/R" + (s + 1) + "C" + (r + 1) + "_OBg." + ext, i, o.rows[s].objects[r].styling.objectBackgroundImage, t));
+								this.app.rows[s].objects[r].styling && this.app.rows[s].objects[r].styling.objectBorderImage && this.isDataURL(this.app.rows[s].objects[r].styling.objectBorderImage) && (m = this.getMime(this.app.rows[s].objects[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].styling.objectBorderImage.split(",")[1], m), o.rows[s].objects[r].styling.objectBorderImage = this.addImage("images/R" + (s + 1) + "C" + (r + 1) + "_OB." + ext, i, o.rows[s].objects[r].styling.objectBorderImage, t));
+                                this.isDataURL(this.app.rows[s].objects[r].image) && (m = this.getMime(this.app.rows[s].objects[r].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].image.split(",")[1], m), o.rows[s].objects[r].image = this.addImage("images/R" + (s + 1) + "C" + (r + 1) + "." + ext, i, o.rows[s].objects[r].image, t));
+								if ("undefined" !== typeof this.app.rows[s].objects[r].bgImage) this.isDataURL(this.app.rows[s].objects[r].bgImage) && (m = this.getMime(this.app.rows[s].objects[r].bgImage), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].bgImage.split(",")[1], m), o.rows[s].objects[r].bgImage = this.addImage("images/R" + (s + 1) + "C" + (r + 1) + "_Change." + ext, i, o.rows[s].objects[r].bgImage, t));
+                                for (var a = 0; a < this.app.rows[s].objects[r].addons.length; a++) this.isDataURL(this.app.rows[s].objects[r].addons[a].image) && (m = this.getMime(this.app.rows[s].objects[r].addons[a].image), ext = this.getExt(m), i = P()(this.app.rows[s].objects[r].addons[a].image.split(",")[1], m), o.rows[s].objects[r].addons[a].image = this.addImage("images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext, i, o.rows[s].objects[r].addons[a].image, t))
                             }
                         }
 						for (var s = 0; s < this.app.backpack.length; s++) {
-							this.app.backpack[s].image.length > 30 && (m = this.getMime(this.app.backpack[s].image), ext = this.getExt(m), i = P()(this.app.backpack[s].image.split(",")[1], m), t.file("images/BR" + (s + 1) + "." + ext, i, {
-                                binary: !0
-                            }), o.backpack[s].image = "images/BR" + (s + 1) + "." + ext);
-							this.app.backpack[s].styling && this.app.backpack[s].styling.rowBackgroundImage && this.app.backpack[s].styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.backpack[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.rowBackgroundImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "_RBg." + ext, i, {
-                                binary: !0
-                            }), o.backpack[s].styling.rowBackgroundImage = "images/BR" + (s + 1) + "_RBg." + ext);
-							this.app.backpack[s].styling && this.app.backpack[s].styling.objectBackgroundImage && this.app.backpack[s].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.backpack[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.objectBackgroundImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "_OBg." + ext, i, {
-                                binary: !0
-                            }), o.backpack[s].styling.objectBackgroundImage = "images/BR" + (s + 1) + "_OBg." + ext);
-							this.app.backpack[s].styling && this.app.backpack[s].styling.rowBorderImage && this.app.backpack[s].styling.rowBorderImage.length > 30 && (m = this.getMime(this.app.backpack[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.rowBorderImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "_RB." + ext, i, {
-                                binary: !0
-                            }), o.backpack[s].styling.rowBorderImage = "images/BR" + (s + 1) + "_RB." + ext);
-							this.app.backpack[s].styling && this.app.backpack[s].styling.objectBorderImage && this.app.backpack[s].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.backpack[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.objectBorderImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "_OB." + ext, i, {
-                                binary: !0
-                            }), o.backpack[s].styling.objectBorderImage = "images/BR" + (s + 1) + "_OB." + ext);
+							this.isDataURL(this.app.backpack[s].image) && (m = this.getMime(this.app.backpack[s].image), ext = this.getExt(m), i = P()(this.app.backpack[s].image.split(",")[1], m), o.backpack[s].image = this.addImage("images/BR" + (s + 1) + "." + ext, i, o.backpack[s].image, t));
+							this.app.backpack[s].styling && this.app.backpack[s].styling.rowBackgroundImage && this.isDataURL(this.app.backpack[s].styling.rowBackgroundImage) && (m = this.getMime(this.app.backpack[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.rowBackgroundImage.split(",")[1], m), o.backpack[s].styling.rowBackgroundImage = this.addImage("images/BR" + (s + 1) + "_RBg." + ext, i, o.backpack[s].styling.rowBackgroundImage, t));
+							this.app.backpack[s].styling && this.app.backpack[s].styling.objectBackgroundImage && this.isDataURL(this.app.backpack[s].styling.objectBackgroundImage) && (m = this.getMime(this.app.backpack[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.objectBackgroundImage.split(",")[1], m), o.backpack[s].styling.objectBackgroundImage = this.addImage("images/BR" + (s + 1) + "_OBg." + ext, i, o.backpack[s].styling.objectBackgroundImage, t));
+							this.app.backpack[s].styling && this.app.backpack[s].styling.rowBorderImage && this.isDataURL(this.app.backpack[s].styling.rowBorderImage) && (m = this.getMime(this.app.backpack[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.rowBorderImage.split(",")[1], m), o.backpack[s].styling.rowBorderImage = this.addImage("images/BR" + (s + 1) + "_RB." + ext, i, o.backpack[s].styling.rowBorderImage, t));
+							this.app.backpack[s].styling && this.app.backpack[s].styling.objectBorderImage && this.isDataURL(this.app.backpack[s].styling.objectBorderImage) && (m = this.getMime(this.app.backpack[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].styling.objectBorderImage.split(",")[1], m), o.backpack[s].styling.objectBorderImage = this.addImage("images/BR" + (s + 1) + "_OB." + ext, i, o.backpack[s].styling.objectBorderImage, t));
 							for (var r = 0; r < this.app.backpack[s].objects.length; r++) {
-								this.app.backpack[s].objects[r].styling && this.app.backpack[s].objects[r].styling.objectBackgroundImage && this.app.backpack[s].objects[r].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.backpack[s].objects[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].styling.objectBackgroundImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "C" + (r + 1) + "_OBg." + ext, i, {
-                                    binary: !0
-                                }), o.backpack[s].objects[r].styling.objectBackgroundImage = "images/BR" + (s + 1) + "C" + (r + 1) + "_OBg." + ext);
-								this.app.backpack[s].objects[r].styling && this.app.backpack[s].objects[r].styling.objectBorderImage && this.app.backpack[s].objects[r].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.backpack[s].objects[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].styling.objectBorderImage.split(",")[1], m), t.file("images/BR" + (s + 1) + "C" + (r + 1) + "_OB." + ext, i, {
-                                    binary: !0
-                                }), o.backpack[s].objects[r].styling.objectBorderImage = "images/BR" + (s + 1) + "C" + (r + 1) + "_OB." + ext);
-                                this.app.backpack[s].objects[r].image.length > 30 && (m = this.getMime(this.app.backpack[s].objects[r].image), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].image.split(",")[1], m), t.file("images/BR" + (s + 1) + "C" + (r + 1) + "." + ext, i, {
-                                    binary: !0
-                                }), o.backpack[s].objects[r].image = "images/BR" + (s + 1) + "C" + (r + 1) + "." + ext);
-                                for (var a = 0; a < this.app.backpack[s].objects[r].addons.length; a++) this.app.backpack[s].objects[r].addons[a].image.length > 30 && (m = this.getMime(this.app.backpack[s].objects[r].addons[a].image), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].addons[a].image.split(",")[1], "image/" + ext), t.file("images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext, i, {
-                                    binary: !0
-                                }), o.backpack[s].objects[r].addons[a].image = "images/BR" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
+								this.app.backpack[s].objects[r].styling && this.app.backpack[s].objects[r].styling.objectBackgroundImage && this.isDataURL(this.app.backpack[s].objects[r].styling.objectBackgroundImage) && (m = this.getMime(this.app.backpack[s].objects[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].styling.objectBackgroundImage.split(",")[1], m), o.backpack[s].objects[r].styling.objectBackgroundImage = this.addImage("images/BR" + (s + 1) + "C" + (r + 1) + "_OBg." + ext, i, o.backpack[s].objects[r].styling.objectBackgroundImage, t));
+								this.app.backpack[s].objects[r].styling && this.app.backpack[s].objects[r].styling.objectBorderImage && this.isDataURL(this.app.backpack[s].objects[r].styling.objectBorderImage) && (m = this.getMime(this.app.backpack[s].objects[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].styling.objectBorderImage.split(",")[1], m), o.backpack[s].objects[r].styling.objectBorderImage = this.addImage("images/BR" + (s + 1) + "C" + (r + 1) + "_OB." + ext, i, o.backpack[s].objects[r].styling.objectBorderImage, t));
+                                this.isDataURL(this.app.backpack[s].objects[r].image) && (m = this.getMime(this.app.backpack[s].objects[r].image), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].image.split(",")[1], m), o.backpack[s].objects[r].image = this.addImage("images/BR" + (s + 1) + "C" + (r + 1) + "." + ext, i, o.backpack[s].objects[r].image, t));
+                                for (var a = 0; a < this.app.backpack[s].objects[r].addons.length; a++) this.isDataURL(this.app.backpack[s].objects[r].addons[a].image) && (m = this.getMime(this.app.backpack[s].objects[r].addons[a].image), ext = this.getExt(m), i = P()(this.app.backpack[s].objects[r].addons[a].image.split(",")[1], "image/" + ext), o.backpack[s].objects[r].addons[a].image = this.addImage("images/BR" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext, i, t))
 							}
 						}
 						for (var s = 0; s < this.app.rowDesignGroups.length; s++) {
-							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBackgroundImage && this.app.rowDesignGroups[s].styling.rowBackgroundImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBackgroundImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_RBg." + ext, i, {
-                                binary: !0
-                            }), o.rowDesignGroups[s].styling.rowBackgroundImage = "images/RD" + (s + 1) + "_RBg." + ext);
-							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBackgroundImage && this.app.rowDesignGroups[s].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBackgroundImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_OBg." + ext, i, {
-                                binary: !0
-                            }), o.rowDesignGroups[s].styling.objectBackgroundImage = "images/RD" + (s + 1) + "_OBg." + ext);
-							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBorderImage && this.app.rowDesignGroups[s].styling.rowBorderImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBorderImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_RB." + ext, i, {
-                                binary: !0
-                            }), o.rowDesignGroups[s].styling.rowBorderImage = "images/RD" + (s + 1) + "_RB." + ext);
-							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBorderImage && this.app.rowDesignGroups[s].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBorderImage.split(",")[1], m), t.file("images/RD" + (s + 1) + "_OB." + ext, i, {
-                                binary: !0
-                            }), o.rowDesignGroups[s].styling.objectBorderImage = "images/RD" + (s + 1) + "_OB." + ext);
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBackgroundImage && this.isDataURL(this.app.rowDesignGroups[s].styling.rowBackgroundImage) && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBackgroundImage.split(",")[1], m), o.rowDesignGroups[s].styling.rowBackgroundImage = this.addImage("images/RD" + (s + 1) + "_RBg." + ext, i, o.rowDesignGroups[s].styling.rowBackgroundImage, t));
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBackgroundImage && this.isDataURL(this.app.rowDesignGroups[s].styling.objectBackgroundImage) && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBackgroundImage.split(",")[1], m), o.rowDesignGroups[s].styling.objectBackgroundImage = this.addImage("images/RD" + (s + 1) + "_OBg." + ext, i, o.rowDesignGroups[s].styling.objectBackgroundImage, t));
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.rowBorderImage && this.isDataURL(this.app.rowDesignGroups[s].styling.rowBorderImage) && (m = this.getMime(this.app.rowDesignGroups[s].styling.rowBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.rowBorderImage.split(",")[1], m), o.rowDesignGroups[s].styling.rowBorderImage = this.addImage("images/RD" + (s + 1) + "_RB." + ext, i, o.rowDesignGroups[s].styling.rowBorderImage, t));
+							this.app.rowDesignGroups[s].styling && this.app.rowDesignGroups[s].styling.objectBorderImage && this.isDataURL(this.app.rowDesignGroups[s].styling.objectBorderImage) && (m = this.getMime(this.app.rowDesignGroups[s].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.rowDesignGroups[s].styling.objectBorderImage.split(",")[1], m), o.rowDesignGroups[s].styling.objectBorderImage = this.addImage("images/RD" + (s + 1) + "_OB." + ext, i, o.rowDesignGroups[s].styling.objectBorderImage, t));
                         }
 						for (var r = 0; r < this.app.objectDesignGroups.length; r++) {
-							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBackgroundImage && this.app.objectDesignGroups[r].styling.objectBackgroundImage.length > 30 && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBackgroundImage.split(",")[1], m), t.file("images/OD" + (r + 1) + "_OBg." + ext, i, {
-								binary: !0
-							}), o.objectDesignGroups[r].styling.objectBackgroundImage = "images/OD" + (r + 1) + "_OBg." + ext);
-							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBorderImage && this.app.objectDesignGroups[r].styling.objectBorderImage.length > 30 && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBorderImage.split(",")[1], m), t.file("images/OD" + "_OB." + ext, i, {
-								binary: !0
-							}), o.objectDesignGroups[r].styling.objectBorderImage = "images/OD" + (r + 1) + "_OB." + ext);
+							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBackgroundImage && this.isDataURL(this.app.objectDesignGroups[r].styling.objectBackgroundImage) && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBackgroundImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBackgroundImage.split(",")[1], m), o.objectDesignGroups[r].styling.objectBackgroundImage = this.addImage("images/OD" + (r + 1) + "_OBg." + ext, i, o.objectDesignGroups[r].styling.objectBackgroundImage, t));
+							this.app.objectDesignGroups[r].styling && this.app.objectDesignGroups[r].styling.objectBorderImage && this.isDataURL(this.app.objectDesignGroups[r].styling.objectBorderImage) && (m = this.getMime(this.app.objectDesignGroups[r].styling.objectBorderImage), ext = this.getExt(m), i = P()(this.app.objectDesignGroups[r].styling.objectBorderImage.split(",")[1], m), o.objectDesignGroups[r].styling.objectBorderImage = this.addImage("images/OD" + (r + 1) + "_OB." + ext, i, o.objectDesignGroups[r].styling.objectBorderImage, t));
 						}
+						this.dImage = {};
                         var n = JSON.stringify(o),
                             l = new Blob([n], {
                                 type: "text/plain"
@@ -21082,7 +21283,7 @@
                         })).catch((error => {
 							console.log(error), ts.$set(ts.state, "saveWait", !1);
 						}));
-                    },
+					},
 					getMime: function(e) {
 						return e.match(/^data:(image\/[^;]+);/)[1];
 					},
@@ -21103,6 +21304,9 @@
 							'ico': 'image/x-icon'
 						};
 						return (mt[ext] ? mt[ext] : "image/" + ext);
+					},
+					isDataURL: function(e) {
+						return /^data:(image\/[a-zA-Z]*);base64,/.test(e);
 					}
                 }
             },
@@ -26478,6 +26682,18 @@
 						},
 						expression: "vuetify.theme.isDark"
 					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Compress Image Automatically. (May cause freezing)"
+					},
+					model: {
+						value: e.app.compressImageAuto,
+						callback: function(o) {
+							e.$set(e.app, "compressImageAuto", o)
+						},
+						expression: "app.compressImageAuto"
+					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
                     attrs: {
@@ -27264,7 +27480,7 @@
                 var e = this,
                     t = e.$createElement,
                     o = e._self._c || t;
-                return o("v-dialog", {
+                return o("v-row", [o("v-dialog", {
                     attrs: {
                         "max-width": e.styling.backPackWidth + "px"
                     },
@@ -27329,7 +27545,23 @@
                     on: {
                         click: e.cleanCurrentComponent
                     }
-                }, [e._v("Close")])], 1)], 1)], 1)
+                }, [e._v("Close")])], 1)], 1)], 1), e.snackbar ? o("span", [o("v-snackbar", {
+                    attrs: {
+                        top: "",
+                        timeout: 2e3
+                    },
+                    model: {
+                        value: e.snackbar,
+                        callback: function(t) {
+                            e.snackbar = t
+                        },
+                        expression: "snackbar"
+                    }
+                }, [o("div", {
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [e._v(e._s(e.text))])])], 1) : e._e()], 1)
             },
             ns = [],
             ls = function() {
@@ -27647,7 +27879,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -27655,10 +27892,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -27666,7 +27908,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -27775,7 +28017,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -27783,10 +28030,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -27794,7 +28046,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e()], 1), o("v-col", {
+                })] : e._e()], 1), o("v-col", {
                     staticClass: "pa-1"
                 }, [o("h3", {
                     style: e.objectTitle,
@@ -27981,7 +28233,12 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", e._g({
+                            return [e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", e._g({
+                                attrs: {
+									src: e.object.image
+								},
+                                style: "" != e.object.image ? e.objectImage : ""
+                            }, i)) : o("img", e._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -27989,10 +28246,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != e.object.image ? e.objectImage : ""
-                            }, i)) : e._e()]
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 69075810)
-                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.object.imageSourceTooltip))])]) : e.object.image.length > 0 && !e.row.objectImageRemoved ? [e.app.printThis ? o("img", {
+                    attrs: {
+						src: e.object.image
+					},
+                    style: "" != e.object.image ? e.objectImage : ""
+                }) : o("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -28000,7 +28262,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                }) : e._e()], 1), e._l(e.object.addons, (function(t) {
+                })] : e._e()], 1), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pt-0",
@@ -29945,7 +30207,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -32633,7 +32895,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -33831,7 +34093,11 @@
                 },
                 data: function() {
                     return {
-                        dialog: !0
+                        dialog: !0,
+						imgMap: {},
+						bUrls: [],
+						snackbar: !1,
+						text: ""
                     }
                 },
                 components: {
@@ -33847,6 +34113,12 @@
                     app: function() {
                         return this.$store.state.app
                     },
+					groups: function() {
+                        return this.$store.state.app.groups
+                    },
+					rows: function() {
+                        return this.$store.state.app.rows
+                    },
                     background: function() {
 						var bgColor = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgColor : this.app.styling.backgroundColor,
 							bgImage = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgImage : this.app.styling.backgroundImage,
@@ -33856,29 +34128,384 @@
                 },
                 methods: {
                     cleanCurrentComponent: function() {
+						this.$set(this.app, "printThis", !1);
                         this.$emit("cleanCurrentComponent", "")
                     },
 					checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
                     },
+					resultArray: function(e, t) {
+                        var o = [];
+                        if ("standard" == this.type) {
+                            for (var i = 0; i < this.allChapters.length; i++)
+                                for (var s = 0; s < this.allChapters[i].pages.length; s++) this.findAllActiveObjects(this.allChapters[i].pages[s], this.allChapters[i]);
+                            o = this.activeObjectList
+                        } else if ("" == t.resultGroupId || null == t.resultGroupId)
+                            for (var a = 0; a < e.length; a++)
+                                for (var b = 0; b < e[a].objects.length; b++) {
+									if (!e[a].objects[b].isNotResult) e[a].objects[b].isActive ? o.push(e[a].objects[b]) : e[a].objects[b].isImageUpload ? e[a].objects[b].image.length > 5 && o.push(e[a].objects[b]) : e[a].objects[b].isSelectableMultiple && "undefined" !== typeof e[a].objects[b].multipleUseVariable && e[a].objects[b].multipleUseVariable > 0 && o.push(e[a].objects[b]);
+								}
+						else
+                            for (a = 0; a < this.rows.length; a++)
+                                for (b = 0; b < this.rows[a].objects.length; b++) {
+									if (!this.rows[a].objects[b].isNotResult) {
+										if (this.rows[a].objects[b].isActive)
+											for (var r = 0; r < this.groups.length; r++)
+												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[r].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
+												else
+													for (var c = 0; c < this.rows[a].objects[b].groups.length; c++) this.rows[a].objects[b].groups[c].id == t.resultGroupId && this.groups[r].id == t.resultGroupId && o.push(this.rows[a].objects[b]);
+										else if (this.rows[a].objects[b].isImageUpload && this.rows[a].objects[b].image.length > 5)
+											for (var n = 0; n < this.groups.length; n++)
+												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[n].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
+												else
+													for (var l = 0; l < this.rows[a].objects[b].groups.length; l++) this.rows[a].objects[b].groups[l].id == t.resultGroupId && this.groups[n].id == t.resultGroupId && o.push(this.rows[a].objects[b]);
+										else if (this.rows[a].objects[b].isSelectableMultiple && ("undefined" !== typeof this.rows[a].objects[b].multipleUseVariable && this.rows[a].objects[b].multipleUseVariable > 0))
+											for (var c = 0; c < this.groups.length; c++)
+												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[c].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
+												else
+													for (var d = 0; d < this.rows[a].objects[b].groups.length; d++) this.rows[a].objects[b].groups[d].id == t.resultGroupId && this.groups[c].id == t.resultGroupId && o.push(this.rows[a].objects[b]);
+									}
+								}
+                        return o
+                    },
+					findAllActiveObjects: function(e, t) {
+                        for (var o = 0; o < e.app.rows.length; o++)
+                            for (var i = 0; i < e.app.rows[o].objects.length; i++) e.app.rows[o].objects[i].isActive && this.activeObjectList.push(e.app.rows[o].objects[i]);
+                        if (e && e.children && e.children.length > 0)
+                            for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
+                    },
+					compressImage: function(e) {
+						return new Promise((resolve) => {
+							const img = new Image();
+							img.onload = () => {
+								const canvas = document.createElement('canvas');
+								const ctx = canvas.getContext('2d');
+								canvas.width = img.width;
+								canvas.height = img.height;
+								ctx.drawImage(img, 0, 0);
+								const l = canvas.toDataURL("image/webp", 0.5);
+								b = P()(l.split(",")[1], "image/webp");
+								if (b) {
+									resolve(b);
+								} else {
+									resolve(e);
+								}
+							};
+							img.onerror = () => {
+								resolve(e);
+							};
+							img.src = e;
+						});
+					},
+					replaceImages: function() {
+						var m = "", i = "", k = "", x = "", o = [];
+						var bgImage = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgImage : this.app.styling.backgroundImage;
+						this.imgMap = new Map();
+						this.bUrl = [];
+						
+						function processImage(img) {
+							return new Promise((resolve, reject) => {
+								if (!this.imgMap.has(img)) {
+									m = this.getMime(img);
+									x = this.compressImage(img);
+									x.then((compressedImage) => {
+										k = URL.createObjectURL(compressedImage);
+										console.log(compressedImage, k);
+										this.imgMap.set(img, k);
+										this.imgMap.set(k, img);
+										this.bUrls.push(k);
+										resolve(k);
+									}).catch(reject);
+								} else {
+									resolve(this.imgMap.get(img));
+								}
+							});
+						}
+						
+						var promiseChain = Promise.resolve();
+						
+						if (bgImage && this.isDataURL(bgImage)) {
+							promiseChain = promiseChain.then(() => processImage.call(this, bgImage))
+								.then((k) => {
+									this.$refs.printThis.style.backgroundImage = 'url("' + k + '")';
+								});
+						}
+						if ("undefined" !== typeof this.app.styling.rowBackgroundImage && this.isDataURL(this.app.styling.rowBackgroundImage)) {
+							promiseChain = promiseChain.then(() => processImage.call(this, this.app.styling.rowBackgroundImage))
+								.then((k) => {
+									this.app.styling.rowBackgroundImage = k;
+								});
+						}
+						if ("undefined" !== typeof this.app.styling.objectBackgroundImage && this.isDataURL(this.app.styling.objectBackgroundImage)) {
+							promiseChain = promiseChain.then(() => processImage.call(this, this.app.styling.objectBackgroundImage))
+								.then((k) => {
+									this.app.styling.objectBackgroundImage = k;
+								});
+						}
+						if ("undefined" !== typeof this.app.styling.rowBorderImage && this.isDataURL(this.app.styling.rowBorderImage)) {
+							promiseChain = promiseChain.then(() => processImage.call(this, this.app.styling.rowBorderImage))
+								.then((k) => {
+									this.app.styling.rowBorderImage = k;
+								});
+						}
+						if ("undefined" !== typeof this.app.styling.objectBorderImage && this.isDataURL(this.app.styling.objectBorderImage)) {
+							promiseChain = promiseChain.then(() => processImage.call(this, this.app.styling.objectBorderImage))
+								.then((k) => {
+									this.app.styling.objectBorderImage = k;
+								});
+						}
+						for (const row of this.backpack) {
+							if (row.isResultRow) {
+								o = this.resultArray(this.app.rows, row);
+								for (const obj of o) {
+									if (obj.image && this.isDataURL(obj.image)){
+										promiseChain = promiseChain.then(() => processImage.call(this, obj.image))
+											.then((k) => {
+												obj.image = k;
+											});
+									}
+									for (const addon of obj.addons) {
+										if (addon.image && this.isDataURL(addon.image)) {
+											promiseChain = promiseChain.then(() => processImage.call(this, addon.image))
+												.then((k) => {
+													addon.image = k;
+												});
+										}
+									}
+								}
+							} else {
+								if ("undefined" !== typeof row.styling && "undefined" !== typeof row.styling.backgroundImage && this.isDataURL(row.styling.backgroundImage)) {
+									if (!this.imgMap.has(row.styling.backgroundImage)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.styling.backgroundImage))
+											.then((k) => {
+												row.styling.backgroundImage = k;
+											});
+									}
+								}
+								if ("undefined" !== typeof row.styling && "undefined" !== typeof row.styling.rowBackgroundImage && this.isDataURL(row.styling.rowBackgroundImage)) {
+									if (!this.imgMap.has(row.styling.rowBackgroundImage)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.styling.rowBackgroundImage))
+											.then((k) => {
+												row.styling.rowBackgroundImage = k;
+											});
+									}
+								}
+								if ("undefined" !== typeof row.styling && "undefined" !== typeof row.styling.objectBackgroundImage && this.isDataURL(row.styling.objectBackgroundImage)) {
+									if (!this.imgMap.has(row.styling.objectBackgroundImage)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.styling.objectBackgroundImage))
+											.then((k) => {
+												row.styling.objectBackgroundImage = k;
+											});
+									}
+								}
+								if ("undefined" !== typeof row.styling && "undefined" !== typeof row.styling.rowBorderImage && this.isDataURL(row.styling.rowBorderImage)) {
+									if (!this.imgMap.has(row.styling.rowBorderImage)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.styling.rowBorderImage))
+											.then((k) => {
+												row.styling.rowBorderImage = k;
+											});
+									}
+								}
+								if ("undefined" !== typeof row.styling && "undefined" !== typeof row.styling.objectBorderImage && this.isDataURL(row.styling.objectBorderImage)) {
+									if (!this.imgMap.has(row.styling.objectBorderImage)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.styling.objectBorderImage))
+											.then((k) => {
+												row.styling.objectBorderImage = k;
+											});
+									}
+								}
+								if (row.image && this.isDataURL(row.image)) {
+									if (!this.imgMap.has(row.image)) {
+										promiseChain = promiseChain.then(() => processImage.call(this, row.image))
+											.then((k) => {
+												row.image = k;
+											});
+									}
+								}
+								for (const obj of row.objects) {
+									if ("undefined" !== typeof obj.styling && "undefined" !== typeof obj.styling.objectBackgroundImage && this.isDataURL(obj.styling.objectBackgroundImage)) {
+										if (!this.imgMap.has(obj.styling.objectBackgroundImage)) {
+											promiseChain = promiseChain.then(() => processImage.call(this, obj.styling.objectBackgroundImage))
+												.then((k) => {
+													obj.styling.objectBackgroundImage = k;
+												});
+										}
+									}
+									if ("undefined" !== typeof obj.styling && "undefined" !== typeof obj.styling.objectBorderImage && this.isDataURL(obj.styling.objectBorderImage)) {
+										if (!this.imgMap.has(obj.styling.objectBorderImage)) {
+											promiseChain = promiseChain.then(() => processImage.call(this, obj.styling.objectBorderImage))
+												.then((k) => {
+													obj.styling.objectBorderImage = k;
+												});
+										}
+									}
+									if (obj.image && this.isDataURL(obj.image)) {
+										if (!this.imgMap.has(obj.image)) {
+											promiseChain = promiseChain.then(() => processImage.call(this, obj.image))
+												.then((k) => {
+													obj.image = k;
+												});
+										}
+									}
+									for (const addon of obj.addons) {
+										if (addon.image && this.isDataURL(addon.image)) {
+											if (!this.imgMap.has(addon.image)) {
+												promiseChain = promiseChain.then(() => processImage.call(this, addon.image))
+													.then((k) => {
+														addon.image = k;
+													});
+											}
+										}
+									}
+								}
+							}
+						}
+						return promiseChain;
+					},
+					restoreImages: function() {
+						var e = new Set();
+						var bgImage = this.$refs.printThis.style.backgroundImage;
+						if (bgImage) {
+							if (this.imgMap.has(bgImage) && !e.has(bgImage)) {
+								this.$refs.printThis.style.backgroundImage = 'url("' + this.imgMap.get(bgImage) + '")';
+								e.add(bgImage);
+							}
+						}
+						if ("undefined" !== typeof this.app.styling.rowBackgroundImage) {
+							if (this.imgMap.has(this.app.styling.rowBackgroundImage) && !e.has(this.app.styling.rowBackgroundImage)) {
+								this.app.styling.rowBackgroundImage = this.imgMap.get(this.app.styling.rowBackgroundImage);
+								e.add(this.app.styling.rowBackgroundImage);
+							}
+						}
+						if ("undefined" !== typeof this.app.styling.objectBackgroundImage) {
+							if (this.imgMap.has(this.app.styling.objectBackgroundImage) && !e.has(this.app.styling.objectBackgroundImage)) {
+								this.app.styling.objectBackgroundImage = this.imgMap.get(this.app.styling.objectBackgroundImage);
+								e.add(this.app.styling.objectBackgroundImage);
+							}
+						}
+						if ("undefined" !== typeof this.app.styling.rowBorderImage) {
+							if (this.imgMap.has(this.app.styling.rowBorderImage) && !e.has(this.app.styling.rowBorderImage)) {
+								this.app.styling.rowBorderImage = this.imgMap.get(this.app.styling.rowBorderImage);
+								e.add(this.app.styling.rowBorderImage);
+							}
+						}
+						if ("undefined" !== typeof this.app.styling.objectBorderImage) {
+							if (this.imgMap.has(this.app.styling.objectBorderImage) && !e.has(this.app.styling.objectBorderImage)) {
+								this.app.styling.objectBorderImage = this.imgMap.get(this.app.styling.objectBorderImage);
+								e.add(this.app.styling.objectBorderImage);
+							}
+						}
+						for (var s = 0; s < this.backpack.length; s++) {
+							if (this.backpack[s].isResultRow) {
+								o = this.resultArray(this.app.rows, this.backpack[s]);
+								for (var a = 0; a < o.length; a++) {
+									if (this.imgMap.has(o[a].image) && !e.has(o[a])) {
+										o[a].image = this.imgMap.get(o[a].image);
+										e.add(o[a]);
+									}
+									for (var b = 0; b < o[a].addons.length; b++) {
+										if (this.imgMap.has(o[a].addons[b].image) && !e.has(o[a].addons[b])) {
+											o[a].addons[b].image = this.imgMap.get(o[a].addons[b].image);
+											e.add(o[a].addons[b]);
+										}
+									}
+								}
+							} else {
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.backgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.backgroundImage) && !e.has(this.backpack[s].styling.backgroundImage)) {
+										this.backpack[s].styling.backgroundImage = this.imgMap.get(this.backpack[s].styling.backgroundImage);
+										e.add(this.backpack[s].styling.backgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBackgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.rowBackgroundImage) && !e.has(this.backpack[s].styling.rowBackgroundImage)) {
+										this.backpack[s].styling.rowBackgroundImage = this.imgMap.get(this.backpack[s].styling.rowBackgroundImage);
+										e.add(this.backpack[s].styling.rowBackgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBackgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.objectBackgroundImage) && !e.has(this.backpack[s].styling.objectBackgroundImage)) {
+										this.backpack[s].styling.objectBackgroundImage = this.imgMap.get(this.backpack[s].styling.objectBackgroundImage);
+										e.add(this.backpack[s].styling.objectBackgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBorderImage) {
+									if (this.imgMap.has(this.backpack[s].styling.rowBorderImage) && !e.has(this.backpack[s].styling.rowBorderImage)) {
+										this.backpack[s].styling.rowBorderImage = this.imgMap.get(this.backpack[s].styling.rowBorderImage);
+										e.add(this.backpack[s].styling.rowBorderImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBorderImage) {
+									if (this.imgMap.has(this.backpack[s].styling.objectBorderImage) && !e.has(this.backpack[s].styling.objectBorderImage)) {
+										this.backpack[s].styling.objectBorderImage = this.imgMap.get(this.backpack[s].styling.objectBorderImage);
+										e.add(this.backpack[s].styling.objectBorderImage);
+									}
+								}
+								if (this.backpack[s].image) {
+									if (this.imgMap.has(this.backpack[s].image) && !e.has(this.backpack[s].image)) {
+										this.backpack[s].image = this.imgMap.get(this.backpack[s].image);
+										e.add(this.backpack[s].image);
+									}
+								}
+								for (var r = 0; r < this.backpack[s].objects.length; r++) {
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBackgroundImage) {
+										if (this.imgMap.has(this.backpack[s].objects[r].styling.objectBackgroundImage) && !e.has(this.backpack[s].objects[r].styling.objectBackgroundImage)) {
+											this.backpack[s].objects[r].styling.objectBackgroundImage = this.imgMap.get(this.backpack[s].objects[r].styling.objectBackgroundImage);
+											e.add(this.backpack[s].objects[r].styling.objectBackgroundImage);
+										}
+									}
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBorderImage) {
+										if (this.imgMap.has(this.backpack[s].objects[r].styling.objectBorderImage) && !e.has(this.backpack[s].objects[r].styling.objectBorderImage)) {
+											this.backpack[s].objects[r].styling.objectBorderImage = this.imgMap.get(this.backpack[s].objects[r].styling.objectBorderImage);
+											e.add(this.backpack[s].objects[r].styling.objectBorderImage);
+										}
+									}
+									if (this.backpack[s].objects[r].image) {
+										if (this.imgMap.has(this.backpack[s].objects[r].image) && !e.has(this.backpack[s].objects[r].image)) {
+											this.backpack[s].objects[r].image = this.imgMap.get(this.backpack[s].objects[r].image);
+											e.add(this.backpack[s].objects[r].image);
+										}
+									}
+									for (var a = 0; a < this.backpack[s].objects[r].addons.length; a++) {
+										if (this.backpack[s].objects[r].addons[a].image) {
+											if (this.imgMap.has(this.backpack[s].objects[r].addons[a].image) && !e.has(this.backpack[s].objects[r].addons[a].image)) {
+												this.backpack[s].objects[r].addons[a].image = this.imgMap.get(this.backpack[s].objects[r].addons[a].image);
+												e.add(this.backpack[s].objects[r].addons[a].image);
+											}
+										}
+									}
+								}
+							}
+						}
+						for (var a = 0; a < this.bUrls.length; a++) {
+							URL.revokeObjectURL(this.bUrls[a]);
+						}
+						this.imgMap.clear();
+						this.bUrls.length = 0;
+					},
+					isDataURL: function(e) {
+						return /^data:(image\/[a-zA-Z]*);base64,/.test(e);
+					},
+					getMime: function(e) {
+						return e.match(/^data:(image\/[^;]+);/)[1];
+					},
                     print: function() {
-						var e = this;
-						console.log(e.$refs.printThis);
-						var bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
+						var e = this,
+							bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
 							bgImage = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgImage : e.app.styling.backgroundImage,
-							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat;
+							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat,
+							bSuccess = !1;
 						if (bgImage) {
 							e.$refs.printThis.style.backgroundImage = 'url("' + bgImage + '")';
 							bgRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
 							e.$refs.printThis.style.backgroundPosition = 'center';
 							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
+						e.$refs.printThis.style.backgroundColor = bgColor;
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: bgImage ? undefined : bgColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
-							console.log(t);
 							var i = document.createEvent("MouseEvents"),
 								s = document.createElement("a");
 							s.download = "Finalized Build.webp";
@@ -33886,74 +34513,135 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
-							if (bgImage) e.$refs.printThis.removeAttribute('style');
+							e.$refs.printThis.removeAttribute('style');
+							bSuccess = !0;
 						}).catch(function(error) {
-							console.log('Fail to generate image, Segmenting and recreating the image...', error);
-							var maxLength = 6e6;
-							var container = e.$refs.printThis.cloneNode(true);
+							if (!bSuccess) {
+								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
+								setTimeout(() => {
+									var maxLength = 6e6;
+									var container = e.$refs.printThis.cloneNode(true);
 
-							console.log(container.innerHTML.length);
-
-							function splitNodes(node, maxLength) {
-								var parts = [];
-								var currentPart = document.createElement("div");
-								currentPart.style.cssText = node.style.cssText;
-								var currentLength = 0;
-
-								function addNodeToCurrentPart(node) {
-									var clone = node.cloneNode(true);
-									currentPart.appendChild(clone);
-									currentLength += (new XMLSerializer().serializeToString(node)).length;
-								}
-
-								Array.from(node.childNodes).forEach(function(child) {
-									var childLength = (new XMLSerializer().serializeToString(child)).length;
-									if (currentLength + childLength > maxLength) {
-										parts.push(currentPart.innerHTML);
-										currentPart = document.createElement("div");
+									function splitNodes(node, maxLength) {
+										var parts = [];
+										var currentPart = document.createElement("div");
 										currentPart.style.cssText = node.style.cssText;
-										currentLength = 0;
+										var currentLength = 0;
+										
+										function getBlobSize(node) {
+											const s = new XMLSerializer();
+											const str = s.serializeToString(node);
+											const blob = new Blob([str], {type: "image/webp"});
+											return blob.size;
+										}
+										
+										function addNodeToCurrentPart(node) {
+											var clone = node.cloneNode(true);
+											currentPart.appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function addNodeToCurrentPartChild(node) {
+											var clone = node.cloneNode(true);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].childNodes[1].appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function initNode(node) {
+											var c1 = node.cloneNode(false),
+												c2 = node.childNodes[0].cloneNode(false),
+												c3 = node.childNodes[0].childNodes[0].cloneNode(false),
+												c4 = node.childNodes[0].childNodes[0].childNodes[0].cloneNode(true),
+												c5 = node.childNodes[0].childNodes[0].childNodes[1].cloneNode(false);
+											currentPart.appendChild(c1);
+											currentPart.childNodes[0].appendChild(c2);
+											currentPart.childNodes[0].childNodes[0].appendChild(c3);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c4);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c5);
+											currentLength += getBlobSize(c1);
+											currentLength += getBlobSize(c2);
+											currentLength += getBlobSize(c3);
+											currentLength += getBlobSize(c4);
+											currentLength += getBlobSize(c5);
+										}
+
+										Array.from(node.childNodes).forEach(function(child) {
+											var childLength = (new XMLSerializer().serializeToString(child)).length;
+											if (childLength > maxLength) {
+												var cParent = child.childNodes[0].childNodes[0],
+													cRow = cParent.childNodes[0];
+												if (currentLength > 0) parts.push(currentPart.innerHTML);
+												currentPart = document.createElement("div");
+												currentPart.style.cssText = node.style.cssText;
+												currentLength = 0;
+												initNode(child);
+												Array.from(cParent.childNodes[1].childNodes).forEach(function(c) {
+													var cLength = (new XMLSerializer().serializeToString(c)).length;
+													if (currentLength + cLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+														initNode(child);
+													}
+													addNodeToCurrentPartChild(c);
+												});
+											} else {
+												if (currentLength + childLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+												}
+												addNodeToCurrentPart(child);
+											}
+										});
+
+										if (currentPart.innerHTML) {
+											parts.push(currentPart.innerHTML);
+										}
+
+										return parts;
 									}
-									addNodeToCurrentPart(child);
-								});
 
-								if (currentPart.innerHTML) {
-									parts.push(currentPart.innerHTML);
-								}
-
-								return parts;
-							}
-
-							var parts = splitNodes(container, maxLength);
-
-							if (parts.length > 1) {
-								parts.forEach(function(part, index) {
-									var tempDiv = document.createElement("div");
-									tempDiv.innerHTML = part;
-									e.$refs.printThis.appendChild(tempDiv);
-									htmlToImage.toBlob(tempDiv, {
-										backgroundImage: bgImage,
-										backgroundColor: bgColor,
-										type: "image/webp",
-										quality: 0.9
-									}).then(function(t) {
-										console.log(t);
-										var i = document.createEvent("MouseEvents"),
-											s = document.createElement("a");
-										s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
-										s.href = window.URL.createObjectURL(t);
-										s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
-										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-										s.dispatchEvent(i);
-										e.$refs.printThis.removeChild(tempDiv);
-										if (bgImage) e.$refs.printThis.removeAttribute('style');
-									}).catch(function(error) {
-										console.log('Fail to generate image', error);
-										e.$refs.printThis.removeChild(tempDiv);
-										if (bgImage) e.$refs.printThis.removeAttribute('style');
-										alert('Failed to download the image.\nPlease try again with a different browser.');
+									var parts = splitNodes(container, maxLength),
+										bS = !0;
+									var promises = parts.map(function(part, index) {
+										return new Promise(function(resolve) {
+											var tempDiv = document.createElement("div");
+											tempDiv.innerHTML = part;
+											if (bgImage) {
+												tempDiv.style.backgroundImage = 'url("' + bgImage + '")';
+												bgRepeat ? tempDiv.style.backgroundRepeat = 'repeat' : tempDiv.style.backgroundSize = 'cover';
+												tempDiv.style.backgroundPosition = 'center';
+												tempDiv.style.backgroundAttachment = 'fixed';
+											}
+											tempDiv.style.backgroundColor = bgColor;
+											e.$refs.printThis.appendChild(tempDiv);
+											htmlToImage.toBlob(tempDiv, {
+												type: "image/webp",
+												quality: 0.9
+											}).then(function(t) {
+												console.log(t);
+												var i = document.createEvent("MouseEvents"),
+													s = document.createElement("a");
+												s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
+												s.href = window.URL.createObjectURL(t);
+												s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
+												i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
+												s.dispatchEvent(i);
+											}).catch(function(err) {
+												e.text = "Failed to download the image. Please try again with a different browser.", e.snackbar = !0;
+											}).finally(function() {
+												e.$refs.printThis.removeChild(tempDiv);
+												resolve();
+											});
+										});
 									});
-								});
+									Promise.all(promises).then(function() {
+										e.$refs.printThis.removeAttribute('style');
+									});
+								}, 1000);
 							}
 						});
 					}
@@ -33970,6 +34658,7 @@
             VCol: I["a"],
             VContainer: k["a"],
             VDialog: B["a"],
+            VSnackbar: Ct["a"],
             VRow: S["a"]
         });
         var Ps = function() {
@@ -35463,16 +36152,16 @@
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
                     onChange: function(e) {
-                        console.log(e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeBackground: function(e) {
-                        console.log(e), this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeObject: function(e) {
-                        console.log(e), this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeRow: function(e) {
-                        console.log(e), this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageRemoval: function() {
                         this.styling.backgroundImage = ""
@@ -35631,7 +36320,7 @@
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
 					onImageChangeBackground: function(e) {
-                        console.log(e), this.styling.backpackBgImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.backpackBgImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
 					onImageRemoval: function() {
 						this.styling.backpackBgImage = ""
@@ -36459,7 +37148,7 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
 					onBorderImageChangeObject: function(e) {
-                        console.log(e), this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
 					onBorderImageRemovalObject: function() {
                         this.styling.objectBorderImage = ""
@@ -37914,7 +38603,7 @@
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
 					onBorderImageChangeRow: function(e) {
-						console.log(e), this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalRow: function() {
 						this.styling.rowBorderImage = ""
@@ -39454,6 +40143,7 @@
 					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
+							e.$set(e.app, "printThis", !0);
                             e.currentComponent = "appBackpackPreview"
                         }
                     }
@@ -39697,7 +40387,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("06.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 11.08.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to set the row background in the row private settings. "), o("br"), o("br"), e._v(" Added a feature to import/export design settings. "), o("br"), o("br"), e._v(" Added a feature to hide score value. "), o("br"), o("br"), e._v(" Added a feature to toggle 'Show Score/Hide Value' for all choices. "), o("br"), o("br"), e._v(" Added a feature to manage backpack design. "), o("br"), o("br"), e._v(" Added a feature to change the design of point bar when a choice is selected. "), o("br"), o("br"), e._v(" Added a feature to set filter designs for unselected choices. "), o("br"), o("br"), e._v(" Added an option in 'Force Active' to make other choices deselectable. "), o("br"), o("br"), e._v(" Added a feature to change focus in the dropdown menu based on key inputs. "), o("br"), o("br"), e._v(" Added a feature to put the font name directly for using custom fonts. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where changing the Group/Design group's ID did not apply to choices. "), o("br"), o("br"), e._v(" Fixed an issue where problems occurred when conditions were not met due to score changes. "), o("br"), o("br"), e._v(" Fixed an issue where the score was sometimes not updated correctly after using the Import Choices. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("06.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -40876,6 +41606,7 @@
 						compG: {},
 						compODG: {},
 						compRDG: {},
+						tmpRequired: {},
 						rowIdLength: 4,
 						objectIdLength: 4,
                         words: [],
@@ -40889,6 +41620,7 @@
                         variables: [],
 						cancelForcedActivated: [],
 						mdObjects: [],
+						printThis: !1,
 						autoSaveIsOn: !1,
 						autoSaveInterval: null,
 						checkDeleteRow: !0,
@@ -41438,7 +42170,7 @@
                                             if ("points" == o.requireds[i].type) {
                                                 if ("undefined" == typeof o.requireds[i].operator) {
                                                     for (var r = 0; r < e.app.pointTypes.length; r++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[r].id && o.requireds[i].reqPoints > e.app.pointTypes[r].startingSum) return !1
+                                                        if (o.requireds[i].reqId == e.app.pointTypes[r].id && o.requireds[i].reqPoints > e.app.pointTypes[r].startingSum) return !1;
                                                 } else
                                                     for (var a = 0; a < e.app.pointTypes.length; a++)
                                                         if (o.requireds[i].reqId == e.app.pointTypes[a].id)
@@ -41449,20 +42181,20 @@
                                                                         if (2 == o.requireds[i].operator && e.app.pointTypes[a].startingSum > e.app.pointTypes[n].startingSum) return !1;
                                                                         if (3 == o.requireds[i].operator && parseInt(e.app.pointTypes[a].startingSum) !== parseInt(e.app.pointTypes[n].startingSum)) return !1;
                                                                         if (4 == o.requireds[i].operator && e.app.pointTypes[a].startingSum < e.app.pointTypes[n].startingSum) return !1;
-                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[a].startingSum <= e.app.pointTypes[n].startingSum) return !1
+                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[a].startingSum <= e.app.pointTypes[n].startingSum) return !1;
                                                                     }
                                                             } else {
                                                                 if (1 == o.requireds[i].operator && o.requireds[i].reqPoints >= e.app.pointTypes[a].startingSum) return !1;
                                                                 if (2 == o.requireds[i].operator && o.requireds[i].reqPoints > e.app.pointTypes[a].startingSum) return !1;
                                                                 if (3 == o.requireds[i].operator && parseInt(o.requireds[i].reqPoints) !== parseInt(e.app.pointTypes[a].startingSum)) return !1;
                                                                 if (4 == o.requireds[i].operator && o.requireds[i].reqPoints < e.app.pointTypes[a].startingSum) return !1;
-                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1
+                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1;
                                                             }
                                             } else if ("or" == o.requireds[i].type) {
 												o.requireds[i].orNum = "undefined" === typeof o.requireds[i].orNum ? 1 : o.requireds[i].orNum;
                                                 for (var l = 0, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) && "" != o.requireds[i].orRequired[c].req && l++;
-                                                if (l < o.requireds[i].orNum) return !1
-												else if (o.requireds[i].orNum == 0 && l > 0) return !1
+                                                if (l < o.requireds[i].orNum) return !1;
+												else if (o.requireds[i].orNum == 0 && l > 0) return !1;
                                             } else if ("pointCompare" == o.requireds[i].type) {
                                                 for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
                                                 for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
@@ -41484,7 +42216,7 @@
                                                 if (d != p && 2 == o.requireds[i].operator) return !1;
                                                 if (d < p && 3 == o.requireds[i].operator) return !1;
                                                 if (d > p && 4 == o.requireds[i].operator) return !1;
-                                                if (d >= p && 5 == o.requireds[i].operator) return !1
+                                                if (d >= p && 5 == o.requireds[i].operator) return !1;
                                             } else if ("selFromGroups" == o.requireds[i].type) {
 												if ("undefined" !== typeof o.requireds[i].selGroups) {
 													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
@@ -41496,13 +42228,13 @@
 																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
 														}
 													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x < o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
+														if (x != o.requireds[i].selNum) return !1;
 													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x > o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													}
 												}
 											} else if ("selFromRows" == o.requireds[i].type) {
@@ -41516,26 +42248,26 @@
 														}
 													}
 													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x < o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
+														if (x != o.requireds[i].selNum) return !1;
 													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x > o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													}
 												}
 											} else if ("selFromWhole" == o.requireds[i].type) {
 												o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
 												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
 												if (o.requireds[i].selFromOperators == "1") {
-													if (x < o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+													if (x < o.requireds[i].selNum) return !1;
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 												} else if (o.requireds[i].selFromOperators == "2") {
-													if (x != o.requireds[i].selNum) return !1
+													if (x != o.requireds[i].selNum) return !1;
 												} else if (o.requireds[i].selFromOperators == "3") {
-													if (x > o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+													if (x > o.requireds[i].selNum) return !1;
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 												}
 											}
                                         }
@@ -41547,112 +42279,15 @@
 												} else {
 													if (e.app.activated.includes(o.requireds[i].reqId)) return !1;
 												}
-											}
-                                            if ("points" == o.requireds[i].type) {
-                                                if ("undefined" == typeof o.requireds[i].operator) {
-                                                    for (var g = 0; g < e.app.pointTypes.length; g++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[g].id && o.requireds[i].reqPoints <= e.app.pointTypes[g].startingSum) return !1
-                                                } else
-                                                    for (var b = 0; b < e.app.pointTypes.length; b++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[b].id)
-                                                            if (isNaN(parseInt(o.requireds[i].reqPoints))) {
-                                                                for (var v = 0; v < e.app.pointTypes.length; v++)
-                                                                    if (o.requireds[i].reqPoints == e.app.pointTypes[v].id) {
-                                                                        if (1 == o.requireds[i].operator && e.app.pointTypes[b].startingSum >= e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (2 == o.requireds[i].operator && e.app.pointTypes[b].startingSum > e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (3 == o.requireds[i].operator && parseInt(e.app.pointTypes[b].startingSum) !== parseInt(e.app.pointTypes[v].startingSum)) return !1;
-                                                                        if (4 == o.requireds[i].operator && e.app.pointTypes[b].startingSum < e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[b].startingSum <= e.app.pointTypes[v].startingSum) return !1
-                                                                    }
-                                                            } else {
-                                                                if (1 == o.requireds[i].operator && o.requireds[i].reqPoints >= e.app.pointTypes[b].startingSum) return !1;
-                                                                if (2 == o.requireds[i].operator && o.requireds[i].reqPoints > e.app.pointTypes[b].startingSum) return !1;
-                                                                if (3 == o.requireds[i].operator && parseInt(o.requireds[i].reqPoints) !== parseInt(e.app.pointTypes[b].startingSum)) return !1;
-                                                                if (4 == o.requireds[i].operator && o.requireds[i].reqPoints < e.app.pointTypes[b].startingSum) return !1;
-                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[b].startingSum) return !1
-                                                            }
-                                            } else if ("or" == o.requireds[i].type) {
-                                                for (var m = !1, f = 0; f < o.requireds[i].orRequired.length; f++) e.app.activated.includes(o.requireds[i].orRequired[f].req) || "" == o.requireds[i].orRequired[f].req || (m = !0);
-                                                if (!m) return !1
-                                            } else if ("pointCompare" == o.requireds[i].type) {
-                                                for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
-                                                for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
-												if ("undefined" !== typeof o.requireds[i].more) {
-													for (var cp = 0, a = 0; a < o.requireds[i].more.length; a++) {
-														if ("undefined" !== typeof o.requireds[i].more[a].id) {
-															for (var s = 0; s < e.app.pointTypes.length; s++) o.requireds[i].more[a].id == e.app.pointTypes[s].id && (cp = e.app.pointTypes[s].startingSum);
-														} else {
-															cp = o.requireds[i].more[a].points;
-														}
-														if (1 == o.requireds[i].more[a].operator) p += parseInt(cp);
-														else if (2 == o.requireds[i].more[a].operator) p -= parseInt(cp);
-														else if (3 == o.requireds[i].more[a].operator) p *= parseInt(cp);
-														else if (4 == o.requireds[i].more[a].operator) p /= parseInt(cp);
-														else if (5 == o.requireds[i].more[a].operator) p %= parseInt(cp);
-													}
-												}
-                                                if (d <= p && 1 == o.requireds[i].operator) return !1;
-                                                if (d != p && 2 == o.requireds[i].operator) return !1;
-                                                if (d < p && 3 == o.requireds[i].operator) return !1;
-                                                if (d > p && 4 == o.requireds[i].operator) return !1;
-                                                if (d >= p && 5 == o.requireds[i].operator) return !1
-                                            } else if ("selFromGroups" == o.requireds[i].type) {
-												if ("undefined" !== typeof o.requireds[i].selGroups) {
-													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[o.requireds[i].selGroups[f]]) {
-															var co = e.app.compG[o.requireds[i].selGroups[f]],
-																coG = e.app.groups[co.groups],
-																z = coG.elements;
-																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
-														}
-													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
-													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													}
-												}
-											} else if ("selFromRows" == o.requireds[i].type) {
-												if ("undefined" !== typeof o.requireds[i].selRows) {
-													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-													for (var x = 0, f = 0; f < o.requireds[i].selRows.length; f++) {
-														if ("undefined" !== typeof e.app.compR[o.requireds[i].selRows[f]]) {
-															var co = e.app.compR[o.requireds[i].selRows[f]],
-																coR = e.app.rows[co.rows];
-															x += coR.currentChoices;
-														}
-													}
-													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
-													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													}
-												}
-											} else if ("selFromWhole" == o.requireds[i].type) {
-												o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
-												if (o.requireds[i].selFromOperators == "1") {
-													if (x < o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
-												} else if (o.requireds[i].selFromOperators == "2") {
-													if (x != o.requireds[i].selNum) return !1
-												} else if (o.requireds[i].selFromOperators == "3") {
-													if (x > o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
-												}
-											}
+											} else if ("or" == o.requireds[i].type) {
+												o.requireds[i].orNum = "undefined" === typeof o.requireds[i].orNum ? 1 : o.requireds[i].orNum;
+                                                for (var l = 0, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) || "" == o.requireds[i].orRequired[c].req || l++;
+                                                if (l < o.requireds[i].orNum) return !1;
+                                            }
                                         }
                                     }
                                 }
-                            return !0
+                            return !0;
                         }
                     }
                 },
@@ -41662,7 +42297,7 @@
                     },
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
-                        for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++) {
+                        for (e.app.activated.length = 0, e.app.mdObjects.length = 0, o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
 								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
 									if (e.app.rows[o].objects[t].isSelectableMultiple) {
@@ -41683,8 +42318,8 @@
 								if (e.app.rows[o].objects[t].textfieldIsOn)
 									for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == e.app.rows[o].objects[t].idOfTheTextfieldWord && (e.app.words[m].replaceText = e.app.rows[o].objects[t].wordChangeDeselect);
 								if (e.app.rows[o].objects[t].isImageUpload) e.app.rows[o].objects[t].image = "";
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) e.app.rows[o].objects[t].activatedRandom.splice(0);
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandomMul) e.app.rows[o].objects[t].activatedRandomMul.splice(0);
+								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) e.app.rows[o].objects[t].activatedRandom.length = 0;
+								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandomMul) e.app.rows[o].objects[t].activatedRandomMul.length = 0;
 								if (e.app.rows[o].objects[t].isActive && e.app.rows[o].objects[t].changeBackground) {
 									if (e.app.rows[o].objects[t].changeBgImage) {
 										var a = e.app.styling.backgroundImage;
@@ -41718,9 +42353,8 @@
 							e.app.rows[o].currentChoices = 0;
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
-						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
+						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.length = 0;
 						if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
-						e.app.mdObjects.length = 0;
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
