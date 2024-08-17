@@ -204,6 +204,7 @@
 					style: t.pointBarIcon,
                     on: {
                         click: function(e) {
+							t.$set(t.app, "printThis", !0);
                             t.currentComponent = "appBackpackPreview"
                         }
                     }
@@ -574,7 +575,12 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.object.image.length > 0 && !t.row.objectImageRemoved ? i("img", t._g({
+                            return [t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", t._g({
+                                attrs: {
+									src: t.object.image
+								},
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s)) : i("img", t._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -582,10 +588,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != t.object.image ? t.objectImage : ""
-                            }, s)) : t._e()]
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 69075810)
-                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 && !t.row.objectImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", {
+                    attrs: {
+						src: t.object.image
+					},
+                    style: "" != t.object.image ? t.objectImage : ""
+                }) : i("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -593,7 +604,7 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                }) : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                })] : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
@@ -702,7 +713,12 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.object.image.length > 0 && !t.row.objectImageRemoved ? i("img", t._g({
+                            return [t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", t._g({
+                                attrs: {
+									src: t.object.image
+								},
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s)) : i("img", t._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -710,10 +726,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != t.object.image ? t.objectImage : ""
-                            }, s)) : t._e()]
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 69075810)
-                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 && !t.row.objectImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", {
+                    attrs: {
+						src: t.object.image
+					},
+                    style: "" != t.object.image ? t.objectImage : ""
+                }) : i("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -721,7 +742,7 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                }) : t._e()], 1), i("v-col", {
+                })] : t._e()], 1), i("v-col", {
                     staticClass: "pa-1"
                 }, [!t.row.objectTitleRemoved ? i("h3", {
                     style: t.objectTitle,
@@ -908,7 +929,12 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.object.image.length > 0 ? i("img", t._g({
+                            return [t.object.image.length > 0 ? [t.app.printThis ? i("img", t._g({
+								attrs: {
+									src: t.object.image
+								},
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s)) : i("img", t._g({
                                 directives: [{
                                     name: "lazy",
                                     rawName: "v-lazy",
@@ -916,10 +942,15 @@
                                     expression: "object.image"
                                 }],
                                 style: "" != t.object.image ? t.objectImage : ""
-                            }, s)) : t._e()]
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 69075810)
-                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 ? i("img", {
+                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : t.object.image.length > 0 ? [t.app.printThis ? i("img", {
+                    attrs: {
+						src: t.object.image
+					},
+                    style: "" != t.object.image ? t.objectImage : ""
+                }) : i("img", {
                     directives: [{
                         name: "lazy",
                         rawName: "v-lazy",
@@ -927,7 +958,7 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                }) : t._e()], 1), t._l(t.object.addons, (function(e) {
+                })] : t._e()], 1), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
                         key: e.index,
                         staticClass: "pt-0",
@@ -3253,7 +3284,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -5876,7 +5907,7 @@
 											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 									this.activated.push(eid), t.currentChoices += 1;
 									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
+									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
 									if (e.duplicateRow) {
 										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 									}
@@ -7930,7 +7961,7 @@
                 var t = this,
                     e = t.$createElement,
                     i = t._self._c || e;
-                return i("v-dialog", {
+                return i("v-row", [i("v-dialog", {
                     attrs: {
                         "max-width": t.styling.backPackWidth + "px"
                     },
@@ -7992,7 +8023,23 @@
                     on: {
                         click: t.cleanCurrentComponent
                     }
-                }, [t._v("Close")])], 1)], 1)], 1)
+                }, [t._v("Close")])], 1)], 1)], 1), t.snackbar ? i("span", [i("v-snackbar", {
+                    attrs: {
+                        top: "",
+                        timeout: 2e3
+                    },
+                    model: {
+                        value: t.snackbar,
+                        callback: function(o) {
+                            t.snackbar = o
+                        },
+                        expression: "snackbar"
+                    }
+                }, [i("div", {
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [t._v(t._s(t.text))])])], 1) : t._e()], 1)
             },
             _t = [],
             Pt = i("c0e9"),
@@ -8005,7 +8052,11 @@
                 },
                 data: function() {
                     return {
-                        dialog: !0
+                        dialog: !0,
+						imgMap: {},
+						bUrls: [],
+						snackbar: !1,
+						text: ""
                     }
                 },
                 components: {
@@ -8030,29 +8081,333 @@
                 },
                 methods: {
                     cleanCurrentComponent: function() {
+						this.$set(this.app, "printThis", !1);
                         this.$emit("cleanCurrentComponent", "")
                     },
-					checkRequireds: function(t) {
-                        return this.$store.getters.checkRequireds(t)
+					checkRequireds: function(e) {
+                        return this.$store.getters.checkRequireds(e)
                     },
+					resultArray: function(e, t) {
+                        var o = [];
+                        if ("standard" == this.type) {
+                            for (var i = 0; i < this.allChapters.length; i++)
+                                for (var s = 0; s < this.allChapters[i].pages.length; s++) this.findAllActiveObjects(this.allChapters[i].pages[s], this.allChapters[i]);
+                            o = this.activeObjectList
+                        } else if ("" == t.resultGroupId || null == t.resultGroupId)
+                            for (var a = 0; a < e.length; a++)
+                                for (var b = 0; b < e[a].objects.length; b++) {
+									if (!e[a].objects[b].isNotResult) e[a].objects[b].isActive ? o.push(e[a].objects[b]) : e[a].objects[b].isImageUpload ? e[a].objects[b].image.length > 5 && o.push(e[a].objects[b]) : e[a].objects[b].isSelectableMultiple && "undefined" !== typeof e[a].objects[b].multipleUseVariable && e[a].objects[b].multipleUseVariable > 0 && o.push(e[a].objects[b]);
+								}
+                        return o
+                    },
+					replaceImages: function() {
+						var m = "", i = "", k = "", o = [];
+						var bgImage = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgImage : this.app.styling.backgroundImage;
+						this.imgMap = new Map();
+						if (bgImage && this.isDataURL(bgImage)) {
+							if (!this.imgMap.has(bgImage)) {
+								m = this.getMime(bgImage);
+								i = F()(bgImage.split(",")[1], m);
+								k = URL.createObjectURL(i);
+								this.imgMap.set(bgImage, 'url("' + k + '")');
+								this.imgMap.set('url("' + k + '")', bgImage);
+								this.bUrls.push('url("' + k + '")');
+							} else {
+								k = this.imgMap.get(bgImage);
+							}
+							this.$refs.printThis.style.backgroundImage = 'url("' + k + '")';
+						}
+						for (var s = 0; s < this.backpack.length; s++) {
+							if (this.backpack[s].isResultRow) {
+								o = this.resultArray(this.app.rows, this.backpack[s]);
+								for (var a = 0; a < o.length; a++) {
+									if (o[a].image && this.isDataURL(o[a].image)) {
+										if (!this.imgMap.has(o[a].image)) {
+											m = this.getMime(o[a].image);
+											i = F()(o[a].image.split(",")[1], m);
+											k = URL.createObjectURL(i);
+											this.imgMap.set(o[a].image, k);
+											this.imgMap.set(k, o[a].image);
+											this.bUrls.push(k);
+										} else {
+											k = this.imgMap.get(o[a].image);
+										}
+										o[a].image = k;
+									}
+									for (var b = 0; b < o[a].addons.length; b++) {
+										if (o[a].addons[b].image && this.isDataURL(o[a].addons[b].image)) {
+											if (!this.imgMap.has(o[a].addons[b].image)) {
+												m = this.getMime(o[a].addons[b].image);
+												i = F()(o[a].addons[b].image.split(",")[1], m);
+												k = URL.createObjectURL(i);
+												this.imgMap.set(o[a].addons[b].image, k);
+												this.imgMap.set(k, o[a].addons[b].image);
+												this.bUrls.push(k);
+											} else {
+												k = this.imgMap.get(o[a].addons[b].image);
+											}
+											o[a].addons[b].image = k;
+										}
+									}
+								}
+							} else {
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.backgroundImage && this.isDataURL(this.backpack[s].styling.backgroundImage)) {
+									if (!this.imgMap.has(this.backpack[s].styling.backgroundImage)) {
+										m = this.getMime(this.backpack[s].styling.backgroundImage);
+										i = F()(this.backpack[s].styling.backgroundImage.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].styling.backgroundImage, k);
+										this.imgMap.set(k, this.backpack[s].styling.backgroundImage);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].styling.backgroundImage);
+									}
+									this.backpack[s].styling.backgroundImage = k;
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBackgroundImage && this.isDataURL(this.backpack[s].styling.rowBackgroundImage)) {
+									if (!this.imgMap.has(this.backpack[s].styling.rowBackgroundImage)) {
+										m = this.getMime(this.backpack[s].styling.rowBackgroundImage);
+										i = F()(this.backpack[s].styling.rowBackgroundImage.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].styling.rowBackgroundImage, k);
+										this.imgMap.set(k, this.backpack[s].styling.rowBackgroundImage);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].styling.rowBackgroundImage);
+									}
+									this.backpack[s].styling.rowBackgroundImage = k;
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBackgroundImage && this.isDataURL(this.backpack[s].styling.objectBackgroundImage)) {
+									if (!this.imgMap.has(this.backpack[s].styling.objectBackgroundImage)) {
+										m = this.getMime(this.backpack[s].styling.objectBackgroundImage);
+										i = F()(this.backpack[s].styling.objectBackgroundImage.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].styling.objectBackgroundImage, k);
+										this.imgMap.set(k, this.backpack[s].styling.objectBackgroundImage);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].styling.objectBackgroundImage);
+									}
+									this.backpack[s].styling.objectBackgroundImage = k;
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBorderImage && this.isDataURL(this.backpack[s].styling.rowBorderImage)) {
+									if (!this.imgMap.has(this.backpack[s].styling.rowBorderImage)) {
+										m = this.getMime(this.backpack[s].styling.rowBorderImage);
+										i = F()(this.backpack[s].styling.rowBorderImage.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].styling.rowBorderImage, k);
+										this.imgMap.set(k, this.backpack[s].styling.rowBorderImage);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].styling.rowBorderImage);
+									}
+									this.backpack[s].styling.rowBorderImage = k;
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBorderImage && this.isDataURL(this.backpack[s].styling.objectBorderImage)) {
+									if (!this.imgMap.has(this.backpack[s].styling.objectBorderImage)) {
+										m = this.getMime(this.backpack[s].styling.objectBorderImage);
+										i = F()(this.backpack[s].styling.objectBorderImage.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].styling.objectBorderImage, k);
+										this.imgMap.set(k, this.backpack[s].styling.objectBorderImage);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].styling.objectBorderImage);
+									}
+									this.backpack[s].styling.objectBorderImage = k;
+								}
+								if (this.backpack[s].image && this.isDataURL(this.backpack[s].image)) {
+									if (!this.imgMap.has(this.backpack[s].image)) {
+										m = this.getMime(tthis.backpack[s].image);
+										i = F()(this.backpack[s].image.split(",")[1], m);
+										k = URL.createObjectURL(i);
+										this.imgMap.set(this.backpack[s].image, k);
+										this.imgMap.set(k, this.backpack[s].image);
+										this.bUrls.push(k);
+									} else {
+										k = this.imgMap.get(this.backpack[s].image);
+									}
+									this.backpack[s].styling.objectBackgroundImage = k;
+								}
+								for (var r = 0; r < this.backpack[s].objects.length; r++) {
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBackgroundImage && this.isDataURL(this.backpack[s].styling.objectBackgroundImage)) {
+										if (!this.imgMap.has(this.backpack[s].objects[r].styling.objectBackgroundImage)) {
+											m = this.getMime(this.backpack[s].objects[r].styling.objectBackgroundImage);
+											i = F()(this.backpack[s].objects[r].styling.objectBackgroundImage.split(",")[1], m);
+											k = URL.createObjectURL(i);
+											this.imgMap.set(this.backpack[s].objects[r].styling.objectBackgroundImage, k);
+											this.imgMap.set(k, this.backpack[s].objects[r].styling.objectBackgroundImage);
+											this.bUrls.push(k);
+										} else {
+											k = this.imgMap.get(this.backpack[s].objects[r].styling.objectBackgroundImage);
+										}
+										this.backpack[s].objects[r].styling.objectBackgroundImage = k;
+									}
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBorderImage && this.isDataURL(this.backpack[s].styling.objectBorderImage)) {
+										if (!this.imgMap.has(this.backpack[s].objects[r].styling.objectBorderImage)) {
+											m = this.getMime(this.backpack[s].objects[r].styling.objectBorderImage);
+											i = F()(this.backpack[s].objects[r].styling.objectBorderImage.split(",")[1], m);
+											k = URL.createObjectURL(i);
+											this.imgMap.set(this.backpack[s].objects[r].styling.objectBorderImage, k);
+											this.imgMap.set(k, this.backpack[s].objects[r].styling.objectBorderImage);
+											this.bUrls.push(k);
+										} else {
+											k = this.imgMap.get(this.backpack[s].objects[r].styling.objectBorderImage);
+										}
+										this.backpack[s].objects[r].styling.objectBorderImage = k;
+									}
+									if (this.backpack[s].objects[r].image && this.isDataURL(this.backpack[s].objects[r].image)) {
+										if (!this.imgMap.has(this.backpack[s].objects[r].image)) {
+											m = this.getMime(this.backpack[s].objects[r].image);
+											i = F()(this.backpack[s].objects[r].image.split(",")[1], m);
+											k = URL.createObjectURL(i);
+											this.imgMap.set(this.backpack[s].objects[r].image, k);
+											this.imgMap.set(k, this.backpack[s].objects[r].image);
+											this.bUrls.push(k);
+										} else {
+											k = this.imgMap.get(this.backpack[s].objects[r].image);
+										}
+										this.backpack[s].objects[r].image = k;
+									}
+									for (var a = 0; a < this.backpack[s].objects[r].addons.length; a++) {
+										if (this.backpack[s].objects[r].addons[a].image && this.isDataURL(this.backpack[s].objects[r].addons[a].image)) {
+											if (!this.imgMap.has(this.backpack[s].objects[r].addons[a].image)) {
+												m = this.getMime(this.backpack[s].objects[r].addons[a].image);
+												i = F()(this.backpack[s].objects[r].addons[a].image.split(",")[1], m);
+												k = URL.createObjectURL(i);
+												this.imgMap.set(this.backpack[s].objects[r].addons[a].image, k);
+												this.imgMap.set(k, this.backpack[s].objects[r].addons[a].image);
+												this.bUrls.push(k);
+											} else {
+												k = this.imgMap.get(this.backpack[s].objects[r].addons[a].image);
+											}
+											this.backpack[s].objects[r].addons[a].image = k;
+										}
+									}
+								}
+							}
+						}
+					},
+					restoreImages: function() {
+						var e = new Set();
+						var bgImage = this.$refs.printThis.style.backgroundImage;
+						if (bgImage) {
+							if (this.imgMap.has(bgImage) && !e.has(bgImage)) {
+								this.$refs.printThis.style.backgroundImage = 'url("' + this.imgMap.get(bgImage) + '")';
+								e.add(bgImage);
+							}
+						}
+						for (var s = 0; s < this.backpack.length; s++) {
+							if (this.backpack[s].isResultRow) {
+								o = this.resultArray(this.app.rows, this.backpack[s]);
+								for (var a = 0; a < o.length; a++) {
+									if (this.imgMap.has(o[a].image) && !e.has(o[a])) {
+										o[a].image = this.imgMap.get(o[a].image);
+										e.add(o[a]);
+									}
+									for (var b = 0; b < o[a].addons.length; b++) {
+										if (this.imgMap.has(o[a].addons[b].image) && !e.has(o[a].addons[b])) {
+											o[a].addons[b].image = this.imgMap.get(o[a].addons[b].image);
+											e.add(o[a].addons[b]);
+										}
+									}
+								}
+							} else {
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.backgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.backgroundImage) && !e.has(this.backpack[s].styling.backgroundImage)) {
+										this.backpack[s].styling.backgroundImage = this.imgMap.get(this.backpack[s].styling.backgroundImage);
+										e.add(this.backpack[s].styling.backgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBackgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.rowBackgroundImage) && !e.has(this.backpack[s].styling.rowBackgroundImage)) {
+										this.backpack[s].styling.rowBackgroundImage = this.imgMap.get(this.backpack[s].styling.rowBackgroundImage);
+										e.add(this.backpack[s].styling.rowBackgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBackgroundImage) {
+									if (this.imgMap.has(this.backpack[s].styling.objectBackgroundImage) && !e.has(this.backpack[s].styling.objectBackgroundImage)) {
+										this.backpack[s].styling.objectBackgroundImage = this.imgMap.get(this.backpack[s].styling.objectBackgroundImage);
+										e.add(this.backpack[s].styling.objectBackgroundImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.rowBorderImage) {
+									if (this.imgMap.has(this.backpack[s].styling.rowBorderImage) && !e.has(this.backpack[s].styling.rowBorderImage)) {
+										this.backpack[s].styling.rowBorderImage = this.imgMap.get(this.backpack[s].styling.rowBorderImage);
+										e.add(this.backpack[s].styling.rowBorderImage);
+									}
+								}
+								if ("undefined" !== typeof this.backpack[s].styling && "undefined" !== typeof this.backpack[s].styling.objectBorderImage) {
+									if (this.imgMap.has(this.backpack[s].styling.objectBorderImage) && !e.has(this.backpack[s].styling.objectBorderImage)) {
+										this.backpack[s].styling.objectBorderImage = this.imgMap.get(this.backpack[s].styling.objectBorderImage);
+										e.add(this.backpack[s].styling.objectBorderImage);
+									}
+								}
+								if (this.backpack[s].image) {
+									if (this.imgMap.has(this.backpack[s].image) && !e.has(this.backpack[s].image)) {
+										this.backpack[s].image = this.imgMap.get(this.backpack[s].image);
+										e.add(this.backpack[s].image);
+									}
+								}
+								for (var r = 0; r < this.backpack[s].objects.length; r++) {
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBackgroundImage) {
+										if (this.imgMap.has(this.backpack[s].objects[r].styling.objectBackgroundImage) && !e.has(this.backpack[s].objects[r].styling.objectBackgroundImage)) {
+											this.backpack[s].objects[r].styling.objectBackgroundImage = this.imgMap.get(this.backpack[s].objects[r].styling.objectBackgroundImage);
+											e.add(this.backpack[s].objects[r].styling.objectBackgroundImage);
+										}
+									}
+									if ("undefined" !== typeof this.backpack[s].objects[r].styling && "undefined" !== typeof this.backpack[s].objects[r].styling.objectBorderImage) {
+										if (this.imgMap.has(this.backpack[s].objects[r].styling.objectBorderImage) && !e.has(this.backpack[s].objects[r].styling.objectBorderImage)) {
+											this.backpack[s].objects[r].styling.objectBorderImage = this.imgMap.get(this.backpack[s].objects[r].styling.objectBorderImage);
+											e.add(this.backpack[s].objects[r].styling.objectBorderImage);
+										}
+									}
+									if (this.backpack[s].objects[r].image) {
+										if (this.imgMap.has(this.backpack[s].objects[r].image) && !e.has(this.backpack[s].objects[r].image)) {
+											this.backpack[s].objects[r].image = this.imgMap.get(this.backpack[s].objects[r].image);
+											e.add(this.backpack[s].objects[r].image);
+										}
+									}
+									for (var a = 0; a < this.backpack[s].objects[r].addons.length; a++) {
+										if (this.backpack[s].objects[r].addons[a].image) {
+											if (this.imgMap.has(this.backpack[s].objects[r].addons[a].image) && !e.has(this.backpack[s].objects[r].addons[a].image)) {
+												this.backpack[s].objects[r].addons[a].image = this.imgMap.get(this.backpack[s].objects[r].addons[a].image);
+												e.add(this.backpack[s].objects[r].addons[a].image);
+											}
+										}
+									}
+								}
+							}
+						}
+						for (var a = 0; a < this.bUrls.length; a++) {
+							URL.revokeObjectURL(this.bUrls[a]);
+						}
+						this.imgMap.clear();
+						this.bUrls.length = 0;
+					},
+					isDataURL: function(e) {
+						return /^data:(image\/[a-zA-Z]*);base64,/.test(e);
+					},
+					getMime: function(e) {
+						return e.match(/^data:(image\/[^;]+);/)[1];
+					},
                     print: function() {
-						var e = this;
-						console.log(e.$refs.printThis);
-						var bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
+						var e = this,
+							bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
 							bgImage = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgImage : e.app.styling.backgroundImage,
-							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat;
+							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat,
+							bSuccess = !1;
 						if (bgImage) {
 							e.$refs.printThis.style.backgroundImage = 'url("' + bgImage + '")';
 							bgRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
 							e.$refs.printThis.style.backgroundPosition = 'center';
 							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
+						e.$refs.printThis.style.backgroundColor = bgColor;
 						htmlToImage.toBlob(e.$refs.printThis, {
-							backgroundColor: bgImage ? undefined : bgColor,
 							type: "image/webp",
 							quality: 0.9
 						}).then(function(t) {
-							console.log(t);
 							var i = document.createEvent("MouseEvents"),
 								s = document.createElement("a");
 							s.download = "Finalized Build.webp";
@@ -8060,74 +8415,136 @@
 							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
-							if (bgImage) e.$refs.printThis.removeAttribute('style');
+							e.restoreImages();
+							e.$refs.printThis.removeAttribute('style');
+							bSuccess = !0;
 						}).catch(function(error) {
-							console.log('Fail to generate image, Segmenting and recreating the image...', error);
-							var maxLength = 6e6;
-							var container = e.$refs.printThis.cloneNode(true);
+							if (!bSuccess) {
+								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
+								setTimeout(() => {
+									var maxLength = 6e6;
+									var container = e.$refs.printThis.cloneNode(true);
 
-							console.log(container.innerHTML.length);
-
-							function splitNodes(node, maxLength) {
-								var parts = [];
-								var currentPart = document.createElement("div");
-								currentPart.style.cssText = node.style.cssText;
-								var currentLength = 0;
-
-								function addNodeToCurrentPart(node) {
-									var clone = node.cloneNode(true);
-									currentPart.appendChild(clone);
-									currentLength += (new XMLSerializer().serializeToString(node)).length;
-								}
-
-								Array.from(node.childNodes).forEach(function(child) {
-									var childLength = (new XMLSerializer().serializeToString(child)).length;
-									if (currentLength + childLength > maxLength) {
-										parts.push(currentPart.innerHTML);
-										currentPart = document.createElement("div");
+									function splitNodes(node, maxLength) {
+										var parts = [];
+										var currentPart = document.createElement("div");
 										currentPart.style.cssText = node.style.cssText;
-										currentLength = 0;
+										var currentLength = 0;
+										
+										function getBlobSize(node) {
+											const s = new XMLSerializer();
+											const str = s.serializeToString(node);
+											const blob = new Blob([str], {type: "image/webp"});
+											return blob.size;
+										}
+										
+										function addNodeToCurrentPart(node) {
+											var clone = node.cloneNode(true);
+											currentPart.appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function addNodeToCurrentPartChild(node) {
+											var clone = node.cloneNode(true);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].childNodes[1].appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function initNode(node) {
+											var c1 = node.cloneNode(false),
+												c2 = node.childNodes[0].cloneNode(false),
+												c3 = node.childNodes[0].childNodes[0].cloneNode(false),
+												c4 = node.childNodes[0].childNodes[0].childNodes[0].cloneNode(true),
+												c5 = node.childNodes[0].childNodes[0].childNodes[1].cloneNode(false);
+											currentPart.appendChild(c1);
+											currentPart.childNodes[0].appendChild(c2);
+											currentPart.childNodes[0].childNodes[0].appendChild(c3);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c4);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c5);
+											currentLength += getBlobSize(c1);
+											currentLength += getBlobSize(c2);
+											currentLength += getBlobSize(c3);
+											currentLength += getBlobSize(c4);
+											currentLength += getBlobSize(c5);
+										}
+
+										Array.from(node.childNodes).forEach(function(child) {
+											var childLength = (new XMLSerializer().serializeToString(child)).length;
+											if (childLength > maxLength) {
+												var cParent = child.childNodes[0].childNodes[0],
+													cRow = cParent.childNodes[0];
+												if (currentLength > 0) parts.push(currentPart.innerHTML);
+												currentPart = document.createElement("div");
+												currentPart.style.cssText = node.style.cssText;
+												currentLength = 0;
+												initNode(child);
+												Array.from(cParent.childNodes[1].childNodes).forEach(function(c) {
+													var cLength = (new XMLSerializer().serializeToString(c)).length;
+													if (currentLength + cLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+														initNode(child);
+													}
+													addNodeToCurrentPartChild(c);
+												});
+											} else {
+												if (currentLength + childLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+												}
+												addNodeToCurrentPart(child);
+											}
+										});
+
+										if (currentPart.innerHTML) {
+											parts.push(currentPart.innerHTML);
+										}
+
+										return parts;
 									}
-									addNodeToCurrentPart(child);
-								});
 
-								if (currentPart.innerHTML) {
-									parts.push(currentPart.innerHTML);
-								}
-
-								return parts;
-							}
-
-							var parts = splitNodes(container, maxLength);
-
-							if (parts.length > 1) {
-								parts.forEach(function(part, index) {
-									var tempDiv = document.createElement("div");
-									tempDiv.innerHTML = part;
-									e.$refs.printThis.appendChild(tempDiv);
-									htmlToImage.toBlob(tempDiv, {
-										backgroundImage: bgImage,
-										backgroundColor: bgColor,
-										type: "image/webp",
-										quality: 0.9
-									}).then(function(t) {
-										console.log(t);
-										var i = document.createEvent("MouseEvents"),
-											s = document.createElement("a");
-										s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
-										s.href = window.URL.createObjectURL(t);
-										s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
-										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-										s.dispatchEvent(i);
-										e.$refs.printThis.removeChild(tempDiv);
-										if (bgImage) e.$refs.printThis.removeAttribute('style');
-									}).catch(function(error) {
-										console.log('Fail to generate image', error);
-										e.$refs.printThis.removeChild(tempDiv);
-										if (bgImage) e.$refs.printThis.removeAttribute('style');
-										alert('Failed to download the image.\nPlease try again with a different browser.');
+									var parts = splitNodes(container, maxLength),
+										bS = !0;
+									var promises = parts.map(function(part, index) {
+										return new Promise(function(resolve) {
+											var tempDiv = document.createElement("div");
+											tempDiv.innerHTML = part;
+											if (bgImage) {
+												tempDiv.style.backgroundImage = 'url("' + bgImage + '")';
+												bgRepeat ? tempDiv.style.backgroundRepeat = 'repeat' : tempDiv.style.backgroundSize = 'cover';
+												tempDiv.style.backgroundPosition = 'center';
+												tempDiv.style.backgroundAttachment = 'fixed';
+											}
+											tempDiv.style.backgroundColor = bgColor;
+											e.$refs.printThis.appendChild(tempDiv);
+											htmlToImage.toBlob(tempDiv, {
+												type: "image/webp",
+												quality: 0.9
+											}).then(function(t) {
+												console.log(t);
+												var i = document.createEvent("MouseEvents"),
+													s = document.createElement("a");
+												s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
+												s.href = window.URL.createObjectURL(t);
+												s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
+												i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
+												s.dispatchEvent(i);
+											}).catch(function(err) {
+												e.text = "Failed to download the image. Please try again with a different browser.", e.snackbar = !0;
+											}).finally(function() {
+												e.$refs.printThis.removeChild(tempDiv);
+												resolve();
+											});
+										});
 									});
-								});
+									Promise.all(promises).then(function() {
+										e.$refs.printThis.removeAttribute('style');
+									});
+								}, 1000);
 							}
 						});
 					}
@@ -8144,6 +8561,7 @@
             VCol: S["a"],
             VContainer: E["a"],
             VDialog: N["a"],
+			VSnackbar: tt["a"],
             VRow: k["a"]
         });
         var Wt = i("63d6"),
@@ -8549,6 +8967,7 @@
                         variables: [],
 						cancelForcedActivated: [],
 						mdObjects: [],
+						printThis: !1,
                         defaultRowTitle: "Row",
                         defaultRowText: "This is a row, and inside of it, you can place choices. On both rows and choices Requirements can be placed, which will block a row from being viewed, or make the player unable to select a choice, depending on either Point-types or the Ids of other choices. Point-types can be made in Features then Manage Points. Hovering over buttons will explain what they do. The Design of the project can be changed in 'Modify Design' at the side navigation bar, and private styling for each row can be turned on in the rows Settings. Default text like this can be turned off in Features -> Manage Defaults.",
                         defaultChoiceTitle: "Choice",
@@ -8831,7 +9250,7 @@
                                             if ("points" == o.requireds[i].type) {
                                                 if ("undefined" == typeof o.requireds[i].operator) {
                                                     for (var r = 0; r < e.app.pointTypes.length; r++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[r].id && o.requireds[i].reqPoints > e.app.pointTypes[r].startingSum) return !1
+                                                        if (o.requireds[i].reqId == e.app.pointTypes[r].id && o.requireds[i].reqPoints > e.app.pointTypes[r].startingSum) return !1;
                                                 } else
                                                     for (var a = 0; a < e.app.pointTypes.length; a++)
                                                         if (o.requireds[i].reqId == e.app.pointTypes[a].id)
@@ -8842,20 +9261,20 @@
                                                                         if (2 == o.requireds[i].operator && e.app.pointTypes[a].startingSum > e.app.pointTypes[n].startingSum) return !1;
                                                                         if (3 == o.requireds[i].operator && parseInt(e.app.pointTypes[a].startingSum) !== parseInt(e.app.pointTypes[n].startingSum)) return !1;
                                                                         if (4 == o.requireds[i].operator && e.app.pointTypes[a].startingSum < e.app.pointTypes[n].startingSum) return !1;
-                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[a].startingSum <= e.app.pointTypes[n].startingSum) return !1
+                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[a].startingSum <= e.app.pointTypes[n].startingSum) return !1;
                                                                     }
                                                             } else {
                                                                 if (1 == o.requireds[i].operator && o.requireds[i].reqPoints >= e.app.pointTypes[a].startingSum) return !1;
                                                                 if (2 == o.requireds[i].operator && o.requireds[i].reqPoints > e.app.pointTypes[a].startingSum) return !1;
                                                                 if (3 == o.requireds[i].operator && parseInt(o.requireds[i].reqPoints) !== parseInt(e.app.pointTypes[a].startingSum)) return !1;
                                                                 if (4 == o.requireds[i].operator && o.requireds[i].reqPoints < e.app.pointTypes[a].startingSum) return !1;
-                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1
+                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1;
                                                             }
                                             } else if ("or" == o.requireds[i].type) {
 												o.requireds[i].orNum = "undefined" === typeof o.requireds[i].orNum ? 1 : o.requireds[i].orNum;
                                                 for (var l = 0, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) && "" != o.requireds[i].orRequired[c].req && l++;
-                                                if (l < o.requireds[i].orNum) return !1
-												else if (o.requireds[i].orNum == 0 && l > 0) return !1
+                                                if (l < o.requireds[i].orNum) return !1;
+												else if (o.requireds[i].orNum == 0 && l > 0) return !1;
                                             } else if ("pointCompare" == o.requireds[i].type) {
                                                 for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
                                                 for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
@@ -8877,7 +9296,7 @@
                                                 if (d != p && 2 == o.requireds[i].operator) return !1;
                                                 if (d < p && 3 == o.requireds[i].operator) return !1;
                                                 if (d > p && 4 == o.requireds[i].operator) return !1;
-                                                if (d >= p && 5 == o.requireds[i].operator) return !1
+                                                if (d >= p && 5 == o.requireds[i].operator) return !1;
                                             } else if ("selFromGroups" == o.requireds[i].type) {
 												if ("undefined" !== typeof o.requireds[i].selGroups) {
 													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
@@ -8889,13 +9308,13 @@
 																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
 														}
 													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x < o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
+														if (x != o.requireds[i].selNum) return !1;
 													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x > o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													}
 												}
 											} else if ("selFromRows" == o.requireds[i].type) {
@@ -8909,26 +9328,26 @@
 														}
 													}
 													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x < o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
+														if (x != o.requireds[i].selNum) return !1;
 													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
+														if (x > o.requireds[i].selNum) return !1;
+														else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 													}
 												}
 											} else if ("selFromWhole" == o.requireds[i].type) {
 												o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
 												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
 												if (o.requireds[i].selFromOperators == "1") {
-													if (x < o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+													if (x < o.requireds[i].selNum) return !1;
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 												} else if (o.requireds[i].selFromOperators == "2") {
-													if (x != o.requireds[i].selNum) return !1
+													if (x != o.requireds[i].selNum) return !1;
 												} else if (o.requireds[i].selFromOperators == "3") {
-													if (x > o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
+													if (x > o.requireds[i].selNum) return !1;
+													else if (o.requireds[i].selNum == 0 && x > 0) return !1;
 												}
 											}
                                         }
@@ -8940,112 +9359,16 @@
 												} else {
 													if (e.app.activated.includes(o.requireds[i].reqId)) return !1;
 												}
-											}
-                                            if ("points" == o.requireds[i].type) {
-                                                if ("undefined" == typeof o.requireds[i].operator) {
-                                                    for (var g = 0; g < e.app.pointTypes.length; g++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[g].id && o.requireds[i].reqPoints <= e.app.pointTypes[g].startingSum) return !1
-                                                } else
-                                                    for (var b = 0; b < e.app.pointTypes.length; b++)
-                                                        if (o.requireds[i].reqId == e.app.pointTypes[b].id)
-                                                            if (isNaN(parseInt(o.requireds[i].reqPoints))) {
-                                                                for (var v = 0; v < e.app.pointTypes.length; v++)
-                                                                    if (o.requireds[i].reqPoints == e.app.pointTypes[v].id) {
-                                                                        if (1 == o.requireds[i].operator && e.app.pointTypes[b].startingSum >= e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (2 == o.requireds[i].operator && e.app.pointTypes[b].startingSum > e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (3 == o.requireds[i].operator && parseInt(e.app.pointTypes[b].startingSum) !== parseInt(e.app.pointTypes[v].startingSum)) return !1;
-                                                                        if (4 == o.requireds[i].operator && e.app.pointTypes[b].startingSum < e.app.pointTypes[v].startingSum) return !1;
-                                                                        if (5 == o.requireds[i].operator && e.app.pointTypes[b].startingSum <= e.app.pointTypes[v].startingSum) return !1
-                                                                    }
-                                                            } else {
-                                                                if (1 == o.requireds[i].operator && o.requireds[i].reqPoints >= e.app.pointTypes[b].startingSum) return !1;
-                                                                if (2 == o.requireds[i].operator && o.requireds[i].reqPoints > e.app.pointTypes[b].startingSum) return !1;
-                                                                if (3 == o.requireds[i].operator && parseInt(o.requireds[i].reqPoints) !== parseInt(e.app.pointTypes[b].startingSum)) return !1;
-                                                                if (4 == o.requireds[i].operator && o.requireds[i].reqPoints < e.app.pointTypes[b].startingSum) return !1;
-                                                                if (5 == o.requireds[i].operator && o.requireds[i].reqPoints <= e.app.pointTypes[b].startingSum) return !1
-                                                            }
-                                            } else if ("or" == o.requireds[i].type) {
-                                                for (var m = !1, f = 0; f < o.requireds[i].orRequired.length; f++) e.app.activated.includes(o.requireds[i].orRequired[f].req) || "" == o.requireds[i].orRequired[f].req || (m = !0);
-                                                if (!m) return !1
-                                            } else if ("pointCompare" == o.requireds[i].type) {
-                                                for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) o.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
-                                                for (var h = 0; h < e.app.pointTypes.length; h++) o.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
-												if ("undefined" !== typeof o.requireds[i].more) {
-													for (var cp = 0, a = 0; a < o.requireds[i].more.length; a++) {
-														if ("undefined" !== typeof o.requireds[i].more[a].id) {
-															for (var s = 0; s < e.app.pointTypes.length; s++) o.requireds[i].more[a].id == e.app.pointTypes[s].id && (cp = e.app.pointTypes[s].startingSum);
-														} else {
-															cp = o.requireds[i].more[a].points;
-														}
-														if (1 == o.requireds[i].more[a].operator) p += parseInt(cp);
-														else if (2 == o.requireds[i].more[a].operator) p -= parseInt(cp);
-														else if (3 == o.requireds[i].more[a].operator) p *= parseInt(cp);
-														else if (4 == o.requireds[i].more[a].operator) p /= parseInt(cp);
-														else if (5 == o.requireds[i].more[a].operator) p %= parseInt(cp);
-													}
-												}
-                                                if (d <= p && 1 == o.requireds[i].operator) return !1;
-                                                if (d != p && 2 == o.requireds[i].operator) return !1;
-                                                if (d < p && 3 == o.requireds[i].operator) return !1;
-                                                if (d > p && 4 == o.requireds[i].operator) return !1;
-                                                if (d >= p && 5 == o.requireds[i].operator) return !1
-                                            } else if ("selFromGroups" == o.requireds[i].type) {
-												if ("undefined" !== typeof o.requireds[i].selGroups) {
-													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[o.requireds[i].selGroups[f]]) {
-															var co = e.app.compG[o.requireds[i].selGroups[f]],
-																coG = e.app.groups[co.groups],
-																z = coG.elements;
-																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
-														}
-													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
-													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													}
-												}
-											} else if ("selFromRows" == o.requireds[i].type) {
-												if ("undefined" !== typeof o.requireds[i].selRows) {
-													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-													for (var x = 0, f = 0; f < o.requireds[i].selRows.length; f++) {
-														if ("undefined" !== typeof e.app.compR[o.requireds[i].selRows[f]]) {
-															var co = e.app.compR[o.requireds[i].selRows[f]],
-																coR = e.app.rows[co.rows];
-															x += coR.currentChoices;
-														}
-													}
-													if (o.requireds[i].selFromOperators == "1") {
-														if (x < o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													} else if (o.requireds[i].selFromOperators == "2") {
-														if (x != o.requireds[i].selNum) return !1
-													} else if (o.requireds[i].selFromOperators == "3") {
-														if (x > o.requireds[i].selNum) return !1
-														else if (o.requireds[i].selNum == 0 && x > 0) return !1
-													}
-												}
-											} else if ("selFromWhole" == o.requireds[i].type) {
-												o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
-												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
-												if (o.requireds[i].selFromOperators == "1") {
-													if (x < o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
-												} else if (o.requireds[i].selFromOperators == "2") {
-													if (x != o.requireds[i].selNum) return !1
-												} else if (o.requireds[i].selFromOperators == "3") {
-													if (x > o.requireds[i].selNum) return !1
-													else if (o.requireds[i].selNum == 0 && x > 0) return !1
-												}
-											}
+											} else if ("or" == o.requireds[i].type) {
+												o.requireds[i].orNum = "undefined" === typeof o.requireds[i].orNum ? 1 : o.requireds[i].orNum;
+                                                for (var l = 0, c = 0; c < o.requireds[i].orRequired.length; c++) e.app.activated.includes(o.requireds[i].orRequired[c].req) || "" == o.requireds[i].orRequired[c].req || l++;
+												console.log(o.requireds[i].orRequired.length, l);
+                                                if (l < o.requireds[i].orNum) return !1;
+                                            }
                                         }
                                     }
                                 }
-                            return !0
+                            return !0;
                         }
                     }
                 },
@@ -9055,7 +9378,7 @@
                     },
                     cleanActivated: function(e) {
                         var t, o, i, s, r, a, n, p, f, b, v, ee;
-                        for (e.app.activated.splice(0), o = 0; o < e.app.rows.length; o++) {
+                        for (e.app.activated.length = 0, e.app.mdObjects.length = 0, o = 0; o < e.app.rows.length; o++) {
 							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
 								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
 									if (e.app.rows[o].objects[t].isSelectableMultiple) {
@@ -9076,8 +9399,8 @@
 								if (e.app.rows[o].objects[t].textfieldIsOn)
 									for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == e.app.rows[o].objects[t].idOfTheTextfieldWord && (e.app.words[m].replaceText = e.app.rows[o].objects[t].wordChangeDeselect);
 								if (e.app.rows[o].objects[t].isImageUpload) e.app.rows[o].objects[t].image = "";
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) e.app.rows[o].objects[t].activatedRandom.splice(0);
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandomMul) e.app.rows[o].objects[t].activatedRandomMul.splice(0);
+								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) e.app.rows[o].objects[t].activatedRandom.length = 0;
+								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandomMul) e.app.rows[o].objects[t].activatedRandomMul.length = 0;
 								if (e.app.rows[o].objects[t].isActive && e.app.rows[o].objects[t].changeBackground) {
 									if (e.app.rows[o].objects[t].changeBgImage) {
 										var a = e.app.styling.backgroundImage;
@@ -9111,7 +9434,7 @@
 							e.app.rows[o].currentChoices = 0;
 						}
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
-						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.splice(0);
+						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.length = 0;
 						if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
                     },
                     addNewPointType: function(t, e) {

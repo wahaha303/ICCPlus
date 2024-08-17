@@ -67,7 +67,11 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to put the font name directly for using custom fonts.
  - Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated.
  - Added a feature to use the modulo operator in 'point comparison' requirements.
- - Added a feature to import a project directly from a 'CYOA.zip' file.
+ - Added a feature to directly load a project from the 'CYOA.zip' file.
+ - Added a feature to copy/paste requirement.
+ - Added a feature to modify the 'Number of requirements' for 'X of these' Requirements.
+ - Added a feature to merge duplicate images when exporting a project as a zip file.
+ - Added an option in Global Settings to enable or disable automatic image conversion.
 
 
 ## Fixed
@@ -125,4 +129,5 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where 'Multiply/Divide' features were not working correctly.
  - Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly.
  - Fixed an issue where choices activated by 'Forces another choice active' were de-selectable.
+ - Fixed an issue where image split downloads do not work correctly in the Firefox browser.
  
