@@ -26,16 +26,7 @@
                             },
                             expression: "dialog"
                         }
-                    }, [o("v-card", [!t.options.word ? o("v-toolbar", {
-                        attrs: {
-                            dark: "",
-                            color: t.options.color,
-                            dense: "",
-                            flat: ""
-                        }
-                    }, [o("v-toolbar-title", {
-                        staticClass: "text-body-2 font-weight-bold grey--text"
-                    }, [t._v(" " + t._s(t.title) + " ")])], 1) : t._e(), o("v-card-text", {
+                    }, [o("v-card", [o("v-card-text", {
                         directives: [{
                             name: "show",
                             rawName: "v-show",
@@ -136,8 +127,6 @@
                 v = o("99d9"),
                 g = o("62ad"),
                 f = o("169a"),
-                h = o("71d9"),
-                p = o("2a7f"),
 				z = o("a844"),
                 b = Object(l["a"])(i, n, a, !1, null, null, null);
             e["default"] = b.exports;
@@ -148,9 +137,7 @@
                 VCardText: v["b"],
                 VCol: g["a"],
                 VDialog: f["a"],
-				VTextarea: z["a"],
-                VToolbar: h["a"],
-                VToolbarTitle: p["a"]
+				VTextarea: z["a"]
             })
         }
     }

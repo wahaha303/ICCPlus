@@ -223,12 +223,12 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Download pre-release Viewer : "), o("a", {
+                }, [e._v(" Download Latest Viewer : "), o("a", {
                     attrs: {
-                        href: "https://github.com/wahaha303/ICCPlus/releases/tag/v.1.8.1-pre-release",
+                        href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.8.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.8.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 14.08.2024")]), o("v-col", {
+                }, [e._v("Update: 18.08.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated. "), o("br"), e._v(" Added a feature to use the modulo operator in 'point comparison' requirements. "), o("br"), e._v(" Added a feature to directly load a project from the 'CYOA.zip' file. "), o("br"), e._v(" Added a feature to copy/paste requirement. "), o("br"), e._v(" Added a feature to merge duplicate images when saving a project as a zip file. "), o("br"), e._v(" Added an option in Global Settings to enable or disable automatic image conversion. ")]), o("v-col", {
+                }, [e._v(" Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated. "), o("br"), e._v(" Added a feature to use the modulo operator in 'point comparison' requirements. "), o("br"), e._v(" Added a feature to directly load a project from the 'CYOA.zip' file. "), o("br"), e._v(" Added a feature to copy/paste a requirement. "), o("br"), e._v(" Added a feature to merge duplicate images when exporting a project as a zip file. "), o("br"), e._v(" Added a feature to increase or decrease the 'Number of requirements' for 'X of these'. "), o("br"), e._v(" Added an option in Global Settings to enable or disable automatic image conversion. "), o("br"), e._v(" Added an option in Global Settings to enable image preloading in the backpack. "), o("br"), e._v(" Added a feature to display the discounted score. "), o("br"), e._v(" Added a feature to export ID/Name list as a CSV file. "), o("br"), e._v(" Added a feature to choose the display type in the loading animation (see index.html). ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -537,7 +537,7 @@
 					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
-							e.$set(e.app, "printThis", !0);
+							if (e.app.preloadImages) e.$set(e.app, "printThis", !0);
                             e.currentComponent = "appBackpackPreview"
                         }
                     }
@@ -691,7 +691,23 @@
                     })], 1)
                 })), 1), o("ConfirmDlg", {
                     ref: "confirm"
-                })], 1)], 1)
+                })], 1), e.globalVariables.snackbar ? o("span", [o("v-snackbar", {
+                    attrs: {
+                        top: "",
+                        timeout: 2e3
+                    },
+                    model: {
+                        value: e.globalVariables.snackbar,
+                        callback: function(t) {
+                            e.globalVariables.snackbar = t
+                        },
+                        expression: "snackbar"
+                    }
+                }, [o("div", {
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [e._v(e._s(e.globalVariables.text))])])], 1) : e._e()], 1)
             },
             n = [],
             l = (o("c975"), o("a434"), o("d3b7"), o("96cf"), o("1da1")),
@@ -1471,6 +1487,8 @@
                             e.currentComponent = t
                         }
                     }
+                }), o("ConfirmDlg", {
+                    ref: "confirm"
                 })], 1)
             },
             d = [],
@@ -2406,7 +2424,7 @@
                     model: {
                         value: e.object.discountOther,
                         callback: function(t) {
-                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountGroups", []), e.$set(e.object, "discountLowLimitIsOn", !1),  e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", 0);
+                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountGroups", []), e.$set(e.object, "discountLowLimitIsOn", !1),  e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", 0), e.$set(e.object, "discountShow", !1);
                         },
                         expression: "object.discountOther"
                     }
@@ -2437,7 +2455,55 @@
                         },
                         expression: "object.discountLowLimit"
                     }
-                })] : e._e(), o("v-select", {
+                })] : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Change the score displayed?"
+                    },
+                    model: {
+                        value: e.object.discountShow,
+                        callback: function(t) {
+                            e.$set(e.object, "discountShow", t), e.$set(e.object, "discountBeforeText", ""), e.$set(e.object, "discountAfterText", "")
+                        },
+                        expression: "object.discountShow"
+                    }
+                }), e.object.discountShow ? [o("v-row", [o("v-col", {
+					staticClass: "pa-1",
+					attrs: {
+						cols: 6
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+						label: "Added Text Before",
+						filled: ""
+                    },
+                    model: {
+                        value: e.object.discountBeforeText,
+                        callback: function(t) {
+                            e.$set(e.object, "discountBeforeText", t)
+                        },
+                        expression: "object.discountBeforeText"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "pa-1",
+					attrs: {
+						cols: 6
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Added Text After",
+						filled: ""
+                    },
+                    model: {
+                        value: e.object.discountAfterText,
+                        callback: function(t) {
+                            e.$set(e.object, "discountAfterText", t)
+                        },
+                        expression: "object.discountAfterText"
+                    }
+                })], 1)], 1)] : e._e(), o("v-select", {
                     attrs: {
                         "hide-details": "",
 						items: this.app.groups,
@@ -4543,7 +4609,23 @@
                     on: {
                         click: e.cleanCurrentComponent
                     }
-                }, [e._v("Close")])], 1)], 1)], 1)], 1)
+                }, [e._v("Close")])], 1)], 1)], 1), e.snackbar ? o("span", [o("v-snackbar", {
+                    attrs: {
+                        top: "",
+                        timeout: 2e3
+                    },
+                    model: {
+                        value: e.snackbar,
+                        callback: function(t) {
+                            e.snackbar = t
+                        },
+                        expression: "snackbar"
+                    }
+                }, [o("div", {
+                    staticStyle: {
+                        "text-align": "center"
+                    }
+                }, [e._v(e._s(e.text))])])], 1) : e._e()], 1)
             },
             v = [],
             m = {
@@ -4555,14 +4637,19 @@
                         currentComponent: "",
                         dialog: !0,
                         numberOfOrRequireds: 4,
-						numberOfSelection: 1
+						numberOfSelection: 1,
+						text: "",
+						snackbar: !1
                     }
                 },
                 components: {},
                 computed: {
                     app: function() {
                         return this.$store.state.app
-                    }
+                    },
+					globalVariables: function() {
+						return this.$store.state.globalVariables
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -4594,7 +4681,9 @@
                         });
                     },
 					pasteRequired: function(e, t) {
-						if ("undefined" !== typeof this.app.tmpRequired) {
+						if ("undefined" === typeof this.app.tmpRequired || "undefined" === typeof this.app.tmpRequired.type) {
+							this.globalVariables.text = "The clipboard is empty.", this.globalVariables.snackbar = !0;
+						} else {
 							if (this.app.tmpRequired.length > 1) {
 								for (var a = 0; a < this.app.tmpRequired.length; a++) {
 									t.push(this.app.tmpRequired[a]);
@@ -4626,6 +4715,7 @@
             R = o("8654"),
 			li = o("ce7e"),
 			vo = o("23a7"),
+			Ct = o("2db4"),
             F = Object(w["a"])(f, b, v, !1, null, null, null),
             _ = F.exports;
         x()(F, {
@@ -4639,6 +4729,7 @@
             VDialog: B["a"],
             VRow: S["a"],
             VSpacer: O["a"],
+			VSnackbar: Ct["a"],
             VTextField: R["a"]
         });
         var q = function() {
@@ -7507,7 +7598,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -7519,7 +7610,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : ""), e.sanitizeArg))
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -7527,7 +7618,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -7539,7 +7630,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : "") + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -7554,7 +7645,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " " + e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : "") + " ", e.sanitizeArg))
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -12964,6 +13055,110 @@
             VSwitch: L["a"],
             VTooltip: Q["a"]
         });
+		var wji = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        scrollable: "",
+						persistent: "",
+                        "max-width": "600px"
+                    },					
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", [o("v-card-text", {
+					staticClass: "pb-0"
+				}, [o("v-container", [o("v-row", [o("v-col", [e.row.wordPromptText ? o("span", {
+					staticStyle: {
+						"font-size": "120%"
+					},
+					domProps: {
+						innerHTML: e._s(e.row.wordPromptText)
+					}
+				}) : e._e(), o("v-textarea", {
+					staticClass: "pt-4",
+                    attrs: {
+                        label: "",
+                        filled: "",
+						noResize: !0,
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.wordChangeSelect,
+                        callback: function(t) {
+                            e.$set(e.row, "wordChangeSelect", t)
+                        },
+                        expression: "object.wordChangeSelect"
+                    }
+                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "blue darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Confirm")])], 1)], 1)], 1)
+            },
+            wIi = [],
+            wki = {
+				props: {
+                    row: Object
+                },
+                data: function() {
+                    return {
+                        dialog: !0
+                    }
+                },
+                computed: {
+                    app: function() {
+                        return this.$store.state.app
+                    }
+                },
+				created: function() {
+					var e = this;
+					this.$set(this.row, "wordChangeSelect", "");
+					return new Promise((function(t) {
+						e.resolve = t
+					}))
+				},
+                methods: {
+					open: function() {
+						var e = this;
+						this.$set(this.row, "wordChangeSelect", "");
+						return this.dialog = !0, new Promise((function(t) {
+							e.resolve = t
+						}))
+					},
+                    cleanCurrentComponent: function() {
+						this.$set(this.app, "wordChangeComplete", !0);
+						this.resolve(!0);
+                        this.$emit("cleanCurrentComponent", "");
+                    }
+                }
+            },
+            wBi = wki,
+            wSi = Object(w["a"])(wBi, wji, wIi, !1, null, null, null),
+            wOi = wSi.exports;
+        x()(wSi, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VTextField: R["a"],
+			VTextarea: Z["a"],
+        });
         var vt = {
                 props: {
                     object: Object,
@@ -14111,37 +14306,721 @@
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
-						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
-							for (var g = 0; g < e.scores.length; g++)
-								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
-									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
-									e.scores[g].setValue = !0;
-									for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+						var i = this,
+							s = this.checkRequireds(e),
+							o = this.checkPoints(e),
+							k = !0;
+						if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+							var cnt = 0;
+							for (var r = 0; r < t.objects.length; r++) {
+								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+									this.activateObject(t.objects[r], t);
+									break
 								}
-							var i = this,
-								s = this.checkRequireds(e),
-								o = this.checkPoints(e),
-								k = !0;
-							var tmpScores = [];
-							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
-							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
-								var cnt = 0;
-								for (var r = 0; r < t.objects.length; r++) {
-									if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-										this.activateObject(t.objects[r], t);
-										break
-									}
-									else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
-								}
-								if (cnt >= t.allowedChoices) k = !1;
+								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
 							}
-							if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
-								if (this.activated.includes(eid)) {
+							if (cnt >= t.allowedChoices) k = !1;
+						}
+						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							.then(({result, wordText}) => {
+								if (result) {
+									e.wordChangeSelect = wordText;
+								} else {
+									e.wordChangeSelect = e.wordChangeDeselect;
+								}
+								i.$set(i.app, "wordChangeComplete", !0);
+								i.activateObject(e, t);
+								i.$set(i.app, "wordChangeComplete", !1);
+							});
+						} else {
+							if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
+								for (var g = 0; g < e.scores.length; g++)
+									if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+										e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+										e.scores[g].setValue = !0;
+										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+									}
+								
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
+									if (this.activated.includes(eid)) {
+										if (this.checkPointsMD(e)) {
+											for (var a = 0; a < e.scores.length; a++)
+												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											var ee = 0, EE = 0;
+											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
+													for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
+														var rndV = e.activatedRandom[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+															var co = this.app.comp[rndV[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == rndV[0]) {
+																			EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = rndV[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												} else {
+													for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+														var pv = p[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[pv[0]]) {
+															var co = this.app.comp[pv[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+																if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+															}
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == pv[0]) {
+																			EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = pv[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												}
+											}
+											for (var f = 0; f < this.activated.length; f++) {
+												var af = this.activated[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[af[0]]) {
+													var co = this.app.comp[af[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (!this.exceptedObjects.includes(coO.id)) {
+														var nH = this.activated.indexOf(eid);
+														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
+														var bR = this.checkRequireds(coO);
+														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
+														if (!bR) {
+															this.exceptedObjects.push(coO.id);
+															if (coO.isMultipleUseVariable) {
+																for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+																}
+																if (coO.forcedActivated) {
+																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+																}
+															} else {
+																if (coO.forcedActivated) coO.forcedActivated = !1;
+																this.activateObject(coO, coR);
+															}
+															f--;
+														}
+													}
+												}
+											}
+											if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+											if (e.multiplyPointtypeIsOnCheck) {
+												e.multiplyPointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.dividePointtypeIsOnCheck) {
+												e.dividePointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.textfieldIsOn)
+												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.addToAllowChoice)
+												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+													var co = this.app.compR[e.idOfAllowChoice],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+													var d = coR.currentChoices - 1;
+													if (d > coR.allowedChoices) {
+														var u = d - coR.allowedChoices;
+														for (var v = 0; v < coR.objects.length; v++) {
+															if (u > 0 && coR.objects[v].isActive) {
+																this.activateObject(coR.objects[v], coR);
+																u--;
+															}
+														}
+													}
+												}
+											if (e.backpackBtnRequirement)
+												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+											if (e.changeBackground) {
+												if (e.changeBgImage) {
+													var a = this.app.styling.backgroundImage;
+													this.$set(this.app.styling, "backgroundImage", e.bgImage);
+													this.$set(e, "bgImage", a);
+												} else {
+													var a = this.app.styling.backgroundColor;
+													this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+													this.$set(e, "changedBgColorCode", a);
+												}
+											}
+											if (e.changePointBar) {
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barBackgroundColor;
+													this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+													this.$set(e, "changedBarBgColor", a);
+												}
+												if (e.changeBarTextColorIsOn) {
+													var a = this.app.styling.barTextColor;
+													this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+													this.$set(e, "changedBarTextColor", a);
+												}
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barIconColor;
+													this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+													this.$set(e, "changedBarIconColor", a);
+												}
+											}
+											if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+												if (e.bgmId) {
+													this.app.bgmIsPlaying = !1;
+													this.playBgm(e, e.bgmId, 0);
+												}
+											}
+											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+												if ("undefined" !== typeof bgmPlayer.unMute) {
+													bgmPlayer.unMute();
+												}
+											}
+											if (e.discountOther)
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+													for (var a = 0; a < this.app.groups.length; a++)
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
+																}
+															}
+											if (e.isContentHidden) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {											
+													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+															var co = this.app.compR[e.hiddenContentsRow[a]],
+																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+															if (coR.isResultRow) {
+																for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
+																}
+															}
+														}
+													}
+												}
+											}
+											this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
+											e.isActive = !e.isActive, this.updateActivated();
+										}
+									} else {
+										if (e.discountOther)
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+												for (var a = 0; a < this.app.groups.length; a++)
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var co = this.app.comp[this.app.groups[a].elements[b].id],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															for (var c = 0; c < coO.scores.length; c++) {
+																var coS = coO.scores[c];
+																if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																	this.$set(coS, "discountIsOn", true);
+																	this.$set(coS, "discountedFrom", e.id);
+																}
+															}
+														}
+										for (var g = 0; g < e.scores.length; g++)
+											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+										this.activated.push(eid), t.currentChoices += 1;
+										var a, f, b, m, v, ee = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.duplicateRow) {
+											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
+										}
+										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+												var y = e.activateThisChoice.split(","); 
+												var RD = y.slice(),
+													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+													nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+												this.$set(e, 'activatedRandom', []);
+												for (var v = rd.length - 1; v > 0; v--) {
+													var rnd = Math.floor(Math.random() * (v + 1));
+													[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+												}
+												e.activatedRandom = rd.slice(0, nAR);
+												for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+													var rndV = e.activatedRandom[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+														var co = this.app.comp[rndV[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = rndV[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+														} else {
+															if (nAR + a < rd.length) {
+																e.activatedRandom.splice(v, 1, rd[nAR + a]);
+																a++, v--;
+															} else {
+																e.activatedRandom.splice(v, 1);
+																b--, v--;
+															}
+														}
+													}
+												}
+											} else {
+												for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+													var yv = y[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[yv[0]]) {
+														var co = this.app.comp[yv[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+														}
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = yv[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+															if(!coO.isActive) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+																coO.forcedActivated = !1;
+															}
+														} else {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+															coO.forcedActivated = !1;
+														}
+													}
+												}
+											}
+										}
+										if (e.deactivateOtherChoice)
+											for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+												var yf = y[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yf[0]]) {
+													var co = this.app.comp[yf[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+														if (!coO.forcedActivated) {
+															if (coO.isSelectableMultiple) {
+																var ee = yf[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneLess(coO, coR);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(coO, coR);
+																	}
+																}
+															} else {
+																if (coO.isActive) this.activateObject(coO, coR);
+															}
+														}
+												}
+												if ("undefined" !== typeof this.app.compG[yf[0]]) {
+													var co = this.app.compG[yf[0]],
+														coG = this.app.groups[co.groups];
+													for (var T = 0; T < coG.elements.length; T++) {
+														if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
+															var coT = this.app.comp[coG.elements[T].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															if (!coTO.forcedActivated) {
+																if (coTO.isSelectableMultiple) {
+																	var ee = yf[1];
+																	if (ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.selectedOneLess(coTO, coTR);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(coTO, coTR);
+																		}
+																	}
+																} else {
+																	if (coTO.isActive) this.activateObject(coTO, coTR);
+																}
+															}
+														}
+													}
+												}
+											}
+										for (var f = 0; f < this.activated.length; f++) {
+											var aF = this.activated[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aF[0]]) {
+												var co = this.app.comp[aF[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (!this.exceptedObjects.includes(coO.id)) {
+													if (!this.checkRequireds(coO)) {
+														this.exceptedObjects.push(coO.id);
+														if (coO.isMultipleUseVariable) {
+															for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+															}
+															if (coO.forcedActivated) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															}
+														} else {
+															if (coO.forcedActivated) coO.forcedActivated = !1;
+															this.activateObject(coO, coR);
+														}
+														f--;
+													}
+												}
+											}
+										}
+										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+										if (e.multiplyPointtypeIsOn) {
+											e.multiplyPointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													if (e.multiplyPointtypeIsId)
+														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													this.app.mdObjects.push(e);
+												}
+										}
+										if (e.dividePointtypeIsOn) {
+											e.dividePointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											this.app.mdObjects.push(e);
+										}
+										if (e.addToAllowChoice)
+											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+												var co = this.app.compR[e.idOfAllowChoice],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+												coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+												var I = coR.currentChoices;
+												if (I > coR.allowedChoices) {
+													var O = I - coR.allowedChoices;
+													for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+												}
+											}
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeSelect;
+												}
+											}
+										}
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+										}
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.changePointBar) {
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barBackgroundColor;
+												this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+												this.$set(e, "changedBarBgColor", a);
+											}
+											if (e.changeBarTextColorIsOn) {
+												var a = this.app.styling.barTextColor;
+												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+												this.$set(e, "changedBarTextColor", a);
+											}
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barIconColor;
+												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+												this.$set(e, "changedBarIconColor", a);
+											}
+										}
+										if (e.scrollToRow) {
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+													var co = this.app.compR[e.scrollRowId],
+														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												}
+											}
+										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.mute) {
+												bgmPlayer.mute();
+											}
+										}
+										if (e.isContentHidden) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {											
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														if (coR.isResultRow) {
+															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
+															}
+														}
+													}
+												}
+											}
+										}
+										e.isActive = !e.isActive, this.updateActivated();
+									}
+								} else if (this.activated.includes(eid)) {
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-										var ee = 0, EE = 0;
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -14178,7 +15057,8 @@
 																	}
 																}
 															} else {
-																if (ee = rndV[1], ee > 0) {
+																var ee = rndV[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -14242,7 +15122,8 @@
 																	}
 																}
 															} else {
-																if (ee = pv[1], ee > 0) {
+																var ee = pv[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -14305,93 +15186,11 @@
 										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
 										if (e.textfieldIsOn)
 											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
@@ -14435,21 +15234,10 @@
 												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
 												this.$set(e, "changedBarTextColor", a);
 											}
-											if (e.changeBarBgColorIsOn) {
+											if (e.changeBarIconColorIsOn) {
 												var a = this.app.styling.barIconColor;
 												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
 												this.$set(e, "changedBarIconColor", a);
-											}
-										}
-										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-											if (e.bgmId) {
-												this.app.bgmIsPlaying = !1;
-												this.playBgm(e, e.bgmId, 0);
-											}
-										}
-										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-											if ("undefined" !== typeof bgmPlayer.unMute) {
-												bgmPlayer.unMute();
 											}
 										}
 										if (e.discountOther)
@@ -14465,6 +15253,17 @@
 																if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 															}
 														}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0)
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.unMute) {
+												bgmPlayer.unMute();
+											}
+										}
 										if (e.isContentHidden) {
 											if ("undefined" !== typeof this.app.compR[t.id]) {											
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
@@ -14487,605 +15286,13 @@
 												}
 											}
 										}
-										this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
-										e.isActive = !e.isActive, this.updateActivated();
+										this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
 									}
-								} else {
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																this.$set(coS, "discountIsOn", true);
-																this.$set(coS, "discountedFrom", e.id);
-															}
-														}
-													}
-									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
-									this.activated.push(eid), t.currentChoices += 1;
-									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
-									if (e.duplicateRow) {
-										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
-									}
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											var y = e.activateThisChoice.split(","); 
-											var RD = y.slice(),
-												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-											this.$set(e, 'activatedRandom', []);
-											for (var v = rd.length - 1; v > 0; v--) {
-												var rnd = Math.floor(Math.random() * (v + 1));
-												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
-											}
-											e.activatedRandom = rd.slice(0, nAR);
-											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-													} else {
-														if (nAR + a < rd.length) {
-															e.activatedRandom.splice(v, 1, rd[nAR + a]);
-															a++, v--;
-														} else {
-															e.activatedRandom.splice(v, 1);
-															b--, v--;
-														}
-													}
-												}
-											}
-										} else {
-											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												var yv = y[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[yv[0]]) {
-													var co = this.app.comp[yv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = yv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-														if(!coO.isActive) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-															coO.forcedActivated = !1;
-														}
-													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-														coO.forcedActivated = !1;
-													}
-												}
-											}
-										}
-									}
-									if (e.deactivateOtherChoice)
-										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											var yf = y[f].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yf[0]]) {
-												var co = this.app.comp[yf[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-													if (!coO.forcedActivated) {
-														if (coO.isSelectableMultiple) {
-															var ee = yf[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneLess(coO, coR);
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(coO, coR);
-																}
-															}
-														} else {
-															if (coO.isActive) this.activateObject(coO, coR);
-														}
-													}
-											}
-											if ("undefined" !== typeof this.app.compG[yf[0]]) {
-												var co = this.app.compG[yf[0]],
-													coG = this.app.groups[co.groups];
-												for (var T = 0; T < coG.elements.length; T++) {
-													if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
-														var coT = this.app.comp[coG.elements[T].id],
-															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
-															coTO = coTR.objects[coT.objects];
-														if (!coTO.forcedActivated) {
-															if (coTO.isSelectableMultiple) {
-																var ee = yf[1];
-																if (ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneLess(coTO, coTR);
-																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(coTO, coTR);
-																	}
-																}
-															} else {
-																if (coTO.isActive) this.activateObject(coTO, coTR);
-															}
-														}
-													}
-												}
-											}
-										}
-									for (var f = 0; f < this.activated.length; f++) {
-										var aF = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[aF[0]]) {
-											var co = this.app.comp[aF[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												if (!this.checkRequireds(coO)) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOn) {
-										e.multiplyPointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++)
-											if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-												this.app.mdObjects.push(e);
-											}
-									}
-									if (e.dividePointtypeIsOn) {
-										e.dividePointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
-										this.app.mdObjects.push(e);
-									}
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
-											var I = coR.currentChoices;
-											if (I > coR.allowedChoices) {
-												var O = I - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
-											}
-										}
-									if (e.textfieldIsOn) {
-										for (var m = 0; m < this.app.words.length; m++) {
-											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-												if (e.customTextfieldIsOn) {
-													e.wordChangeSelect = prompt(e.wordPromptText);
-													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
-												}
-												this.app.words[m].replaceText = e.wordChangeSelect;
-											}
-										}
-									}
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-												var co = this.app.compR[e.scrollRowId],
-													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-												coR.$el.scrollIntoView({ behavior: 'smooth' });
-											}
-										}
-									}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.mute) {
-											bgmPlayer.mute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
-													}
-												}
-											}
-										}
-									}
-									e.isActive = !e.isActive, this.updateActivated();
 								}
-							} else if (this.activated.includes(eid)) {
-								if (this.checkPointsMD(e)) {
-									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == rndV[0]) {
-																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										} else {
-											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-												var pv = p[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[pv[0]]) {
-													var co = this.app.comp[pv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == pv[0]) {
-																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = pv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										}
-									}
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												var nH = this.activated.indexOf(eid);
-												this.activated.splice(nH, 1);
-												t.currentChoices -= 1;
-												var bR = this.checkRequireds(coO);
-												this.activated.splice(nH, 0, eid);
-												t.currentChoices += 1;
-												if (!bR) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOnCheck) {
-										e.multiplyPointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
-									}
-									if (e.dividePointtypeIsOnCheck) {
-										e.dividePointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
-									}
-									if (e.textfieldIsOn)
-										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
-											var d = coR.currentChoices - 1;
-											if (d > coR.allowedChoices) {
-												var u = d - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) {
-													if (u > 0 && coR.objects[v].isActive) {
-														this.activateObject(coR.objects[v], coR);
-														u--;
-													}
-												}
-											}
-										}
-									if (e.backpackBtnRequirement)
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarIconColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-														}
-													}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0)
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.unMute) {
-											bgmPlayer.unMute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
-													}
-												}
-											}
-										}
-									}
-									this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
-								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
-							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
+							if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
 						}
-						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -15700,7 +15907,6 @@
             wt = o("49e2"),
             yt = o("c865"),
             xt = o("0393"),
-            Ct = o("2db4"),
             Tt = o("71d9"),
             jt = Object(w["a"])(mt, p, u, !1, null, "b79ff9c2", null),
             It = jt.exports;
@@ -17911,7 +18117,10 @@
                     AppRowSettings: Ft,
                     AppObjectList: Jt,
                     ObjectRequirement: le,
-                    AppButtonSettings: Dt
+                    AppButtonSettings: Dt,
+                    ConfirmDlg: function() {
+                        return o.e("chunk-2d0e6102").then(o.bind(null, "96c2"))
+                    }
                 },
                 created: function() {
                     window.addEventListener("resize", this.handleResize), this.handleResize()
@@ -18858,37 +19067,721 @@
 					activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
-						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
-							for (var g = 0; g < e.scores.length; g++)
-								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
-									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
-									e.scores[g].setValue = !0;
-									for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+						var i = this,
+							s = this.checkRequireds(e),
+							o = this.checkPoints(e),
+							k = !0;
+						if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+							var cnt = 0;
+							for (var r = 0; r < t.objects.length; r++) {
+								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+									this.activateObject(t.objects[r], t);
+									break
 								}
-							var i = this,
-								s = this.checkRequireds(e),
-								o = this.checkPoints(e),
-								k = !0;
-							var tmpScores = [];
-							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
-							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
-								var cnt = 0;
-								for (var r = 0; r < t.objects.length; r++) {
-									if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-										this.activateObject(t.objects[r], t);
-										break
-									}
-									else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
-								}
-								if (cnt >= t.allowedChoices) k = !1;
+								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
 							}
-							if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
-								if (this.activated.includes(eid)) {
+							if (cnt >= t.allowedChoices) k = !1;
+						}
+						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							.then(({result, wordText}) => {
+								if (result) {
+									e.wordChangeSelect = wordText;
+								} else {
+									e.wordChangeSelect = e.wordChangeDeselect;
+								}
+								i.$set(i.app, "wordChangeComplete", !0);
+								i.activateObject(e, t);
+								i.$set(i.app, "wordChangeComplete", !1);
+							});
+						} else {
+							if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
+								for (var g = 0; g < e.scores.length; g++)
+									if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+										e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+										e.scores[g].setValue = !0;
+										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+									}
+								
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
+									if (this.activated.includes(eid)) {
+										if (this.checkPointsMD(e)) {
+											for (var a = 0; a < e.scores.length; a++)
+												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											var ee = 0, EE = 0;
+											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
+													for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
+														var rndV = e.activatedRandom[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+															var co = this.app.comp[rndV[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == rndV[0]) {
+																			EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = rndV[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												} else {
+													for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+														var pv = p[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[pv[0]]) {
+															var co = this.app.comp[pv[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+																if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+															}
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == pv[0]) {
+																			EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = pv[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												}
+											}
+											for (var f = 0; f < this.activated.length; f++) {
+												var af = this.activated[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[af[0]]) {
+													var co = this.app.comp[af[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (!this.exceptedObjects.includes(coO.id)) {
+														var nH = this.activated.indexOf(eid);
+														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
+														var bR = this.checkRequireds(coO);
+														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
+														if (!bR) {
+															this.exceptedObjects.push(coO.id);
+															if (coO.isMultipleUseVariable) {
+																for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+																}
+																if (coO.forcedActivated) {
+																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+																}
+															} else {
+																if (coO.forcedActivated) coO.forcedActivated = !1;
+																this.activateObject(coO, coR);
+															}
+															f--;
+														}
+													}
+												}
+											}
+											if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+											if (e.multiplyPointtypeIsOnCheck) {
+												e.multiplyPointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.dividePointtypeIsOnCheck) {
+												e.dividePointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.textfieldIsOn)
+												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.addToAllowChoice)
+												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+													var co = this.app.compR[e.idOfAllowChoice],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+													var d = coR.currentChoices - 1;
+													if (d > coR.allowedChoices) {
+														var u = d - coR.allowedChoices;
+														for (var v = 0; v < coR.objects.length; v++) {
+															if (u > 0 && coR.objects[v].isActive) {
+																this.activateObject(coR.objects[v], coR);
+																u--;
+															}
+														}
+													}
+												}
+											if (e.backpackBtnRequirement)
+												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+											if (e.changeBackground) {
+												if (e.changeBgImage) {
+													var a = this.app.styling.backgroundImage;
+													this.$set(this.app.styling, "backgroundImage", e.bgImage);
+													this.$set(e, "bgImage", a);
+												} else {
+													var a = this.app.styling.backgroundColor;
+													this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+													this.$set(e, "changedBgColorCode", a);
+												}
+											}
+											if (e.changePointBar) {
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barBackgroundColor;
+													this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+													this.$set(e, "changedBarBgColor", a);
+												}
+												if (e.changeBarTextColorIsOn) {
+													var a = this.app.styling.barTextColor;
+													this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+													this.$set(e, "changedBarTextColor", a);
+												}
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barIconColor;
+													this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+													this.$set(e, "changedBarIconColor", a);
+												}
+											}
+											if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+												if (e.bgmId) {
+													this.app.bgmIsPlaying = !1;
+													this.playBgm(e, e.bgmId, 0);
+												}
+											}
+											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+												if ("undefined" !== typeof bgmPlayer.unMute) {
+													bgmPlayer.unMute();
+												}
+											}
+											if (e.discountOther)
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+													for (var a = 0; a < this.app.groups.length; a++)
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
+																}
+															}
+											if (e.isContentHidden) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {											
+													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+															var co = this.app.compR[e.hiddenContentsRow[a]],
+																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+															if (coR.isResultRow) {
+																for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
+																}
+															}
+														}
+													}
+												}
+											}
+											this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
+											e.isActive = !e.isActive, this.updateActivated();
+										}
+									} else {
+										if (e.discountOther)
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+												for (var a = 0; a < this.app.groups.length; a++)
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var co = this.app.comp[this.app.groups[a].elements[b].id],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															for (var c = 0; c < coO.scores.length; c++) {
+																var coS = coO.scores[c];
+																if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																	this.$set(coS, "discountIsOn", true);
+																	this.$set(coS, "discountedFrom", e.id);
+																}
+															}
+														}
+										for (var g = 0; g < e.scores.length; g++)
+											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+										this.activated.push(eid), t.currentChoices += 1;
+										var a, f, b, m, v, ee = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.duplicateRow) {
+											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
+										}
+										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+												var y = e.activateThisChoice.split(","); 
+												var RD = y.slice(),
+													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+													nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+												this.$set(e, 'activatedRandom', []);
+												for (var v = rd.length - 1; v > 0; v--) {
+													var rnd = Math.floor(Math.random() * (v + 1));
+													[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+												}
+												e.activatedRandom = rd.slice(0, nAR);
+												for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+													var rndV = e.activatedRandom[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+														var co = this.app.comp[rndV[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = rndV[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+														} else {
+															if (nAR + a < rd.length) {
+																e.activatedRandom.splice(v, 1, rd[nAR + a]);
+																a++, v--;
+															} else {
+																e.activatedRandom.splice(v, 1);
+																b--, v--;
+															}
+														}
+													}
+												}
+											} else {
+												for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+													var yv = y[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[yv[0]]) {
+														var co = this.app.comp[yv[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+														}
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = yv[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+															if(!coO.isActive) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+																coO.forcedActivated = !1;
+															}
+														} else {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+															coO.forcedActivated = !1;
+														}
+													}
+												}
+											}
+										}
+										if (e.deactivateOtherChoice)
+											for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+												var yf = y[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yf[0]]) {
+													var co = this.app.comp[yf[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+														if (!coO.forcedActivated) {
+															if (coO.isSelectableMultiple) {
+																var ee = yf[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneLess(coO, coR);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(coO, coR);
+																	}
+																}
+															} else {
+																if (coO.isActive) this.activateObject(coO, coR);
+															}
+														}
+												}
+												if ("undefined" !== typeof this.app.compG[yf[0]]) {
+													var co = this.app.compG[yf[0]],
+														coG = this.app.groups[co.groups];
+													for (var T = 0; T < coG.elements.length; T++) {
+														if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
+															var coT = this.app.comp[coG.elements[T].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															if (!coTO.forcedActivated) {
+																if (coTO.isSelectableMultiple) {
+																	var ee = yf[1];
+																	if (ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.selectedOneLess(coTO, coTR);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(coTO, coTR);
+																		}
+																	}
+																} else {
+																	if (coTO.isActive) this.activateObject(coTO, coTR);
+																}
+															}
+														}
+													}
+												}
+											}
+										for (var f = 0; f < this.activated.length; f++) {
+											var aF = this.activated[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aF[0]]) {
+												var co = this.app.comp[aF[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (!this.exceptedObjects.includes(coO.id)) {
+													if (!this.checkRequireds(coO)) {
+														this.exceptedObjects.push(coO.id);
+														if (coO.isMultipleUseVariable) {
+															for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+															}
+															if (coO.forcedActivated) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															}
+														} else {
+															if (coO.forcedActivated) coO.forcedActivated = !1;
+															this.activateObject(coO, coR);
+														}
+														f--;
+													}
+												}
+											}
+										}
+										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+										if (e.multiplyPointtypeIsOn) {
+											e.multiplyPointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													if (e.multiplyPointtypeIsId)
+														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													this.app.mdObjects.push(e);
+												}
+										}
+										if (e.dividePointtypeIsOn) {
+											e.dividePointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											this.app.mdObjects.push(e);
+										}
+										if (e.addToAllowChoice)
+											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+												var co = this.app.compR[e.idOfAllowChoice],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+												coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+												var I = coR.currentChoices;
+												if (I > coR.allowedChoices) {
+													var O = I - coR.allowedChoices;
+													for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+												}
+											}
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeSelect;
+												}
+											}
+										}
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+										}
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.changePointBar) {
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barBackgroundColor;
+												this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+												this.$set(e, "changedBarBgColor", a);
+											}
+											if (e.changeBarTextColorIsOn) {
+												var a = this.app.styling.barTextColor;
+												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+												this.$set(e, "changedBarTextColor", a);
+											}
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barIconColor;
+												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+												this.$set(e, "changedBarIconColor", a);
+											}
+										}
+										if (e.scrollToRow) {
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+													var co = this.app.compR[e.scrollRowId],
+														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
+													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												}
+											}
+										}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.mute) {
+												bgmPlayer.mute();
+											}
+										}
+										if (e.isContentHidden) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {											
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														if (coR.isResultRow) {
+															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
+															}
+														}
+													}
+												}
+											}
+										}
+										e.isActive = !e.isActive, this.updateActivated();
+									}
+								} else if (this.activated.includes(eid)) {
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-										var ee = 0, EE = 0;
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -18925,7 +19818,8 @@
 																	}
 																}
 															} else {
-																if (ee = rndV[1], ee > 0) {
+																var ee = rndV[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -18989,7 +19883,8 @@
 																	}
 																}
 															} else {
-																if (ee = pv[1], ee > 0) {
+																var ee = pv[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -19052,93 +19947,11 @@
 										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
 										if (e.textfieldIsOn)
 											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
@@ -19182,21 +19995,10 @@
 												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
 												this.$set(e, "changedBarTextColor", a);
 											}
-											if (e.changeBarBgColorIsOn) {
+											if (e.changeBarIconColorIsOn) {
 												var a = this.app.styling.barIconColor;
 												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
 												this.$set(e, "changedBarIconColor", a);
-											}
-										}
-										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-											if (e.bgmId) {
-												this.app.bgmIsPlaying = !1;
-												this.playBgm(e, e.bgmId, 0);
-											}
-										}
-										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-											if ("undefined" !== typeof bgmPlayer.unMute) {
-												bgmPlayer.unMute();
 											}
 										}
 										if (e.discountOther)
@@ -19212,6 +20014,17 @@
 																if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 															}
 														}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0)
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.unMute) {
+												bgmPlayer.unMute();
+											}
+										}
 										if (e.isContentHidden) {
 											if ("undefined" !== typeof this.app.compR[t.id]) {											
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
@@ -19234,605 +20047,13 @@
 												}
 											}
 										}
-										this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
-										e.isActive = !e.isActive, this.updateActivated();
+										this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
 									}
-								} else {
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																this.$set(coS, "discountIsOn", true);
-																this.$set(coS, "discountedFrom", e.id);
-															}
-														}
-													}
-									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
-									this.activated.push(eid), t.currentChoices += 1;
-									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
-									if (e.duplicateRow) {
-										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
-									}
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											var y = e.activateThisChoice.split(","); 
-											var RD = y.slice(),
-												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-											this.$set(e, 'activatedRandom', []);
-											for (var v = rd.length - 1; v > 0; v--) {
-												var rnd = Math.floor(Math.random() * (v + 1));
-												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
-											}
-											e.activatedRandom = rd.slice(0, nAR);
-											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-													} else {
-														if (nAR + a < rd.length) {
-															e.activatedRandom.splice(v, 1, rd[nAR + a]);
-															a++, v--;
-														} else {
-															e.activatedRandom.splice(v, 1);
-															b--, v--;
-														}
-													}
-												}
-											}
-										} else {
-											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												var yv = y[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[yv[0]]) {
-													var co = this.app.comp[yv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = yv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-														if(!coO.isActive) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-															coO.forcedActivated = !1;
-														}
-													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-														coO.forcedActivated = !1;
-													}
-												}
-											}
-										}
-									}
-									if (e.deactivateOtherChoice)
-										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											var yf = y[f].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yf[0]]) {
-												var co = this.app.comp[yf[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-													if (!coO.forcedActivated) {
-														if (coO.isSelectableMultiple) {
-															var ee = yf[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneLess(coO, coR);
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(coO, coR);
-																}
-															}
-														} else {
-															if (coO.isActive) this.activateObject(coO, coR);
-														}
-													}
-											}
-											if ("undefined" !== typeof this.app.compG[yf[0]]) {
-												var co = this.app.compG[yf[0]],
-													coG = this.app.groups[co.groups];
-												for (var T = 0; T < coG.elements.length; T++) {
-													if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
-														var coT = this.app.comp[coG.elements[T].id],
-															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
-															coTO = coTR.objects[coT.objects];
-														if (!coTO.forcedActivated) {
-															if (coTO.isSelectableMultiple) {
-																var ee = yf[1];
-																if (ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneLess(coTO, coTR);
-																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(coTO, coTR);
-																	}
-																}
-															} else {
-																if (coTO.isActive) this.activateObject(coTO, coTR);
-															}
-														}
-													}
-												}
-											}
-										}
-									for (var f = 0; f < this.activated.length; f++) {
-										var aF = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[aF[0]]) {
-											var co = this.app.comp[aF[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												if (!this.checkRequireds(coO)) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOn) {
-										e.multiplyPointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++)
-											if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-												this.app.mdObjects.push(e);
-											}
-									}
-									if (e.dividePointtypeIsOn) {
-										e.dividePointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
-										this.app.mdObjects.push(e);
-									}
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
-											var I = coR.currentChoices;
-											if (I > coR.allowedChoices) {
-												var O = I - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
-											}
-										}
-									if (e.textfieldIsOn) {
-										for (var m = 0; m < this.app.words.length; m++) {
-											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-												if (e.customTextfieldIsOn) {
-													e.wordChangeSelect = prompt(e.wordPromptText);
-													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
-												}
-												this.app.words[m].replaceText = e.wordChangeSelect;
-											}
-										}
-									}
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-												var co = this.app.compR[e.scrollRowId],
-													coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-												coR.$el.scrollIntoView({ behavior: 'smooth' });
-											}
-										}
-									}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.mute) {
-											bgmPlayer.mute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
-													}
-												}
-											}
-										}
-									}
-									e.isActive = !e.isActive, this.updateActivated();
 								}
-							} else if (this.activated.includes(eid)) {
-								if (this.checkPointsMD(e)) {
-									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == rndV[0]) {
-																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										} else {
-											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-												var pv = p[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[pv[0]]) {
-													var co = this.app.comp[pv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == pv[0]) {
-																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = pv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										}
-									}
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												var nH = this.activated.indexOf(eid);
-												this.activated.splice(nH, 1);
-												t.currentChoices -= 1;
-												var bR = this.checkRequireds(coO);
-												this.activated.splice(nH, 0, eid);
-												t.currentChoices += 1;
-												if (!bR) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOnCheck) {
-										e.multiplyPointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
-									}
-									if (e.dividePointtypeIsOnCheck) {
-										e.dividePointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
-									}
-									if (e.textfieldIsOn)
-										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
-											var d = coR.currentChoices - 1;
-											if (d > coR.allowedChoices) {
-												var u = d - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) {
-													if (u > 0 && coR.objects[v].isActive) {
-														this.activateObject(coR.objects[v], coR);
-														u--;
-													}
-												}
-											}
-										}
-									if (e.backpackBtnRequirement)
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarIconColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-														}
-													}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0)
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.unMute) {
-											bgmPlayer.unMute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
-													}
-												}
-											}
-										}
-									}
-									this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
-								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
-							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
+							if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
 						}
-						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -20549,19 +20770,14 @@
                             e.currentComponent = "appStats"
                         }
                     }
-                }, [e._v("Project Stats")])], 1), o("br"), e._v("If you find the Interactive CYOA creator useful and want to support the developer, then please consider buying the desktop version of the web application here. "), o("iframe", {
+                }, [e._v("Project Stats")])], 1), o("br"), e._v("If you want to the desktop verson of Interactive CYOA Creator Plus, you can download here. "), o("iframe", {
                     attrs: {
                         frameborder: "0",
-                        src: "https://itch.io/embed/610808?border_width=2&bg_color=f3f1f1&fg_color=222222&link_color=c36200&border_color=bcb6b6",
+                        src: "https://hikawasisters.neocities.org/embed/",
                         width: "700",
                         height: "169"
                     }
-                }, [o("a", {
-                    attrs: {
-                        href: "https://meandelay.itch.io/interactive-cyoa-creator",
-                        target: "_blank"
-                    }
-                }, [e._v("Interactive CYOA Creator by MeanDelay")])])], 1)], 1)], 1), o(e.currentComponent, {
+                })], 1)], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     on: {
                         cleanCurrentComponent: function(t) {
@@ -26043,7 +26259,25 @@
                             staticClass: "col-lg-2"
                         }, [e._v(" " + e._s(t.title) + " / " + e._s(t.id) + " ")])
                     })), 1)], 1)
-                }))], 2)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                }))], 2)], 1)], 1), o("v-card-actions", [o("v-col", {
+					attrs: {
+						cols: 6
+					}
+				}, [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: function(t) {
+							return e.exportAsCsv(e.rows)
+						}
+                    }
+                }, [e._v("Export as CSV File")])], 1), o("v-col", {
+					attrs: {
+						cols: 6
+					}
+				}, [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -26051,7 +26285,7 @@
                     on: {
                         click: e.cleanCurrentComponent
                     }
-                }, [e._v("Close")])], 1)], 1)], 1)
+                }, [e._v("Close")])], 1)], 1)], 1)], 1)
             },
             Vi = [],
             Pi = {
@@ -26068,7 +26302,61 @@
                 methods: {
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
-                    }
+                    },
+					exportAsCsv: function(e) {
+						var p = ["id", "title"];
+						const result = {};
+						function fO(t, p) {
+							const r = {};
+							for (const key in t) {
+								if (p.includes(key)) {
+									r[key] = t[key];
+								}
+							}
+							if (Array.isArray(t.objects)) {
+								r.objects = t.objects.map(item => {
+									const fI = {};
+									for (const key in item) {
+										if (p.includes(key)) {
+											fI[key] = item[key];
+										}
+									}
+									return fI;
+								});
+							}
+							return r;
+						}
+						for (const key in e) {
+							result[key] = fO(e[key], p);
+						}
+						
+						function convertToCsv(t) {
+							const r = [];
+							const h = p.join(",");
+							r.push(h);
+							for (const key in t) {
+								const mR = p.map(header => JSON.stringify(t[key][header] || ""));
+								r.push(mR.join(","));
+								if (t[key].objects && t[key].objects.length) {
+									t[key].objects.forEach(obj => {
+										const oR = p.map(header => JSON.stringify(obj[header] || ""));
+										r.push(oR.join(","));
+									});
+									r.push("");
+								}
+							}
+							return r.join("\n");
+						}
+						const c = "\uFEFF" + convertToCsv(result);
+						var t = new Blob([c], { type:"text/csv;charset=utf-8" }),
+							i = document.createEvent("MouseEvents"),
+							s = document.createElement("a");
+						s.download = "data.csv";
+						s.href = window.URL.createObjectURL(t);
+						s.dataset.downloadurl = ["text/csv", s.download, s.href].join(":");
+						i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
+						s.dispatchEvent(i);
+					}
                 }
             },
             Di = Pi,
@@ -26693,6 +26981,18 @@
 							e.$set(e.app, "compressImageAuto", o)
 						},
 						expression: "app.compressImageAuto"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Preload Images in Backpack."
+					},
+					model: {
+						value: e.app.preloadImages,
+						callback: function(o) {
+							e.$set(e.app, "preloadImages", o)
+						},
+						expression: "app.preloadImages"
 					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
@@ -27842,6 +28142,8 @@
                             e.currentComponent = t
                         }
                     }
+                }), o("ConfirmDlg", {
+                    ref: "confirm"
                 })], 1)
             },
             cs = [],
@@ -28310,7 +28612,9 @@
                     staticStyle: {
                         "text-align": "center"
                     }
-                }, [e._v(e._s(e.text))])])], 1) : e._e()], 1)
+                }, [e._v(e._s(e.text))])])], 1) : e._e(), o("ConfirmDlg", {
+                    ref: "confirm"
+                })], 1)
             },
             ps = [],
             us = function() {
@@ -28506,7 +28810,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -28518,7 +28822,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " " + e.score.afterText, e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : ""), e.sanitizeArg))
                     }
                 })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
                     staticClass: "pa-0 ma-0",
@@ -28526,7 +28830,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -28538,7 +28842,7 @@
                 }) : e._e()]), o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : "") + " ", e.sanitizeArg))
                     }
                 })]), o("div", {
                     style: e.pointType.imageOnSide ? "padding-left:3px;padding-right:3px" : "padding-left:1px;padding-right:2px"
@@ -28553,7 +28857,7 @@
                 }, [o("div", [o("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: e._s(e.$sanitize(e.score.beforeText + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : e.scoreValue)) + " " + e.score.afterText + " ", e.sanitizeArg))
+                        innerHTML: e._s(e.$sanitize(e.score.beforeText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountBeforeText : "") + " " + (e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : "") + " ", e.sanitizeArg))
                     }
                 })])])], 1) : e._e()], 1)
             },
@@ -28803,7 +29107,10 @@
                     ObjectAddon: ms,
                     ObjectScore: Ts,
                     AppImageUpload: G,
-                    PictureInput: $["a"]
+                    PictureInput: $["a"],
+					ConfirmDlg: function() {
+                        return o.e("chunk-2d0e6102").then(o.bind(null, "96c2"))
+                    }
                 },
                 computed: {
                     styling: function() {
@@ -29801,37 +30108,739 @@
 					activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
-						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
-							for (var g = 0; g < e.scores.length; g++)
-								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
-									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
-									e.scores[g].setValue = !0;
-									for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+						var i = this,
+							s = this.checkRequireds(e),
+							o = this.checkPoints(e),
+							k = !0;
+						if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+							var cnt = 0;
+							for (var r = 0; r < t.objects.length; r++) {
+								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+									this.activateObject(t.objects[r], t);
+									break
 								}
-							var i = this,
-								s = this.checkRequireds(e),
-								o = this.checkPoints(e),
-								k = !0;
-							var tmpScores = [];
-							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
-							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
-								var cnt = 0;
-								for (var r = 0; r < t.objects.length; r++) {
-									if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-										this.activateObject(t.objects[r], t);
-										break
-									}
-									else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
-								}
-								if (cnt >= t.allowedChoices) k = !1;
+								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
 							}
-							if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
-								if (this.activated.includes(eid)) {
+							if (cnt >= t.allowedChoices) k = !1;
+						}
+						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							.then(({result, wordText}) => {
+								if (result) {
+									e.wordChangeSelect = wordText;
+								} else {
+									e.wordChangeSelect = e.wordChangeDeselect;
+								}
+								i.$set(i.app, "wordChangeComplete", !0);
+								i.activateObject(e, t);
+								i.$set(i.app, "wordChangeComplete", !1);
+							});
+						} else {
+							if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
+								for (var g = 0; g < e.scores.length; g++)
+									if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+										e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+										e.scores[g].setValue = !0;
+										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+									}
+								
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
+									if (this.activated.includes(eid)) {
+										if (this.checkPointsMD(e)) {
+											for (var a = 0; a < e.scores.length; a++)
+												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											var ee = 0, EE = 0;
+											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
+													for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
+														var rndV = e.activatedRandom[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+															var co = this.app.comp[rndV[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == rndV[0]) {
+																			EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = rndV[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												} else {
+													for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+														var pv = p[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[pv[0]]) {
+															var co = this.app.comp[pv[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+																if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+															}
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == pv[0]) {
+																			EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = pv[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												}
+											}
+											for (var f = 0; f < this.activated.length; f++) {
+												var af = this.activated[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[af[0]]) {
+													var co = this.app.comp[af[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (!this.exceptedObjects.includes(coO.id)) {
+														var nH = this.activated.indexOf(eid);
+														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
+														var bR = this.checkRequireds(coO);
+														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
+														if (!bR) {
+															this.exceptedObjects.push(coO.id);
+															if (coO.isMultipleUseVariable) {
+																for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+																}
+																if (coO.forcedActivated) {
+																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+																}
+															} else {
+																if (coO.forcedActivated) coO.forcedActivated = !1;
+																this.activateObject(coO, coR);
+															}
+															f--;
+														}
+													}
+												}
+											}
+											if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+											if (e.multiplyPointtypeIsOnCheck) {
+												e.multiplyPointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.dividePointtypeIsOnCheck) {
+												e.dividePointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.textfieldIsOn)
+												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.addToAllowChoice)
+												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+													var co = this.app.compR[e.idOfAllowChoice],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+													var d = coR.currentChoices - 1;
+													if (d > coR.allowedChoices) {
+														var u = d - coR.allowedChoices;
+														for (var v = 0; v < coR.objects.length; v++) {
+															if (u > 0 && coR.objects[v].isActive) {
+																this.activateObject(coR.objects[v], coR);
+																u--;
+															}
+														}
+													}
+												}
+											if (e.backpackBtnRequirement)
+												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+											if (e.changeBackground) {
+												if (e.changeBgImage) {
+													var a = this.app.styling.backgroundImage;
+													this.$set(this.app.styling, "backgroundImage", e.bgImage);
+													this.$set(e, "bgImage", a);
+												} else {
+													var a = this.app.styling.backgroundColor;
+													this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+													this.$set(e, "changedBgColorCode", a);
+												}
+											}
+											if (e.changePointBar) {
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barBackgroundColor;
+													this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+													this.$set(e, "changedBarBgColor", a);
+												}
+												if (e.changeBarTextColorIsOn) {
+													var a = this.app.styling.barTextColor;
+													this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+													this.$set(e, "changedBarTextColor", a);
+												}
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barIconColor;
+													this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+													this.$set(e, "changedBarIconColor", a);
+												}
+											}
+											if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+												if (e.bgmId) {
+													this.app.bgmIsPlaying = !1;
+													this.playBgm(e, e.bgmId, 0);
+												}
+											}
+											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+												if ("undefined" !== typeof bgmPlayer.unMute) {
+													bgmPlayer.unMute();
+												}
+											}
+											if (e.discountOther)
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+													for (var a = 0; a < this.app.groups.length; a++)
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
+																}
+															}
+											if (e.isContentHidden) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {											
+													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+															var co = this.app.compR[e.hiddenContentsRow[a]],
+																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+															if (coR.isResultRow) {
+																for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
+																}
+															}
+														}
+													}
+												}
+											}
+											this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
+											e.isActive = !e.isActive, this.updateActivated();
+										}
+									} else {
+										if (e.discountOther)
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+												for (var a = 0; a < this.app.groups.length; a++)
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var co = this.app.comp[this.app.groups[a].elements[b].id],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															for (var c = 0; c < coO.scores.length; c++) {
+																var coS = coO.scores[c];
+																if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																	this.$set(coS, "discountIsOn", true);
+																	this.$set(coS, "discountedFrom", e.id);
+																}
+															}
+														}
+										for (var g = 0; g < e.scores.length; g++)
+											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+										this.activated.push(eid), t.currentChoices += 1;
+										var a, f, b, m, v, ee = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.duplicateRow) {
+											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
+										}
+										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+												var y = e.activateThisChoice.split(","); 
+												var RD = y.slice(),
+													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+													nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+												this.$set(e, 'activatedRandom', []);
+												for (var v = rd.length - 1; v > 0; v--) {
+													var rnd = Math.floor(Math.random() * (v + 1));
+													[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+												}
+												e.activatedRandom = rd.slice(0, nAR);
+												for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+													var rndV = e.activatedRandom[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+														var co = this.app.comp[rndV[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = rndV[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+														} else {
+															if (nAR + a < rd.length) {
+																e.activatedRandom.splice(v, 1, rd[nAR + a]);
+																a++, v--;
+															} else {
+																e.activatedRandom.splice(v, 1);
+																b--, v--;
+															}
+														}
+													}
+												}
+											} else {
+												for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+													var yv = y[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[yv[0]]) {
+														var co = this.app.comp[yv[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+														}
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = yv[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+															if(!coO.isActive) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+																coO.forcedActivated = !1;
+															}
+														} else {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+															coO.forcedActivated = !1;
+														}
+													}
+												}
+											}
+										}
+										if (e.deactivateOtherChoice)
+											for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+												var yf = y[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yf[0]]) {
+													var co = this.app.comp[yf[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+														if (!coO.forcedActivated) {
+															if (coO.isSelectableMultiple) {
+																var ee = yf[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneLess(coO, coR);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(coO, coR);
+																	}
+																}
+															} else {
+																if (coO.isActive) this.activateObject(coO, coR);
+															}
+														}
+												}
+												if ("undefined" !== typeof this.app.compG[yf[0]]) {
+													var co = this.app.compG[yf[0]],
+														coG = this.app.groups[co.groups];
+													for (var T = 0; T < coG.elements.length; T++) {
+														if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
+															var coT = this.app.comp[coG.elements[T].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															if (!coTO.forcedActivated) {
+																if (coTO.isSelectableMultiple) {
+																	var ee = yf[1];
+																	if (ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.selectedOneLess(coTO, coTR);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(coTO, coTR);
+																		}
+																	}
+																} else {
+																	if (coTO.isActive) this.activateObject(coTO, coTR);
+																}
+															}
+														}
+													}
+												}
+											}
+										for (var f = 0; f < this.activated.length; f++) {
+											var aF = this.activated[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aF[0]]) {
+												var co = this.app.comp[aF[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (!this.exceptedObjects.includes(coO.id)) {
+													if (!this.checkRequireds(coO)) {
+														this.exceptedObjects.push(coO.id);
+														if (coO.isMultipleUseVariable) {
+															for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+															}
+															if (coO.forcedActivated) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															}
+														} else {
+															if (coO.forcedActivated) coO.forcedActivated = !1;
+															this.activateObject(coO, coR);
+														}
+														f--;
+													}
+												}
+											}
+										}
+										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+										if (e.multiplyPointtypeIsOn) {
+											e.multiplyPointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													if (e.multiplyPointtypeIsId)
+														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													this.app.mdObjects.push(e);
+												}
+										}
+										if (e.dividePointtypeIsOn) {
+											e.dividePointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											this.app.mdObjects.push(e);
+										}
+										if (e.addToAllowChoice)
+											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+												var co = this.app.compR[e.idOfAllowChoice],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+												coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+												var I = coR.currentChoices;
+												if (I > coR.allowedChoices) {
+													var O = I - coR.allowedChoices;
+													for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+												}
+											}
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeSelect;
+												}
+											}
+										}
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+										}
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.changePointBar) {
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barBackgroundColor;
+												this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+												this.$set(e, "changedBarBgColor", a);
+											}
+											if (e.changeBarTextColorIsOn) {
+												var a = this.app.styling.barTextColor;
+												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+												this.$set(e, "changedBarTextColor", a);
+											}
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barIconColor;
+												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+												this.$set(e, "changedBarIconColor", a);
+											}
+										}
+										if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {
+												var tCo = this.app.compR[t.id];
+												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+													var p = this.$parent.$parent.$children,
+														co = this.app.compR[e.scrollRowId];
+													for (var a = 0; a < p.length; a++) {
+														if (this.$parent == p[a]) {
+															coR = p[co.rows + a - tCo.rows];
+															function waitScroll() {
+																setTimeout(function() {
+																	if (coR.$el.offsetParent) {
+																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																	} else {
+																		waitScroll();
+																	}
+																}, 100);
+															}
+															waitScroll();
+															break
+														}
+													}
+												}
+											}
+										}
+									}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.mute) {
+												bgmPlayer.mute();
+											}
+										}
+										if (e.isContentHidden) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {											
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														if (coR.isResultRow) {
+															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
+															}
+														}
+													}
+												}
+											}
+										}
+										e.isActive = !e.isActive, this.updateActivated();
+									}
+								} else if (this.activated.includes(eid)) {
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-										var ee = 0, EE = 0;
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -29868,7 +30877,8 @@
 																	}
 																}
 															} else {
-																if (ee = rndV[1], ee > 0) {
+																var ee = rndV[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -29932,7 +30942,8 @@
 																	}
 																}
 															} else {
-																if (ee = pv[1], ee > 0) {
+																var ee = pv[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -29995,93 +31006,11 @@
 										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
 										if (e.textfieldIsOn)
 											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
@@ -30125,21 +31054,10 @@
 												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
 												this.$set(e, "changedBarTextColor", a);
 											}
-											if (e.changeBarBgColorIsOn) {
+											if (e.changeBarIconColorIsOn) {
 												var a = this.app.styling.barIconColor;
 												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
 												this.$set(e, "changedBarIconColor", a);
-											}
-										}
-										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-											if (e.bgmId) {
-												this.app.bgmIsPlaying = !1;
-												this.playBgm(e, e.bgmId, 0);
-											}
-										}
-										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-											if ("undefined" !== typeof bgmPlayer.unMute) {
-												bgmPlayer.unMute();
 											}
 										}
 										if (e.discountOther)
@@ -30155,6 +31073,17 @@
 																if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 															}
 														}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0)
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.unMute) {
+												bgmPlayer.unMute();
+											}
+										}
 										if (e.isContentHidden) {
 											if ("undefined" !== typeof this.app.compR[t.id]) {											
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
@@ -30177,623 +31106,13 @@
 												}
 											}
 										}
-										this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
-										e.isActive = !e.isActive, this.updateActivated();
+										this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
 									}
-								} else {
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																this.$set(coS, "discountIsOn", true);
-																this.$set(coS, "discountedFrom", e.id);
-															}
-														}
-													}
-									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
-									this.activated.push(eid), t.currentChoices += 1;
-									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
-									if (e.duplicateRow) {
-										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
-									}
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											var y = e.activateThisChoice.split(","); 
-											var RD = y.slice(),
-												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-											this.$set(e, 'activatedRandom', []);
-											for (var v = rd.length - 1; v > 0; v--) {
-												var rnd = Math.floor(Math.random() * (v + 1));
-												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
-											}
-											e.activatedRandom = rd.slice(0, nAR);
-											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-													} else {
-														if (nAR + a < rd.length) {
-															e.activatedRandom.splice(v, 1, rd[nAR + a]);
-															a++, v--;
-														} else {
-															e.activatedRandom.splice(v, 1);
-															b--, v--;
-														}
-													}
-												}
-											}
-										} else {
-											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												var yv = y[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[yv[0]]) {
-													var co = this.app.comp[yv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = yv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-														if(!coO.isActive) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-															coO.forcedActivated = !1;
-														}
-													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-														coO.forcedActivated = !1;
-													}
-												}
-											}
-										}
-									}
-									if (e.deactivateOtherChoice)
-										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											var yf = y[f].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yf[0]]) {
-												var co = this.app.comp[yf[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-													if (!coO.forcedActivated) {
-														if (coO.isSelectableMultiple) {
-															var ee = yf[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneLess(coO, coR);
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(coO, coR);
-																}
-															}
-														} else {
-															if (coO.isActive) this.activateObject(coO, coR);
-														}
-													}
-											}
-											if ("undefined" !== typeof this.app.compG[yf[0]]) {
-												var co = this.app.compG[yf[0]],
-													coG = this.app.groups[co.groups];
-												for (var T = 0; T < coG.elements.length; T++) {
-													if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
-														var coT = this.app.comp[coG.elements[T].id],
-															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
-															coTO = coTR.objects[coT.objects];
-														if (!coTO.forcedActivated) {
-															if (coTO.isSelectableMultiple) {
-																var ee = yf[1];
-																if (ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneLess(coTO, coTR);
-																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(coTO, coTR);
-																	}
-																}
-															} else {
-																if (coTO.isActive) this.activateObject(coTO, coTR);
-															}
-														}
-													}
-												}
-											}
-										}
-									for (var f = 0; f < this.activated.length; f++) {
-										var aF = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[aF[0]]) {
-											var co = this.app.comp[aF[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												if (!this.checkRequireds(coO)) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOn) {
-										e.multiplyPointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++)
-											if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-												this.app.mdObjects.push(e);
-											}
-									}
-									if (e.dividePointtypeIsOn) {
-										e.dividePointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
-										this.app.mdObjects.push(e);
-									}
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
-											var I = coR.currentChoices;
-											if (I > coR.allowedChoices) {
-												var O = I - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
-											}
-										}
-									if (e.textfieldIsOn) {
-										for (var m = 0; m < this.app.words.length; m++) {
-											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-												if (e.customTextfieldIsOn) {
-													e.wordChangeSelect = prompt(e.wordPromptText);
-													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
-												}
-												this.app.words[m].replaceText = e.wordChangeSelect;
-											}
-										}
-									}
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
-															}
-															waitScroll();
-															break
-														}
-													}
-												}
-											}
-										}
-									}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.mute) {
-											bgmPlayer.mute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
-													}
-												}
-											}
-										}
-									}
-									e.isActive = !e.isActive, this.updateActivated();
 								}
-							} else if (this.activated.includes(eid)) {
-								if (this.checkPointsMD(e)) {
-									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == rndV[0]) {
-																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										} else {
-											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-												var pv = p[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[pv[0]]) {
-													var co = this.app.comp[pv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == pv[0]) {
-																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = pv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										}
-									}
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												var nH = this.activated.indexOf(eid);
-												this.activated.splice(nH, 1);
-												t.currentChoices -= 1;
-												var bR = this.checkRequireds(coO);
-												this.activated.splice(nH, 0, eid);
-												t.currentChoices += 1;
-												if (!bR) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOnCheck) {
-										e.multiplyPointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
-									}
-									if (e.dividePointtypeIsOnCheck) {
-										e.dividePointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
-									}
-									if (e.textfieldIsOn)
-										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
-											var d = coR.currentChoices - 1;
-											if (d > coR.allowedChoices) {
-												var u = d - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) {
-													if (u > 0 && coR.objects[v].isActive) {
-														this.activateObject(coR.objects[v], coR);
-														u--;
-													}
-												}
-											}
-										}
-									if (e.backpackBtnRequirement)
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarIconColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-														}
-													}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0)
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.unMute) {
-											bgmPlayer.unMute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
-													}
-												}
-											}
-										}
-									}
-									this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
-								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
-							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
+							if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
 						}
-						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -31544,7 +31863,10 @@
                     }
                 },
                 components: {
-                    AppObject: Bs
+                    AppObject: Bs,
+					ConfirmDlg: function() {
+                        return o.e("chunk-2d0e6102").then(o.bind(null, "96c2"))
+                    }
                 },
                 created: function() {
                     window.addEventListener("resize", this.handleResize), this.handleResize()
@@ -32489,37 +32811,739 @@
 					activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
-						if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
-							for (var g = 0; g < e.scores.length; g++)
-								if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
-									e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
-									e.scores[g].setValue = !0;
-									for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+						var i = this,
+							s = this.checkRequireds(e),
+							o = this.checkPoints(e),
+							k = !0;
+						if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+							var cnt = 0;
+							for (var r = 0; r < t.objects.length; r++) {
+								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+									this.activateObject(t.objects[r], t);
+									break
 								}
-							var i = this,
-								s = this.checkRequireds(e),
-								o = this.checkPoints(e),
-								k = !0;
-							var tmpScores = [];
-							if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
-							if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
-								var cnt = 0;
-								for (var r = 0; r < t.objects.length; r++) {
-									if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-										this.activateObject(t.objects[r], t);
-										break
-									}
-									else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
-								}
-								if (cnt >= t.allowedChoices) k = !1;
+								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
 							}
-							if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
-								if (this.activated.includes(eid)) {
+							if (cnt >= t.allowedChoices) k = !1;
+						}
+						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							.then(({result, wordText}) => {
+								if (result) {
+									e.wordChangeSelect = wordText;
+								} else {
+									e.wordChangeSelect = e.wordChangeDeselect;
+								}
+								i.$set(i.app, "wordChangeComplete", !0);
+								i.activateObject(e, t);
+								i.$set(i.app, "wordChangeComplete", !1);
+							});
+						} else {
+							if (!(e.selectOnce && e.isActive) && !this.linkedObjects.includes(e.id)) {
+								for (var g = 0; g < e.scores.length; g++)
+									if ("undefined" !== typeof e.scores[g].isRandom && e.scores[g].isRandom && !e.scores[g].setValue) {
+										e.scores[g].value = Math.floor(Math.random() * (parseInt(e.scores[g].maxValue) - parseInt(e.scores[g].minValue) + 1)) + parseInt(e.scores[g].minValue);
+										e.scores[g].setValue = !0;
+										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
+									}
+								
+								var tmpScores = [];
+								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
+									if (this.activated.includes(eid)) {
+										if (this.checkPointsMD(e)) {
+											for (var a = 0; a < e.scores.length; a++)
+												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											var ee = 0, EE = 0;
+											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
+													for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
+														var rndV = e.activatedRandom[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+															var co = this.app.comp[rndV[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == rndV[0]) {
+																			EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = rndV[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												} else {
+													for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
+														var pv = p[v].split("/ON#");
+														if ("undefined" !== typeof this.app.comp[pv[0]]) {
+															var co = this.app.comp[pv[0]],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															if (!e.isAllowDeselect) coO.forcedActivated = !1;
+															if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+																if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+															}
+															if (coO.isSelectableMultiple) {
+																if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
+																	for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
+																		var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
+																		if (cFA[0] == pv[0]) {
+																			EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
+																			break
+																		}
+																	}
+																	if (EE > 0) {
+																		for (var n = 0; n < EE; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (EE < 0) {
+																		for (var pp = 0; pp < -1 * EE; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																} else {
+																	if (ee = pv[1], ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneLess(coO, coR);
+																			}
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			if (!e.isNotDeactivate) {
+																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																				this.selectedOneMore(coO, coR);
+																			}
+																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		}
+																	}
+																}
+															} else {
+																if (coO.isActive && !e.isNotDeactivate) {
+																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+																	this.activateObject(coO, coR);
+																}
+															}
+														}
+													}
+												}
+											}
+											for (var f = 0; f < this.activated.length; f++) {
+												var af = this.activated[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[af[0]]) {
+													var co = this.app.comp[af[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+													if (!this.exceptedObjects.includes(coO.id)) {
+														var nH = this.activated.indexOf(eid);
+														this.activated.splice(nH, 1);
+														t.currentChoices -= 1;
+														var bR = this.checkRequireds(coO);
+														this.activated.splice(nH, 0, eid);
+														t.currentChoices += 1;
+														if (!bR) {
+															this.exceptedObjects.push(coO.id);
+															if (coO.isMultipleUseVariable) {
+																for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+																}
+																if (coO.forcedActivated) {
+																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+																}
+															} else {
+																if (coO.forcedActivated) coO.forcedActivated = !1;
+																this.activateObject(coO, coR);
+															}
+															f--;
+														}
+													}
+												}
+											}
+											if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
+											if (e.multiplyPointtypeIsOnCheck) {
+												e.multiplyPointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.dividePointtypeIsOnCheck) {
+												e.dividePointtypeIsOnCheck = !1;
+												var ei = 0;
+												for (var m = 0; m < this.app.pointTypes.length; m++) {
+													if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+														for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.id != e.id) {
+																if (mdO.multiplyPointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+																} else if (mdO.dividePointtypeIsOnCheck) {
+																	this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																	this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																}
+															} else {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+																ei = n;
+																break
+															}
+														}
+														for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+															var mdO = this.app.mdObjects[n];
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																if (mdO.multiplyPointtypeIsId) {
+																	for (var x = 0; x < this.app.pointTypes.length; x++) {
+																		if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																			mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																			this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																		}
+																	}
+																} else {
+																	mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																	this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+																}
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+															}
+														}
+													}
+												}
+												this.app.mdObjects.splice(ei, 1);
+											}
+											if (e.textfieldIsOn)
+												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.addToAllowChoice)
+												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+													var co = this.app.compR[e.idOfAllowChoice],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+													var d = coR.currentChoices - 1;
+													if (d > coR.allowedChoices) {
+														var u = d - coR.allowedChoices;
+														for (var v = 0; v < coR.objects.length; v++) {
+															if (u > 0 && coR.objects[v].isActive) {
+																this.activateObject(coR.objects[v], coR);
+																u--;
+															}
+														}
+													}
+												}
+											if (e.backpackBtnRequirement)
+												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
+											if (e.changeBackground) {
+												if (e.changeBgImage) {
+													var a = this.app.styling.backgroundImage;
+													this.$set(this.app.styling, "backgroundImage", e.bgImage);
+													this.$set(e, "bgImage", a);
+												} else {
+													var a = this.app.styling.backgroundColor;
+													this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+													this.$set(e, "changedBgColorCode", a);
+												}
+											}
+											if (e.changePointBar) {
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barBackgroundColor;
+													this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+													this.$set(e, "changedBarBgColor", a);
+												}
+												if (e.changeBarTextColorIsOn) {
+													var a = this.app.styling.barTextColor;
+													this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+													this.$set(e, "changedBarTextColor", a);
+												}
+												if (e.changeBarBgColorIsOn) {
+													var a = this.app.styling.barIconColor;
+													this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+													this.$set(e, "changedBarIconColor", a);
+												}
+											}
+											if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+												if (e.bgmId) {
+													this.app.bgmIsPlaying = !1;
+													this.playBgm(e, e.bgmId, 0);
+												}
+											}
+											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+												if ("undefined" !== typeof bgmPlayer.unMute) {
+													bgmPlayer.unMute();
+												}
+											}
+											if (e.discountOther)
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+													for (var a = 0; a < this.app.groups.length; a++)
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
+																}
+															}
+											if (e.isContentHidden) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {											
+													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+															var co = this.app.compR[e.hiddenContentsRow[a]],
+																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+															if (coR.isResultRow) {
+																for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
+																}
+															}
+														}
+													}
+												}
+											}
+											this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
+											e.isActive = !e.isActive, this.updateActivated();
+										}
+									} else {
+										if (e.discountOther)
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
+												for (var a = 0; a < this.app.groups.length; a++)
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var co = this.app.comp[this.app.groups[a].elements[b].id],
+																coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															for (var c = 0; c < coO.scores.length; c++) {
+																var coS = coO.scores[c];
+																if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																	this.$set(coS, "discountIsOn", true);
+																	this.$set(coS, "discountedFrom", e.id);
+																}
+															}
+														}
+										for (var g = 0; g < e.scores.length; g++)
+											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+										this.activated.push(eid), t.currentChoices += 1;
+										var a, f, b, m, v, ee = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.duplicateRow) {
+											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
+										}
+										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
+											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+												var y = e.activateThisChoice.split(","); 
+												var RD = y.slice(),
+													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
+													nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
+												this.$set(e, 'activatedRandom', []);
+												for (var v = rd.length - 1; v > 0; v--) {
+													var rnd = Math.floor(Math.random() * (v + 1));
+													[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
+												}
+												e.activatedRandom = rd.slice(0, nAR);
+												for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
+													var rndV = e.activatedRandom[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[rndV[0]]) {
+														var co = this.app.comp[rndV[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = rndV[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+														} else {
+															if (nAR + a < rd.length) {
+																e.activatedRandom.splice(v, 1, rd[nAR + a]);
+																a++, v--;
+															} else {
+																e.activatedRandom.splice(v, 1);
+																b--, v--;
+															}
+														}
+													}
+												}
+											} else {
+												for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
+													var yv = y[v].split("/ON#");
+													if ("undefined" !== typeof this.app.comp[yv[0]]) {
+														var co = this.app.comp[yv[0]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
+														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+														}
+														if (this.checkRequireds(coO) && this.checkPoints(coO)) {
+															if (coO.isSelectableMultiple) {
+																var ee = yv[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneMore(coO, coR);
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
+																		this.selectedOneLess(coO, coR);
+																		if (!e.isAllowDeselect) coO.forcedActivated = !0;
+																	}
+																}
+															} else {
+																if (!coO.isActive) this.activateObject(coO, coR);
+																if (!e.isAllowDeselect) coO.forcedActivated = !0;
+															}
+															if(!coO.isActive) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+																coO.forcedActivated = !1;
+															}
+														} else {
+															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
+															coO.forcedActivated = !1;
+														}
+													}
+												}
+											}
+										}
+										if (e.deactivateOtherChoice)
+											for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
+												var yf = y[f].split("/ON#");
+												if ("undefined" !== typeof this.app.comp[yf[0]]) {
+													var co = this.app.comp[yf[0]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+														coO = coR.objects[co.objects];
+														if (!coO.forcedActivated) {
+															if (coO.isSelectableMultiple) {
+																var ee = yf[1];
+																if (ee > 0) {
+																	for (var n = 0; n < ee; n++) {
+																		this.selectedOneLess(coO, coR);
+																	}
+																} else if (ee < 0) {
+																	for (var pp = 0; pp < -1 * ee; pp++) {
+																		this.selectedOneMore(coO, coR);
+																	}
+																}
+															} else {
+																if (coO.isActive) this.activateObject(coO, coR);
+															}
+														}
+												}
+												if ("undefined" !== typeof this.app.compG[yf[0]]) {
+													var co = this.app.compG[yf[0]],
+														coG = this.app.groups[co.groups];
+													for (var T = 0; T < coG.elements.length; T++) {
+														if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
+															var coT = this.app.comp[coG.elements[T].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															if (!coTO.forcedActivated) {
+																if (coTO.isSelectableMultiple) {
+																	var ee = yf[1];
+																	if (ee > 0) {
+																		for (var n = 0; n < ee; n++) {
+																			this.selectedOneLess(coTO, coTR);
+																		}
+																	} else if (ee < 0) {
+																		for (var pp = 0; pp < -1 * ee; pp++) {
+																			this.selectedOneMore(coTO, coTR);
+																		}
+																	}
+																} else {
+																	if (coTO.isActive) this.activateObject(coTO, coTR);
+																}
+															}
+														}
+													}
+												}
+											}
+										for (var f = 0; f < this.activated.length; f++) {
+											var aF = this.activated[f].split("/ON#");
+											if ("undefined" !== typeof this.app.comp[aF[0]]) {
+												var co = this.app.comp[aF[0]],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+													coO = coR.objects[co.objects];
+												if (!this.exceptedObjects.includes(coO.id)) {
+													if (!this.checkRequireds(coO)) {
+														this.exceptedObjects.push(coO.id);
+														if (coO.isMultipleUseVariable) {
+															for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
+																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
+															}
+															if (coO.forcedActivated) {
+																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
+																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
+															}
+														} else {
+															if (coO.forcedActivated) coO.forcedActivated = !1;
+															this.activateObject(coO, coR);
+														}
+														f--;
+													}
+												}
+											}
+										}
+										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
+										if (e.multiplyPointtypeIsOn) {
+											e.multiplyPointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													if (e.multiplyPointtypeIsId)
+														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													this.app.mdObjects.push(e);
+												}
+										}
+										if (e.dividePointtypeIsOn) {
+											e.dividePointtypeIsOnCheck = !0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											this.app.mdObjects.push(e);
+										}
+										if (e.addToAllowChoice)
+											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+												var co = this.app.compR[e.idOfAllowChoice],
+													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+												coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+												var I = coR.currentChoices;
+												if (I > coR.allowedChoices) {
+													var O = I - coR.allowedChoices;
+													for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+												}
+											}
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeSelect;
+												}
+											}
+										}
+										if (e.backpackBtnRequirement) {
+											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
+											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
+										}
+										if (e.changeBackground) {
+											if (e.changeBgImage) {
+												var a = this.app.styling.backgroundImage;
+												this.$set(this.app.styling, "backgroundImage", e.bgImage);
+												this.$set(e, "bgImage", a);
+											} else {
+												var a = this.app.styling.backgroundColor;
+												this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
+												this.$set(e, "changedBgColorCode", a);
+											}
+										}
+										if (e.changePointBar) {
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barBackgroundColor;
+												this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
+												this.$set(e, "changedBarBgColor", a);
+											}
+											if (e.changeBarTextColorIsOn) {
+												var a = this.app.styling.barTextColor;
+												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
+												this.$set(e, "changedBarTextColor", a);
+											}
+											if (e.changeBarBgColorIsOn) {
+												var a = this.app.styling.barIconColor;
+												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
+												this.$set(e, "changedBarIconColor", a);
+											}
+										}
+										if (e.scrollToRow) {
+										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {
+												var tCo = this.app.compR[t.id];
+												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+													var p = this.$parent.$parent.$children,
+														co = this.app.compR[e.scrollRowId];
+													for (var a = 0; a < p.length; a++) {
+														if (this.$parent == p[a]) {
+															coR = p[co.rows + a - tCo.rows];
+															function waitScroll() {
+																setTimeout(function() {
+																	if (coR.$el.offsetParent) {
+																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																	} else {
+																		waitScroll();
+																	}
+																}, 100);
+															}
+															waitScroll();
+															break
+														}
+													}
+												}
+											}
+										}
+									}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
+												this.app.bgmIsPlaying = !0;
+												this.playBgm(e, e.bgmId, 0);
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.mute) {
+												bgmPlayer.mute();
+											}
+										}
+										if (e.isContentHidden) {
+											if ("undefined" !== typeof this.app.compR[t.id]) {											
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														if (coR.isResultRow) {
+															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
+															}
+														}
+													}
+												}
+											}
+										}
+										e.isActive = !e.isActive, this.updateActivated();
+									}
+								} else if (this.activated.includes(eid)) {
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-										var ee = 0, EE = 0;
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -32556,7 +33580,8 @@
 																	}
 																}
 															} else {
-																if (ee = rndV[1], ee > 0) {
+																var ee = rndV[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -32620,7 +33645,8 @@
 																	}
 																}
 															} else {
-																if (ee = pv[1], ee > 0) {
+																var ee = pv[1];
+																if (ee > 0) {
 																	for (var n = 0; n < ee; n++) {
 																		if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
 																		if (!e.isNotDeactivate) {
@@ -32683,93 +33709,11 @@
 										if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											var ei = 0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) {
-												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
-													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.id != e.id) {
-															if (mdO.multiplyPointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
-															} else if (mdO.dividePointtypeIsOnCheck) {
-																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															}
-														} else {
-															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
-															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
-															ei = n;
-															break
-														}
-													}
-													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
-														var mdO = this.app.mdObjects[n];
-														if (mdO.multiplyPointtypeIsOnCheck) {
-															if (mdO.multiplyPointtypeIsId) {
-																for (var x = 0; x < this.app.pointTypes.length; x++) {
-																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
-																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
-																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
-																	}
-																}
-															} else {
-																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
-																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
-															}
-														} else if (mdO.dividePointtypeIsOnCheck) {
-															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
-															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
-														}
-													}
-												}
-											}
-											this.app.mdObjects.splice(ei, 1);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
 										if (e.textfieldIsOn)
 											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
@@ -32813,21 +33757,10 @@
 												this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
 												this.$set(e, "changedBarTextColor", a);
 											}
-											if (e.changeBarBgColorIsOn) {
+											if (e.changeBarIconColorIsOn) {
 												var a = this.app.styling.barIconColor;
 												this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
 												this.$set(e, "changedBarIconColor", a);
-											}
-										}
-										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-											if (e.bgmId) {
-												this.app.bgmIsPlaying = !1;
-												this.playBgm(e, e.bgmId, 0);
-											}
-										}
-										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-											if ("undefined" !== typeof bgmPlayer.unMute) {
-												bgmPlayer.unMute();
 											}
 										}
 										if (e.discountOther)
@@ -32843,6 +33776,17 @@
 																if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
 															}
 														}
+										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
+											if (e.bgmId) {
+												this.app.bgmIsPlaying = !1;
+												this.playBgm(e, e.bgmId, 0)
+											}
+										}
+										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
+											if ("undefined" !== typeof bgmPlayer.unMute) {
+												bgmPlayer.unMute();
+											}
+										}
 										if (e.isContentHidden) {
 											if ("undefined" !== typeof this.app.compR[t.id]) {											
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
@@ -32865,623 +33809,13 @@
 												}
 											}
 										}
-										this.activated.splice(this.activated.indexOf(eid), 1), t.currentChoices -= 1;
-										e.isActive = !e.isActive, this.updateActivated();
+										this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
 									}
-								} else {
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																this.$set(coS, "discountIsOn", true);
-																this.$set(coS, "discountedFrom", e.id);
-															}
-														}
-													}
-									for (var g = 0; g < e.scores.length; g++)
-										if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-											for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
-									this.activated.push(eid), t.currentChoices += 1;
-									var a, f, b, m, v, ee = 0;
-									if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
-									if (e.duplicateRow) {
-										if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
-									}
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
-											var y = e.activateThisChoice.split(","); 
-											var RD = y.slice(),
-												rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
-												nAR = parseInt(e.numActivateRandom) > rd.length ? rd.length : parseInt(e.numActivateRandom);
-											this.$set(e, 'activatedRandom', []);
-											for (var v = rd.length - 1; v > 0; v--) {
-												var rnd = Math.floor(Math.random() * (v + 1));
-												[rd[v], rd[rnd]] = [rd[rnd], rd[v]];
-											}
-											e.activatedRandom = rd.slice(0, nAR);
-											for (var a = 0, b = 0, v = 0; v < parseInt(nAR) + b; v++) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-													} else {
-														if (nAR + a < rd.length) {
-															e.activatedRandom.splice(v, 1, rd[nAR + a]);
-															a++, v--;
-														} else {
-															e.activatedRandom.splice(v, 1);
-															b--, v--;
-														}
-													}
-												}
-											}
-										} else {
-											for (var y = e.activateThisChoice.split(","), v = 0; v < y.length; v++) {
-												var yv = y[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[yv[0]]) {
-													var co = this.app.comp[yv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if ("undefined" === typeof coO.forcedActivated) this.$set(coO, "forcedActivated", !1);
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (this.checkRequireds(coO) && this.checkPoints(coO)) {
-														if (coO.isSelectableMultiple) {
-															var ee = yv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneMore(coO, coR);
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	this.selectedOneLess(coO, coR);
-																	if (!e.isAllowDeselect) coO.forcedActivated = !0;
-																}
-															}
-														} else {
-															if (!coO.isActive) this.activateObject(coO, coR);
-															if (!e.isAllowDeselect) coO.forcedActivated = !0;
-														}
-														if(!coO.isActive) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-															coO.forcedActivated = !1;
-														}
-													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-														if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
-														coO.forcedActivated = !1;
-													}
-												}
-											}
-										}
-									}
-									if (e.deactivateOtherChoice)
-										for (var y = e.deactivateThisChoice.split(","), f = 0; f < y.length; f++) {
-											var yf = y[f].split("/ON#");
-											if ("undefined" !== typeof this.app.comp[yf[0]]) {
-												var co = this.app.comp[yf[0]],
-													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-													coO = coR.objects[co.objects];
-													if (!coO.forcedActivated) {
-														if (coO.isSelectableMultiple) {
-															var ee = yf[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	this.selectedOneLess(coO, coR);
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	this.selectedOneMore(coO, coR);
-																}
-															}
-														} else {
-															if (coO.isActive) this.activateObject(coO, coR);
-														}
-													}
-											}
-											if ("undefined" !== typeof this.app.compG[yf[0]]) {
-												var co = this.app.compG[yf[0]],
-													coG = this.app.groups[co.groups];
-												for (var T = 0; T < coG.elements.length; T++) {
-													if ("undefined" !== typeof this.app.comp[coG.elements[T].id]) {
-														var coT = this.app.comp[coG.elements[T].id],
-															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
-															coTO = coTR.objects[coT.objects];
-														if (!coTO.forcedActivated) {
-															if (coTO.isSelectableMultiple) {
-																var ee = yf[1];
-																if (ee > 0) {
-																	for (var n = 0; n < ee; n++) {
-																		this.selectedOneLess(coTO, coTR);
-																	}
-																} else if (ee < 0) {
-																	for (var pp = 0; pp < -1 * ee; pp++) {
-																		this.selectedOneMore(coTO, coTR);
-																	}
-																}
-															} else {
-																if (coTO.isActive) this.activateObject(coTO, coTR);
-															}
-														}
-													}
-												}
-											}
-										}
-									for (var f = 0; f < this.activated.length; f++) {
-										var aF = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[aF[0]]) {
-											var co = this.app.comp[aF[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												if (!this.checkRequireds(coO)) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresS(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOn) {
-										e.multiplyPointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++)
-											if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
-												if (e.multiplyPointtypeIsId)
-													for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-												else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
-												this.app.mdObjects.push(e);
-											}
-									}
-									if (e.dividePointtypeIsOn) {
-										e.dividePointtypeIsOnCheck = !0;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
-										this.app.mdObjects.push(e);
-									}
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
-											var I = coR.currentChoices;
-											if (I > coR.allowedChoices) {
-												var O = I - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
-											}
-										}
-									if (e.textfieldIsOn) {
-										for (var m = 0; m < this.app.words.length; m++) {
-											if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-												if (e.customTextfieldIsOn) {
-													e.wordChangeSelect = prompt(e.wordPromptText);
-													if (e.wordChangeSelect === null) e.wordChangeSelect = e.wordChangeDeselect;
-												}
-												this.app.words[m].replaceText = e.wordChangeSelect;
-											}
-										}
-									}
-									if (e.backpackBtnRequirement) {
-										if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
-									}
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
-															}
-															waitScroll();
-															break
-														}
-													}
-												}
-											}
-										}
-									}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
-											this.app.bgmIsPlaying = !0;
-											this.playBgm(e, e.bgmId, 0);
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.mute) {
-											bgmPlayer.mute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
-													}
-												}
-											}
-										}
-									}
-									e.isActive = !e.isActive, this.updateActivated();
 								}
-							} else if (this.activated.includes(eid)) {
-								if (this.checkPointsMD(e)) {
-									for (var a = 0; a < e.scores.length; a++)
-										if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-											for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
-									if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-										if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
-											for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
-												var rndV = e.activatedRandom[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[rndV[0]]) {
-													var co = this.app.comp[rndV[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == rndV[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == rndV[0]) {
-																	EE = parseInt(rndV[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = rndV[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										} else {
-											for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-												var pv = p[v].split("/ON#");
-												if ("undefined" !== typeof this.app.comp[pv[0]]) {
-													var co = this.app.comp[pv[0]],
-														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-														coO = coR.objects[co.objects];
-													if (!e.isAllowDeselect) coO.forcedActivated = !1;
-													if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
-														if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-													}
-													if (coO.isSelectableMultiple) {
-														if ("undefined" !== typeof this.app.cancelForcedActivated && this.app.cancelForcedActivated.some(item => item.split("/ON#")[0] == pv[0])) {
-															for (var AC = 0, EE = 0; AC < this.app.cancelForcedActivated.length; AC++) {
-																var cFA = this.app.cancelForcedActivated[AC].split("/ON#");
-																if (cFA[0] == pv[0]) {
-																	EE = parseInt(pv[1]) - parseInt(cFA[1]), this.app.cancelForcedActivated.splice(AC, 1);
-																	break
-																}
-															}
-															if (EE > 0) {
-																for (var n = 0; n < EE; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (EE < 0) {
-																for (var pp = 0; pp < -1 * EE; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														} else {
-															var ee = pv[1];
-															if (ee > 0) {
-																for (var n = 0; n < ee; n++) {
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneLess(coO, coR);
-																	}
-																}
-															} else if (ee < 0) {
-																for (var pp = 0; pp < -1 * ee; pp++) {
-																	if (!e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.selectedOneMore(coO, coR);
-																	}
-																	if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																}
-															}
-														}
-													} else {
-														if (coO.isActive && !e.isNotDeactivate) {
-															if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-															this.activateObject(coO, coR);
-														}
-													}
-												}
-											}
-										}
-									}
-									for (var f = 0; f < this.activated.length; f++) {
-										var af = this.activated[f].split("/ON#");
-										if ("undefined" !== typeof this.app.comp[af[0]]) {
-											var co = this.app.comp[af[0]],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-												coO = coR.objects[co.objects];
-											if (!this.exceptedObjects.includes(coO.id)) {
-												var nH = this.activated.indexOf(eid);
-												this.activated.splice(nH, 1);
-												t.currentChoices -= 1;
-												var bR = this.checkRequireds(coO);
-												this.activated.splice(nH, 0, eid);
-												t.currentChoices += 1;
-												if (!bR) {
-													this.exceptedObjects.push(coO.id);
-													if (coO.isMultipleUseVariable) {
-														for (var N = coO.multipleUseVariable, n = 0; n < N; n++) {
-															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
-														}
-														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
-															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
-														}
-													} else {
-														if (coO.forcedActivated) coO.forcedActivated = !1;
-														this.activateObject(coO, coR);
-													}
-													f--;
-												}
-											}
-										}
-									}
-									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresC(e, t, tmpScores, 0);
-									if (e.multiplyPointtypeIsOnCheck) {
-										e.multiplyPointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
-									}
-									if (e.dividePointtypeIsOnCheck) {
-										e.dividePointtypeIsOnCheck = !1;
-										for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
-									}
-									if (e.textfieldIsOn)
-										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
-									if (e.addToAllowChoice)
-										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
-											var co = this.app.compR[e.idOfAllowChoice],
-												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-											coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
-											var d = coR.currentChoices - 1;
-											if (d > coR.allowedChoices) {
-												var u = d - coR.allowedChoices;
-												for (var v = 0; v < coR.objects.length; v++) {
-													if (u > 0 && coR.objects[v].isActive) {
-														this.activateObject(coR.objects[v], coR);
-														u--;
-													}
-												}
-											}
-										}
-									if (e.backpackBtnRequirement)
-										this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
-									if (e.changeBackground) {
-										if (e.changeBgImage) {
-											var a = this.app.styling.backgroundImage;
-											this.$set(this.app.styling, "backgroundImage", e.bgImage);
-											this.$set(e, "bgImage", a);
-										} else {
-											var a = this.app.styling.backgroundColor;
-											this.$set(this.app.styling, "backgroundColor", e.changedBgColorCode);
-											this.$set(e, "changedBgColorCode", a);
-										}
-									}
-									if (e.changePointBar) {
-										if (e.changeBarBgColorIsOn) {
-											var a = this.app.styling.barBackgroundColor;
-											this.$set(this.app.styling, "barBackgroundColor", e.changedBarBgColor);
-											this.$set(e, "changedBarBgColor", a);
-										}
-										if (e.changeBarTextColorIsOn) {
-											var a = this.app.styling.barTextColor;
-											this.$set(this.app.styling, "barTextColor", e.changedBarTextColor);
-											this.$set(e, "changedBarTextColor", a);
-										}
-										if (e.changeBarIconColorIsOn) {
-											var a = this.app.styling.barIconColor;
-											this.$set(this.app.styling, "barIconColor", e.changedBarIconColor);
-											this.$set(e, "changedBarIconColor", a);
-										}
-									}
-									if (e.discountOther)
-										if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-											for (var a = 0; a < this.app.groups.length; a++)
-												for (var b = 0; b < this.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-														var co = this.app.comp[this.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-														}
-													}
-									if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
-										if (e.bgmId) {
-											this.app.bgmIsPlaying = !1;
-											this.playBgm(e, e.bgmId, 0)
-										}
-									}
-									if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
-										if ("undefined" !== typeof bgmPlayer.unMute) {
-											bgmPlayer.unMute();
-										}
-									}
-									if (e.isContentHidden) {
-										if ("undefined" !== typeof this.app.compR[t.id]) {											
-											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-													var co = this.app.compR[e.hiddenContentsRow[a]],
-														coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-													if (coR.isResultRow) {
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
-													}
-												}
-											}
-										}
-									}
-									this.activated.splice(this.activated.indexOf(eid), 1), e.isActive = !e.isActive, this.updateActivated(), t.currentChoices -= 1;
-								}
+								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
-							if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
+							if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
 						}
-						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     updateObject: function() {
                         this.$emit("objectWasChanged", this.object)
@@ -34128,7 +34462,7 @@
                 },
                 methods: {
                     cleanCurrentComponent: function() {
-						this.$set(this.app, "printThis", !1);
+						if (this.app.preloadImages) this.$set(this.app, "printThis", !1);
                         this.$emit("cleanCurrentComponent", "")
                     },
 					checkRequireds: function(e) {
@@ -39794,7 +40128,10 @@
                     },
                     currentDesignComponent: function() {
                         return this.$store.state.currentDesignComponent
-                    }
+                    },
+					globalVariables: function() {
+						return this.$store.state.globalVariables
+					}
                 },
                 methods: {
                     cloneRow: function(e) {
@@ -39991,6 +40328,7 @@
             VNavigationDrawer: Zr["a"],
             VRow: S["a"],
             VSpacer: O["a"],
+			VSnackbar: Ct["a"],
             VToolbar: Tt["a"],
             VToolbarTitle: xi["a"],
             VTooltip: Q["a"]
@@ -40143,7 +40481,7 @@
 					style: e.pointBarIcon,
                     on: {
                         click: function(t) {
-							e.$set(e.app, "printThis", !0);
+							if (e.app.preloadImages) e.$set(e.app, "printThis", !0);
                             e.currentComponent = "appBackpackPreview"
                         }
                     }
@@ -41336,7 +41674,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.7.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.8.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -41610,6 +41948,7 @@
 						rowIdLength: 4,
 						objectIdLength: 4,
                         words: [],
+						wordChangeComplete: !1,
                         groups: [],
 						rowDesignGroups: [],
 						objectDesignGroups: [],
@@ -42149,6 +42488,10 @@
 						rowBorderImageSliceBottom: 5,
 						rowBorderImageSliceLeft: 5,
 						rowBorderImageSliceRight: 5,
+					},
+					globalVariables: {
+						text: "",
+						snackbar: !1
 					}
                 },
                 getters: {
@@ -42355,6 +42698,7 @@
 						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.length = 0;
 						if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+						e.app.wordChangeComplete = !1;
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
