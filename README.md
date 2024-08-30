@@ -79,7 +79,7 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to choose all items in the dropdown menu at once.
  - Added a feature to set which points to discount.
  - Added a feature to set Design Groups for backpack.
- - Added a feature to hide contents ouside of backpack.
+ - Added a feature to hide contents outside of backpack.
  - Added a feature to multiply the score by the number of selections when using multi-select.
  - Added a feature that allows multi-select choices to adjust Allowed Choices.
  - Added a feature to set the size/position of the counter for multi-select choices.

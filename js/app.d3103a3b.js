@@ -28485,7 +28485,7 @@
 							for (var a = 0; a < e.length; a++) {
 								var ea = e[a].split("/ON#");
 								ea = ea.length > 1 ? ea : ea[0].split("/IMG#");
-								ea = ea[0].split("/WORD#");
+								ea = ea.length > 1 ? ea : ea[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[ea[0]]) {
 									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
@@ -28507,7 +28507,7 @@
 								var eb = e[b].split("/ON#");
 								eb = eb.length > 1 ? eb : eb[0].split("/IMG#");
 								var ebImg = eb.length > 1 ? eb[1] : "";
-								eb = eb[0].split("/WORD#");
+								eb = eb.length > 1 ? eb : eb[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[eb[0]]) {
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
@@ -28702,7 +28702,7 @@
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
 								en = en.length > 1 ? en : en[0].split("/IMG#");
-								en = en[0].split("/WORD#");
+								en = en.length > 1 ? en : en[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
@@ -28733,7 +28733,7 @@
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
 								en = en.length > 1 ? en : en[0].split("/IMG#");
-								en = en[0].split("/WORD#");
+								en = en.length > 1 ? en : en[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
