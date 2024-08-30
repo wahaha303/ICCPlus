@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.9.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.9.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to choose all items in the dropdown menu at once. "), o("br"), e._v(" Added a feature to set which points to discount. "), o("br"), e._v(" Added a feature to set Design Groups for backpack. "), o("br"), e._v(" Added a feature to hide contents ouside of backpack. "), o("br"), e._v(" Added a feature to multiply the score by the number of selections when using multi-select. "), o("br"), e._v(" Added a feature that allows multi-select choices to adjust Allowed Choices. "), o("br"), e._v(" Added a feature to set the size/position of the counter for multi-select choices. "), o("br"), e._v(" Added a feature to hide the counter when the choice is missing requirements. "), o("br"), e._v(" Added a feature to keep the choice selected when the Clean Activated feature is used. "), o("br"), e._v(" Added a feature to disable 'Use Alternate Menu' in Config Global Settings. ")]), o("v-col", {
+                }, [e._v(" Added a feature to choose all items in the dropdown menu at once. "), o("br"), e._v(" Added a feature to set which points to discount. "), o("br"), e._v(" Added a feature to set Design Groups for backpack. "), o("br"), e._v(" Added a feature to hide contents outside of backpack. "), o("br"), e._v(" Added a feature to multiply the score by the number of selections when using multi-select. "), o("br"), e._v(" Added a feature that allows multi-select choices to adjust Allowed Choices. "), o("br"), e._v(" Added a feature to set the size/position of the counter for multi-select choices. "), o("br"), e._v(" Added a feature to hide the counter when the choice is missing requirements. "), o("br"), e._v(" Added a feature to keep the choice selected when the Clean Activated feature is used. "), o("br"), e._v(" Added a feature to disable 'Use Alternate Menu' in Config Global Settings. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -43405,7 +43405,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.9.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.9.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
