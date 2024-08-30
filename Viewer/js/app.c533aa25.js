@@ -3759,21 +3759,19 @@
 																}
 															}
 											if (e.isContentHidden) {
-												if ("undefined" !== typeof this.app.compR[t.id]) {											
-													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-															var co = this.app.compR[e.hiddenContentsRow[a]],
-																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -4095,22 +4093,20 @@
 											}
 										}
 										if (e.isContentHidden) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {											
-												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-														var co = this.app.compR[e.hiddenContentsRow[a]],
-															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
+											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+													var co = this.app.compR[e.hiddenContentsRow[a]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+													for (var b = 0; b < e.hiddenContentsType.length; b++) {
+														if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+														else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+														else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+														else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+														else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+														else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+														else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+														else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 													}
 												}
 											}
@@ -4376,21 +4372,19 @@
 											}
 										}
 										if (e.isContentHidden) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {											
-												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-														var co = this.app.compR[e.hiddenContentsRow[a]],
-															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
+											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+													var co = this.app.compR[e.hiddenContentsRow[a]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													for (var b = 0; b < e.hiddenContentsType.length; b++) {
+														if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+														else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+														else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+														else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+														else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+														else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+														else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+														else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 													}
 												}
 											}
@@ -6464,21 +6458,19 @@
 																}
 															}
 											if (e.isContentHidden) {
-												if ("undefined" !== typeof this.app.compR[t.id]) {											
-													for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-															var co = this.app.compR[e.hiddenContentsRow[a]],
-																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+														var co = this.app.compR[e.hiddenContentsRow[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -6800,22 +6792,20 @@
 											}
 										}
 										if (e.isContentHidden) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {											
-												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-														var co = this.app.compR[e.hiddenContentsRow[a]],
-															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-														}
+											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+													var co = this.app.compR[e.hiddenContentsRow[a]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+													for (var b = 0; b < e.hiddenContentsType.length; b++) {
+														if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+														else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+														else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+														else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+														else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+														else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+														else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+														else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 													}
 												}
 											}
@@ -7081,21 +7071,19 @@
 											}
 										}
 										if (e.isContentHidden) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {											
-												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
-													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
-														var co = this.app.compR[e.hiddenContentsRow[a]],
-															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														for (var b = 0; b < e.hiddenContentsType.length; b++) {
-															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-														}
+											for (var a = 0; a < e.hiddenContentsRow.length; a++) {
+												if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
+													var co = this.app.compR[e.hiddenContentsRow[a]],
+														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+													for (var b = 0; b < e.hiddenContentsType.length; b++) {
+														if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+														else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+														else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+														else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+														else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+														else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+														else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+														else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 													}
 												}
 											}
@@ -10324,6 +10312,24 @@
 							if (t.isActive && t.setBgmIsOn){
 								if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
 									 bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+								}
+							}
+							if (t.isActive && t.isContentHidden) {
+								for (var a = 0; a < t.hiddenContentsRow.length; a++) {
+									if ("undefined" !== typeof e.app.compR[t.hiddenContentsRow[a]]) {
+										var co = e.app.compR[t.hiddenContentsRow[a]],
+											coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows];
+										for (var b = 0; b < t.hiddenContentsType.length; b++) {
+											if (t.hiddenContentsType[b] == "1") coR.objectTitleRemoved = !1;
+											else if (t.hiddenContentsType[b] == "2") coR.objectImageRemoved = !1;
+											else if (t.hiddenContentsType[b] == "3") coR.objectTextRemoved = !1;
+											else if (t.hiddenContentsType[b] == "4") coR.objectScoreRemoved = !1;
+											else if (t.hiddenContentsType[b] == "5") coR.objectRequirementRemoved = !1;
+											else if (t.hiddenContentsType[b] == "6") coR.addonTitleRemoved = !1;
+											else if (t.hiddenContentsType[b] == "7") coR.addonImageRemoved = !1;
+											else if (t.hiddenContentsType[b] == "8") coR.addonTextRemoved = !1;
+										}
+									}
 								}
 							}
 							t.isActive = !1;
