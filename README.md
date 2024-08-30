@@ -76,6 +76,16 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to display the discounted score.
  - Added a feature to export ID/Name list as a CSV file.
  - Added a feature to choose the display type in the loading animation (see index.html).
+ - Added a feature to choose all items in the dropdown menu at once.
+ - Added a feature to set which points to discount.
+ - Added a feature to set Design Groups for backpack.
+ - Added a feature to hide contents ouside of backpack.
+ - Added a feature to multiply the score by the number of selections when using multi-select.
+ - Added a feature that allows multi-select choices to adjust Allowed Choices.
+ - Added a feature to set the size/position of the counter for multi-select choices.
+ - Added a feature to hide the counter when the choice is missing requirements.
+ - Added a feature to keep the choice selected when the Clean Activated feature is used.
+ - Added a feature to disable 'Use Alternate Menu' in Config Global Settings.
 
 
 ## Fixed
@@ -133,5 +143,11 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where 'Multiply/Divide' features were not working correctly.
  - Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly.
  - Fixed an issue where choices activated by 'Forces another choice active' were de-selectable.
- - Fixed an issue where image split downloads do not work correctly in the Firefox browser.
+ - Fixed an issue where image split downloads did not work correctly in the Firefox browser.
+ - Fixed an issue where the copy/paste requirement feature was not working correctly in certain situations.
+ - Fixed an issue where the Clean Activated feature did not update visual effects correctly.
+ - Fixed an issue where scores in multi-select choices were not calculated properly when a simple variable was not used.
+ - Fixed an issue where multi-select choices were not being properly canceled.
+ - Fixed an issue where choices couldn't be selected after deleting a choice.
+ - Fixed an issue where the 'player image upload' function did not work with the other choice functions.
  

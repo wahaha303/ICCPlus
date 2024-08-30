@@ -108,9 +108,9 @@
                         }
                     },
                     methods: {
-                        open: function(t, e, o) {
+                        open: function(t, e, o, i) {
                             var n = this;
-							this.wordText = "";
+							this.wordText = i;
                             return this.dialog = !0, this.title = t, this.message = e, this.options = Object.assign(this.options, o), new Promise((resolve, reject) => {
 								n.resolve = (result) => {
 									if (result) resolve({result, wordText:n.wordText});

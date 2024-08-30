@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.8.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.9.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 18.08.2024")]), o("v-col", {
+                }, [e._v("Update: 30.08.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated. "), o("br"), e._v(" Added a feature to use the modulo operator in 'point comparison' requirements. "), o("br"), e._v(" Added a feature to directly load a project from the 'CYOA.zip' file. "), o("br"), e._v(" Added a feature to copy/paste a requirement. "), o("br"), e._v(" Added a feature to merge duplicate images when exporting a project as a zip file. "), o("br"), e._v(" Added a feature to increase or decrease the 'Number of requirements' for 'X of these'. "), o("br"), e._v(" Added an option in Global Settings to enable or disable automatic image conversion. "), o("br"), e._v(" Added an option in Global Settings to enable image preloading in the backpack. "), o("br"), e._v(" Added a feature to display the discounted score. "), o("br"), e._v(" Added a feature to export ID/Name list as a CSV file. "), o("br"), e._v(" Added a feature to choose the display type in the loading animation (see index.html). ")]), o("v-col", {
+                }, [e._v(" Added a feature to choose all items in the dropdown menu at once. "), o("br"), e._v(" Added a feature to set which points to discount. "), o("br"), e._v(" Added a feature to set Design Groups for backpack. "), o("br"), e._v(" Added a feature to hide contents ouside of backpack. "), o("br"), e._v(" Added a feature to multiply the score by the number of selections when using multi-select. "), o("br"), e._v(" Added a feature that allows multi-select choices to adjust Allowed Choices. "), o("br"), e._v(" Added a feature to set the size/position of the counter for multi-select choices. "), o("br"), e._v(" Added a feature to hide the counter when the choice is missing requirements. "), o("br"), e._v(" Added a feature to keep the choice selected when the Clean Activated feature is used. "), o("br"), e._v(" Added a feature to disable 'Use Alternate Menu' in Config Global Settings. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where 'Will make another choice unselected' feature was not working correctly. "), o("br"), e._v(" Fixed an issue where 'Multiply/Divide' features were not working correctly. "), o("br"), e._v(" Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly. "), o("br"), e._v(" Fixed an issue where choices activated by 'Forces another choice active' were de-selectable. "), o("br"), e._v(" Fixed an issue where image split downloads do not work correctly in the Firefox browser. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the copy/paste requirement feature was not working correctly in certain situations. "), o("br"), e._v(" Fixed an issue where the Clean Activated feature did not update visual effects correctly. "), o("br"), e._v(" Fixed an issue where scores in multi-select choices were not calculated properly when a simple variable was not used. "), o("br"), e._v(" Fixed an issue where multi-select choices were not being properly canceled. "), o("br"), e._v(" Fixed an issue where choices couldn't be selected after deleting a choice. "), o("br"), e._v(" Fixed an issue where the 'player image upload' function did not work with the other choice functions. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -356,7 +356,7 @@
                 }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-clipboard-list")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v(" See ID/Title List ")])], 1)], 1), o("v-list-item", e._g({
                     on: {
                         click: function(t) {
-                            e.drawer = !e.drawer
+							if (!e.app.disableAlterMenu) e.drawer = !e.drawer
                         }
                     }
                 }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-menu")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v(" Use Alternate Menu ")])], 1)], 1)], 1)], 1)], 1), o("v-main", [e.drawer ? e._e() : o("v-row", {
@@ -1568,7 +1568,6 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-										console.log(e, t);
                                         e.currentComponent = "ObjectSettings"
                                     }
                                 }
@@ -1867,7 +1866,8 @@
                             isEditModeOn: e.isEditModeOn,
                             app: e.app,
                             score: t,
-							scores: e.object.scores
+							scores: e.object.scores,
+							isSelectableMultiple: e.object.isSelectableMultiple
                         },
                         on: {
                             scoreWasChanged: function(e) {
@@ -2072,7 +2072,7 @@
                         callback: function(t) {
                             e.$set(e.object, "isSelectableMultiple", t);
 							if (!t) {
-								e.$set(e.object, "isMultipleUseVariable", t), e.$set(e.object, "multipleScoreId", "");
+								e.$set(e.object, "isMultipleUseVariable", t), e.$set(e.object, "multipleScoreId", ""), e.$set(e.object, "hideMultipleCounter", t);
 							}
                         },
                         expression: "object.isSelectableMultiple"
@@ -2088,6 +2088,18 @@
                             e.$set(e.object, "isMultipleUseVariable", t), e.$set(e.object, "multipleScoreId", "");
                         },
                         expression: "object.isMultipleUseVariable"
+                    }
+                }) : e._e(), e.object.isSelectableMultiple ? o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Hide the counter if the choice is missing requirements?"
+                    },
+                    model: {
+                        value: e.object.hideMultipleCounter,
+                        callback: function(t) {
+                            e.$set(e.object, "hideMultipleCounter", t)
+                        },
+                        expression: "object.hideMultipleCounter"
                     }
                 }) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("p", [e._v(" The point type used here should only be used for this choice, and it can be hidden by placing something in 'Id needed to activate' in Features -> Manage Points. ")]) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("v-select", {
                     staticClass: "pa-1",
@@ -2165,6 +2177,18 @@
                             e.$set(e.object, "selectOnce", t)
                         },
                         expression: "object.selectOnce"
+                    }
+                }), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "This choice is not deselected by the Clean Choice feature."
+                    },
+                    model: {
+                        value: e.object.notDeselectedByClean,
+                        callback: function(t) {
+                            e.$set(e.object, "notDeselectedByClean", t)
+                        },
+                        expression: "object.notDeselectedByClean"
                     }
                 }), o("v-checkbox", {
                     attrs: {
@@ -2365,7 +2389,7 @@
                 }) : e._e(), e.object.activateOtherChoice ? o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
-                        label: "Allow de-selecting the activated choices?"
+                        label: "Allow deselecting the activated choices?"
                     },
                     model: {
                         value: e.object.isAllowDeselect,
@@ -2424,7 +2448,7 @@
                     model: {
                         value: e.object.discountOther,
                         callback: function(t) {
-                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountGroups", []), e.$set(e.object, "discountLowLimitIsOn", !1),  e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", 0), e.$set(e.object, "discountShow", !1);
+                            e.$set(e.object, "discountOther", t), e.$set(e.object, "discountGroups", []), e.$set(e.object, "discountPointTypes", []), e.$set(e.object, "discountLowLimitIsOn", !1),  e.$set(e.object, "discountOperator", ""), e.$set(e.object, "discountValue", 0), e.$set(e.object, "discountShow", !1);
                         },
                         expression: "object.discountOther"
                     }
@@ -2519,6 +2543,23 @@
                             e.$set(e.object, "discountGroups", t)
                         },
                         expression: "object.discountGroups"
+                    }
+                }), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+						items: this.app.pointTypes,
+                        "item-text": "name",
+                        "item-value": "id",
+                        filled: "",
+						multiple: !0,
+						label: "Name of the PointTypes that will be discounted"
+                    },
+                    model: {
+                        value: e.object.discountPointTypes,
+                        callback: function(t) {
+                            e.$set(e.object, "discountPointTypes", t)
+                        },
+                        expression: "object.discountPointTypes"
                     }
                 }), o("v-row", [o("v-col", {
                     staticClass: "pb-0 pr-1",
@@ -2914,7 +2955,8 @@
                         "item-value": "id",
                         filled: "",
 						label: "Id of the row where contents will be hidden",
-						multiple: !0
+						multiple: !0,
+						enableSelectAll: !0
                     },
 					scopedSlots: {
 						item: ({item, attrs}) => [
@@ -3143,7 +3185,7 @@
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
-                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row);
+                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isButtonObject ? !1 : e.activateObject(e.object, e.row);
                         }
                     }
                 }, [1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
@@ -3203,7 +3245,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -3211,7 +3253,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3232,7 +3274,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3254,7 +3296,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -3265,7 +3343,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
                     staticStyle: {
                         "white-space": "pre-line"
@@ -3292,7 +3406,43 @@
                         },
                         expression: "object.randomWeight"
                     }
-                }) : e._e(), e._l(e.object.addons, (function(t) {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "py-0"
@@ -3308,7 +3458,43 @@
                             }
                         }
                     })], 1)
-                }))], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
@@ -3360,7 +3546,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -3368,7 +3554,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3389,7 +3575,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3410,7 +3596,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -3421,7 +3643,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -3429,7 +3687,43 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e()], 2), e._l(e.object.addons, (function(t) {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pt-0",
@@ -3448,19 +3742,7 @@
                             }
                         }
                     })], 1)
-                }))], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
-                    staticClass: "ma-0 pa-0",
-                    staticStyle: {
-                        width: "100%"
-                    }
-                }, [o("v-col", {
-                    staticClass: "pa-1"
-                }, [!e.row.objectTitleRemoved ? o("h3", {
-                    style: e.objectTitle,
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
-                    }
-                }) : e._e(), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -3468,7 +3750,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3489,7 +3771,55 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                    staticClass: "ma-0 pa-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [o("v-col", {
+                    staticClass: "pa-1"
+                }, [!e.row.objectTitleRemoved ? o("h3", {
+                    style: e.objectTitle,
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                    }
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -3510,7 +3840,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -3521,7 +3887,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t, e.sanitizeArg)))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -3529,7 +3931,43 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e()], 2), o("v-col", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
                 }, ["" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -3588,7 +4026,43 @@
                             }
                         }
                     })], 1)
-                }))], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         row: e.object
@@ -3666,7 +4140,8 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-                                        e.$set(e.app, "tmpRequired", e.addon.required);
+										e.$set(e.app, "tmpRequired", e.addon.required);
+										e.globalVariables.text = "The requirement is copied.", e.globalVariables.snackbar = !0;
                                     }
                                 }
                             }, [e._v("mdi-clipboard-outline")])], 1)]
@@ -4681,7 +5156,7 @@
                         });
                     },
 					pasteRequired: function(e, t) {
-						if ("undefined" === typeof this.app.tmpRequired || "undefined" === typeof this.app.tmpRequired.type) {
+						if ("undefined" === typeof this.app.tmpRequired || this.app.tmpRequired.length === 0) {
 							this.globalVariables.text = "The clipboard is empty.", this.globalVariables.snackbar = !0;
 						} else {
 							if (this.app.tmpRequired.length > 1) {
@@ -4689,11 +5164,11 @@
 									t.push(this.app.tmpRequired[a]);
 								}
 							} else {
-								if (e.id == "") {
+								if ("undefined" === typeof e.text) {
 									const o = Object.assign({}, this.app.tmpRequired, {requireds: []});
-									t.push(o);
+									t.push(o[0]);
 								} else {
-									t.push(this.app.tmpRequired);
+									t.push(this.app.tmpRequired[0]);
 								}
 							}
 						}
@@ -5274,10 +5749,10 @@
                     AppImageUpload: G
                 },
                 computed: {
-                    objectImage: function() {
-                        var e = "width:" + this.styling.objectImageWidth + "%;margin-top:" + this.styling.objectImageMarginTop + "%;margin-bottom:" + this.styling.objectImageMarginBottom + "%;",
-                            t = this.styling.objectImgBorderRadiusIsPixels ? "px" : "%";
-                        return e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.styling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectImgBorderIsOn && (e += "border: " + this.styling.objectImgBorderWidth + "px " + this.styling.objectImgBorderStyle + " " + this.styling.objectImgBorderColor + ";"), e
+					objectImage: function() {
+                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+						this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+                        return e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
                     activated: function() {
                         return this.$store.state.app.activated
@@ -5290,6 +5765,29 @@
                     },
 					object: function() {
 						return this.$parent.object
+					},
+					objectImageStyling: function() {
+						if (this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
 					},
                     textStyling: function() {
 						if (this.object.privateTextIsOn) return this.object.styling;
@@ -5371,7 +5869,10 @@
                                     for (var s = 0; s < this.app.words.length; s++) e = e.replace(new RegExp(this.app.words[s].id, "g"), this.app.words[s].replaceText)
                             }
                         return e
-                    }
+                    },
+					globalVariables: function() {
+						return this.$store.state.globalVariables
+					}					
                 },
                 methods: {
                     checkRequireds: function(e) {
@@ -5461,7 +5962,8 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-                                        e.$set(e.app, "tmpRequired", e.required);
+										e.$set(e.app, "tmpRequired", e.required);
+										e.globalVariables.text = "The requirement is copied.", e.globalVariables.snackbar = !0;
                                     }
                                 }
                             }, [e._v("mdi-clipboard-outline")])], 1)]
@@ -6835,7 +7337,10 @@
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
-                    }
+                    },
+					globalVariables: function() {
+						return this.$store.state.globalVariables
+					}
                 },
                 methods: {
                     checkRequireds: function(e) {
@@ -6924,7 +7429,8 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-                                        e.$set(e.app, "tmpRequired", e.score.requireds);
+										e.$set(e.app, "tmpRequired", e.score.requireds);
+										e.globalVariables.text = "The requirement is copied.", e.globalVariables.snackbar = !0;
                                     }
                                 }
                             }, [e._v("mdi-clipboard-outline")])], 1)]
@@ -6974,7 +7480,7 @@
                         expression: "score.isNotDiscountable"
                     }
                 })], 1), o("v-col", {
-                    staticClass: "py-0 col-12"
+                    staticClass: e.isSelectableMultiple ? "py-0 col-6" : "py-0 col-12"
                 }, [o("v-checkbox", {
                     staticClass: "auto shrink mr-2 ml-0 mt-0",
                     attrs: {
@@ -6988,7 +7494,22 @@
                         },
                         expression: "score.isNotRecalculatable"
                     }
-                })], 1), o("v-col", {
+                })], 1), e.isSelectableMultiple ? o("v-col", {
+                    staticClass: "py-0 col-6"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 ml-0 mt-0",
+                    attrs: {
+						"hide-details": "",
+                        label: "Multiply by number of selections?"
+                    },
+                    model: {
+                        value: e.score.multiplyByTimes,
+                        callback: function(t) {
+                            e.$set(e.score, "multiplyByTimes", t)
+                        },
+                        expression: "score.multiplyByTimes"
+                    }
+                })], 1) : e._e(), o("v-col", {
                     staticClass: "py-0 pr-1"
                 }, [o("v-select", {
                     staticClass: "my-1",
@@ -7654,7 +8175,8 @@
                 props: {
                     score: Object,
                     isEditModeOn: Boolean,
-					scores: Array
+					scores: Array,
+					isSelectableMultiple: Boolean
                 },
                 data: function() {
                     return {
@@ -7778,7 +8300,10 @@
                     },
 					app: function() {
                         return this.$store.state.app
-                    }
+                    },
+					globalVariables: function() {
+						return this.$store.state.globalVariables
+					}
                 },
                 methods: {
                     deleteEvent: function(e, t) {
@@ -13443,19 +13968,25 @@
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
                     },
+					multiChoiceCounter: function() {
+						if (this.object.hideMultipleCounter) {
+							return this.checkRequireds(this.object)
+						}
+						return !0
+					},
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
                         return 'font-family: "' + this.textStyling.objectText + '";text-align: ' + this.textStyling.objectTextAlign + ";font-size: " + this.textStyling.objectTextTextSize + "%;color: " + (!e && this.filterStyling.reqCTextColorIsOn ? this.filterStyling.reqFilterCTextColor : (this.object.isActive && this.filterStyling.selCTextColorIsOn ? this.filterStyling.selFilterCTextColor : this.textStyling.objectTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;"
                     },
                     objectBackground: function() {
-                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : "")) + "margin:" + this.objectStyling.objectMargin + "px;",
+                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : "")) + "margin:" + this.objectStyling.objectMargin + "px;",
 							t = this.objectStyling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
+						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
 						if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
 						else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
 						else if (!o) {
-							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
+							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
@@ -13636,16 +14167,16 @@
 												o.next = 4;
 												break
 											}
-											var s = t.objects.indexOf(t.object);
+											var s = t.objects.indexOf(t.object);											
+											if (t.object.isActive) t.activateObject(t.object, t.row);
 											if ("undefined" !== typeof t.app.compR[t.row.id]) {
 												var co = t.app.compR[t.row.id],
 													coR = co.type == "backpack" ? t.app.backpack[co.rows] : t.app.rows[co.rows];
-												for (var i = s + 1; s < coR.length; s++) {
-													if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
-														t.app.comp[coR.objects[s]].objects = s;
+												for (var i = s + 1; i < coR.objects.length; i++) {
+													if ("undefined" !== typeof t.app.comp[coR.objects[i].id]) {
+														t.app.comp[coR.objects[i].id].objects = i - 1;
 													}
 												}
-												e.$set(e.object, "backpackBtnRequirement", t);
 												if (t.object.backpackBtnRequirement) t.$set(t.app, "hideBackpackBtn", t.app.hideBackpackBtn - 1);
 												t.$delete(t.app.comp, t.object.id);
 												t.objects.splice(t.objects.indexOf(t.object), 1);
@@ -13658,12 +14189,13 @@
 							})))()
 						} else {
 							var s = t.objects.indexOf(t.object);
+							if (t.object.isActive) t.activateObject(t.object, t.row);
 							if ("undefined" !== typeof t.app.compR[t.row.id]) {
 								var co = t.app.compR[t.row.id],
 									coR = co.type == "backpack" ? t.app.backpack[co.rows] : t.app.rows[co.rows];
-								for (var i = s + 1; s < coR.length; s++) {
-									if ("undefined" !== typeof t.app.comp[coR.objects[s]]) {
-										t.app.comp[coR.objects[s]].objects = s;
+								for (var i = s + 1; i < coR.objects.length; i++) {
+									if ("undefined" !== typeof t.app.comp[coR.objects[i].id]) {
+										t.app.comp[coR.objects[i].id].objects = i - 1;
 									}
 								}
 								if (t.object.backpackBtnRequirement) t.$set(t.app, "hideBackpackBtn", t.app.hideBackpackBtn - 1);
@@ -13756,7 +14288,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -13811,7 +14342,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -13835,7 +14365,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -13889,7 +14418,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -13941,7 +14469,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -13962,7 +14489,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 																
@@ -14051,7 +14577,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -14075,7 +14600,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -14168,7 +14692,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -14192,7 +14715,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -14314,7 +14836,10 @@
 							var cnt = 0;
 							for (var r = 0; r < t.objects.length; r++) {
 								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-									this.activateObject(t.objects[r], t);
+									if (t.objects[r].isSelectableMultiple)
+										for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+									else
+										this.activateObject(t.objects[r], t);
 									break
 								}
 								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
@@ -14322,7 +14847,7 @@
 							if (cnt >= t.allowedChoices) k = !1;
 						}
 						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
-							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0}, e.wordChangeSelect)
 							.then(({result, wordText}) => {
 								if (result) {
 									e.wordChangeSelect = wordText;
@@ -14341,15 +14866,15 @@
 										e.scores[g].setValue = !0;
 										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
 									}
-								
 								var tmpScores = [];
-								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (!this.exceptedObjects.length == 0 && !this.exceptedObjects.includes(eid)) this.exceptedObjects.push(eid);
 								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 									if (this.activated.includes(eid)) {
 										if (this.checkPointsMD(e)) {
-											for (var a = 0; a < e.scores.length; a++)
+											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -14485,7 +15010,7 @@
 													var co = this.app.comp[af[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													if (!this.exceptedObjects.includes(coO.id)) {
+													if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 														var nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
 														t.currentChoices -= 1;
@@ -14499,7 +15024,6 @@
 																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 																}
 																if (coO.forcedActivated) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 																}
 															} else {
@@ -14602,8 +15126,13 @@
 												}
 												this.app.mdObjects.splice(ei, 1);
 											}
-											if (e.textfieldIsOn)
-												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.textfieldIsOn) {
+												for (var m = 0; m < this.app.words.length; m++) {
+													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+														this.app.words[m].replaceText = e.wordChangeDeselect;
+													}
+												}
+											}
 											if (e.addToAllowChoice)
 												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 													var co = this.app.compR[e.idOfAllowChoice],
@@ -14613,13 +15142,19 @@
 													if (d > coR.allowedChoices) {
 														var u = d - coR.allowedChoices;
 														for (var v = 0; v < coR.objects.length; v++) {
-															if (u > 0 && coR.objects[v].isActive) {
-																this.activateObject(coR.objects[v], coR);
+															if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+																if (coR.objects[v].isSelectableMultiple)
+																	for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+																else
+																	this.activateObject(coR.objects[v], coR);
 																u--;
 															}
 														}
 													}
 												}
+											if (e.isImageUpload) {
+												this.$set(e, "image", e.defaultImage);
+											}
 											if (e.backpackBtnRequirement)
 												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 											if (e.changeBackground) {
@@ -14680,17 +15215,15 @@
 														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 															var co = this.app.compR[e.hiddenContentsRow[a]],
 																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															if (coR.isResultRow) {
-																for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-																}
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 															}
 														}
 													}
@@ -14710,15 +15243,17 @@
 																coO = coR.objects[co.objects];
 															for (var c = 0; c < coO.scores.length; c++) {
 																var coS = coO.scores[c];
-																if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																	this.$set(coS, "discountIsOn", true);
-																	this.$set(coS, "discountedFrom", e.id);
+																if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																	if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																		if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																		else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																		else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																		else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																		if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																		if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																		this.$set(coS, "discountIsOn", true);
+																		this.$set(coS, "discountedFrom", e.id);
+																	}
 																}
 															}
 														}
@@ -14727,12 +15262,12 @@
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
-										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 										if (e.duplicateRow) {
 											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 										}
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											if (e.isActivateRandom) {
 												var y = e.activateThisChoice.split(","); 
 												var RD = y.slice(),
 													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
@@ -14813,12 +15348,10 @@
 																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 															if(!coO.isActive) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 																coO.forcedActivated = !1;
 															}
 														} else {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 															coO.forcedActivated = !1;
 														}
@@ -14892,7 +15425,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -14938,6 +15470,10 @@
 												}
 											}
 										}
+										if (e.isImageUpload) {
+											this.$set(e, "defaultImage", e.image);
+											this.currentComponent = "appImageUpload"
+										}
 										if (e.backpackBtnRequirement) {
 											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
@@ -14972,10 +15508,28 @@
 										}
 										if (e.scrollToRow) {
 											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var co = this.app.compR[e.scrollRowId],
-														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
+															}
+														}
+													}
 												}
 											}
 										}
@@ -14997,18 +15551,16 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-															}
+														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 														}
 													}
 												}
@@ -15157,7 +15709,7 @@
 												var co = this.app.comp[af[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												if (!this.exceptedObjects.includes(coO.id)) {
+												if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 													var nH = this.activated.indexOf(eid);
 													this.activated.splice(nH, 1);
 													t.currentChoices -= 1;
@@ -15171,7 +15723,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -15192,8 +15743,13 @@
 											e.dividePointtypeIsOnCheck = !1;
 											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
-										if (e.textfieldIsOn)
-											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeDeselect;
+												}
+											}
+										}
 										if (e.addToAllowChoice)
 											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 												var co = this.app.compR[e.idOfAllowChoice],
@@ -15203,13 +15759,19 @@
 												if (d > coR.allowedChoices) {
 													var u = d - coR.allowedChoices;
 													for (var v = 0; v < coR.objects.length; v++) {
-														if (u > 0 && coR.objects[v].isActive) {
-															this.activateObject(coR.objects[v], coR);
+														if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+															if (coR.objects[v].isSelectableMultiple)
+																for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+															else
+																this.activateObject(coR.objects[v], coR);
 															u--;
 														}
 													}
 												}
 											}
+										if (e.isImageUpload) {
+											this.$set(e, "image", e.defaultImage);
+										}
 										if (e.backpackBtnRequirement)
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
@@ -15270,17 +15832,15 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -15299,11 +15859,31 @@
                     },
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+									var cnt = 0;
+									for (var r = 0; r < t.objects.length; r++) {
+										if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+											if (t.objects[r].isSelectableMultiple)
+												for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+											else
+												this.activateObject(t.objects[r], t);
+											break
+										}
+										else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+									}
+									if (cnt >= t.allowedChoices) 
+										s = !1;
+									else 
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								} else {
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum
 								if (e.isMultipleUseVariable) {
@@ -15313,6 +15893,7 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
@@ -15320,10 +15901,16 @@
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
 												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[tmpVariable - 1]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable);
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable});
+													} else {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+													}
 												}
 											}
 										}
@@ -15348,10 +15935,28 @@
 										}
 										if (e.scrollToRow) {
 											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var co = this.app.compR[e.scrollRowId],
-														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
+															}
+														}
+													}
 												}
 											}
 										}
@@ -15447,7 +16052,6 @@
 															}
 														}
 													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
@@ -15474,7 +16078,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -15488,6 +16091,17 @@
 										}
 									}
 									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
+									if (e.addToAllowChoice)
+										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+											var co = this.app.compR[e.idOfAllowChoice],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+											var I = coR.currentChoices;
+											if (I > coR.allowedChoices) {
+												var O = I - coR.allowedChoices;
+												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+											}
+										}
 								}
 								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
@@ -15496,11 +16110,11 @@
                     },
                     selectedOneLess: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
 							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
 							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -15510,15 +16124,23 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
-												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(tmpVariable)] || e.scores[i].isActiveMul[tmpVariable]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
+
+													} else {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
+													}
 												}
 											}
 										}
@@ -15662,7 +16284,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
-										if (!this.exceptedObjects.includes(coO.id)) {
+										if (coO.id !== e.id && !this.exceptedObjects.includes(coO.id)) {
 											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
@@ -15676,7 +16298,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -15691,9 +16312,28 @@
 									}
 								}
 								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.addToAllowChoice)
+									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+										var co = this.app.compR[e.idOfAllowChoice],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+										var d = e.isMultipleUseVariable && parseInt(e.multipleUseVariable) == 0 ? coR.currentChoices - 1 : coR.currentChoices;
+										if (d > coR.allowedChoices) {
+											var u = d - coR.allowedChoices;
+											for (var v = 0; v < coR.objects.length; v++) {
+												if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+													if (coR.objects[v].isSelectableMultiple)
+														for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+													else
+														this.activateObject(coR.objects[v], coR);
+													u--;
+												}
+											}
+										}
+									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -16509,7 +17149,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("2" == this.sortType) {
 							this.row.objects.sort((function(t, o) {
@@ -16518,7 +17157,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("3" == this.sortType) {
 							this.row.objects.sort((function(e, t) {
@@ -16528,7 +17166,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("4" == this.sortType) {
 							this.row.objects.sort((function(e, t) {
@@ -16538,7 +17175,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						}
                     },
@@ -17822,7 +18458,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("2" == this.sortType) {
 							this.row.objects.sort((function(t, o) {
@@ -17831,7 +18466,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("3" == this.sortType) {
 							this.row.objects.sort((function(e, t) {
@@ -17841,7 +18475,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						} else if ("4" == this.sortType) {
 							this.row.objects.sort((function(e, t) {
@@ -17851,7 +18484,6 @@
 							}));
 							for (var b = 0; b < this.row.objects.length; b++) {
 								this.app.comp[this.row.objects[b].id].objects = b;
-								console.log(this.row.objects[b].id, this.app.comp[this.row.objects[b].id]);
 							}
 						}
                     },
@@ -18225,7 +18857,7 @@
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
                                 for (e = 0; e < this.rows[t].objects.length; e++) {
-									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
                         else
                             for (t = 0; t < this.rows.length; t++)
@@ -18236,11 +18868,6 @@
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
 													for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-										else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
-											for (var n = 0; n < this.groups.length; n++)
-												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-												else
-													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
 										else if (this.rows[t].objects[e].isSelectableMultiple && ("undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
@@ -18517,7 +19144,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -18572,7 +19198,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -18596,7 +19221,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -18650,7 +19274,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -18702,7 +19325,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -18723,7 +19345,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 																
@@ -18812,7 +19433,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -18836,7 +19456,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -18929,7 +19548,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -18953,7 +19571,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -19075,7 +19692,10 @@
 							var cnt = 0;
 							for (var r = 0; r < t.objects.length; r++) {
 								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-									this.activateObject(t.objects[r], t);
+									if (t.objects[r].isSelectableMultiple)
+										for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+									else
+										this.activateObject(t.objects[r], t);
 									break
 								}
 								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
@@ -19083,7 +19703,7 @@
 							if (cnt >= t.allowedChoices) k = !1;
 						}
 						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
-							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0}, e.wordChangeSelect)
 							.then(({result, wordText}) => {
 								if (result) {
 									e.wordChangeSelect = wordText;
@@ -19102,15 +19722,15 @@
 										e.scores[g].setValue = !0;
 										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
 									}
-								
 								var tmpScores = [];
-								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (!this.exceptedObjects.length == 0 && !this.exceptedObjects.includes(eid)) this.exceptedObjects.push(eid);
 								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 									if (this.activated.includes(eid)) {
 										if (this.checkPointsMD(e)) {
-											for (var a = 0; a < e.scores.length; a++)
+											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -19246,7 +19866,7 @@
 													var co = this.app.comp[af[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													if (!this.exceptedObjects.includes(coO.id)) {
+													if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 														var nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
 														t.currentChoices -= 1;
@@ -19260,7 +19880,6 @@
 																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 																}
 																if (coO.forcedActivated) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 																}
 															} else {
@@ -19363,8 +19982,13 @@
 												}
 												this.app.mdObjects.splice(ei, 1);
 											}
-											if (e.textfieldIsOn)
-												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.textfieldIsOn) {
+												for (var m = 0; m < this.app.words.length; m++) {
+													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+														this.app.words[m].replaceText = e.wordChangeDeselect;
+													}
+												}
+											}
 											if (e.addToAllowChoice)
 												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 													var co = this.app.compR[e.idOfAllowChoice],
@@ -19374,13 +19998,19 @@
 													if (d > coR.allowedChoices) {
 														var u = d - coR.allowedChoices;
 														for (var v = 0; v < coR.objects.length; v++) {
-															if (u > 0 && coR.objects[v].isActive) {
-																this.activateObject(coR.objects[v], coR);
+															if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+																if (coR.objects[v].isSelectableMultiple)
+																	for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+																else
+																	this.activateObject(coR.objects[v], coR);
 																u--;
 															}
 														}
 													}
 												}
+											if (e.isImageUpload) {
+												this.$set(e, "image", e.defaultImage);
+											}
 											if (e.backpackBtnRequirement)
 												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 											if (e.changeBackground) {
@@ -19441,17 +20071,15 @@
 														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 															var co = this.app.compR[e.hiddenContentsRow[a]],
 																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															if (coR.isResultRow) {
-																for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-																}
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 															}
 														}
 													}
@@ -19471,15 +20099,17 @@
 																coO = coR.objects[co.objects];
 															for (var c = 0; c < coO.scores.length; c++) {
 																var coS = coO.scores[c];
-																if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																	this.$set(coS, "discountIsOn", true);
-																	this.$set(coS, "discountedFrom", e.id);
+																if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																	if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																		if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																		else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																		else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																		else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																		if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																		if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																		this.$set(coS, "discountIsOn", true);
+																		this.$set(coS, "discountedFrom", e.id);
+																	}
 																}
 															}
 														}
@@ -19488,12 +20118,12 @@
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
-										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 										if (e.duplicateRow) {
 											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 										}
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											if (e.isActivateRandom) {
 												var y = e.activateThisChoice.split(","); 
 												var RD = y.slice(),
 													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
@@ -19574,12 +20204,10 @@
 																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 															if(!coO.isActive) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 																coO.forcedActivated = !1;
 															}
 														} else {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 															coO.forcedActivated = !1;
 														}
@@ -19653,7 +20281,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -19699,6 +20326,10 @@
 												}
 											}
 										}
+										if (e.isImageUpload) {
+											this.$set(e, "defaultImage", e.image);
+											this.currentComponent = "appImageUpload"
+										}
 										if (e.backpackBtnRequirement) {
 											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
@@ -19733,10 +20364,28 @@
 										}
 										if (e.scrollToRow) {
 											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var co = this.app.compR[e.scrollRowId],
-														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
+															}
+														}
+													}
 												}
 											}
 										}
@@ -19758,18 +20407,16 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-															}
+														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 														}
 													}
 												}
@@ -19918,7 +20565,7 @@
 												var co = this.app.comp[af[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												if (!this.exceptedObjects.includes(coO.id)) {
+												if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 													var nH = this.activated.indexOf(eid);
 													this.activated.splice(nH, 1);
 													t.currentChoices -= 1;
@@ -19932,7 +20579,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -19953,8 +20599,13 @@
 											e.dividePointtypeIsOnCheck = !1;
 											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
-										if (e.textfieldIsOn)
-											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeDeselect;
+												}
+											}
+										}
 										if (e.addToAllowChoice)
 											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 												var co = this.app.compR[e.idOfAllowChoice],
@@ -19964,13 +20615,19 @@
 												if (d > coR.allowedChoices) {
 													var u = d - coR.allowedChoices;
 													for (var v = 0; v < coR.objects.length; v++) {
-														if (u > 0 && coR.objects[v].isActive) {
-															this.activateObject(coR.objects[v], coR);
+														if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+															if (coR.objects[v].isSelectableMultiple)
+																for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+															else
+																this.activateObject(coR.objects[v], coR);
 															u--;
 														}
 													}
 												}
 											}
+										if (e.isImageUpload) {
+											this.$set(e, "image", e.defaultImage);
+										}
 										if (e.backpackBtnRequirement)
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
@@ -20031,17 +20688,15 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -20060,11 +20715,31 @@
                     },
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+									var cnt = 0;
+									for (var r = 0; r < t.objects.length; r++) {
+										if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+											if (t.objects[r].isSelectableMultiple)
+												for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+											else
+												this.activateObject(t.objects[r], t);
+											break
+										}
+										else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+									}
+									if (cnt >= t.allowedChoices) 
+										s = !1;
+									else 
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								} else {
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum
 								if (e.isMultipleUseVariable) {
@@ -20074,6 +20749,7 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
@@ -20081,10 +20757,16 @@
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
 												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[tmpVariable - 1]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable);
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable});
+													} else {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+													}
 												}
 											}
 										}
@@ -20109,10 +20791,28 @@
 										}
 										if (e.scrollToRow) {
 											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var co = this.app.compR[e.scrollRowId],
-														coR = this.$parent.$parent.$children[co.rows * 2 + 2];
-													coR.$el.scrollIntoView({ behavior: 'smooth' });
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
+															}
+														}
+													}
 												}
 											}
 										}
@@ -20208,7 +20908,6 @@
 															}
 														}
 													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
@@ -20235,7 +20934,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -20249,6 +20947,17 @@
 										}
 									}
 									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
+									if (e.addToAllowChoice)
+										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+											var co = this.app.compR[e.idOfAllowChoice],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+											var I = coR.currentChoices;
+											if (I > coR.allowedChoices) {
+												var O = I - coR.allowedChoices;
+												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+											}
+										}
 								}
 								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
@@ -20257,11 +20966,11 @@
                     },
                     selectedOneLess: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
 							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
 							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -20271,15 +20980,23 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
-												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(tmpVariable)] || e.scores[i].isActiveMul[tmpVariable]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
+
+													} else {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
+													}
 												}
 											}
 										}
@@ -20423,7 +21140,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
-										if (!this.exceptedObjects.includes(coO.id)) {
+										if (coO.id !== e.id && !this.exceptedObjects.includes(coO.id)) {
 											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
@@ -20437,7 +21154,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -20452,9 +21168,28 @@
 									}
 								}
 								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.addToAllowChoice)
+									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+										var co = this.app.compR[e.idOfAllowChoice],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+										var d = e.isMultipleUseVariable && parseInt(e.multipleUseVariable) == 0 ? coR.currentChoices - 1 : coR.currentChoices;
+										if (d > coR.allowedChoices) {
+											var u = d - coR.allowedChoices;
+											for (var v = 0; v < coR.objects.length; v++) {
+												if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+													if (coR.objects[v].isSelectableMultiple)
+														for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+													else
+														this.activateObject(coR.objects[v], coR);
+													u--;
+												}
+											}
+										}
+									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -20953,7 +21688,7 @@
 					}
                 },
                 methods: {
-					initalizeApp: function(e) {
+					initializeApp: function(e) {
 						if (e.app.autoSaveInterval) clearInterval(e.app.autoSaveInterval), e.app.autoSaveInterval = null;
 						if ("undefined" === typeof e.app.checkDeleteRow) e.app.checkDeleteRow = !0;
 						if (e.app.autoSaveIsOn) e.$store.commit("saveAutomatically", e);
@@ -20993,6 +21728,9 @@
 						if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
 						if ("undefined" === typeof e.app.rowIdLength) e.$set(e.app, "rowIdLength", 4);
 						if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
+						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
+						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
+						if ("undefined" === typeof e.app.cancelForcedActivated) e.$set(e.app, "cancelForcedActivated", []);
 						for (var a = 0; a < e.app.pointTypes.length; a++) {
 							if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownPointBar) e.app.pointTypes[a].isNotShownPointBar = !0;
@@ -21086,6 +21824,7 @@
 										}
 									}
 								}
+								if (e.app.rows[b].objects[c].discountOther && "undefined" === typeof e.app.rows[b].objects[c].discountPointTypes) e.$set(e.app.rows[b].objects[c], "discountPointTypes", []);
 							}
 						}
 						for (var b = 0; b < e.app.backpack.length; b++) {
@@ -21312,7 +22051,7 @@
 								const d = new TextDecoder('utf-8');
 								const txt = d.decode(t.result);
 								e.$store.commit("loadApp", JSON.parse(txt));
-								e.initalizeApp(e);
+								e.initializeApp(e);
 							} else if (ext == "zip") {
 								var s = new co.a;
 								s.loadAsync(t.result).then(function(i) {
@@ -21340,7 +22079,7 @@
 										if (jFile) {
 											jFile.async("string").then(function(f) {
 												e.$store.commit("loadApp", JSON.parse(f));
-												e.initalizeApp(e);
+												e.initializeApp(e);
 												e.replaceImages(e);
 												e.$set(e, "imgMap", {});
 											});
@@ -21375,7 +22114,7 @@
 									var sv = JSON.parse(o);
 									s.put(sv, '1');
 									e.$store.commit("loadApp", sv);
-									e.initalizeApp(e);
+									e.initializeApp(e);
 								} else {
 									e.text = "There is no data in local storage", e.snackbar = !0;
 								}
@@ -21385,7 +22124,7 @@
 									const i = o.target.result;
 									if (i) {
 										e.$store.commit("loadApp", i);
-										e.initalizeApp(e);
+										e.initializeApp(e);
 									} else {
 										e.text = "There is no data in local storage", e.snackbar = !0;
 									}
@@ -21820,11 +22559,59 @@
                     staticClass: "headline"
                 }, [e._v("Multi Choice Design")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
                     staticClass: "col-md-6"
-                }, [e._v(" Font size of the tier number "), o("v-text-field", {
+                }, [e._v(" Tier number "), o("v-row", [o("v-col", {
+					staticClass: "pb-0",
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-checkbox", {
+					staticClass: "mr-2 mt-1 mb-n6",
+					attrs: {
+						label: "Use Custom Font?"
+					},
+					model: {
+						value: e.styling.customMultiTextFont,
+						callback: function(t) {
+							e.$set(e.styling, "customMultiTextFont", t)
+						},
+						expression: "styling.customMultiTextFont"
+					}
+				})], 1), o("v-col", {
+                    staticClass: "px-1"
+                }, [e.styling.customMultiTextFont ? o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						label: "Text Font",
+						filled: ""
+					},
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                }) : o("v-select", {
                     attrs: {
-                        label: "Number text size",
-                        suffix: "%",
+                        "hide-details": "",
+                        items: e.textFonts,
+                        filled: "",
+                        label: "Text Font"
+                    },
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "px-1"
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
                         type: "number",
+                        label: "Text Size",
                         filled: ""
                     },
                     model: {
@@ -21834,22 +22621,7 @@
                         },
                         expression: "styling.multiChoiceTextSize"
                     }
-                })], 1), o("v-col", {
-                    staticClass: "col-md-6"
-                }, [e._v(" The font of the tier number "), o("v-select", {
-                    attrs: {
-                        items: e.textFonts,
-                        filled: "",
-                        label: "Number text font"
-                    },
-                    model: {
-                        value: e.styling.multiChoiceTextFont,
-                        callback: function(t) {
-                            e.$set(e.styling, "multiChoiceTextFont", t)
-                        },
-                        expression: "styling.multiChoiceTextFont"
-                    }
-                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                }, [e._v("%")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -21940,6 +22712,7 @@
             VCardActions: j["a"],
             VCardText: j["b"],
             VCardTitle: j["c"],
+			VCheckbox: ae["a"],
             VCol: I["a"],
             VContainer: k["a"],
             VDialog: B["a"],
@@ -22628,7 +23401,7 @@
                                 return e.hideValueToggle(t)
                             }
                         }
-                    }, [e._v("Hide Value ON/OFF")])], 1), , o("v-col", {
+                    }, [e._v("Hide Value ON/OFF")])], 1), o("v-col", {
                         staticClass: "col-2"
                     }, [o("v-btn", {
                         staticClass: "py-0",
@@ -23335,7 +24108,8 @@
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
-								multiple: !0
+								multiple: !0,
+								enableSelectAll: !0
                             },
 							scopedSlots: {
 								item: ({item, attrs}) => [
@@ -23432,7 +24206,8 @@
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
-								multiple: !0
+								multiple: !0,
+								enableSelectAll: !0
                             },
 							scopedSlots: {
 								item: ({item, attrs}) => [
@@ -23945,7 +24720,9 @@
                             rowImgBorderColor: "#FFEEDDFF",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: 1200
+                            backPackWidth: 1200,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Candara",
                             rowText: "Candara",
@@ -24135,7 +24912,9 @@
                             rowImgBorderWidth: 2,
                             backPackWidth: 1200,
                             objectImgOverflowIsOn: !1,
-                            rowOverflowIsOn: !0
+                            rowOverflowIsOn: !0,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Candara",
                             rowText: "Candara",
@@ -24325,7 +25104,9 @@
                             rowImgBorderWidth: 2,
                             backPackWidth: 1200,
                             objectImgOverflowIsOn: !1,
-                            rowOverflowIsOn: !0
+                            rowOverflowIsOn: !0,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Cambria",
                             rowText: "Helvetica",
@@ -24513,7 +25294,9 @@
                             rowImgBorderColor: "#FFEEDDFF",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: 1200
+                            backPackWidth: 1200,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Times New Roman",
                             rowText: "Candara",
@@ -24703,12 +25486,14 @@
                             rowImgBorderColor: "red",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: "1600",
+                            backPackWidth: 1600,
                             objectDesignIsAdvanced: !0,
                             rowDesignIsAdvanced: !0,
                             objectImgOverflowIsOn: !0,
                             multiChoiceTextSize: "200",
-                            multiChoiceTextFont: "Candara"
+                            multiChoiceTextFont: "Candara",
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Trebuchet MS",
                             rowText: "Candara",
@@ -24898,14 +25683,16 @@
                             rowImgBorderColor: "#1C1C1CFF",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: "1600",
+                            backPackWidth: 1600,
                             objectDesignIsAdvanced: !0,
                             rowDesignIsAdvanced: !0,
                             objectImgOverflowIsOn: !0,
                             multiChoiceTextSize: "200",
                             multiChoiceTextFont: "Candara",
                             rowImageMarginBottom: "1",
-                            rowImgOverflowIsOn: !0
+                            rowImgOverflowIsOn: !0,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Comic Sans MS",
                             rowText: "Helvetica",
@@ -25095,14 +25882,16 @@
                             rowImgBorderColor: "#1C1C1CFF",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: "1600",
+                            backPackWidth: 1600,
                             objectDesignIsAdvanced: !0,
                             rowDesignIsAdvanced: !0,
                             objectImgOverflowIsOn: !0,
                             multiChoiceTextSize: "200",
                             multiChoiceTextFont: "Candara",
                             rowImageMarginBottom: "0",
-                            rowImgOverflowIsOn: !0
+                            rowImgOverflowIsOn: !0,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }, {
                             rowTitle: "Times New Roman",
                             rowText: "Helvetica",
@@ -25292,14 +26081,16 @@
                             rowImgBorderColor: "#76BC43FF",
                             rowImgBorderStyle: "double",
                             rowImgBorderWidth: "2",
-                            backPackWidth: "1800",
+                            backPackWidth: 1800,
                             objectDesignIsAdvanced: !0,
                             rowDesignIsAdvanced: !0,
                             objectImgOverflowIsOn: !0,
                             multiChoiceTextSize: "100",
                             multiChoiceTextFont: "Times New Roman",
                             rowImageMarginBottom: "1",
-                            rowImgOverflowIsOn: !0
+                            rowImgOverflowIsOn: !0,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }]
                     }
                 },
@@ -26120,7 +26911,9 @@
                 }, [e._v("Words")]), o("v-card-text", [o("v-container", [e._v(" At creation and deletion on older project, the list might not update. Exit dialog and return to force it, is fixed the next time the project is saved and loaded. "), e._l(e.words, (function(t, i) {
                     return o("v-col", {
                         key: t.index
-                    }, [o("v-row", [o("v-col", [o("v-text-field", {
+                    }, [o("v-row", [o("v-col", {
+						staticClass: "col-6"
+					}, [o("v-text-field", {
                         attrs: {
                             "hide-details": "",
                             label: "Id that can be placed in the text",
@@ -26133,7 +26926,9 @@
                             },
                             expression: "word.id"
                         }
-                    })], 1), o("v-col", [o("v-text-field", {
+                    })], 1), o("v-col", {
+						staticClass: "col-6"
+					}, [o("v-text-field", {
                         attrs: {
                             "hide-details": "",
                             label: "Text to replace id with",
@@ -26146,17 +26941,43 @@
                             },
                             expression: "word.replaceText"
                         }
-                    })], 1), o("v-btn", {
+                    })], 1), o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
                         staticClass: "py-0",
                         attrs: {
                             "hide-details": ""
                         },
                         on: {
-                            click: function(t) {
+                            click: function(o) {
+                                return e.changeWordsOrderUp(t)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-up")])])], 1), o("v-col", {
+                        staticClass: "col-8"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
                                 return e.deleteVariable(i, e.words)
                             }
                         }
-                    }, [e._v("Delete")])], 1)], 1)
+                    }, [e._v("Delete")])], 1), o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeWordsOrderDown(t)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-down")])])], 1)], 1)], 1)
                 }))], 2)], 1), o("v-card-actions", [o("v-col", {
                     attrs: {
                         cols: "6"
@@ -26208,6 +27029,12 @@
                             replaceText: ""
                         })
                     },
+					changeWordsOrderUp: function(e) {
+						if (this.words.indexOf(e) > 0) this.words.splice(this.words.indexOf(e) - 1, 2, this.words[this.words.indexOf(e)], this.words[this.words.indexOf(e) - 1])
+					},
+					changeWordsOrderDown: function(e) {
+						if (this.words.indexOf(e) < this.words.length - 1) this.words.splice(this.words.indexOf(e), 2, this.words[this.words.indexOf(e) + 1], this.words[this.words.indexOf(e)])
+					},
                     deleteVariable: function() {
                         this.$store.commit("deleteWord", this.words)
                     }
@@ -26225,6 +27052,7 @@
             VCol: I["a"],
             VContainer: k["a"],
             VDialog: B["a"],
+			VIcon: J["a"],
             VRow: S["a"],
             VTextField: R["a"]
         });
@@ -26423,17 +27251,21 @@
 								for (var a = 0; a < t.elements.length; a++) {
 									if ("undefined" !== typeof e.app.compR[t.elements[a].id]) {
 										var co = e.app.compR[t.elements[a].id],
-											coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows];
+											coR = e.app.rows[co.rows];
 										for (var b = 0; b < coR.rowDesignGroups.length; b++) {
 											if (coR.rowDesignGroups[b].id == t.id) {
 												coR.rowDesignGroups[b].id = o;
 											}
 										}
-										for (var c = 0; c < coR.objects.length; c++) {
-											for (var d = 0; d < coR.objects[c].rowDesignGroups.length; d++) {
-												if (coR.objects[c].rowDesignGroups[d].id == t.id) {
-													coR.objects[c].rowDesignGroups[d].id = o;
-												}
+									}
+								}
+								for (var a = 0; a < t.backpackElements.length; a++) {
+									if ("undefined" !== typeof e.app.compR[t.backpackElements[a].id]) {
+										var co = e.app.compR[t.backpackElements[a].id],
+											coR = e.app.backpack[co.rows];
+										for (var b = 0; b < coR.rowDesignGroups.length; b++) {
+											if (coR.rowDesignGroups[b].id == t.id) {
+												coR.rowDesignGroups[b].id = o;
 											}
 										}
 									}
@@ -26472,12 +27304,13 @@
                     })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
                             attrs: {
                                 "hide-details": "",
-                                label: "Row Id",
+                                label: "App Row Id",
                                 filled: "",
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
-								multiple: !0
+								multiple: !0,
+								enableSelectAll: !0
                             },							
 							scopedSlots: {
 								item: ({item, attrs}) => [
@@ -26501,58 +27334,122 @@
                             model: {
                                 value: t.elements,
                                 callback: function(o) {
-									if ("undefined" !== typeof t.elements) {
-										var tElements = t.elements.map(el => el.id),
-											setT = new Set(tElements),
-											setO = new Set(o),
-											newElement;
-										if (t.elements.length > o.length) {
-											for (var a of setT) {
-												if (!setO.has(a)) {
-													newElement = a;
-													break
+									if ("undefined" === typeof t.elements) e.$set(t, "elements", []);
+									var tElements = t.elements.map(el => el.id),
+										setT = new Set(tElements),
+										setO = new Set(o),
+										newElement;
+									if (t.elements.length > o.length) {
+										for (var a of setT) {
+											if (!setO.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== e.app.compR[newElement]) {
+											var co = e.app.compR[newElement],
+												coR = e.app.rows[co.rows];
+											for (var a = 0; a < coR.rowDesignGroups.length; a++) {
+												if (coR.rowDesignGroups[a].id == t.id) {
+													coR.rowDesignGroups.splice(a, 1);
 												}
 											}
-											if ("undefined" !== e.app.compR[newElement]) {
-												var co = e.app.compR[newElement],
-													coR = e.app.rows[co.rows];
-												for (var a = 0; a < coR.rowDesignGroups.length; a++) {
-													if (coR.rowDesignGroups[a].id == t.id) {
-														coR.rowDesignGroups.splice(a, 1);
-													}
-												}
-												for (var b = 0; b < t.elements.length; b++) {
-													if (t.elements[b].id == coR.id) e.$delete(t.elements, b), b--;
-												}
-												for (var c = 0; c < coR.objects.length; c++) {
-													for (var d = 0; d < coR.objects[c].rowDesignGroups.length; d++) {
-														if (coR.objects[c].rowDesignGroups[d].id == t.id) {
-															coR.objects[c].rowDesignGroups.splice(d, 1);
-														}
-													}
-													for (var f = 0; f < t.elements.length; f++) {
-														if (t.elements[f].id == coR.objects[c].id) e.$delete(t.elements, f), f--;
-													}
+											for (var b = 0; b < t.elements.length; b++) {
+												if (t.elements[b].id == coR.id) e.$delete(t.elements, b), b--;
+											}
+										}
+									} else {
+										for (var a of setO) {
+											if (!setT.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== typeof e.app.compR[newElement]) {
+											var co = e.app.compR[newElement],
+												coR = e.app.rows[co.rows];
+											if ("undefined" === typeof coR.rowDesignGroups) e.$set(coR, "rowDesignGroups", []);
+											coR.rowDesignGroups.push({id: t.id});
+											t.elements.push({id: coR.id});
+										}
+									}
+								},
+                                expression: "elements.id"
+                            }
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                            attrs: {
+                                "hide-details": "",
+                                label: "Backpack Row Id",
+                                filled: "",
+								items: e.app.backpack,
+								"item-text": "id",
+								"item-value": "id",
+								multiple: !0,
+								enableSelectAll: !0
+                            },							
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + ("undefined" !== typeof item.debugTitle ? item.debugTitle + " " : "") + item.title)])])]],
+							},
+                            model: {
+                                value: t.backpackElements,
+                                callback: function(o) {
+									if ("undefined" === typeof t.backpackElements) e.$set(t, "backpackElements", []);
+									var tElements = t.backpackElements.map(el => el.id),
+										setT = new Set(tElements),
+										setO = new Set(o),
+										newElement;
+									if (t.backpackElements.length > o.length) {
+										for (var a of setT) {
+											if (!setO.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== e.app.compR[newElement]) {
+											var co = e.app.compR[newElement],
+												coR = e.app.backpack[co.rows];
+											for (var a = 0; a < coR.rowDesignGroups.length; a++) {
+												if (coR.rowDesignGroups[a].id == t.id) {
+													coR.rowDesignGroups.splice(a, 1);
 												}
 											}
-										} else {
-											for (var a of setO) {
-												if (!setT.has(a)) {
-													newElement = a;
-													break
-												}
+											for (var b = 0; b < t.backpackElements.length; b++) {
+												if (t.backpackElements[b].id == coR.id) e.$delete(t.backpackElements, b), b--;
 											}
-											if ("undefined" !== typeof e.app.compR[newElement]) {
-												var co = e.app.compR[newElement],
-													coR = e.app.rows[co.rows];
-												if ("undefined" === typeof coR.rowDesignGroups) e.$set(coR, "rowDesignGroups", []);
-												coR.rowDesignGroups.push({id: t.id});
-												t.elements.push({id: coR.id});
+										}
+									} else {
+										for (var a of setO) {
+											if (!setT.has(a)) {
+												newElement = a;
+												break
 											}
+										}
+										if ("undefined" !== typeof e.app.compR[newElement]) {
+											var co = e.app.compR[newElement],
+												coR = e.app.backpack[co.rows];
+											if ("undefined" === typeof coR.rowDesignGroups) e.$set(coR, "rowDesignGroups", []);
+											coR.rowDesignGroups.push({id: t.id});
+											t.backpackElements.push({id: coR.id});
 										}
 									}
                                 },
-                                expression: "elements.id"
+                                expression: "bElements.id"
                             }
                         })], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
 							staticStyle: {
@@ -26596,7 +27493,19 @@
 								for (var a = 0; a < t.elements.length; a++) {
 									if ("undefined" !== typeof e.app.comp[t.elements[a].id]) {
 										var co = e.app.comp[t.elements[a].id],
-											coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+											coR = e.app.rows[co.rows],
+											coO = coR.objects[co.objects];
+										for (var b = 0; b < coO.objectDesignGroups.length; b++) {
+											if (coO.objectDesignGroups[b].id == t.id) {
+												coO.objectDesignGroups[b].id = o;
+											}
+										}
+									}
+								}
+								for (var a = 0; a < t.backpackElements.length; a++) {
+									if ("undefined" !== typeof e.app.comp[t.backpackElements[a].id]) {
+										var co = e.app.comp[t.backpackElements[a].id],
+											coR = e.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
 										for (var b = 0; b < coO.objectDesignGroups.length; b++) {
 											if (coO.objectDesignGroups[b].id == t.id) {
@@ -26639,12 +27548,13 @@
                     })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
                             attrs: {
                                 "hide-details": "",
-                                label: "Object Id",
+                                label: "App Object Id",
                                 filled: "",
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
-								multiple: !0
+								multiple: !0,
+								enableSelectAll: !0
                             },							
 							scopedSlots: {
 								item: ({item, attrs}) => [
@@ -26668,50 +27578,126 @@
                             model: {
                                 value: t.elements,
                                 callback: function(o) {
-									if ("undefined" !== typeof t.elements) {
-										var tElements = t.elements.map(el => el.id),
-											setT = new Set(tElements),
-											setO = new Set(o),
-											newElement;
-										if (t.elements.length > o.length) {
-											for (var a of setT) {
-												if (!setO.has(a)) {
-													newElement = a;
-													break
+									if ("undefined" === typeof t.elements) e.$set(t, "elements", []);
+									var tElements = t.elements.map(el => el.id),
+										setT = new Set(tElements),
+										setO = new Set(o),
+										newElement;
+									if (t.elements.length > o.length) {
+										for (var a of setT) {
+											if (!setO.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== typeof e.app.comp[newElement]) {
+											var co = e.app.comp[newElement],
+												coR = e.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											for (var a = 0; a < coO.objectDesignGroups.length; a++) {
+												if (coO.objectDesignGroups[a].id == t.id) {
+													coO.objectDesignGroups.splice(a, 1);
 												}
 											}
-											if ("undefined" !== typeof e.app.comp[newElement]) {
-												var co = e.app.comp[newElement],
-													coR = e.app.rows[co.rows],
-													coO = coR.objects[co.objects];
-												for (var a = 0; a < coO.objectDesignGroups.length; a++) {
-													if (coO.objectDesignGroups[a].id == t.id) {
-														coO.objectDesignGroups.splice(a, 1);
-													}
-												}
-												for (var c = 0; c < t.elements.length; c++) {
-													if (t.elements[c].id == coO.id) e.$delete(t.elements, c), c--;
-												}
+											for (var c = 0; c < t.elements.length; c++) {
+												if (t.elements[c].id == coO.id) e.$delete(t.elements, c), c--;
 											}
-										} else {
-											for (var a of setO) {
-												if (!setT.has(a)) {
-													newElement = a;
-													break
-												}
+										}
+									} else {
+										for (var a of setO) {
+											if (!setT.has(a)) {
+												newElement = a;
+												break
 											}
-											if ("undefined" !== e.app.comp[newElement]) {
-												var co = e.app.comp[newElement],
-													coR = e.app.rows[co.rows],
-													coO = coR.objects[co.objects];
-												if ("undefined" === typeof coO.objectDesignGroups) e.$set(coO, "objectDesignGroups", []);
-												coO.objectDesignGroups.push({id: t.id});
-												t.elements.push({id: coO.id});
-											}
+										}
+										if ("undefined" !== e.app.comp[newElement]) {
+											var co = e.app.comp[newElement],
+												coR = e.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											if ("undefined" === typeof coO.objectDesignGroups) e.$set(coO, "objectDesignGroups", []);
+											coO.objectDesignGroups.push({id: t.id});
+											t.elements.push({id: coO.id});
 										}
 									}
                                 },
                                 expression: "elements.id"
+                            }
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                            attrs: {
+                                "hide-details": "",
+                                label: "Backpack Object Id",
+                                filled: "",
+								items: e.app.backpack.flatMap(row => row.objects),
+								"item-text": "id",
+								"item-value": "id",
+								multiple: !0,
+								enableSelectAll: !0
+                            },							
+							scopedSlots: {
+								item: ({item, attrs}) => [
+									o("div", {
+										staticClass: "v-list-item__action"
+									}, [o("div", {
+										staticClass: "v-simple-checkbox"
+									}, [o("div", {
+										staticClass: "v-input--selection-controls__ripple primary--text"
+									}), o("i", {
+										staticClass: attrs["aria-selected"] == "true" ? "v-icon notranslate mdi mdi-checkbox-marked theme--light primary--text" : "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light",
+										attrs: {
+											"aria-hidden": "true"
+										}
+									})])]), [o("div", {
+										staticClass: "v-list-item__content"
+									}, [o("div", {
+										staticClass: "v-list-item__title"
+									}, [e._v(item.id + " - " + item.title)])])]],
+							},
+                            model: {
+                                value: t.backpackElements,
+                                callback: function(o) {
+									if ("undefined" === typeof t.backpackElements) e.$set(t, "backpackElements", []);
+									var tElements = t.backpackElements.map(el => el.id),
+										setT = new Set(tElements),
+										setO = new Set(o),
+										newElement;
+									if (t.backpackElements.length > o.length) {
+										for (var a of setT) {
+											if (!setO.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== typeof e.app.comp[newElement]) {
+											var co = e.app.comp[newElement],
+												coR = e.app.backpack[co.rows],
+												coO = coR.objects[co.objects];
+											for (var a = 0; a < coO.objectDesignGroups.length; a++) {
+												if (coO.objectDesignGroups[a].id == t.id) {
+													coO.objectDesignGroups.splice(a, 1);
+												}
+											}
+											for (var c = 0; c < t.backpackElements.length; c++) {
+												if (t.backpackElements[c].id == coO.id) e.$delete(t.backpackElements, c), c--;
+											}
+										}
+									} else {
+										for (var a of setO) {
+											if (!setT.has(a)) {
+												newElement = a;
+												break
+											}
+										}
+										if ("undefined" !== e.app.comp[newElement]) {
+											var co = e.app.comp[newElement],
+												coR = e.app.backpack[co.rows],
+												coO = coR.objects[co.objects];
+											if ("undefined" === typeof coO.objectDesignGroups) e.$set(coO, "objectDesignGroups", []);
+											coO.objectDesignGroups.push({id: t.id});
+											t.backpackElements.push({id: coO.id});
+										}
+									}
+                                },
+                                expression: "backpackElements.id"
                             }
                         })], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
 							staticStyle: {
@@ -26925,7 +27911,7 @@
 				}), e.app.autoSaveIsOn ? o("v-switch", {
 					staticClass: "mt-n4 ms-8",
 					attrs: {
-						label: "Saved in local storage. (Not Recommended)"
+						label: "Saved in local storage. (IndexedDB)"
 					},
 					model: {
 						value: e.app.saveInLocalStorage,
@@ -26993,6 +27979,18 @@
 							e.$set(e.app, "preloadImages", o)
 						},
 						expression: "app.preloadImages"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Disable Alternate Menu."
+					},
+					model: {
+						value: e.app.disableAlterMenu,
+						callback: function(o) {
+							e.$set(e.app, "disableAlterMenu", o)
+						},
+						expression: "app.disableAlterMenu"
 					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
@@ -27410,15 +28408,16 @@
                         for (var e = [], t = 0; t < this.rows.length; t++)
                             for (var o = 0; o < this.rows[t].objects.length; o++) {
 								if (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) {
+									var a = this.rows[t].objects[o].id;
 									if (this.rows[t].objects[o].textfieldIsOn && this.rows[t].objects[o].customTextfieldIsOn) {
-										e.push(this.rows[t].objects[o].id + "/WORD#" + this.rows[t].objects[o].wordChangeSelect);
-									} else {
-										e.push(this.rows[t].objects[o].id);
+										a += "/WORD#" + this.rows[t].objects[o].wordChangeSelect;
 									}
+									if (this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image !== this.rows[t].objects[o].defaultImage) {
+										a += "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#");
+									}
+									e.push(a);
 								} else if (this.rows[t].objects[o].isSelectableMultiple && 0 !== this.rows[t].objects[o].multipleUseVariable) {
 									e.push(this.rows[t].objects[o].id + "/ON#" + this.rows[t].objects[o].multipleUseVariable);
-								} else if (this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image.length > 0) {
-									e.push(this.rows[t].objects[o].id + "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#"));
 								}
 							}
                         return e
@@ -27480,13 +28479,13 @@
                         this.$store.commit({
                             type: "cleanActivated"
                         });
-						this.$set(this.app, "cancelForcedActivated", []);
 						if (this.newActivated.length > 0) {
 							var e = this.newActivated.split(",");
 							this.app.activated = e.map(item => item.split("/WORD")[0]);
 							for (var a = 0; a < e.length; a++) {
 								var ea = e[a].split("/ON#");
-								ea.length > 1 ? ea = ea : ea = ea[0].split("/WORD#");
+								ea = ea.length > 1 ? ea : ea[0].split("/IMG#");
+								ea = ea[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[ea[0]]) {
 									var co = this.app.comp[ea[0]],
 										coR = this.app.rows[co.rows],
@@ -27506,7 +28505,9 @@
 							}
 							for (var b = 0; b < e.length; b++) {
 								var eb = e[b].split("/ON#");
-								eb.length > 1 ? eb = eb : eb = eb[0].split("/WORD#");
+								eb = eb.length > 1 ? eb : eb[0].split("/IMG#");
+								var ebImg = eb.length > 1 ? eb[1] : "";
+								eb = eb[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[eb[0]]) {
 									var co = this.app.comp[eb[0]],
 										coR = this.app.rows[co.rows],
@@ -27520,14 +28521,18 @@
 															coTR = this.app.rows[coT.rows],
 															coTO = coTR.objects[coT.objects];
 														for (var f = 0; f < coTO.scores.length; f++) {
-															var coTS = coTO.scores[f];
-															if (!coTS.isNotDiscountable) {
-																if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
-																else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
-																else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
-																else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
-																if (e.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? parseInt(coO.discountLowLimit) : coTS.discountScore;
-																this.$set(coTS, "discountIsOn", true);
+															var coTS = coTO.scores[f];															
+															if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																if (!coTS.isNotDiscountable && !coTS.discountIsOn) {
+																	if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
+																	else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
+																	else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
+																	else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
+																	if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? parseInt(coO.discountLowLimit) : coTS.discountScore;
+																	if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																	this.$set(coTS, "discountIsOn", true);
+																	this.$set(coTS, "discountedFrom", coO.id);
+																}
 															}
 														}
 													}
@@ -27685,8 +28690,10 @@
 											bgmPlayer.mute();
 										}
 									}
-									if (coO.isImageUpload)
-										for (var g = 0; g < e.length; g++) coO.id == e[g].split("/IMG#")[0] && (coO.image = e[g].split("/IMG#")[1].replaceAll("/CHAR#", ","), e.splice(g, 1));
+									if (coO.isImageUpload) {
+										coO.defaultImage = "undefined" === typeof coO.image ? "" : coO.image;
+										coO.image = ebImg.replaceAll("/CHAR#", ",");
+									}
 									if (coO.textfieldIsOn)
 										for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == coO.idOfTheTextfieldWord && (coO.customTextfieldIsOn ? (this.app.words[m].replaceText = eb[1], coO.wordChangeSelect = eb[1]) : this.app.words[m].replaceText = coO.wordChangeSelect);
 									coR.currentChoices += 1;
@@ -27694,7 +28701,8 @@
 							}
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
-								en.length > 1 ? en = en : en = en[0].split("/WORD#");
+								en = en.length > 1 ? en : en[0].split("/IMG#");
+								en = en[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
@@ -27724,7 +28732,8 @@
 							}
 							for (var n = 0; n < e.length; n++) {
 								var en = e[n].split("/ON#");
-								en.length > 1 ? en = en : en = en[0].split("/WORD#");
+								en = en.length > 1 ? en : en[0].split("/IMG#");
+								en = en[0].split("/WORD#");
 								if ("undefined" !== typeof this.app.comp[en[0]]) {
 									var co = this.app.comp[en[0]],
 										coR = this.app.rows[co.rows],
@@ -28156,7 +29165,7 @@
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
-                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isButtonObject || e.object.isImageUpload ? e.object.isImageUpload && (e.currentComponent = "appImageUpload") : e.activateObject(e.object, e.row)
+                            e.row.isInfoRow || e.object.isNotSelectable || e.object.isSelectableMultiple || e.object.forcedActivated || e.object.isButtonObject ? !1 : e.activateObject(e.object, e.row)
                         }
                     }
                 }, [1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
@@ -28216,7 +29225,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -28224,7 +29233,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28245,7 +29254,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28267,7 +29276,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -28278,7 +29323,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
                     staticStyle: {
                         "white-space": "pre-line"
@@ -28287,7 +29368,43 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e._l(e.object.addons, (function(t) {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "py-0"
@@ -28303,7 +29420,43 @@
                             }
                         }
                     })], 1)
-                }))], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
@@ -28355,7 +29508,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -28363,7 +29516,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28384,7 +29537,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28405,7 +29558,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -28416,7 +29605,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -28424,7 +29649,43 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e()], 2), e._l(e.object.addons, (function(t) {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pt-0",
@@ -28443,19 +29704,7 @@
                             }
                         }
                     })], 1)
-                }))], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
-                    staticClass: "ma-0 pa-0",
-                    staticStyle: {
-                        width: "100%"
-                    }
-                }, [o("v-col", {
-                    staticClass: "pa-1"
-                }, [!e.row.objectTitleRemoved ? o("h3", {
-                    style: e.objectTitle,
-                    domProps: {
-                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
-                    }
-                }) : e._e(), e.object.isSelectableMultiple ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
@@ -28463,7 +29712,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28484,7 +29733,55 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: "x-large"
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                    staticClass: "ma-0 pa-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [o("v-col", {
+                    staticClass: "pa-1"
+                }, [!e.row.objectTitleRemoved ? o("h3", {
+                    style: e.objectTitle,
+                    domProps: {
+                        innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
+                    }
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(t) {
@@ -28505,7 +29802,43 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e._l(e.object.requireds, (function(t) {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0"
@@ -28516,7 +29849,43 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     }) : e._e()], 1)
-                })), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -28524,7 +29893,43 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e()], 2), o("v-col", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0"
                 }, ["" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -28583,7 +29988,43 @@
                             }
                         }
                     })], 1)
-                }))], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         row: e.object
@@ -28681,9 +30122,9 @@
                 },
                 computed: {
                     objectImage: function() {
-                        var e = "width:" + this.styling.objectImageWidth + "%;margin-top:" + this.styling.objectImageMarginTop + "%;margin-bottom:" + this.styling.objectImageMarginBottom + "%;",
-                            t = this.styling.objectImgBorderRadiusIsPixels ? "px" : "%";
-                        return e += "border-radius: " + this.styling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.styling.objectImgBorderRadiusTopRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.styling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.styling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.styling.objectImgBorderIsOn && (e += "border: " + this.styling.objectImgBorderWidth + "px " + this.styling.objectImgBorderStyle + " " + this.styling.objectImgBorderColor + ";"), e
+                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+						this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+                        return e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
                     activated: function() {
                         return this.$store.state.app.activated
@@ -28693,6 +30134,29 @@
                     },
                     object: function() {
 						return this.$parent.object
+					},
+					objectImageStyling: function() {
+						if (this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+								}
+							}
+						}
+						return this.$store.state.app.styling;
 					},
 					textStyling: function() {
 						if (this.object.privateTextIsOn) return this.object.styling;
@@ -29286,6 +30750,12 @@
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
                     },
+					multiChoiceCounter: function() {
+						if (this.object.hideMultipleCounter) {
+							return this.checkRequireds(this.object)
+						}
+						return !0
+					},
                     objectText: function() {
 						var e = this.checkRequireds(this.object);
                         return 'font-family: "' + this.textStyling.objectText + '";text-align: ' + this.textStyling.objectTextAlign + ";font-size: " + this.textStyling.objectTextTextSize + "%;color: " + (!e && this.filterStyling.reqCTextColorIsOn ? this.filterStyling.reqFilterCTextColor : (this.object.isActive && this.filterStyling.selCTextColorIsOn ? this.filterStyling.selFilterCTextColor : this.textStyling.objectTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;"
@@ -29306,14 +30776,14 @@
                         return e
                     },
                     objectBackground: function() {
-                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : "")) + "margin:" + this.objectStyling.objectMargin + "px;",
+                        var e = (this.objectStyling.objectBorderImage ? 'border-image: url("' + this.objectStyling.objectBorderImage + '") ' + this.objectStyling.objectBorderImageSliceTop + ' ' + this.objectStyling.objectBorderImageSliceRight + ' ' + this.objectStyling.objectBorderImageSliceBottom + ' ' + this.objectStyling.objectBorderImageSliceLeft + ' / ' + this.objectStyling.objectBorderImageWidth + 'px ' + this.objectStyling.objectBorderImageRepeat + '; border-style: solid; padding: ' + this.objectStyling.objectBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.backgroundStyling.objectBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : "")) + "margin:" + this.objectStyling.objectMargin + "px;",
 							t = this.objectStyling.objectBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : ((this.object.isActive || this.object.isImageUpload && this.object.image.length > 0) && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
+						this.objectStyling.objectGradientIsOn && (e += this.objectStyling.objectGradientIsOn ? ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ");" : ""), 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.object.template ? e += "border-radius: " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectStyling.objectBorderRadiusBottomLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopLeft + 0 + t + " " + this.objectStyling.objectBorderRadiusTopRight + 0 + t + " " + this.objectStyling.objectBorderRadiusBottomRight + 0 + t + "; ", this.objectStyling.objectOverflowIsOn && (e += "overflow:hidden;"), (this.objectStyling.objectBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.objectStyling.objectBorderWidth + "px " + this.objectStyling.objectBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.objectStyling.objectBorderColor)) + ";"), e += "filter: ", this.objectStyling.objectDropShadowIsOn && (e += "drop-shadow(" + this.objectStyling.objectDropShadowH + "px " + this.objectStyling.objectDropShadowV + "px " + this.objectStyling.objectDropShadowBlur + "px " + this.objectStyling.objectDropShadowColor + ")");
 						if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
 						else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
 						else if (!o) {
-							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") + (this.object.isActive || (this.object.isImageUpload && this.object.image.length > 0) ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
+							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : "background-size: cover;") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
@@ -29558,7 +31028,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -29613,7 +31082,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -29637,7 +31105,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -29691,7 +31158,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -29743,7 +31209,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -29764,7 +31229,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 																
@@ -29853,7 +31317,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -29877,7 +31340,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -29970,7 +31432,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -29994,7 +31455,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -30116,7 +31576,10 @@
 							var cnt = 0;
 							for (var r = 0; r < t.objects.length; r++) {
 								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-									this.activateObject(t.objects[r], t);
+									if (t.objects[r].isSelectableMultiple)
+										for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+									else
+										this.activateObject(t.objects[r], t);
 									break
 								}
 								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
@@ -30124,7 +31587,7 @@
 							if (cnt >= t.allowedChoices) k = !1;
 						}
 						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
-							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0}, e.wordChangeSelect)
 							.then(({result, wordText}) => {
 								if (result) {
 									e.wordChangeSelect = wordText;
@@ -30143,15 +31606,15 @@
 										e.scores[g].setValue = !0;
 										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
 									}
-								
 								var tmpScores = [];
-								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (!this.exceptedObjects.length == 0 && !this.exceptedObjects.includes(eid)) this.exceptedObjects.push(eid);
 								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 									if (this.activated.includes(eid)) {
 										if (this.checkPointsMD(e)) {
-											for (var a = 0; a < e.scores.length; a++)
+											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -30287,7 +31750,7 @@
 													var co = this.app.comp[af[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													if (!this.exceptedObjects.includes(coO.id)) {
+													if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 														var nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
 														t.currentChoices -= 1;
@@ -30301,7 +31764,6 @@
 																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 																}
 																if (coO.forcedActivated) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 																}
 															} else {
@@ -30404,8 +31866,13 @@
 												}
 												this.app.mdObjects.splice(ei, 1);
 											}
-											if (e.textfieldIsOn)
-												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.textfieldIsOn) {
+												for (var m = 0; m < this.app.words.length; m++) {
+													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+														this.app.words[m].replaceText = e.wordChangeDeselect;
+													}
+												}
+											}
 											if (e.addToAllowChoice)
 												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 													var co = this.app.compR[e.idOfAllowChoice],
@@ -30415,13 +31882,19 @@
 													if (d > coR.allowedChoices) {
 														var u = d - coR.allowedChoices;
 														for (var v = 0; v < coR.objects.length; v++) {
-															if (u > 0 && coR.objects[v].isActive) {
-																this.activateObject(coR.objects[v], coR);
+															if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+																if (coR.objects[v].isSelectableMultiple)
+																	for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+																else
+																	this.activateObject(coR.objects[v], coR);
 																u--;
 															}
 														}
 													}
 												}
+											if (e.isImageUpload) {
+												this.$set(e, "image", e.defaultImage);
+											}
 											if (e.backpackBtnRequirement)
 												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 											if (e.changeBackground) {
@@ -30482,17 +31955,15 @@
 														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 															var co = this.app.compR[e.hiddenContentsRow[a]],
 																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															if (coR.isResultRow) {
-																for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-																}
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 															}
 														}
 													}
@@ -30512,15 +31983,17 @@
 																coO = coR.objects[co.objects];
 															for (var c = 0; c < coO.scores.length; c++) {
 																var coS = coO.scores[c];
-																if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																	this.$set(coS, "discountIsOn", true);
-																	this.$set(coS, "discountedFrom", e.id);
+																if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																	if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																		if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																		else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																		else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																		else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																		if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																		if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																		this.$set(coS, "discountIsOn", true);
+																		this.$set(coS, "discountedFrom", e.id);
+																	}
 																}
 															}
 														}
@@ -30529,12 +32002,12 @@
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
-										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 										if (e.duplicateRow) {
 											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 										}
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											if (e.isActivateRandom) {
 												var y = e.activateThisChoice.split(","); 
 												var RD = y.slice(),
 													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
@@ -30615,12 +32088,10 @@
 																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 															if(!coO.isActive) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 																coO.forcedActivated = !1;
 															}
 														} else {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 															coO.forcedActivated = !1;
 														}
@@ -30694,7 +32165,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -30740,6 +32210,10 @@
 												}
 											}
 										}
+										if (e.isImageUpload) {
+											this.$set(e, "defaultImage", e.image);
+											this.currentComponent = "appImageUpload"
+										}
 										if (e.backpackBtnRequirement) {
 											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
@@ -30773,32 +32247,32 @@
 											}
 										}
 										if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
 															}
-															waitScroll();
-															break
 														}
 													}
 												}
 											}
 										}
-									}
 										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 											if (e.bgmId) {
 												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
@@ -30817,18 +32291,16 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-															}
+														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 														}
 													}
 												}
@@ -30977,7 +32449,7 @@
 												var co = this.app.comp[af[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												if (!this.exceptedObjects.includes(coO.id)) {
+												if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 													var nH = this.activated.indexOf(eid);
 													this.activated.splice(nH, 1);
 													t.currentChoices -= 1;
@@ -30991,7 +32463,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -31012,8 +32483,13 @@
 											e.dividePointtypeIsOnCheck = !1;
 											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
-										if (e.textfieldIsOn)
-											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeDeselect;
+												}
+											}
+										}
 										if (e.addToAllowChoice)
 											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 												var co = this.app.compR[e.idOfAllowChoice],
@@ -31023,13 +32499,19 @@
 												if (d > coR.allowedChoices) {
 													var u = d - coR.allowedChoices;
 													for (var v = 0; v < coR.objects.length; v++) {
-														if (u > 0 && coR.objects[v].isActive) {
-															this.activateObject(coR.objects[v], coR);
+														if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+															if (coR.objects[v].isSelectableMultiple)
+																for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+															else
+																this.activateObject(coR.objects[v], coR);
 															u--;
 														}
 													}
 												}
 											}
+										if (e.isImageUpload) {
+											this.$set(e, "image", e.defaultImage);
+										}
 										if (e.backpackBtnRequirement)
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
@@ -31090,17 +32572,15 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -31119,11 +32599,31 @@
                     },
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+									var cnt = 0;
+									for (var r = 0; r < t.objects.length; r++) {
+										if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+											if (t.objects[r].isSelectableMultiple)
+												for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+											else
+												this.activateObject(t.objects[r], t);
+											break
+										}
+										else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+									}
+									if (cnt >= t.allowedChoices) 
+										s = !1;
+									else 
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								} else {
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum
 								if (e.isMultipleUseVariable) {
@@ -31133,6 +32633,7 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
@@ -31140,10 +32641,16 @@
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
 												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[tmpVariable - 1]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable);
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable});
+													} else {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+													}
 												}
 											}
 										}
@@ -31171,15 +32678,15 @@
 												if ("undefined" !== typeof this.app.compR[t.id]) {
 													var tCo = this.app.compR[t.id];
 													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-														var p = this.$parent.$parent.$children,
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
 															co = this.app.compR[e.scrollRowId];
 														for (var a = 0; a < p.length; a++) {
-															if (this.$parent == p[a]) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
 																coR = p[co.rows + a - tCo.rows];
 																function waitScroll() {
 																	setTimeout(function() {
-																		if (coR.$el.offsetParent) {
-																			coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
 																		} else {
 																			waitScroll();
 																		}
@@ -31285,7 +32792,6 @@
 															}
 														}
 													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
@@ -31312,7 +32818,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -31326,6 +32831,17 @@
 										}
 									}
 									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
+									if (e.addToAllowChoice)
+										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+											var co = this.app.compR[e.idOfAllowChoice],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+											var I = coR.currentChoices;
+											if (I > coR.allowedChoices) {
+												var O = I - coR.allowedChoices;
+												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+											}
+										}
 								}
 								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
@@ -31334,11 +32850,11 @@
                     },
                     selectedOneLess: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
 							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
 							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -31348,15 +32864,23 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
-												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(tmpVariable)] || e.scores[i].isActiveMul[tmpVariable]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
+
+													} else {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
+													}
 												}
 											}
 										}
@@ -31500,7 +33024,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
-										if (!this.exceptedObjects.includes(coO.id)) {
+										if (coO.id !== e.id && !this.exceptedObjects.includes(coO.id)) {
 											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
@@ -31514,7 +33038,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -31529,9 +33052,28 @@
 									}
 								}
 								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.addToAllowChoice)
+									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+										var co = this.app.compR[e.idOfAllowChoice],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+										var d = e.isMultipleUseVariable && parseInt(e.multipleUseVariable) == 0 ? coR.currentChoices - 1 : coR.currentChoices;
+										if (d > coR.allowedChoices) {
+											var u = d - coR.allowedChoices;
+											for (var v = 0; v < coR.objects.length; v++) {
+												if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+													if (coR.objects[v].isSelectableMultiple)
+														for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+													else
+														this.activateObject(coR.objects[v], coR);
+													u--;
+												}
+											}
+										}
+									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -31971,7 +33513,7 @@
                         } else if ("" == this.row.resultGroupId || null == this.row.resultGroupId)
                             for (t = 0; t < this.rows.length; t++)
                                 for (e = 0; e < this.rows[t].objects.length; e++) {
-									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isImageUpload ? this.rows[t].objects[e].image.length > 5 && o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
                         else
                             for (t = 0; t < this.rows.length; t++)
@@ -31982,11 +33524,6 @@
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[r].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
 												else
 													for (var a = 0; a < this.rows[t].objects[e].groups.length; a++) this.rows[t].objects[e].groups[a].id == this.row.resultGroupId && this.groups[r].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
-										else if (this.rows[t].objects[e].isImageUpload && this.rows[t].objects[e].image.length > 5)
-											for (var n = 0; n < this.groups.length; n++)
-												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[n].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
-												else
-													for (var l = 0; l < this.rows[t].objects[e].groups.length; l++) this.rows[t].objects[e].groups[l].id == this.row.resultGroupId && this.groups[n].id == this.row.resultGroupId && o.push(this.rows[t].objects[e]);
 										else if (this.rows[t].objects[e].isSelectableMultiple && ("undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (this.row.resultGroupId == this.rows[t].resultGroupId && this.rows[t] != this.row && this.groups[c].id == this.rows[t].resultGroupId) o.push(this.rows[t].objects[e]);
@@ -32261,7 +33798,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -32316,7 +33852,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -32340,7 +33875,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
@@ -32394,7 +33928,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32446,7 +33979,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32467,7 +33999,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 																
@@ -32556,7 +34087,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32580,7 +34110,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32673,7 +34202,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32697,7 +34225,6 @@
 																	}
 																}
 																if (coO.forcedActivated && nC > 0) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																}
 															} else {
@@ -32819,7 +34346,10 @@
 							var cnt = 0;
 							for (var r = 0; r < t.objects.length; r++) {
 								if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
-									this.activateObject(t.objects[r], t);
+									if (t.objects[r].isSelectableMultiple)
+										for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+									else
+										this.activateObject(t.objects[r], t);
 									break
 								}
 								else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
@@ -32827,7 +34357,7 @@
 							if (cnt >= t.allowedChoices) k = !1;
 						}
 						if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices) && !this.activated.includes(eid) && e.textfieldIsOn && e.customTextfieldIsOn && !this.app.wordChangeComplete) {
-							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0})
+							this.$refs.confirm.open("", e.wordPromptText, {noconfirm: !0, word: !0}, e.wordChangeSelect)
 							.then(({result, wordText}) => {
 								if (result) {
 									e.wordChangeSelect = wordText;
@@ -32846,15 +34376,15 @@
 										e.scores[g].setValue = !0;
 										for (var a = 0; a < this.app.pointTypes.length; a++) this.app.pointTypes[a].id == e.scores[g].id && this.app.pointTypes[a].belowZeroNotAllowed && this.app.pointTypes[a].startingSum - parseInt(e.scores[g].value) < 0 && (e.scores[g].setValue = !1);
 									}
-								
 								var tmpScores = [];
-								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (!this.exceptedObjects.length == 0 && !this.exceptedObjects.includes(eid)) this.exceptedObjects.push(eid);
 								if (s && o && k && (t.currentChoices < t.allowedChoices || 0 == t.allowedChoices)) {
 									if (this.activated.includes(eid)) {
 										if (this.checkPointsMD(e)) {
-											for (var a = 0; a < e.scores.length; a++)
+											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
 													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 												if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
@@ -32990,7 +34520,7 @@
 													var co = this.app.comp[af[0]],
 														coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 														coO = coR.objects[co.objects];
-													if (!this.exceptedObjects.includes(coO.id)) {
+													if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 														var nH = this.activated.indexOf(eid);
 														this.activated.splice(nH, 1);
 														t.currentChoices -= 1;
@@ -33004,7 +34534,6 @@
 																	coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 																}
 																if (coO.forcedActivated) {
-																	if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 																}
 															} else {
@@ -33107,8 +34636,13 @@
 												}
 												this.app.mdObjects.splice(ei, 1);
 											}
-											if (e.textfieldIsOn)
-												for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+											if (e.textfieldIsOn) {
+												for (var m = 0; m < this.app.words.length; m++) {
+													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+														this.app.words[m].replaceText = e.wordChangeDeselect;
+													}
+												}
+											}
 											if (e.addToAllowChoice)
 												if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 													var co = this.app.compR[e.idOfAllowChoice],
@@ -33118,13 +34652,19 @@
 													if (d > coR.allowedChoices) {
 														var u = d - coR.allowedChoices;
 														for (var v = 0; v < coR.objects.length; v++) {
-															if (u > 0 && coR.objects[v].isActive) {
-																this.activateObject(coR.objects[v], coR);
+															if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+																if (coR.objects[v].isSelectableMultiple)
+																	for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+																else
+																	this.activateObject(coR.objects[v], coR);
 																u--;
 															}
 														}
 													}
 												}
+											if (e.isImageUpload) {
+												this.$set(e, "image", e.defaultImage);
+											}
 											if (e.backpackBtnRequirement)
 												this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 											if (e.changeBackground) {
@@ -33185,17 +34725,15 @@
 														if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 															var co = this.app.compR[e.hiddenContentsRow[a]],
 																coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-															if (coR.isResultRow) {
-																for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																	if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																	else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																	else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																	else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																	else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																	else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-																}
+															for (var b = 0; b < e.hiddenContentsType.length; b++) {
+																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 															}
 														}
 													}
@@ -33215,15 +34753,17 @@
 																coO = coR.objects[co.objects];
 															for (var c = 0; c < coO.scores.length; c++) {
 																var coS = coO.scores[c];
-																if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																	if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																	else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																	else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																	else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																	if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																	if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																	this.$set(coS, "discountIsOn", true);
-																	this.$set(coS, "discountedFrom", e.id);
+																if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																	if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																		if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
+																		else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
+																		else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
+																		else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
+																		if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
+																		if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+																		this.$set(coS, "discountIsOn", true);
+																		this.$set(coS, "discountedFrom", e.id);
+																	}
 																}
 															}
 														}
@@ -33232,12 +34772,12 @@
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
-										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.length = 0;
+										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
 										if (e.duplicateRow) {
 											if ("undefined" !== typeof e.duplicateRowId && "undefined" !== typeof e.duplicateRowPlace) this.duplicateRow(e, t);
 										}
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
-											if (e.isActivateRandom && "undefined" !== typeof e.isActivateRandom) {
+											if (e.isActivateRandom) {
 												var y = e.activateThisChoice.split(","); 
 												var RD = y.slice(),
 													rd = RD.filter(item => !this.activated.some(activatedItem => activatedItem.split("/ON#")[0] == item.split("/ON#")[0])),
@@ -33318,12 +34858,10 @@
 																if (!e.isAllowDeselect) coO.forcedActivated = !0;
 															}
 															if(!coO.isActive) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 																coO.forcedActivated = !1;
 															}
 														} else {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															if(coO.isSelectableMultiple) this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]);
 															coO.forcedActivated = !1;
 														}
@@ -33397,7 +34935,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -33443,6 +34980,10 @@
 												}
 											}
 										}
+										if (e.isImageUpload) {
+											this.$set(e, "defaultImage", e.image);
+											this.currentComponent = "appImageUpload"
+										}
 										if (e.backpackBtnRequirement) {
 											if ("undefined" === typeof this.app.btnBackpackIsOn) this.$set(this.app, "btnBackpackIsOn", 0);
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn + 1);
@@ -33476,32 +35017,32 @@
 											}
 										}
 										if (e.scrollToRow) {
-										if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
-											if ("undefined" !== typeof this.app.compR[t.id]) {
-												var tCo = this.app.compR[t.id];
-												if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-													var p = this.$parent.$parent.$children,
-														co = this.app.compR[e.scrollRowId];
-													for (var a = 0; a < p.length; a++) {
-														if (this.$parent == p[a]) {
-															coR = p[co.rows + a - tCo.rows];
-															function waitScroll() {
-																setTimeout(function() {
-																	if (coR.$el.offsetParent) {
-																		coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
-																	} else {
-																		waitScroll();
-																	}
-																}, 100);
+											if ("undefined" !== typeof e.scrollRowId && e.scrollRowId.length > 0) {
+												if ("undefined" !== typeof this.app.compR[t.id]) {
+													var tCo = this.app.compR[t.id];
+													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
+															co = this.app.compR[e.scrollRowId];
+														for (var a = 0; a < p.length; a++) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
+																coR = p[co.rows + a - tCo.rows];
+																function waitScroll() {
+																	setTimeout(function() {
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
+																		} else {
+																			waitScroll();
+																		}
+																	}, 100);
+																}
+																waitScroll();
+																break
 															}
-															waitScroll();
-															break
 														}
 													}
 												}
 											}
 										}
-									}
 										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 											if (e.bgmId) {
 												if ("undefined" === typeof this.app.bgmIsPlaying) this.$set(this.app, "bgmIsPlaying", !1);
@@ -33520,18 +35061,16 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
-															}
+														if (!coR.textIsRemoved) this.$set(coR, "textIsRemoved", true);
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", true);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", true);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", true);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", true);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", true);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", true);
 														}
 													}
 												}
@@ -33680,7 +35219,7 @@
 												var co = this.app.comp[af[0]],
 													coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 													coO = coR.objects[co.objects];
-												if (!this.exceptedObjects.includes(coO.id)) {
+												if (coO.id !== eid && !this.exceptedObjects.includes(coO.id)) {
 													var nH = this.activated.indexOf(eid);
 													this.activated.splice(nH, 1);
 													t.currentChoices -= 1;
@@ -33694,7 +35233,6 @@
 																coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 															}
 															if (coO.forcedActivated) {
-																if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 																this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															}
 														} else {
@@ -33715,8 +35253,13 @@
 											e.dividePointtypeIsOnCheck = !1;
 											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
 										}
-										if (e.textfieldIsOn)
-											for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == e.idOfTheTextfieldWord && (this.app.words[m].replaceText = e.wordChangeDeselect);
+										if (e.textfieldIsOn) {
+											for (var m = 0; m < this.app.words.length; m++) {
+												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
+													this.app.words[m].replaceText = e.wordChangeDeselect;
+												}
+											}
+										}
 										if (e.addToAllowChoice)
 											if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
 												var co = this.app.compR[e.idOfAllowChoice],
@@ -33726,13 +35269,19 @@
 												if (d > coR.allowedChoices) {
 													var u = d - coR.allowedChoices;
 													for (var v = 0; v < coR.objects.length; v++) {
-														if (u > 0 && coR.objects[v].isActive) {
-															this.activateObject(coR.objects[v], coR);
+														if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+															if (coR.objects[v].isSelectableMultiple)
+																for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+															else
+																this.activateObject(coR.objects[v], coR);
 															u--;
 														}
 													}
 												}
 											}
+										if (e.isImageUpload) {
+											this.$set(e, "image", e.defaultImage);
+										}
 										if (e.backpackBtnRequirement)
 											this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
@@ -33793,17 +35342,15 @@
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
 														var co = this.app.compR[e.hiddenContentsRow[a]],
 															coR = this.app.compR[t.id].type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
-														if (coR.isResultRow) {
-															for (var b = 0; b < e.hiddenContentsType.length; b++) {
-																if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
-																else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
-																else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
-																else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
-																else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
-																else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
-															}
+														for (var b = 0; b < e.hiddenContentsType.length; b++) {
+															if (e.hiddenContentsType[b] == "1") this.$set(coR, "objectTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "2") this.$set(coR, "objectImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "3") this.$set(coR, "objectTextRemoved", false);
+															else if (e.hiddenContentsType[b] == "4") this.$set(coR, "objectScoreRemoved", false);
+															else if (e.hiddenContentsType[b] == "5") this.$set(coR, "objectRequirementRemoved", false);
+															else if (e.hiddenContentsType[b] == "6") this.$set(coR, "addonTitleRemoved", false);
+															else if (e.hiddenContentsType[b] == "7") this.$set(coR, "addonImageRemoved", false);
+															else if (e.hiddenContentsType[b] == "8") this.$set(coR, "addonTextRemoved", false);
 														}
 													}
 												}
@@ -33822,11 +35369,31 @@
                     },
                     selectedOneMore: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+									var cnt = 0;
+									for (var r = 0; r < t.objects.length; r++) {
+										if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+											if (t.objects[r].isSelectableMultiple)
+												for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+											else
+												this.activateObject(t.objects[r], t);
+											break
+										}
+										else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+									}
+									if (cnt >= t.allowedChoices) 
+										s = !1;
+									else 
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								} else {
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum
 								if (e.isMultipleUseVariable) {
@@ -33836,6 +35403,7 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
@@ -33843,10 +35411,16 @@
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
 												if ("undefined" === typeof e.scores[i].isActiveMul) this.$set(e.scores[i], "isActiveMul", []);
-												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1]) {
-													this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable) - 1] = !0;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+												if (this.checkRequireds(e.scores[i]) && !e.scores[i].isActiveMul[tmpVariable - 1]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable);
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * tmpVariable : parseInt(e.scores[i].value) * tmpVariable});
+													} else {
+														this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable - 1] = !0;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
+													}
 												}
 											}
 										}
@@ -33874,15 +35448,15 @@
 												if ("undefined" !== typeof this.app.compR[t.id]) {
 													var tCo = this.app.compR[t.id];
 													if ("undefined" !== typeof this.app.compR[e.scrollRowId]) {
-														var p = this.$parent.$parent.$children,
+														var p = this.$el.offsetParent.offsetParent.parentElement.children,
 															co = this.app.compR[e.scrollRowId];
 														for (var a = 0; a < p.length; a++) {
-															if (this.$parent == p[a]) {
+															if (this.$el.offsetParent.offsetParent == p[a]) {
 																coR = p[co.rows + a - tCo.rows];
 																function waitScroll() {
 																	setTimeout(function() {
-																		if (coR.$el.offsetParent) {
-																			coR.$el.offsetParent.scrollIntoView({behavior: 'smooth'});
+																		if (coR) {
+																			coR.scrollIntoView({behavior: 'smooth'});
 																		} else {
 																			waitScroll();
 																		}
@@ -33988,7 +35562,6 @@
 															}
 														}
 													} else {
-														if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 														coO.isSelectableMultiple ? this.app.cancelForcedActivated.push(coO.id + "/ON#" + yv[1]) : this.app.cancelForcedActivated.push(coO.id);
 													}
 												}
@@ -34015,7 +35588,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -34029,6 +35601,17 @@
 										}
 									}
 									if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulS(e, t, tmpScores, 0);
+									if (e.addToAllowChoice)
+										if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+											var co = this.app.compR[e.idOfAllowChoice],
+												coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+											coR.allowedChoices += e.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += e.numbAddToAllowChoice;
+											var I = coR.currentChoices;
+											if (I > coR.allowedChoices) {
+												var O = I - coR.allowedChoices;
+												for (var v = 0; v < coR.objects.length; v++) O > 0 && coR.objects[v].isActive && (this.activateObject(coR.objects[v], coR), O--)
+											}
+										}
 								}
 								if (this.exceptedObjects.indexOf(e.id) == 0) this.$set(this, "exceptedObjects", []);
 							}
@@ -34037,11 +35620,11 @@
                     },
                     selectedOneLess: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
-                        var s = !0;
+                        var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
 							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
 							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum)) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -34051,15 +35634,23 @@
 									eid = e.id;
 								}
 								var tmpScores = [];
+								var tmpVariable = e.isMultipleUseVariable ? parseInt(e.multipleUseVariable) : tmpPoint.value;
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
 											if (this.app.pointTypes[s].id == e.scores[i].id) {
-												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] || e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)]) {
-													this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
-													e.scores[i].isActiveMul[parseInt(e.multipleUseVariable)] = !1;
-													tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)})
+												if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[parseInt(tmpVariable)] || e.scores[i].isActiveMul[tmpVariable]) {
+													if (e.scores[i].multiplyByTimes) {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
+
+													} else {
+														this.app.pointTypes[s].startingSum += (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
+														e.scores[i].isActiveMul[tmpVariable] = !1;
+														tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
+													}
 												}
 											}
 										}
@@ -34203,7 +35794,7 @@
 										var co = this.app.comp[aF[0]],
 											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 											coO = coR.objects[co.objects];
-										if (!this.exceptedObjects.includes(coO.id)) {
+										if (coO.id !== e.id && !this.exceptedObjects.includes(coO.id)) {
 											var fI = this.activated.findIndex(item => item.split("/ON#")[0] == e.id);
 											if (fI !== -1) {
 												var	aFI = this.activated[fI].split("/ON#");
@@ -34217,7 +35808,6 @@
 															coO.forcedActivated ? (coO.forcedActivated = !1, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !0) : this.selectedOneLess(coO, coR);
 														}
 														if (coO.forcedActivated) {
-															if ("undefined" === typeof this.app.cancelForcedActivated) this.$set(this.app, "cancelForcedActivated", []);
 															this.app.cancelForcedActivated.push(coO.id + "/ON#" + N);
 															coO.forcedActivated = !1;
 														}
@@ -34232,9 +35822,28 @@
 									}
 								}
 								if (!this.exceptedObjects.includes(e.id) || this.exceptedObjects.indexOf(e.id) == 0) this.updateScoresMulC(e, t, tmpScores, 0);
+								if (e.addToAllowChoice)
+									if ("undefined" !== typeof this.app.compR[e.idOfAllowChoice]) {
+										var co = this.app.compR[e.idOfAllowChoice],
+											coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
+										coR.allowedChoices -= e.numbAddToAllowChoice, coR.allowedChoicesChange -= coR.numbAddToAllowChoice;
+										var d = e.isMultipleUseVariable && parseInt(e.multipleUseVariable) == 0 ? coR.currentChoices - 1 : coR.currentChoices;
+										if (d > coR.allowedChoices) {
+											var u = d - coR.allowedChoices;
+											for (var v = 0; v < coR.objects.length; v++) {
+												if (u > 0 && coR.objects[v].isActive && !coR.objects[v].forcedActivated && coR.objects[v].id != e.id) {
+													if (coR.objects[v].isSelectableMultiple)
+														for (var a = t.objects[v].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(coR.objects[v], t);
+													else
+														this.activateObject(coR.objects[v], coR);
+													u--;
+												}
+											}
+										}
+									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -34477,7 +36086,7 @@
                         } else if ("" == t.resultGroupId || null == t.resultGroupId)
                             for (var a = 0; a < e.length; a++)
                                 for (var b = 0; b < e[a].objects.length; b++) {
-									if (!e[a].objects[b].isNotResult) e[a].objects[b].isActive ? o.push(e[a].objects[b]) : e[a].objects[b].isImageUpload ? e[a].objects[b].image.length > 5 && o.push(e[a].objects[b]) : e[a].objects[b].isSelectableMultiple && "undefined" !== typeof e[a].objects[b].multipleUseVariable && e[a].objects[b].multipleUseVariable > 0 && o.push(e[a].objects[b]);
+									if (!this.rows[t].objects[e].isNotResult) this.rows[t].objects[e].isActive ? o.push(this.rows[t].objects[e]) : this.rows[t].objects[e].isSelectableMultiple && "undefined" !== typeof this.rows[t].objects[e].multipleUseVariable && this.rows[t].objects[e].multipleUseVariable > 0 && o.push(this.rows[t].objects[e]);
 								}
 						else
                             for (a = 0; a < this.rows.length; a++)
@@ -34488,11 +36097,6 @@
 												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[r].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
 												else
 													for (var c = 0; c < this.rows[a].objects[b].groups.length; c++) this.rows[a].objects[b].groups[c].id == t.resultGroupId && this.groups[r].id == t.resultGroupId && o.push(this.rows[a].objects[b]);
-										else if (this.rows[a].objects[b].isImageUpload && this.rows[a].objects[b].image.length > 5)
-											for (var n = 0; n < this.groups.length; n++)
-												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[n].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
-												else
-													for (var l = 0; l < this.rows[a].objects[b].groups.length; l++) this.rows[a].objects[b].groups[l].id == t.resultGroupId && this.groups[n].id == t.resultGroupId && o.push(this.rows[a].objects[b]);
 										else if (this.rows[a].objects[b].isSelectableMultiple && ("undefined" !== typeof this.rows[a].objects[b].multipleUseVariable && this.rows[a].objects[b].multipleUseVariable > 0))
 											for (var c = 0; c < this.groups.length; c++)
 												if (t.resultGroupId == this.rows[a].resultGroupId && this.rows[a] != t && this.groups[c].id == this.rows[a].resultGroupId) o.push(this.rows[a].objects[b]);
@@ -34815,7 +36419,7 @@
 							URL.revokeObjectURL(this.bUrls[a]);
 						}
 						this.imgMap.clear();
-						this.bUrls.length = 0;
+						this.bUrls.splice(0);
 					},
 					isDataURL: function(e) {
 						return /^data:(image\/[a-zA-Z]*);base64,/.test(e);
@@ -34956,7 +36560,6 @@
 												type: "image/webp",
 												quality: 0.9
 											}).then(function(t) {
-												console.log(t);
 												var i = document.createEvent("MouseEvents"),
 													s = document.createElement("a");
 												s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
@@ -36686,12 +38289,60 @@
                         width: "100%"
                     }
                 }, [o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
-                    staticClass: "col-md-6"
-                }, [e._v(" Font size of the tier number "), o("v-text-field", {
+                    staticClass: "col-md-12"
+                }, [e._v(" Tier number "), o("v-row", [o("v-col", {
+					staticClass: "pb-0",
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-checkbox", {
+					staticClass: "mr-2 mt-1 mb-n6",
+					attrs: {
+						label: "Use Custom Font?"
+					},
+					model: {
+						value: e.styling.customMultiTextFont,
+						callback: function(t) {
+							e.$set(e.styling, "customMultiTextFont", t)
+						},
+						expression: "styling.customMultiTextFont"
+					}
+				})], 1), o("v-col", {
+                    staticClass: "px-1"
+                }, [e.styling.customMultiTextFont ? o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						label: "Text Font",
+						filled: ""
+					},
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                }) : o("v-select", {
                     attrs: {
-                        label: "Number text size",
-                        suffix: "%",
+                        "hide-details": "",
+                        items: e.textFonts,
+                        filled: "",
+                        label: "Text Font"
+                    },
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "px-1"
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
                         type: "number",
+                        label: "Text Size",
                         filled: ""
                     },
                     model: {
@@ -36701,22 +38352,42 @@
                         },
                         expression: "styling.multiChoiceTextSize"
                     }
-                })], 1), o("v-col", {
-                    staticClass: "col-md-6"
-                }, [e._v(" The font of the tier number "), o("v-select", {
+                }, [e._v("%")])], 1)], 1)], 1), o("v-col", {
+                    staticClass: "col-md-12"
+                }, [e._v(" Counter "), o("v-row", [o("v-col", {
+                    staticClass: "px-1"
+                }, [o("v-select", {
                     attrs: {
-                        items: e.textFonts,
+                        "hide-details": "",
+                        items: e.counterPositions,
                         filled: "",
-                        label: "Number text font"
+                        label: "Counter's Position"
                     },
                     model: {
-                        value: e.styling.multiChoiceTextFont,
+                        value: e.styling.multiChoiceCounterPosition,
                         callback: function(t) {
-                            e.$set(e.styling, "multiChoiceTextFont", t)
+                            e.$set(e.styling, "multiChoiceCounterPosition", t);
+							console.log(e.styling.multiChoiceCounterPosition);
                         },
-                        expression: "styling.multiChoiceTextFont"
+                        expression: "styling.multiChoiceCounterPosition"
                     }
-                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                })], 1), o("v-col", {
+                    staticClass: "px-1"
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        type: "number",
+                        label: "Counter Size",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.multiChoiceCounterSize,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceCounterSize", t)
+                        },
+                        expression: "styling.multiChoiceCounterSize"
+                    }
+                }, [e._v("%")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
                     attrs: {
                         color: "green darken-1",
                         text: ""
@@ -36784,7 +38455,23 @@
                         }, {
                             text: "Tahoma",
                             value: "Tahoma"
-                        }]
+                        }],
+						counterPositions: [{
+							text: "Bottom of Choice Title",
+							value: 0
+						}, {
+							text: "Bottom of Choice Scores",
+							value: 1
+						}, {
+							text: "Bottom of Choice Requirements",
+							value: 2
+						}, {
+							text: "Bottom of Choice Text",
+							value: 3
+						}, {
+							text: "Bottom of Choice Addons",
+							value: 4
+						}]
                     }
                 },
                 computed: {
@@ -36806,6 +38493,7 @@
             VCard: T["a"],
             VCardActions: j["a"],
             VCardText: j["b"],
+			VCheckbox: ae["a"],
             VCol: I["a"],
             VContainer: k["a"],
             VRow: S["a"],
@@ -40223,13 +41911,16 @@
 								return regeneratorRuntime.wrap((function(o) {
 									while (1) switch (o.prev = o.next) {
 										case 0:
-											return o.next = 2, t.$refs.confirm.open("Confirm", "Are you sure you want to delete this row?");
+											return o.next = 2, t.$refs.confirm.open("Confirm", "Are you sure you want to delete this row? Be sure to deselect all choices before deleting this row.");
 										case 2:
 											if (!o.sent) {
 												o.next = 4;
 												break
 											}
 											var s = t.app.rows.indexOf(e);
+											for (var a = 0; a < e.objects.length; a++) {
+												if (e.objects[a].backpackBtnRequirement) t.$set(t.app, "hideBackpackBtn", t.app.hideBackpackBtn - 1);
+											}
 											for (var f = s + 1; f < t.app.rows.length; f++) {
 												t.app.compR[t.app.rows[f].id].rows -= 1;
 												for (var b = 0; b < t.app.rows[f].objects.length; b++) {
@@ -40725,7 +42416,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("20.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 20.08.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added an option in 'Score' to determine whether the 'Scores Updated On' should be activated. "), o("br"), o("br"), e._v(" Added a feature to use the modulo operator in 'point comparison' requirements. "), o("br"), e._v(" Added a feature to directly load a project from the 'CYOA.zip' file. "), o("br"), o("br"), e._v(" Added a feature to copy/paste a requirement. "), o("br"), o("br"), e._v(" Added a feature to merge duplicate images when exporting a project as a zip file. "), o("br"), o("br"), e._v(" Added a feature to increase or decrease the 'Number of requirements' for 'X of these'. "), o("br"), o("br"), e._v(" Added an option in Global Settings to enable or disable automatic image conversion. "), o("br"), o("br"), e._v(" Added an option in Global Settings to enable image preloading in the backpack. "), o("br"), o("br"), e._v(" Added a feature to display the discounted score. "), o("br"), o("br"), e._v(" Added a feature to export ID/Name list as a CSV file. "), o("br"), o("br"), e._v(" Added a feature to choose the display type in the loading animation (see index.html). ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where 'Will make another choice unselected' feature was not working correctly. "), o("br"), o("br"), e._v(" Fixed an issue where 'Multiply/Divide' features were not working correctly. "), o("br"), o("br"), e._v(" Fixed an issue where the toggle buttons of 'Show Score/Hide Value' were not working correctly. "), o("br"), o("br"), e._v(" Fixed an issue where choices activated by 'Forces another choice active' were de-selectable. "), o("br"), o("br"), e._v(" Fixed an issue where image split downloads do not work correctly in the Firefox browser. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("11.08.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -41674,7 +43405,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.8.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.9.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -42184,7 +43915,9 @@
                             rowImgBorderColor: "red",
                             rowImgBorderStyle: "solid",
                             rowImgBorderWidth: 2,
-                            backPackWidth: 1200
+                            backPackWidth: 1200,
+							multiChoiceCounterPosition: 0,
+							multiChoiceCounterSize: 170
                         }
                     },
                     objectWidths: [{
@@ -42492,7 +44225,11 @@
 					globalVariables: {
 						text: "",
 						snackbar: !1
-					}
+					},
+					scoreUpdate: "",
+					exceptedObjects: [],
+					exceptedScores: [],
+					linkedObjects: []
                 },
                 getters: {
                     checkRequireds: function(e, t) {
@@ -42639,10 +44376,281 @@
                         e.app = t;
                     },
                     cleanActivated: function(e) {
-                        var t, o, i, s, r, a, n, p, f, b, v, ee;
-                        for (e.app.activated.length = 0, e.app.mdObjects.length = 0, o = 0; o < e.app.rows.length; o++) {
-							for (e.app.rows[o].isEditModeOn = !1, e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0), t = 0; t < e.app.rows[o].objects.length; t++) {
-								for (r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
+						function checkRequireds(t) {
+							if ("undefined" !== typeof t.requireds)
+								for (var i = 0; i < t.requireds.length; i++) {
+									var s = !1;
+									if ("undefined" !== typeof t.requireds[i].requireds ? checkRequireds(t.requireds[i]) && (s = !0) : s = !0, s) {
+										if (t.requireds[i].required) {
+											if ("id" == t.requireds[i].type) {
+												var ri = t.requireds[i].reqId.split("/ON#");
+												if (ri.length > 1) {
+													if (!e.app.activated.some(RI => {if (RI.includes(ri[0] + "/ON#")) {return parseInt(RI.split("/ON#")[1]) >= parseInt(ri[1])} return !1})) return !1;
+												} else {
+													if (!e.app.activated.includes(t.requireds[i].reqId)) return !1;
+												}
+											}
+											if ("points" == t.requireds[i].type) {
+												if ("undefined" == typeof t.requireds[i].operator) {
+													for (var r = 0; r < e.app.pointTypes.length; r++)
+														if (t.requireds[i].reqId == e.app.pointTypes[r].id && t.requireds[i].reqPoints > e.app.pointTypes[r].startingSum) return !1;
+												} else
+													for (var a = 0; a < e.app.pointTypes.length; a++)
+														if (t.requireds[i].reqId == e.app.pointTypes[a].id)
+															if (isNaN(parseInt(t.requireds[i].reqPoints))) {
+																for (var n = 0; n < e.app.pointTypes.length; n++)
+																	if (t.requireds[i].startingSum == e.app.pointTypes[n].id) {
+																		if (1 == t.requireds[i].operator && e.app.pointTypes[a].startingSum >= e.app.pointTypes[n].startingSum) return !1;
+																		if (2 == t.requireds[i].operator && e.app.pointTypes[a].startingSum > e.app.pointTypes[n].startingSum) return !1;
+																		if (3 == t.requireds[i].operator && parseInt(e.app.pointTypes[a].startingSum) !== parseInt(e.app.pointTypes[n].startingSum)) return !1;
+																		if (4 == t.requireds[i].operator && e.app.pointTypes[a].startingSum < e.app.pointTypes[n].startingSum) return !1;
+																		if (5 == t.requireds[i].operator && e.app.pointTypes[a].startingSum <= e.app.pointTypes[n].startingSum) return !1;
+																	}
+															} else {
+																if (1 == t.requireds[i].operator && t.requireds[i].reqPoints >= e.app.pointTypes[a].startingSum) return !1;
+																if (2 == t.requireds[i].operator && t.requireds[i].reqPoints > e.app.pointTypes[a].startingSum) return !1;
+																if (3 == t.requireds[i].operator && parseInt(t.requireds[i].reqPoints) !== parseInt(e.app.pointTypes[a].startingSum)) return !1;
+																if (4 == t.requireds[i].operator && t.requireds[i].reqPoints < e.app.pointTypes[a].startingSum) return !1;
+																if (5 == t.requireds[i].operator && t.requireds[i].reqPoints <= e.app.pointTypes[a].startingSum) return !1;
+															}
+											} else if ("or" == t.requireds[i].type) {
+												t.requireds[i].orNum = "undefined" === typeof t.requireds[i].orNum ? 1 : t.requireds[i].orNum;
+												for (var l = 0, c = 0; c < t.requireds[i].orRequired.length; c++) e.app.activated.includes(t.requireds[i].orRequired[c].req) && "" != t.requireds[i].orRequired[c].req && l++;
+												if (l < t.requireds[i].orNum) return !1;
+												else if (t.requireds[i].orNum == 0 && l > 0) return !1;
+											} else if ("pointCompare" == t.requireds[i].type) {
+												for (var d = void 0, p = void 0, u = 0; u < e.app.pointTypes.length; u++) t.requireds[i].reqId == e.app.pointTypes[u].id && (d = e.app.pointTypes[u].startingSum);
+												for (var h = 0; h < e.app.pointTypes.length; h++) t.requireds[i].reqId1 == e.app.pointTypes[h].id && (p = e.app.pointTypes[h].startingSum);
+												if ("undefined" !== typeof t.requireds[i].more) {
+													for (var cp = 0, a = 0; a < t.requireds[i].more.length; a++) {
+														if ("undefined" !== typeof t.requireds[i].more[a].id) {
+															for (var s = 0; s < e.app.pointTypes.length; s++) t.requireds[i].more[a].id == e.app.pointTypes[s].id && (cp = e.app.pointTypes[s].startingSum);
+														} else {
+															cp = t.requireds[i].more[a].points;
+														}
+														if (1 == t.requireds[i].more[a].operator) p += parseInt(cp);
+														else if (2 == t.requireds[i].more[a].operator) p -= parseInt(cp);
+														else if (3 == t.requireds[i].more[a].operator) p *= parseInt(cp);
+														else if (4 == t.requireds[i].more[a].operator) p /= parseInt(cp);
+														else if (5 == t.requireds[i].more[a].operator) p %= parseInt(cp);
+													}
+												}
+												if (d <= p && 1 == t.requireds[i].operator) return !1;
+												if (d != p && 2 == t.requireds[i].operator) return !1;
+												if (d < p && 3 == t.requireds[i].operator) return !1;
+												if (d > p && 4 == t.requireds[i].operator) return !1;
+												if (d >= p && 5 == t.requireds[i].operator) return !1;
+											} else if ("selFromGroups" == t.requireds[i].type) {
+												if ("undefined" !== typeof t.requireds[i].selGroups) {
+													t.requireds[i].selFromOperators = "undefined" === typeof t.requireds[i].selFromOperators ? "1" : t.requireds[i].selFromOperators;
+													for (var x = 0, f = 0; f < t.requireds[i].selGroups.length; f++)
+														if ("undefined" !== e.app.compG[t.requireds[i].selGroups[f]]) {
+															var co = e.app.compG[t.requireds[i].selGroups[f]],
+																coG = e.app.groups[ct.groups],
+																z = coG.elements;
+																x += e.app.activated.filter(item => z.some(zitem => {if (zitem.id == item.split("/ON#")[0]) {return !0} else return !1})).length;
+														}
+													if (t.requireds[i].selFromOperators == "1") {
+														if (x < t.requireds[i].selNum) return !1;
+														else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+													} else if (t.requireds[i].selFromOperators == "2") {
+														if (x != t.requireds[i].selNum) return !1;
+													} else if (t.requireds[i].selFromOperators == "3") {
+														if (x > t.requireds[i].selNum) return !1;
+														else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+													}
+												}
+											} else if ("selFromRows" == t.requireds[i].type) {
+												if ("undefined" !== typeof t.requireds[i].selRows) {
+													t.requireds[i].selFromOperators = "undefined" === typeof t.requireds[i].selFromOperators ? "1" : t.requireds[i].selFromOperators;
+													for (var x = 0, f = 0; f < t.requireds[i].selRows.length; f++) {
+														if ("undefined" !== typeof e.app.compR[t.requireds[i].selRows[f]]) {
+															var co = e.app.compR[t.requireds[i].selRows[f]],
+																coR = e.app.rows[ct.rows];
+															x += coR.currentChoices;
+														}
+													}
+													if (t.requireds[i].selFromOperators == "1") {
+														if (x < t.requireds[i].selNum) return !1;
+														else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+													} else if (t.requireds[i].selFromOperators == "2") {
+														if (x != t.requireds[i].selNum) return !1;
+													} else if (t.requireds[i].selFromOperators == "3") {
+														if (x > t.requireds[i].selNum) return !1;
+														else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+													}
+												}
+											} else if ("selFromWhole" == t.requireds[i].type) {
+												t.requireds[i].selFromOperators = "undefined" === typeof t.requireds[i].selFromOperators ? "1" : t.requireds[i].selFromOperators;
+												for (var x = 0, m = 0; m < e.app.rows.length; m++) x += e.app.rows[m].currentChoices;
+												if (t.requireds[i].selFromOperators == "1") {
+													if (x < t.requireds[i].selNum) return !1;
+													else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+												} else if (t.requireds[i].selFromOperators == "2") {
+													if (x != t.requireds[i].selNum) return !1;
+												} else if (t.requireds[i].selFromOperators == "3") {
+													if (x > t.requireds[i].selNum) return !1;
+													else if (t.requireds[i].selNum == 0 && x > 0) return !1;
+												}
+											}
+										}
+										if (!t.requireds[i].required) {
+											if ("id" == t.requireds[i].type) {
+												var ri = t.requireds[i].reqId.split("/ON#");
+												if (ri.length > 1) {
+													if (e.app.activated.some(RI => {if (RI.includes(ri[0] + "/ON#")) {return parseInt(RI.split("/ON#")[1]) >= parseInt(ri[1])} return !1})) return !1;
+												} else {
+													if (e.app.activated.includes(t.requireds[i].reqId)) return !1;
+												}
+											} else if ("or" == t.requireds[i].type) {
+												t.requireds[i].orNum = "undefined" === typeof t.requireds[i].orNum ? 1 : t.requireds[i].orNum;
+												for (var l = 0, c = 0; c < t.requireds[i].orRequired.length; c++) e.app.activated.includes(t.requireds[i].orRequired[c].req) || "" == t.requireds[i].orRequired[c].req || l++;
+												if (l < t.requireds[i].orNum) return !1;
+											}
+										}
+									}
+								}
+							return !0;
+						}
+						function checkActivateOther(t) {
+							if (t.activateOtherChoice && "undefined" !== typeof t.activateThisChoice) {
+								if (t.isActivateRandom) {
+									if (t.isSelectableMultiple) {
+										for (var b = 0; b < t.multipleUseVariable; b++) {
+											for (var c = 0; c < t.activatedRandomMul[b].length; c++) {
+												var y = t.activatedRandomMul[b][c].split("/ON#"),
+													yCo = e.app.comp[y[0]],
+													yCoR = yCo.type == "app" ? e.app.rows[yCo.rows] : e.app.backpack[yCo.rows],
+													yCoO = yCoR.objects[yCo.objects];
+												if (tmpList.has(y[0])) {
+													preserveList.add(y[0]);
+													if (!t.isAllowDeselect) forcedList.add(y[0]);
+													if (y.length > 1) {
+														if (forcedMulList.has(y[0])) forcedMulList.set(y[0], forcedMulList.get(y[0]) + parseInt(y[1]));
+														else forcedMulList.set(y[0], parseInt(y[1]));
+														if (multiList.has(y[0])) {
+															if (!yCoO.notDeselectedByClean) multiList.set(y[0], multiList.get(y[0]) + parseInt(y[1]));
+														} else multiList.set(y[0], parseInt(y[1]));
+													}
+													checkActivateOther(yCoO);
+												} else {
+													if (y.length > 1) e.app.cancelForcedActivated.push(y[0] + "/ON#" + y[1]);
+												}
+											}
+										}
+									} else {
+										if ("undefined" !== typeof t.activatedRandom) {
+											for (var b = 0; b < t.activatedRandom.length; b++) {
+												var y = t.activatedRandom[b].split("/ON#"),
+													yCo = e.app.comp[y[0]],
+													yCoR = yCo.type == "app" ? e.app.rows[yCo.rows] : e.app.backpack[yCo.rows],
+													yCoO = yCoR.objects[yCo.objects];
+												if (tmpList.has(y[0])) {
+													preserveList.add(y[0]);
+													if (!t.isAllowDeselect) forcedList.add(y[0]);
+													if (y.length > 1) {
+														if (forcedMulList.has(y[0])) forcedMulList.set(y[0], forcedMulList.get(y[0]) + parseInt(y[1]));
+														else forcedMulList.set(y[0], parseInt(y[1]));
+														if (multiList.has(y[0])) {
+															if (!yCoO.notDeselectedByClean) multiList.set(y[0], multiList.get(y[0]) + parseInt(y[1]));
+														} else multiList.set(y[0], parseInt(y[1]));
+													}
+													checkActivateOther(yCoO);
+												} else {
+													if (y.length > 1) e.app.cancelForcedActivated.push(y[0] + "/ON#" + y[1]);
+												}
+											}
+										}
+									}
+								} else {	
+									var y = t.activateThisChoice.split(",");
+									for (var b = 0; b < y.length; b++) {
+										var yb = y[b].split("/ON#"),
+											yCo = e.app.comp[yb[0]],
+											yCoR = yCo.type == "app" ? e.app.rows[yCo.rows] : e.app.backpack[yCo.rows],
+											yCoO = yCoR.objects[yCo.objects];
+										if (tmpList.has(yb[0])) {
+											preserveList.add(yb[0]);
+											if (!t.isAllowDeselect) forcedList.add(yb[0]);
+											if (yb.length > 1) {
+												if (forcedMulList.has(yb[0])) forcedMulList.set(yb[0], forcedMulList.get(yb[0]) + parseInt(yb[1]));
+												else forcedMulList.set(yb[0], parseInt(yb[1]));
+												if (multiList.has(yb[0])) {
+													if (!yCoO.notDeselectedByClean) multiList.set(yb[0], multiList.get(yb[0]) + parseInt(yb[1]));
+												} else multiList.set(yb[0], parseInt(yb[1]));
+											}
+											checkActivateOther(yCoO);
+										} else {
+											if (yb.length > 1) e.app.cancelForcedActivated.push(yb[0] + "/ON#" + yb[1]);
+										}
+									}
+								}
+							}
+						}
+						function clearChoices(t) {
+							if (t.textfieldIsOn)
+								for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == t.idOfTheTextfieldWord && (e.app.words[m].replaceText = t.wordChangeDeselect);
+							if (t.isImageUpload) t.image = t.defaultImage;
+							if ("undefined" !== typeof t.activatedRandom) t.activatedRandom.splice(0);
+							if ("undefined" !== typeof t.activatedRandomMul) t.activatedRandomMul.splice(0);
+							if (t.isActive && t.changeBackground) {
+								if (t.changeBgImage) {
+									var c = e.app.styling.backgroundImage;
+									e.app.styling.backgroundImage = t.bgImage;
+									t.bgImage = c;
+								} else {
+									var c = e.app.styling.backgroundColor;
+									e.app.styling.backgroundColor = t.changedBgColorCode;
+									t.changedBgColorCode = c;
+								}
+							}
+							if (t.isActive && t.changePointBar) {
+								if (t.changeBarBgColorIsOn) {
+									var c = e.app.styling.barBackgroundColor;
+									e.app.styling.barBackgroundColor = t.changedBarBgColor;
+									t.changedBarBgColor = c;
+								}
+								if (t.changeBarTextColorIsOn) {
+									var c = e.app.styling.barTextColor;
+									e.app.styling.barTextColor = t.changedBarTextColor;
+									t.changedBarTextColor = c;
+								}
+								if (t.changeBarIconColorIsOn) {
+									var c = e.app.styling.barIconColor;
+									e.app.styling.barIconColor = t.changedBarIconColor;
+									t.changedBarIconColor = c;
+								}
+							}
+							if (t.isActive && t.setBgmIsOn){
+								if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
+									 bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+								}
+							}
+							t.isActive = !1;
+						}
+						var tmpList = new Set(e.app.activated.map(item => item.split("/ON#")[0])),
+							preserveList = new Set(),
+							forcedList = new Set(),
+							multiList = new Map(),
+							forcedMulList = new Map();
+						e.app.activated.splice(0), e.app.mdObjects.splice(0), e.app.cancelForcedActivated.splice(0);
+						for (const item of tmpList) {
+							if ("undefined" !== typeof e.app.comp[item]) {
+								var co = e.app.comp[item],
+									coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								if (coO.notDeselectedByClean) {
+									if (coO.isSelectableMultiple && coO.isMultipleUseVariable) multiList.set(coO.id, coO.multipleUseVariable);
+									preserveList.add(coO.id);
+									checkActivateOther(coO);
+								}
+							}
+						}
+                        for (var o = 0; o < e.app.rows.length; o++) {
+							e.app.rows[o].isEditModeOn = !1;
+							e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0);
+							for (var t = 0; t < e.app.rows[o].objects.length; t++) {
+								for (var r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
 									if (e.app.rows[o].objects[t].isSelectableMultiple) {
 										if (e.app.rows[o].objects[t].isMultipleUseVariable) {
 											for (var k = 0; k <= e.app.rows[o].objects[t].multipleUseVariable - 1; k++) {
@@ -42654,51 +44662,126 @@
 									}
 									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
 								}
+								e.app.rows[o].objects[t].forcedActivated = !1;
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
 									if (e.app.rows[o].objects[t].isMultipleUseVariable)
-										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus;
+										e.app.rows[o].objects[t].multipleUseVariable = e.app.rows[o].objects[t].initMultipleTimesMinus, e.app.rows[o].objects[t].selectedThisManyTimesProp = e.app.rows[o].objects[t].initMultipleTimesMinus, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus;
+									else
+										for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == e.app.rows[o].objects[t].multipleScoreId && (e.app.rows[o].objects[t].selectedThisManyTimesProp = e.app.pointTypes[a].initValue);
 								}
-								if (e.app.rows[o].objects[t].textfieldIsOn)
-									for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == e.app.rows[o].objects[t].idOfTheTextfieldWord && (e.app.words[m].replaceText = e.app.rows[o].objects[t].wordChangeDeselect);
-								if (e.app.rows[o].objects[t].isImageUpload) e.app.rows[o].objects[t].image = "";
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandom) e.app.rows[o].objects[t].activatedRandom.length = 0;
-								if ("undefined" !== typeof e.app.rows[o].objects[t].activatedRandomMul) e.app.rows[o].objects[t].activatedRandomMul.length = 0;
-								if (e.app.rows[o].objects[t].isActive && e.app.rows[o].objects[t].changeBackground) {
-									if (e.app.rows[o].objects[t].changeBgImage) {
-										var a = e.app.styling.backgroundImage;
-										e.app.styling.backgroundImage = e.app.rows[o].objects[t].bgImage;
-										e.app.rows[o].objects[t].bgImage = a;
-									} else {
-										var a = e.app.styling.backgroundColor;
-										e.app.styling.backgroundColor = e.app.rows[o].objects[t].changedBgColorCode;
-										e.app.rows[o].objects[t].changedBgColorCode = a;
-									}
+								if (!preserveList.has(e.app.rows[o].objects[t].id)) {
+									clearChoices(e.app.rows[o].objects[t]);
 								}
-								if (e.app.rows[o].objects[t].isActive && e.app.rows[o].objects[t].changePointBar) {
-									if (e.app.rows[o].objects[t].changeBarBgColorIsOn) {
-										var a = e.app.styling.barBackgroundColor;
-										e.app.styling.barBackgroundColor = e.app.rows[o].objects[t].changedBarBgColor;
-										e.app.rows[o].objects[t].changedBarBgColor = a;
-									}
-									if (e.app.rows[o].objects[t].changeBarTextColorIsOn) {
-										var a = e.app.styling.barTextColor;
-										e.app.styling.barTextColor = e.app.rows[o].objects[t].changedBarTextColor;
-										e.app.rows[o].objects[t].changedBarTextColor = a;
-									}
-									if (e.app.rows[o].objects[t].changeBarIconColorIsOn) {
-										var a = e.app.styling.barIconColor;
-										e.app.styling.barIconColor = e.app.rows[o].objects[t].changedBarIconColor;
-										e.app.rows[o].objects[t].changedBarIconColor = a;
-									}
-								}
-								e.app.rows[o].objects[t].isActive = 0, e.app.rows[o].objects[t].forcedActivated = !1;
 							}
 							e.app.rows[o].currentChoices = 0;
 						}
-						for (a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
-						if ("undefined" !== typeof e.app.cancelForcedActivated) e.app.cancelForcedActivated.length = 0;
-						if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer) bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+						for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
 						e.app.wordChangeComplete = !1;
+						for (const item of preserveList) {
+							if ("undefined" !== typeof e.app.comp[item]) {
+								var p = e.app.comp[item],
+									pR = p.type == "app" ? e.app.rows[p.rows] : e.app.backpack[p.rows],
+									pO = pR.objects[p.objects];
+								if(checkRequireds(pO)) {
+									if (pO.discountOther)
+										if ("undefined" !== typeof pO.discountOperator && "undefined" !== typeof pO.discountValue && "undefined" !== typeof pO.discountGroups)
+											for (var a = 0; a < e.app.groups.length; a++)
+												for (var b = 0; b < e.app.groups[a].elements.length; b++)
+													if ("undefined" !== typeof e.app.comp[e.app.groups[a].elements[b].id]) {
+														var co = e.app.comp[e.app.groups[a].elements[b].id],
+															coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														for (var c = 0; c < coO.scores.length; c++) {
+															var coS = coO.scores[c];
+															if (pO.discountPointTypes.length === 0 || pO.discountPointTypes.includes(coS.id)) {
+																if (!coS.isNotDiscountable && !coS.discountIsOn) {
+																	if (1 == pO.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(pO.discountValue);
+																	else if (2 == pO.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(pO.discountValue);
+																	else if (3 == pO.discountOperator) coS.discountScore = parseInt(coS.value) * pO.discountValue;
+																	else if (4 == pO.discountOperator) coS.discountScore = parseInt(coS.value) / pO.discountValue;
+																	if (pO.discountLowLimitIsOn && "undefined" !== typeof pO.discountLowLimit) coS.discountScore = coS.discountScore < pO.discountLowLimit ? parseInt(pO.discountLowLimit) : coS.discountScore;
+																	if (pO.discountShow) e.$set(coS, "discountShow", pO.discountShow), e.$set(coS, "discountBeforeText", pO.discountBeforeText), e.$set(coS, "discountAfterText", pO.discountAfterText);
+																	coS.discountIsOn = true;
+																	coS.discountedFrom = pO.id;
+																}
+															}
+														}
+													}
+									if (pO.addToAllowChoice)
+										if ("undefined" !== typeof e.app.compR[pO.idOfAllowChoice]) {
+											var co = e.app.compR[pO.idOfAllowChoice],
+												coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows];
+											coR.allowedChoices += pO.numbAddToAllowChoice, isNaN(coR.allowedChoicesChange) && (coR.allowedChoicesChange = 0), coR.allowedChoicesChange += pO.numbAddToAllowChoice;
+										}
+									if (pO.isSelectableMultiple) {
+										if (pO.isMultipleUseVariable) {
+											pO.multipleUseVariable = multiList.get(pO.id);
+											pO.selectedThisManyTimesProp = pO.multipleUseVariable;
+											e.app.activated.push(pO.id + "/ON#" + pO.multipleUseVariable);
+											if (forcedMulList.has(pO.id)) {
+												pO.numMultipleTimesMinus = forcedMulList.get(pO.id);
+												pO.forcedActivated = !0;
+											}
+										}
+									} else {
+										e.app.activated.push(pO.id);
+										if (forcedList.has(pO.id)) pO.forcedActivated = !0;
+									}
+									pR.currentChoices += 1;
+								} else {
+									preserveList.delete(pO.id);
+								}
+							}
+						}
+						for (const item of preserveList) {
+							if ("undefined" !== typeof e.app.comp[item]) {
+								var p = e.app.comp[item],
+									pR = p.type == "app" ? e.app.rows[p.rows] : e.app.backpack[p.rows],
+									pO = pR.objects[p.objects];
+								if (pO.isSelectableMultiple) {
+									if (pO.isMultipleUseVariable) {
+										if ("undefined" !== typeof pO.scores) {
+											for (var i = 0; i < pO.scores.length; i++) {
+												for (var s = 0; s < e.app.pointTypes.length; s++) {
+													if (e.app.pointTypes[s].id == pO.scores[i].id) {
+														for (var a = 0; a < pO.multipleUseVariable; a++) {
+															if (checkRequireds(pO.scores[i]) && !pO.scores[i].isActiveMul[a]) {
+																if (pO.scores[i].multiplyByTimes) {
+																	e.app.pointTypes[s].startingSum -= (pO.scores[i].discountIsOn ? pO.scores[i].discountScore * (a + 1) : parseInt(pO.scores[i].value) * (a + 1));
+																	pO.scores[i].isActiveMul[a] = !0;
+																} else {
+																	e.app.pointTypes[s].startingSum -= (pO.scores[i].discountIsOn ? pO.scores[i].discountScore : parseInt(pO.scores[i].value));
+																	pO.scores[i].isActiveMul[a] = !0;
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								for (var g = 0; g < pO.scores.length; g++) {
+									if (checkRequireds(pO.scores[g]) && !pO.scores[g].isActive)
+										for (var w = 0; w < e.app.pointTypes.length; w++) e.app.pointTypes[w].id == pO.scores[g].id && (e.app.pointTypes[w].startingSum -= (pO.scores[g].discountIsOn ? pO.scores[g].discountScore : parseInt(pO.scores[g].value)), pO.scores[g].isActive = !0);
+								}
+								if (pO.multiplyPointtypeIsOn) {
+									pO.multiplyPointtypeIsOnCheck = !0;
+									for (var m = 0; m < e.app.pointTypes.length; m++)
+										if (e.app.pointTypes[m].id == pO.pointTypeToMultiply) {
+											if (pO.multiplyPointtypeIsId)
+												for (var x = 0; x < e.app.pointTypes.length; x++) e.app.pointTypes[x].id == pO.multiplyWithThis && (pO.startingSumAtMultiply = e.app.pointTypes[m].startingSum * e.app.pointTypes[x].startingSum, e.app.pointTypes[m].startingSum *= e.app.pointTypes[x].startingSum);
+											else pO.startingSumAtMultiply = e.app.pointTypes[m].startingSum * pO.multiplyWithThis, e.app.pointTypes[m].startingSum *= pO.multiplyWithThis;
+											e.app.mdObjects.push(pO);
+										}
+								}
+								if (pO.dividePointtypeIsOn) {
+									pO.dividePointtypeIsOnCheck = !0;
+									for (var m = 0; m < e.app.pointTypes.length; m++) e.app.pointTypes[m].id == pO.pointTypeToDivide && (pO.startingSumAtDivide = e.app.pointTypes[m].startingSum / pO.divideWithThis, e.app.pointTypes[m].startingSum /= pO.divideWithThis);
+									e.app.mdObjects.push(pO);
+								}
+							}
+						}
                     },
                     addNewPointType: function(e, t) {
                         e.app.pointTypes.push({
@@ -42727,6 +44810,7 @@
                             name: t.name,
 							activatedId: t.activatedId,
                             elements: [],
+							backpackElements: [],
 							styling: {}
                         })
 					},
@@ -42736,6 +44820,7 @@
                             name: t.name,
 							activatedId: t.activatedId,
                             elements: [],
+							backpackElements: [],
 							styling: {}
                         })
 					},

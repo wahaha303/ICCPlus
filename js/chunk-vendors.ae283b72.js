@@ -34431,6 +34431,11 @@
                     directives: {
                         ripple: x["a"]
                     },
+					data: function() {
+						return {
+							selectAll: !1
+						}
+					},
                     props: {
                         action: Boolean,
                         dense: Boolean,
@@ -34461,7 +34466,9 @@
                             default: function() {
                                 return []
                             }
-                        }
+                        },
+						enableSelectAll: Boolean,
+						allItems: Array
                     },
                     computed: {
                         parsedItems: function() {
@@ -34602,10 +34609,47 @@
                         },
                         getValue: function(t) {
                             return Object(B["n"])(t, this.itemValue, this.getText(t))
-                        }
+                        },
+						genSelectAll: function() {
+							var e = this;
+							return this.$createElement(H["a"], {
+								attrs: {
+									role: "option",
+									id: `list-item-${this._uid}-select-all`,
+									"aria-selected": String(e.selectAll)
+								},
+								on: {
+									click: function() {
+                                        const selectedValues = e.allItems.map(item => e.getValue(item));
+										if (!e.selectAll) {
+											selectedValues.forEach(value => {
+												if (!e.hasItem(value)) e.$emit("select", value);
+											});
+										} else {
+											selectedValues.forEach(value => {
+												if (e.hasItem(value)) e.$emit("select", value);
+											});
+										}
+										e.$set(e, "selectAll", !e.selectAll);
+                                    }
+								},
+								props: {
+									activeClass: this.tileActiveClass,
+									ripple: true
+								}
+							}, [this.$createElement(L["a"], [
+								this.$createElement(L["c"], {
+									domProps: {
+										innerHTML: e.selectAll ? "Deselect All" : "Select All"
+									}
+								})
+							])]);
+						}
                     },
                     render: function() {
-                        for (var t = [], e = this.items.length, n = 0; n < e; n++) {
+						var t = [];
+						if (this.enableSelectAll) t.push(this.genSelectAll());
+                        for (e = this.items.length, n = 0; n < e; n++) {
                             var r = this.items[n];
                             this.hideSelected && this.hasItem(r) || (null == r ? t.push(this.genTile({
                                 item: r,
@@ -34660,7 +34704,7 @@
                     },
                     attach: {
                         type: null,
-                        default: !1
+                        default: !0
                     },
                     cacheItems: Boolean,
                     chips: Boolean,
@@ -34700,7 +34744,8 @@
                     multiple: Boolean,
                     openOnClear: Boolean,
                     returnObject: Boolean,
-                    smallChips: Boolean
+                    smallChips: Boolean,
+					enableSelectAll: Boolean
                 },
                 data: function() {
                     return {
@@ -34775,7 +34820,9 @@
                                 itemText: this.itemText,
                                 itemValue: this.itemValue,
                                 noDataText: this.$vuetify.lang.t(this.noDataText),
-                                selectedItems: this.selectedItems
+                                selectedItems: this.selectedItems,
+								enableSelectAll: this.enableSelectAll,
+								allItems: this.allItems
                             },
                             on: {
                                 select: this.selectItem
