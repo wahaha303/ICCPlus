@@ -3066,7 +3066,7 @@
 						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
 						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
 						var nC = 0,
-							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + parseInt(e.multipleUseVariable + 1) : e.id;
 						for (var f = 0; f < this.activated.length; f++) {
 							var aF = this.activated[f].split("/ON#");
 							if ("undefined" !== typeof this.app.comp[aF[0]]) {
@@ -5771,7 +5771,7 @@
 						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
 						if (!this.exceptedScores.includes(e.id)) this.exceptedScores.push(e.id);
 						var nC = 0,
-							eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
+							eid = e.isMultipleUseVariable ? e.id + "/ON#" + parseInt(e.multipleUseVariable + 1) : e.id;
 						for (var f = 0; f < this.activated.length; f++) {
 							var aF = this.activated[f].split("/ON#");
 							if ("undefined" !== typeof this.app.comp[aF[0]]) {
@@ -8415,16 +8415,18 @@
 															var coT = this.app.comp[aRM[0]],
 																coTR = this.app.rows[coT.rows],
 																coTO = coTR.objects[coT.objects];
-															if (coTO.isMultipleUseVariable) {
-																for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
-																	if (ee > 0) {
-																		coTO.numMultipleTimesMinus++;
-																	} else if (ee < 0) {
-																		coTO.numMultipleTimesMinus--;
+															if (!coTO.isAllowDeselect) {
+																if (coTO.isMultipleUseVariable) {
+																	for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
+																		if (ee > 0) {
+																			coTO.numMultipleTimesMinus++;
+																		} else if (ee < 0) {
+																			coTO.numMultipleTimesMinus--;
+																		}
 																	}
 																}
+																coTO.forcedActivated = !0;
 															}
-															coTO.forcedActivated = !0;
 														}
 													}
 													preNAR = nAR[v];
@@ -8443,16 +8445,18 @@
 														var coT = this.app.comp[aRM[0]],
 															coTR = this.app.rows[coT.rows],
 															coTO = coTR.objects[coT.objects];
-														if (coTO.isMultipleUseVariable) {
-															for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
-																if (ee > 0) {
-																	coTO.numMultipleTimesMinus++;
-																} else if (ee < 0) {
-																	coTO.numMultipleTimesMinus--;
+														if (!coTO.isAllowDeselect) {
+															if (coTO.isMultipleUseVariable) {
+																for (var ee = aRM[1], x = 0; x < Math.abs(ee); x++) {
+																	if (ee > 0) {
+																		coTO.numMultipleTimesMinus++;
+																	} else if (ee < 0) {
+																		coTO.numMultipleTimesMinus--;
+																	}
 																}
 															}
+															coTO.forcedActivated = !0;
 														}
-														coTO.forcedActivated = !0;
 													}
 												}
 											}
@@ -8467,10 +8471,20 @@
 													var coT = this.app.comp[rdV[0]],
 														coTR = this.app.rows[coT.rows],
 														coTO = coTR.objects[coT.objects];
-													if (coTO.isMultipleUseVariable) {
-														if (coO.isMultipleUseVariable) {
-															for (var E = 0; E < Math.abs(coO.multipleUseVariable); E++) {
-																for (var ee = rd[v].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+													if (!coTO.isAllowDeselect) {
+														if (coTO.isMultipleUseVariable) {
+															if (coO.isMultipleUseVariable) {
+																for (var E = 0; E < Math.abs(coO.multipleUseVariable); E++) {
+																	for (var ee = rd[v].split("/ON#")[1], x = 0; x < Math.abs(ee); x++) {
+																		if (ee > 0) {
+																			coTO.numMultipleTimesMinus++;
+																		} else if (ee < 0) {
+																			coTO.numMultipleTimesMinus--;
+																		}
+																	}
+																}
+															} else {
+																for (var ee = rdV[1], x = 0; x < Math.abs(ee); x++) {
 																	if (ee > 0) {
 																		coTO.numMultipleTimesMinus++;
 																	} else if (ee < 0) {
@@ -8478,17 +8492,9 @@
 																	}
 																}
 															}
-														} else {
-															for (var ee = rdV[1], x = 0; x < Math.abs(ee); x++) {
-																if (ee > 0) {
-																	coTO.numMultipleTimesMinus++;
-																} else if (ee < 0) {
-																	coTO.numMultipleTimesMinus--;
-																}
-															}
 														}
+														coTO.forcedActivated = !0;
 													}
-													coTO.forcedActivated = !0;
 												}
 											}
 											for (var v = 0; v < nrd.length; v++) {
