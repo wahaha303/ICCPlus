@@ -14305,6 +14305,7 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -14323,55 +14324,62 @@
 											this.activated.splice(nH, 0, eid);
 											t.currentChoices += 1;
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresC(coO, coR, tmpScores, count);
@@ -14434,6 +14442,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -14452,51 +14461,64 @@
 											t.currentChoices += 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
 												var nC = 0;
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																	
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresS(coO, coR, tmpScores, count);
@@ -14531,6 +14553,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
@@ -14558,55 +14581,62 @@
 												t.currentChoices += 1;
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulC(coO, coR, tmpScores, count);
@@ -14642,6 +14672,7 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -14673,57 +14704,62 @@
 												bE = this.checkRequireds(coS);
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																console.log(coO.id);
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
-																			console.log(ee, coS.isActiveMul[ee], coS.isActiveMul);
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulS(coO, coR, tmpScores, count);
@@ -19157,13 +19193,14 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
 												}
 											}
-											bC = this.checkRequireds(coS);											
+											bC = this.checkRequireds(coS);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -19175,55 +19212,62 @@
 											this.activated.splice(nH, 0, eid);
 											t.currentChoices += 1;
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresC(coO, coR, tmpScores, count);
@@ -19286,6 +19330,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -19304,51 +19349,64 @@
 											t.currentChoices += 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
 												var nC = 0;
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																	
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresS(coO, coR, tmpScores, count);
@@ -19383,6 +19441,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
@@ -19410,55 +19469,62 @@
 												t.currentChoices += 1;
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulC(coO, coR, tmpScores, count);
@@ -19494,6 +19560,7 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -19525,55 +19592,62 @@
 												bE = this.checkRequireds(coS);
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulS(coO, coR, tmpScores, count);
@@ -31042,13 +31116,14 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
 												}
 											}
-											bC = this.checkRequireds(coS);											
+											bC = this.checkRequireds(coS);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -31060,55 +31135,62 @@
 											this.activated.splice(nH, 0, eid);
 											t.currentChoices += 1;
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresC(coO, coR, tmpScores, count);
@@ -31171,6 +31253,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -31189,51 +31272,64 @@
 											t.currentChoices += 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
 												var nC = 0;
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																	
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresS(coO, coR, tmpScores, count);
@@ -31268,6 +31364,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
@@ -31295,55 +31392,62 @@
 												t.currentChoices += 1;
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulC(coO, coR, tmpScores, count);
@@ -31379,6 +31483,7 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -31410,55 +31515,62 @@
 												bE = this.checkRequireds(coS);
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulS(coO, coR, tmpScores, count);
@@ -33806,13 +33918,14 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
 												}
 											}
-											bC = this.checkRequireds(coS);											
+											bC = this.checkRequireds(coS);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -33824,55 +33937,62 @@
 											this.activated.splice(nH, 0, eid);
 											t.currentChoices += 1;
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nh > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresC(coO, coR, tmpScores, count);
@@ -33935,6 +34055,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											var nH = this.activated.indexOf(eid);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -33953,51 +34074,64 @@
 											t.currentChoices += 1;
 											var bE = this.checkRequireds(coS);
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
 												var nC = 0;
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
 																	}
+																	
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-																
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresS(coO, coR, tmpScores, count);
@@ -34032,6 +34166,7 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
@@ -34059,55 +34194,62 @@
 												t.currentChoices += 1;
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulC(coO, coR, tmpScores, count);
@@ -34143,6 +34285,7 @@
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
 											bC = !1, bE = !1;
 										if (!coS.isNotRecalculatable) {
+											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable] : coS.isActive;
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -34174,55 +34317,62 @@
 												bE = this.checkRequireds(coS);
 											}
 											if (bC !== bE) {
-												this.exceptedScores.push(coO.id);
-												tmpScores = [];
-												19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												if (bC) {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum += coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !1;
+													if (isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !1;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												} else {
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
-																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSValue;
-																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
-																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
-																			coS.isActiveMul[ee] = !0;
+													if (!isActive) {
+														this.exceptedScores.push(coO.id);
+														tmpScores = [];
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														for (var m = 0; m < this.app.pointTypes.length; m++)
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum -= coSValue;
+																			tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
+																			for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
+																				coS.isActiveMul[ee] = !0;
+																			}
 																		}
 																	}
+																	if (coO.forcedActivated && nC > 0) {
+																		this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
-																if (coO.forcedActivated && nC > 0) {
-																	this.app.cancelForcedActivated.push(coO.id + "/ON#" + nC);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 															}
-														}
+													}
 												}
 												count++;
 												this.updateScoresMulS(coO, coR, tmpScores, count);
