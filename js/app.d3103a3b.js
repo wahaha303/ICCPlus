@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.9.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.9.3 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -5160,7 +5160,7 @@
 							this.globalVariables.text = "The clipboard is empty.", this.globalVariables.snackbar = !0;
 						} else {
 							if (this.app.tmpRequired.length > 1) {
-								for (var a = 0; a < this.app.tmpRequired.length; a++) {
+								for (var a = 0; a < Object.keys(this.app.tmpRequired).length; a++) {
 									t.push(this.app.tmpRequired[a]);
 								}
 							} else {
@@ -5962,7 +5962,8 @@
                             }, i), [o("v-icon", {
                                 on: {
                                     click: function(t) {
-										e.$set(e.app, "tmpRequired", e.required);
+										e.$set(e.app, "tmpRequired", []);
+										e.app.tmpRequired.push(e.required);
 										e.globalVariables.text = "The requirement is copied.", e.globalVariables.snackbar = !0;
                                     }
                                 }
@@ -14310,7 +14311,7 @@
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum -= tmpScores[a].value);
 												}
 											}
-											bC = this.checkRequireds(coS);											
+											bC = this.checkRequireds(coS);
 											for (var a = 0; a < tmpScores.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
 													this.app.pointTypes[n].id == tmpScores[a].id && (this.app.pointTypes[n].startingSum += tmpScores[a].value);
@@ -14702,6 +14703,7 @@
 													for (var m = 0; m < this.app.pointTypes.length; m++)
 														if (this.app.pointTypes[m].id == coS.id) {
 															if (coO.isMultipleUseVariable) {
+																console.log(coO.id);
 																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
 																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) {
 																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
@@ -14711,6 +14713,7 @@
 																		tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
 																			coS.isActiveMul[ee] = !0;
+																			console.log(ee, coS.isActiveMul[ee], coS.isActiveMul);
 																		}
 																	}
 																}
@@ -16327,7 +16330,7 @@
 									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -21177,7 +21180,7 @@
 									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -21719,6 +21722,7 @@
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
 						if ("undefined" === typeof e.app.cancelForcedActivated) e.$set(e.app, "cancelForcedActivated", []);
+						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, 'tmpRequired', []);
 						for (var a = 0; a < e.app.pointTypes.length; a++) {
 							if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownPointBar) e.app.pointTypes[a].isNotShownPointBar = !0;
@@ -33061,7 +33065,7 @@
 									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -35825,7 +35829,7 @@
 									}
 								if (e.isActive == !0) {
 									if (e.selectedThisManyTimesProp == e.initMultipleTimesMinus && ("undefined" === typeof e.forcedActivated || e.forcedActivated == !1)) {
-										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable)), 1), t.currentChoices -= 1;
+										e.isActive = !1, this.activated.splice(this.activated.indexOf(e.id + "/ON#" + (e.multipleUseVariable + 1)), 1), t.currentChoices -= 1;
 										if (e.backpackBtnRequirement) this.$set(this.app, "btnBackpackIsOn", this.app.btnBackpackIsOn - 1);
 										if (e.changeBackground) {
 											if (e.changeBgImage) {
@@ -43387,7 +43391,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.9.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.9.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -43657,7 +43661,7 @@
 						compG: {},
 						compODG: {},
 						compRDG: {},
-						tmpRequired: {},
+						tmpRequired: [],
 						rowIdLength: 4,
 						objectIdLength: 4,
                         words: [],
