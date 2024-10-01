@@ -28733,6 +28733,7 @@
                         model: {
                             value: t.id,
                             callback: function(o) {
+								e.app.compGR[o] = e.app.compGR[t.id], e.$delete(e.app.compGR, t.id);
 								e.$set(t, "id", o);
                             },
                             expression: "globalRequirements.id"
@@ -28875,9 +28876,11 @@
                             id: e,
                             name: "Global Requirement " + (this.globalRequirements.length + 1)
                         });
+						this.app.compGR[e] = {globalRequirements: this.globalRequirements.length - 1};
                     },
 					deleteGlobalRequirement: function(e) {
                         this.app.globalRequirements.splice(e, 1);
+						this.$delete(this.app.compGR, this.app.globalRequirements[e].id);
                     }
                 }
             },
