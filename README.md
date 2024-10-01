@@ -86,6 +86,15 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to hide the counter when the choice is missing requirements.
  - Added a feature to keep the choice selected when the Clean Activated feature is used.
  - Added a feature to disable 'Use Alternate Menu' in Config Global Settings.
+ - Added an option in Global Settings to hide 'Scores Updated On' Message.
+ - Added an option in Global Settings to enable shortcuts for switching between Editor and Viewer modes.
+ - Added an option in Global Settings to use vw instead of px for the default font-size.
+ - Assigned CSS class names generated from their IDs to each row and choice.
+ - Added a feature to create multiple choices at once.
+ - Added a feature to move a choice within its row.
+ - Added a feature to set Global Requirements.
+ - Added a feature to set the background image fit in choice/row/window.
+ - Added a feature to set width of image box in 'Manage Rows/Choices Image Design'.
 
 
 ## Fixed
@@ -150,4 +159,12 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where multi-select choices were not being properly canceled.
  - Fixed an issue where choices couldn't be selected after deleting a choice.
  - Fixed an issue where the 'player image upload' function did not work with the other choice functions.
+ - Fixed an issue where the 'Half of the screen' option did not work in backpack.
+ - Fixed an issue where the 'Object Gradient' did not work properly.
+ - Fixed an issue where the point discount feature did not work properly.
+ - Fixed an issue where the 'Score Updated On' did not work properly with multi-select choices.
+ - Fixed an issue where the multi-select choice did not work properly when decreased below 0.
+ - Fixed an issue where the 'Import Choices' feature did not work properly.
+ - Fixed an issue where performance degraded when the number of Word variables was high.
+ - Fixed an issue where the last Word was always deleted when attempting to remove a Word.
  
