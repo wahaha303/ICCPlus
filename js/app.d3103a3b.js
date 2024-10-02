@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.10.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.10.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added an option in Global Settings to hide 'Scores Updated On' Message. "), o("br"), e._v(" Added an option in Global Settings to enable shortcuts for switching between Editor and Viewer modes. "), o("br"), e._v(" Added an option in Global Settings to use vw instead of px for the default font-size. "), o("br"), e._v(" Assigned CSS class names generated from their IDs to each row and choice. "), o("br"), e._v(" Added a feature to create multiple choices at once. "), o("br"), e._v(" Added a feature to move a choice within its row. "), o("br"), e._v(" Added a feature to set Global Requirements. "), o("br"), e._v(" Added a feature to set the background image fit in choice/row/window. "), o("br"), e._v(" Added a feature to set width of image box in 'Manage Rows/Choices Image Design'. ")]), o("v-col", {
+                }, [e._v(" Added an option in Global Settings to hide 'Scores Updated On' Message. "), o("br"), e._v(" Added an option in Global Settings to enable shortcuts for switching between Editor and Viewer modes. "), o("br"), e._v(" Added an option in Global Settings to use vw instead of px for the default font-size. "), o("br"), e._v(" Assigned CSS class names generated from their IDs to each row and choice. "), o("br"), e._v(" Added a feature to create multiple choices at once. "), o("br"), e._v(" Added a feature to move a choice within its row. "), o("br"), e._v(" Added a feature to set Global Requirements. "), o("br"), e._v(" Added a feature to set the background image fit in choice/row/window. "), o("br"), e._v(" Added a feature to set width of image box in 'Manage Rows/Choices Image Design'. "), o("br"), e._v(" Added a feature to set default text of 'Or/Selected From Requirements'. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -3216,7 +3216,7 @@
                         expression: "object.BackpackButton"
                     }
                 })] : e._e()], 1)], 1)], 1)], 1)], 1) : e.checkRequireds(e.row) ? o("span", {
-                    staticClass: "row" + " row-" + e.row.id + " choice-" + e.object.id + (e.object.isActive ? " selected" + (e.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " unselected") + (!e.checkRequireds(e.object) ? " disabled" + (e.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " enabled"),
+                    staticClass: "row" + " row-" + e.row.id + " choice-" + e.object.id + (e.object.isActive ? " choice-selected" + (e.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " choice-unselected") + (!e.checkRequireds(e.object) ? " choice-disabled" + (e.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " choice-enabled"),
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
@@ -14501,7 +14501,11 @@
 										i.push((o + coO.title));
 									}
 								}
-								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
+								if (this.app.orderOrReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+								} else {
+									return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
+								}
 							} else if ("selFromGroups" == e.type) {
 								var i = [];
 								for (var s = 0; s < e.selGroups.length; s++) {
@@ -14510,6 +14514,11 @@
 											coG = this.app.groups[co.groups];
 										i.push(coG.name);
 									}
+								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
 								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
@@ -14521,9 +14530,18 @@
 										i.push(coR.title);
 									}
 								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+								}
 							}
                         return ""
                     },
@@ -22455,6 +22473,10 @@
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
 						if ("undefined" === typeof e.app.globalRequirements) e.$set(e.app, "globalRequirements", []);
+						if ("undefined" === typeof e.app.orderOrReqText) e.$set(e.app, "orderOrReqText", "0");
+						if ("undefined" === typeof e.app.defaultOrReq) e.$set(e.app, "defaultOrReq", "of");
+						if ("undefined" === typeof e.app.orderSelReqText) e.$set(e.app, "orderSelReqText", "0");
+						if ("undefined" === typeof e.app.defaultSelReq) e.$set(e.app, "defaultSelReq", "choice from");
 						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, 'tmpRequired', []);
 						for (var a = 0; a < e.app.pointTypes.length; a++) {
 							if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
@@ -27561,7 +27583,7 @@
                         },
                         expression: "app.defaultChoiceText"
                     }
-                })], 1), o("v-col", [e._v(" Addon "), o("v-text-field", {
+                }), e._v(" Addon "), o("v-text-field", {
                     attrs: {
                         placeholder: "Empty",
                         label: "Addon Title",
@@ -27588,7 +27610,7 @@
                         },
                         expression: "app.defaultAddonText"
                     }
-                }), e._v("Requirement "), o("v-text-field", {
+                })], 1), o("v-col", [e._v("Requirement "), o("v-text-field", {
                     attrs: {
                         placeholder: "Empty",
                         label: "Before Required Text",
@@ -27614,6 +27636,60 @@
                             e.$set(e.app, "defaultAfterReq", t)
                         },
                         expression: "app.defaultAfterReq"
+                    }
+                }), e._v("Or Requirement "), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.orderOrReq,
+                        filled: "",
+                        label: "Order of Text"
+                    },
+                    model: {
+                        value: e.app.orderOrReqText,
+                        callback: function(t) {
+                            e.$set(e.app, "orderOrReqText", t)
+                        },
+                        expression: "app.orderOrReqText"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        placeholder: "Empty",
+                        label: "Or Requirement Text",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.app.defaultOrReq,
+                        callback: function(t) {
+                            e.$set(e.app, "defaultOrReq", t)
+                        },
+                        expression: "app.defaultOrReq"
+                    }
+                }), e._v("Selected From Requirement "), o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.orderSelReq,
+                        filled: "",
+                        label: "Order of Text"
+                    },
+                    model: {
+                        value: e.app.orderSelReqText,
+                        callback: function(t) {
+                            e.$set(e.app, "orderSelReqText", t)
+                        },
+                        expression: "app.orderOrReqText"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        placeholder: "Empty",
+                        label: "Selected From Requirement Text",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.app.defaultSelReq,
+                        callback: function(t) {
+                            e.$set(e.app, "defaultSelReq", t)
+                        },
+                        expression: "app.defaultSelReq"
                     }
                 })], 1), o("v-col", [e._v(" Points "), o("v-text-field", {
                     attrs: {
@@ -27668,7 +27744,21 @@
             ki = {
                 data: function() {
                     return {
-                        dialog: !0
+                        dialog: !0,
+						orderOrReq: [{
+							text: "X of Y",
+							value: "0"
+						}, {
+							text: "Y of X",
+							value: "1"
+						}],
+						orderSelReq: [{
+							text: "X from Y",
+							value: "0"
+						}, {
+							text: "Y from X",
+							value: "1"
+						}]
                     }
                 },
                 computed: {
@@ -27701,6 +27791,7 @@
             VContainer: k["a"],
             VDialog: B["a"],
             VRow: S["a"],
+			VSelect: K["a"],
             VTextField: R["a"]
         });
         var Ri = function() {
@@ -28127,7 +28218,7 @@
 								"item-value": "id",
 								multiple: !0,
 								enableSelectAll: !0
-                            },							
+                            },
 							scopedSlots: {
 								item: ({item, attrs}) => [
 									o("div", {
@@ -30697,7 +30788,7 @@
                     t = e.$createElement,
                     o = e._self._c || t;
                 return o("span", [e.checkRequireds(e.row) ? o("span", {
-                    staticClass: "row" + " row-" + e.row.id + " choice-" + e.object.id + (e.object.isActive ? " selected" + (e.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " unselected") + (!e.checkRequireds(e.object) ? " disabled" + (e.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " enabled"),
+                    staticClass: "row" + " row-" + e.row.id + " choice-" + e.object.id + (e.object.isActive ? " selected" + (e.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " unselected") + (!e.checkRequireds(e.object) ? " choice-disabled" + (e.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " choice-enabled"),
                     style: e.objectBackground,
                     on: {
                         click: function(t) {
@@ -32476,7 +32567,11 @@
 										i.push((o + coO.title));
 									}
 								}
-								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
+								if (this.app.orderOrReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+								} else {
+									return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
+								}
 							} else if ("selFromGroups" == e.type) {
 								var i = [];
 								for (var s = 0; s < e.selGroups.length; s++) {
@@ -32485,6 +32580,11 @@
 											coG = this.app.groups[co.groups];
 										i.push(coG.name);
 									}
+								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
 								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
@@ -32496,9 +32596,18 @@
 										i.push(coR.title);
 									}
 								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+								}
 							}
                         return ""
                     },
@@ -45435,7 +45544,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.10.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.10.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -45747,6 +45856,10 @@
                         defaultAddonTitle: "Addon",
                         defaultAddonText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 						enableShortcut: !0,
+						orderOrReqText: "0",
+						defaultOrReq: "of",
+						orderSelReqText: "0",
+						defaultSelReq: "choice from",
                         styling: {
                             rowTitle: "Times New Roman",
                             rowText: "Times New Roman",

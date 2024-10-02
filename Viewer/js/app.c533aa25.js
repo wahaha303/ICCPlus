@@ -602,7 +602,7 @@
                     e = t.$createElement,
                     i = t._self._c || e;
                 return i("span", [t.checkRequireds(t.row) ? i("span", {
-					staticClass: "row" + " row-" + t.row.id + " choice-" + t.object.id + (t.object.isActive ? " selected" + (t.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " unselected") + (!t.checkRequireds(t.object) ? " disabled" + (t.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " enabled"),
+					staticClass: "row" + " row-" + t.row.id + " choice-" + t.object.id + (t.object.isActive ? " choice-selected" + (t.filterStyling.selOverlayOnImage ? " bg-overlay" : "") : " choice-unselected") + (!t.checkRequireds(t.object) ? " choice-disabled" + (t.filterStyling.reqOverlayOnImage ? " bg-overlay" : "") : " choice-enabled"),
                     style: t.objectBackground,
                     on: {
                         click: function(e) {
@@ -2758,7 +2758,11 @@
 										i.push((o + coO.title));
 									}
 								}
-								return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " of " : "1 of " ) + i.join(", ") + " " + e.afterText
+								if (this.app.orderOrReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+								} else {
+									return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
+								}
 							} else if ("selFromGroups" == e.type) {
 								var i = [];
 								for (var s = 0; s < e.selGroups.length; s++) {
@@ -2767,6 +2771,11 @@
 											coG = this.app.groups[co.groups];
 										i.push(coG.name);
 									}
+								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
 								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromRows" == e.type) {
@@ -2778,9 +2787,18 @@
 										i.push(coR.title);
 									}
 								}
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+								}
 								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
 							} else if ("selFromWhole" == e.type) {
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + e.afterText
+								if (this.app.orderSelReqText == "1") {
+									return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+								} else {
+									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+								}
 							}
                         return ""
                     },
@@ -10235,6 +10253,10 @@ updateScoresC: function(e, t, o, i) {
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
 						if ("undefined" === typeof e.app.cancelForcedActivated) e.$set(e.app, "cancelForcedActivated", []);
 						if ("undefined" === typeof e.app.globalRequirements) e.$set(e.app, "globalRequirements", []);
+						if ("undefined" === typeof e.app.orderOrReqText) e.$set(e.app, "orderOrReqText", "0");
+						if ("undefined" === typeof e.app.defaultOrReq) e.$set(e.app, "defaultOrReq", "of");
+						if ("undefined" === typeof e.app.orderSelReqText) e.$set(e.app, "orderSelReqText", "0");
+						if ("undefined" === typeof e.app.defaultSelReq) e.$set(e.app, "defaultSelReq", "choice from");
 						for (var b = 0; b < e.app.rows.length; b++) {
 							var g = e.app.rows[b].id;
 							e.app.compR[g] = {rows: b, type: "app"};

@@ -95,6 +95,7 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to set Global Requirements.
  - Added a feature to set the background image fit in choice/row/window.
  - Added a feature to set width of image box in 'Manage Rows/Choices Image Design'.
+ - Added a feature to set default text of 'Or/Selected From Requirements'.
 
 
 ## Fixed
