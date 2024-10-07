@@ -28097,9 +28097,9 @@
                         model: {
                             value: t.id,
                             callback: function(o) {
-								e.$delete(e.app.wordmap, t.id);
+								e.$delete(e.app.wordMap, t.id);
                                 e.$set(t, "id", o);
-								e.$set(e.app.wordmap, t.id, t.replaceText);
+								e.$set(e.app.wordMap, t.id, t.replaceText);
                             },
                             expression: "word.id"
                         }
@@ -28115,7 +28115,7 @@
                             value: t.replaceText,
                             callback: function(o) {
                                 e.$set(t, "replaceText", o);
-								e.$set(e.app.wordmap, t.id, t.replaceText);
+								e.$set(e.app.wordMap, t.id, t.replaceText);
                             },
                             expression: "word.replaceText"
                         }
@@ -28218,7 +28218,7 @@
 						if (e < this.words.length - 1) this.words.splice(e, 2, this.words[e + 1], this.words[e])
 					},
                     deleteWord: function(e) {
-						this.$delete(this.app.wordmap, this.words[e].id);
+						this.$delete(this.app.wordMap, this.words[e].id);
 						this.words.splice(e, 1);
                     }
                 }
