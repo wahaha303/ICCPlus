@@ -464,7 +464,7 @@
                     staticClass: "mb-0",
                     style: t.rowTitle,
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.replaceRowTitle))
+                        innerHTML: t._s(t.$sanitize(t.replaceRowTitle, t.sanitizeArg))
                     }
                 }) : t._e(), "" !== t.row.titleText ? i("p", {
                     staticClass: "mb-0",
@@ -1703,15 +1703,15 @@
                     },
                     replaceAddonTitle: function() {
                         var e = this.addon.title;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -1720,15 +1720,15 @@
                     },
                     replaceAddonText: function() {
                         var e = this.addon.text;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -2676,15 +2676,15 @@
                     },
                     replaceObjectText: function() {
                         var e = this.object.text;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -2693,15 +2693,15 @@
                     },
                     replaceObjectTitleText: function() {
                         var e = this.object.title;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -2939,6 +2939,7 @@
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
@@ -2996,6 +2997,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -3025,6 +3027,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -3080,6 +3083,7 @@
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
@@ -3137,6 +3141,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -3167,6 +3172,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -3264,6 +3270,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -3293,6 +3300,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -3401,6 +3409,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -3430,6 +3439,7 @@
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -3584,7 +3594,7 @@
 										if (this.checkPointsMD(e)) {
 											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
 											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -3793,6 +3803,7 @@
 																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
 															}
 														}
+														this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 													}
 												}
 												this.app.mdObjects.splice(ei, 1);
@@ -3838,6 +3849,7 @@
 																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
 															}
 														}
+														this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
 													}
 												}
 												this.app.mdObjects.splice(ei, 1);
@@ -3845,7 +3857,8 @@
 											if (e.textfieldIsOn) {
 												for (var m = 0; m < this.app.words.length; m++) {
 													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-														this.app.words[m].replaceText = e.wordChangeDeselect;
+														this.app.words[m].replaceText = "undefined" === typeof e.wordChangeDeselect ? "" : e.wordChangeDeselect;
+														this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 													}
 												}
 											}
@@ -3979,7 +3992,7 @@
 												}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
 										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -4167,13 +4180,13 @@
 												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
 													if (e.multiplyPointtypeIsId)
 														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis; this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 													this.app.mdObjects.push(e);
 												}
 										}
 										if (e.dividePointtypeIsOn) {
 											e.dividePointtypeIsOnCheck = !0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis, this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum));
 											this.app.mdObjects.push(e);
 										}
 										if (e.addToAllowChoice)
@@ -4191,6 +4204,7 @@
 											for (var m = 0; m < this.app.words.length; m++) {
 												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
 													this.app.words[m].replaceText = e.wordChangeSelect;
+													this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 												}
 											}
 										}
@@ -4294,7 +4308,7 @@
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -4464,16 +4478,101 @@
 										this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
+											var ei = 0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) {
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.id != e.id) {
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															}
+														} else {
+															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															ei = n;
+															break
+														}
+													}
+													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.multiplyPointtypeIsOnCheck) {
+															if (mdO.multiplyPointtypeIsId) {
+																for (var x = 0; x < this.app.pointTypes.length; x++) {
+																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																	}
+																}
+															} else {
+																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+															}
+														} else if (mdO.dividePointtypeIsOnCheck) {
+															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+														}
+													}
+													this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
+												}
+											}
+											this.app.mdObjects.splice(ei, 1);
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+											var ei = 0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) {
+												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.id != e.id) {
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															}
+														} else {
+															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															ei = n;
+															break
+														}
+													}
+													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.multiplyPointtypeIsOnCheck) {
+															if (mdO.multiplyPointtypeIsId) {
+																for (var x = 0; x < this.app.pointTypes.length; x++) {
+																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																	}
+																}
+															} else {
+																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+															}
+														} else if (mdO.dividePointtypeIsOnCheck) {
+															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+														}
+													}
+													this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
+												}
+											}
+											this.app.mdObjects.splice(ei, 1);
 										}
 										if (e.textfieldIsOn) {
 											for (var m = 0; m < this.app.words.length; m++) {
 												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-													this.app.words[m].replaceText = e.wordChangeDeselect;
+													this.app.words[m].replaceText = "undefined" === typeof e.wordChangeDeselect ? "" : e.wordChangeDeselect;
+													this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 												}
 											}
 										}
@@ -4605,12 +4704,12 @@
 									if (cnt >= t.allowedChoices) 
 										s = !1;
 									else 
-										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
 								} else {
-									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
 								}
 							} else {
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum, this.$set(this.app.pointTypeMap, this.app.pointTypes[o].id, this.app.pointTypes[o].startingSum)) : s = !1);
 							}
 							if (s) {
 								var eid, eidNum
@@ -4655,6 +4754,7 @@
 														}
 													}
 												}
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
 											}
 										}
 								}
@@ -4867,9 +4967,31 @@
 						var rowType = this.app.compR[t.id].type;
                         var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (e.numMultipleTimesMinus < e.multipleUseVariable) {
+									if (e.multipleUseVariable == 0 && t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+										var cnt = 0;
+										for (var r = 0; r < t.objects.length; r++) {
+											if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+												if (t.objects[r].isSelectableMultiple)
+													for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+												else
+													this.activateObject(t.objects[r], t);
+												break
+											}
+											else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+										}
+										if (cnt >= t.allowedChoices) 
+											s = !1;
+										else 
+											e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
+									} else {
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
+									}
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum, this.$set(this.app.pointTypeMap, this.app.pointTypes[o].id, this.app.pointTypes[o].startingSum)) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -4910,6 +5032,7 @@
 														}
 													}
 												}
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
 											}
 										}
 								}
@@ -5142,9 +5265,29 @@
 						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     cloneObject: function() {
-                        this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
-                        for (var t = "", e = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < 4; i++) t += e.charAt(Math.floor(Math.random() * e.length));
-                        this.row.objects[this.row.objects.length - 1].id = t
+                        this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
+                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        this.row.objects[this.row.objects.indexOf(this.object) + 1].id = e;
+						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1, type: "app"};
+						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
+							this.app.comp[this.row.objects[b].id].objects = b;
+						}
+						for (var c = 0; c < this.object.groups.length; c++) {
+							if ("undefined" !== typeof this.app.compG[this.object.groups[c].id]) {
+								var co = this.app.compG[this.object.groups[c].id],
+									coG = this.app.groups[co.groups];
+								coG.elements.push({id: e});
+							}
+						}
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var d = 0; d < this.object.objectDesignGroups.length; d++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[d].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[d].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									coD.elements.push({id: e});
+								}
+							}
+						}
                     },
                     updateActivated: function() {
                         this.$emit("activatedWasChanged", this.activated)
@@ -5564,15 +5707,15 @@
                     },
                     replaceRowTitle: function() {
                         var e = this.row.title;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -5581,15 +5724,15 @@
                     },
                     replaceRowText: function() {
                         var e = this.row.titleText;
-                        if (typeof this.app.words !== "undefined") {
-							const pointTypeMap = new Map(this.app.pointTypes.map(pt => [pt.id, pt.startingSum]));
-							const wordMap = new Map(this.app.words.map(w => [w.id, w.replaceText]));
-							const combinedRegex = new RegExp([...wordMap.keys()].join("|"), "g");
+                        if ("undefined" !== typeof this.app.words) {
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
-								if (pointTypeMap.has(match)) {
-									return pointTypeMap.get(match);
-								} else if (wordMap.has(match)) {
-									return wordMap.get(match);
+								if (this.app.pointTypeMap.hasOwnProperty(match)) {
+									return this.app.pointTypeMap[match]
+								} else if (this.app.objectMap.hasOwnProperty(match)) {
+									return this.app.objectMap[match]
+								} else if (this.app.wordMap.hasOwnProperty(match)) {
+									return this.app.wordMap[match]
 								}
 								return match
 							});
@@ -5752,7 +5895,7 @@
 							}
 						}
 					},
-updateScoresC: function(e, t, o, i) {
+					updateScoresC: function(e, t, o, i) {
 						var tmpScores = o,
 							count = i;
 						if (this.scoreUpdate == "") this.scoreUpdate = "Scores Updated On: ";
@@ -5790,6 +5933,7 @@ updateScoresC: function(e, t, o, i) {
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
@@ -5847,6 +5991,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -5876,6 +6021,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -5931,6 +6077,7 @@ updateScoresC: function(e, t, o, i) {
 															} else {
 																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
@@ -5988,6 +6135,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -6018,6 +6166,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -6115,6 +6264,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -6144,6 +6294,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -6252,6 +6403,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -6281,6 +6433,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSValue < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue}));
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -6435,7 +6588,7 @@ updateScoresC: function(e, t, o, i) {
 										if (this.checkPointsMD(e)) {
 											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
 											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -6644,6 +6797,7 @@ updateScoresC: function(e, t, o, i) {
 																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
 															}
 														}
+														this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 													}
 												}
 												this.app.mdObjects.splice(ei, 1);
@@ -6689,6 +6843,7 @@ updateScoresC: function(e, t, o, i) {
 																this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
 															}
 														}
+														this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
 													}
 												}
 												this.app.mdObjects.splice(ei, 1);
@@ -6696,7 +6851,8 @@ updateScoresC: function(e, t, o, i) {
 											if (e.textfieldIsOn) {
 												for (var m = 0; m < this.app.words.length; m++) {
 													if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-														this.app.words[m].replaceText = e.wordChangeDeselect;
+														this.app.words[m].replaceText = "undefined" === typeof e.wordChangeDeselect ? "" : e.wordChangeDeselect;
+														this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 													}
 												}
 											}
@@ -6830,7 +6986,7 @@ updateScoresC: function(e, t, o, i) {
 												}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}));
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
 										if (e.cleanACtivatedOnSelect && !this.cleanActivated()) this.app.activated.splice(0);
@@ -7018,13 +7174,13 @@ updateScoresC: function(e, t, o, i) {
 												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
 													if (e.multiplyPointtypeIsId)
 														for (var x = 0; x < this.app.pointTypes.length; x++) this.app.pointTypes[x].id == e.multiplyWithThis && (e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum, this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum);
-													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis;
+													else e.startingSumAtMultiply = this.app.pointTypes[m].startingSum * e.multiplyWithThis, this.app.pointTypes[m].startingSum *= e.multiplyWithThis; this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 													this.app.mdObjects.push(e);
 												}
 										}
 										if (e.dividePointtypeIsOn) {
 											e.dividePointtypeIsOnCheck = !0;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis);
+											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (e.startingSumAtDivide = this.app.pointTypes[m].startingSum / e.divideWithThis, this.app.pointTypes[m].startingSum /= e.divideWithThis, this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum));
 											this.app.mdObjects.push(e);
 										}
 										if (e.addToAllowChoice)
@@ -7042,6 +7198,7 @@ updateScoresC: function(e, t, o, i) {
 											for (var m = 0; m < this.app.words.length; m++) {
 												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
 													this.app.words[m].replaceText = e.wordChangeSelect;
+													this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 												}
 											}
 										}
@@ -7145,7 +7302,7 @@ updateScoresC: function(e, t, o, i) {
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}));
+												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -7315,16 +7472,101 @@ updateScoresC: function(e, t, o, i) {
 										this.updateScoresC(e, t, tmpScores, 0);
 										if (e.multiplyPointtypeIsOnCheck) {
 											e.multiplyPointtypeIsOnCheck = !1;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToMultiply && (this.app.pointTypes[m].startingSum -= e.startingSumAtMultiply, this.app.pointTypes[m].startingSum += (e.startingSumAtMultiply / e.multiplyWithThis));
+											var ei = 0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) {
+												if (this.app.pointTypes[m].id == e.pointTypeToMultiply) {
+													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.id != e.id) {
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															}
+														} else {
+															this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															ei = n;
+															break
+														}
+													}
+													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.multiplyPointtypeIsOnCheck) {
+															if (mdO.multiplyPointtypeIsId) {
+																for (var x = 0; x < this.app.pointTypes.length; x++) {
+																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																	}
+																}
+															} else {
+																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+															}
+														} else if (mdO.dividePointtypeIsOnCheck) {
+															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+														}
+													}
+													this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
+												}
+											}
+											this.app.mdObjects.splice(ei, 1);
 										}
 										if (e.dividePointtypeIsOnCheck) {
 											e.dividePointtypeIsOnCheck = !1;
-											for (var m = 0; m < this.app.pointTypes.length; m++) this.app.pointTypes[m].id == e.pointTypeToDivide && (this.app.pointTypes[m].startingSum -= e.startingSumAtDivide, this.app.pointTypes[m].startingSum += (e.startingSumAtDivide * e.divideWithThis));
+											var ei = 0;
+											for (var m = 0; m < this.app.pointTypes.length; m++) {
+												if (this.app.pointTypes[m].id == e.pointTypeToDivide) {
+													for (var n = this.app.mdObjects.length - 1; n >= 0; n--) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.id != e.id) {
+															if (mdO.multiplyPointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtMultiply;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtMultiply / mdO.multiplyWithThis);
+															} else if (mdO.dividePointtypeIsOnCheck) {
+																this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+																this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															}
+														} else {
+															this.app.pointTypes[m].startingSum -= mdO.startingSumAtDivide;
+															this.app.pointTypes[m].startingSum += parseInt(mdO.startingSumAtDivide * mdO.divideWithThis);
+															ei = n;
+															break
+														}
+													}
+													for (var n = ei + 1; n < this.app.mdObjects.length; n++) {
+														var mdO = this.app.mdObjects[n];
+														if (mdO.multiplyPointtypeIsOnCheck) {
+															if (mdO.multiplyPointtypeIsId) {
+																for (var x = 0; x < this.app.pointTypes.length; x++) {
+																	if (this.app.pointTypes[x].id == mdO.multiplyWithThis) {
+																		mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+																		this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+																	}
+																}
+															} else {
+																mdO.startingSumAtMultiply = this.app.pointTypes[m].startingSum * mdO.multiplyWithThis;
+																this.app.pointTypes[m].startingSum *= mdO.multiplyWithThis;
+															}
+														} else if (mdO.dividePointtypeIsOnCheck) {
+															mdO.startingSumAtDivide = this.app.pointTypes[m].startingSum / mdO.divideWithThis;
+															this.app.pointTypes[m].startingSum /= mdO.divideWithThis;
+														}
+													}
+													this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum)
+												}
+											}
+											this.app.mdObjects.splice(ei, 1);
 										}
 										if (e.textfieldIsOn) {
 											for (var m = 0; m < this.app.words.length; m++) {
 												if (this.app.words[m].id == e.idOfTheTextfieldWord) {
-													this.app.words[m].replaceText = e.wordChangeDeselect;
+													this.app.words[m].replaceText = "undefined" === typeof e.wordChangeDeselect ? "" : e.wordChangeDeselect;
+													this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 												}
 											}
 										}
@@ -7456,12 +7698,12 @@ updateScoresC: function(e, t, o, i) {
 									if (cnt >= t.allowedChoices) 
 										s = !1;
 									else 
-										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
 								} else {
-									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
+									e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesPluss > e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable++, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
 								}
 							} else {
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesPluss > this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum++, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum, this.$set(this.app.pointTypeMap, this.app.pointTypes[o].id, this.app.pointTypes[o].startingSum)) : s = !1);
 							}
 							if (s) {
 								var eid, eidNum
@@ -7506,6 +7748,7 @@ updateScoresC: function(e, t, o, i) {
 														}
 													}
 												}
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
 											}
 										}
 								}
@@ -7718,9 +7961,31 @@ updateScoresC: function(e, t, o, i) {
 						var rowType = this.app.compR[t.id].type;
                         var s = !0, tmpPoint = {id: "", value: 0};
 						if (!this.linkedObjects.includes(e.id)) {
-							if (e.isMultipleUseVariable) e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPointsR(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable)) : s = !1;
-							else
-								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum) : s = !1);
+							if (e.isMultipleUseVariable) {
+								if (e.numMultipleTimesMinus < e.multipleUseVariable) {
+									if (e.multipleUseVariable == 0 && t.currentChoices + 1 > t.allowedChoices && !e.isActive && 0 != t.allowedChoices) {
+										var cnt = 0;
+										for (var r = 0; r < t.objects.length; r++) {
+											if (t.objects[r].isActive && !t.objects[r].forcedActivated) {
+												if (t.objects[r].isSelectableMultiple)
+													for (var a = t.objects[r].multipleUseVariable, b = 0; b < a; b++) this.selectedOneLess(t.objects[r], t);
+												else
+													this.activateObject(t.objects[r], t);
+												break
+											}
+											else if (t.objects[r].isActive && t.objects[r].forcedActivated) cnt++;
+										}
+										if (cnt >= t.allowedChoices) 
+											s = !1;
+										else 
+											e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
+									} else {
+										e.multipleUseVariable = "undefined" === typeof e.multipleUseVariable ? 0 : e.multipleUseVariable, e.numMultipleTimesMinus < e.multipleUseVariable && this.checkPoints(e) ? (e.multipleUseVariable--, this.$set(e, "selectedThisManyTimesProp", e.multipleUseVariable), this.$set(this.app.objectMap, e.id, e.multipleUseVariable)) : s = !1;
+									}
+								}
+							} else {
+								for (var o = 0; o < this.app.pointTypes.length; o++) this.app.pointTypes[o].id == e.multipleScoreId && (e.numMultipleTimesMinus < this.app.pointTypes[o].startingSum ? (this.app.pointTypes[o].startingSum--, this.$set(e, "selectedThisManyTimesProp", this.app.pointTypes[o].startingSum), tmpPoint.id = e.multipleScoreId, tmpPoint.value = this.app.pointTypes[o].startingSum, this.$set(this.app.pointTypeMap, this.app.pointTypes[o].id, this.app.pointTypes[o].startingSum)) : s = !1);
+							}
 							if (s) {
 								var eid, eidNum;
 								if (e.isMultipleUseVariable) {
@@ -7761,6 +8026,7 @@ updateScoresC: function(e, t, o, i) {
 														}
 													}
 												}
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
 											}
 										}
 								}
@@ -8738,6 +9004,7 @@ updateScoresC: function(e, t, o, i) {
 															} else {
 																this.app.pointTypes[m].startingSum += coSDiscount;
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
 												}
 											}
@@ -8784,6 +9051,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -8803,6 +9071,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -8887,6 +9156,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -8906,6 +9176,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -9001,6 +9272,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum += coSValue, coS.isActive = !1, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												} else {
@@ -9020,6 +9292,7 @@ updateScoresC: function(e, t, o, i) {
 																} else {
 																	this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
 													}
 												}
@@ -9035,7 +9308,7 @@ updateScoresC: function(e, t, o, i) {
 							this.$set(this, "exceptedScores", []);
 						}
 					},
-					activateObject: function(e) {
+					activateObjectI: function(e) {
 						var eID = e.split("/IMG#"),
 							eImage = eID.length > 1 ? eID[1] : "";
 						eID = eID[0].split("/WORD#");
@@ -9075,7 +9348,7 @@ updateScoresC: function(e, t, o, i) {
 								var coS = coO.scores[h];
 								for (var j = 0; j < this.app.pointTypes.length; j++) {
 									if (this.app.pointTypes[j].id == coS.id) {
-										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}));
+										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum));
 									}
 								}
 							}
@@ -9224,17 +9497,17 @@ updateScoresC: function(e, t, o, i) {
 								coO.image = eImage.replaceAll("/CHAR#", ",");
 							}
 							if (coO.textfieldIsOn)
-								for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == coO.idOfTheTextfieldWord && (coO.customTextfieldIsOn ? (this.app.words[m].replaceText = eWord, coO.wordChangeSelect = eWord) : this.app.words[m].replaceText = coO.wordChangeSelect);
+								for (var m = 0; m < this.app.words.length; m++) this.app.words[m].id == coO.idOfTheTextfieldWord && (coO.customTextfieldIsOn ? (this.app.words[m].replaceText = eWord, coO.wordChangeSelect = eWord) : this.app.words[m].replaceText = coO.wordChangeSelect), this.$set(this.app.wordMap, this.app.words[m].id, this.app.words[m].replaceText);
 						}
 					},
-					selectedOneMore: function(e) {
+					selectedOneMoreI: function(e) {
 						if ("undefined" !== typeof this.app.comp[e]) {
 							var s = !0;
 							var co = this.app.comp[e],
 								coR = this.app.rows[co.rows],
 								coO = coR.objects[co.objects];
 							coO.multipleUseVariable = "undefined" === typeof coO.multipleUseVariable ? 0 : coO.multipleUseVariable;
-							coO.numMultipleTimesPluss > coO.multipleUseVariable ? (coO.multipleUseVariable++, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable)) : s = !1;
+							coO.numMultipleTimesPluss > coO.multipleUseVariable ? (coO.multipleUseVariable++, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable), this.$set(this.app.objectMap, coO.id, coO.multipleUseVariable)) : s = !1;
 							if (s) {
 								var tmpScores = [];
 								for (var h = 0; h < coO.scores.length; h++) {
@@ -9248,6 +9521,7 @@ updateScoresC: function(e, t, o, i) {
 												this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue);
 												coS.isActiveMul[k - 1] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
 											}
 										}
 									}
@@ -9390,13 +9664,13 @@ updateScoresC: function(e, t, o, i) {
 							}
 						}
 					},
-					selectedOneLess: function(e) {
+					selectedOneLessI: function(e) {
 						if ("undefined" !== typeof this.app.comp[e]) {
 							var co = this.app.comp[e],
 								coR = this.app.rows[co.rows],
 								coO = coR.objects[co.objects];
 							coO.multipleUseVariable = "undefined" === typeof coO.multipleUseVariable ? 0 : coO.multipleUseVariable;
-							coO.numMultipleTimesMinus < coO.multipleUseVariable ? (coO.multipleUseVariable--, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable)) : s = !1;
+							coO.numMultipleTimesMinus < coO.multipleUseVariable ? (coO.multipleUseVariable--, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable), this.$set(this.app.objectMap, coO.id, coO.multipleUseVariable)) : s = !1;
 							if (s) {
 								var tmpScores = [];
 								for (var h = 0; h < coO.scores.length; h++) {
@@ -9410,6 +9684,7 @@ updateScoresC: function(e, t, o, i) {
 												this.app.pointTypes[j].startingSum += (coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue);
 												coS.isActiveMulMinus[k] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
+												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
 											}
 										}
 									}
@@ -9442,19 +9717,17 @@ updateScoresC: function(e, t, o, i) {
 								var ea = e[a].split("/ON#");
 								if (ea.length > 1) {
 									for (var b = 0; b < Math.abs(parseInt(ea[1])); b++) {
-										ea[1] > 0 ? this.selectedOneMore(ea[0]) : this.selectedOneLess(ea[0]);
+										ea[1] > 0 ? this.selectedOneMoreI(ea[0]) : this.selectedOneLessI(ea[0]);
 									}
 								} else {
-									ea = ea[0].split("/IMG#");
-									ea = ea[0].split("/WORD#");
-									this.activateObject(ea[0]);
+									this.activateObjectI(ea[0]);
 								}
 							}
 							this.newActivatedList.splice(0);
 							console.log(e);
 						}
                     },
-					checkRequireds: function(e) {
+                    checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
                     },
                     cleanCurrentComponent: function() {
@@ -10251,12 +10524,18 @@ updateScoresC: function(e, t, o, i) {
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownPointBar) e.app.pointTypes[a].isNotShownPointBar = !0;
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownObjects) e.app.pointTypes[a].isNotShownObjects = !0;
 						}
+						if ("undefined" === typeof e.app.pointTypeMap) e.$set(e.app, "pointTypeMap", {});
+						if ("undefined" === typeof e.app.wordMap) e.$set(e.app, "wordMap", {});
+						if ("undefined" === typeof e.app.objectMap) e.$set(e.app, "objectMap", {});
 						e.$set(e.app, "comp", {});
 						e.$set(e.app, "compR", {});
 						e.$set(e.app, "compG", {});
 						e.$set(e.app, "compODG", {});
 						e.$set(e.app, "compRDG", {});
 						e.$set(e.app, "compGR", {});
+						e.app.pointTypes.forEach(pt => {e.$set(e.app.pointTypeMap, pt.id, pt.startingSum)});
+						e.app.words.forEach(w => {e.$set(e.app.wordMap, w.id, w.replaceText)});
+						e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
 						if ("undefined" === typeof e.app.cancelForcedActivated) e.$set(e.app, "cancelForcedActivated", []);
@@ -10546,6 +10825,9 @@ updateScoresC: function(e, t, o, i) {
 						compODG: {},
 						compRDG: {},
 						tmpRequired: {},
+						pointTypeMap: {},
+						wordMap: {},
+						objectMap: {},
 						rowIdLength: 4,
 						objectIdLength: 4,
                         words: [],
@@ -11208,7 +11490,7 @@ updateScoresC: function(e, t, o, i) {
 						}
 						function clearChoices(t) {
 							if (t.textfieldIsOn)
-								for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == t.idOfTheTextfieldWord && (e.app.words[m].replaceText = t.wordChangeDeselect);
+								for (var m = 0; m < e.app.words.length; m++) e.app.words[m].id == t.idOfTheTextfieldWord && (e.app.words[m].replaceText = "undefined" === typeof t.wordChangeDeselect ? "" : t.wordChangeDeselect), e.app.wordMap[e.app.words[m].id] = e.app.words[m].replaceText;
 							if (t.isImageUpload) t.image = t.defaultImage;
 							if ("undefined" !== typeof t.activatedRandom) t.activatedRandom.splice(0);
 							if ("undefined" !== typeof t.activatedRandomMul) t.activatedRandomMul.splice(0);
@@ -11311,7 +11593,7 @@ updateScoresC: function(e, t, o, i) {
 								e.app.rows[o].objects[t].forcedActivated = !1;
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
 									if (e.app.rows[o].objects[t].isMultipleUseVariable)
-										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus;
+										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus, e.app.objectMap[e.app.rows[o].objects[t].id] = 0;
 									else
 										for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == e.app.rows[o].objects[t].multipleScoreId && (e.app.rows[o].objects[t].selectedThisManyTimesProp = e.app.pointTypes[a].initValue);
 								}
@@ -11321,7 +11603,7 @@ updateScoresC: function(e, t, o, i) {
 							}
 							e.app.rows[o].currentChoices = 0;
 						}
-						for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue;
+						for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue, e.app.pointTypeMap[e.app.pointTypes[a].id] = e.app.pointTypes[a].startingSum;
 						e.app.wordChangeComplete = !1;
 						for (const item of preserveList) {
 							if ("undefined" !== typeof e.app.comp[item]) {
@@ -11401,6 +11683,7 @@ updateScoresC: function(e, t, o, i) {
 																}
 															}
 														}
+														e.app.pointTypeMap[e.app.pointTypes[s].id] = e.app.pointTypes[s].startingSum;
 													}
 												}
 											}
@@ -11409,7 +11692,7 @@ updateScoresC: function(e, t, o, i) {
 								}
 								for (var g = 0; g < pO.scores.length; g++) {
 									if (checkRequireds(pO.scores[g]) && !pO.scores[g].isActive)
-										for (var w = 0; w < e.app.pointTypes.length; w++) e.app.pointTypes[w].id == pO.scores[g].id && (e.app.pointTypes[w].startingSum -= (pO.scores[g].discountIsOn ? pO.scores[g].discountScore : parseInt(pO.scores[g].value)), pO.scores[g].isActive = !0);
+										for (var w = 0; w < e.app.pointTypes.length; w++) e.app.pointTypes[w].id == pO.scores[g].id && (e.app.pointTypes[w].startingSum -= (pO.scores[g].discountIsOn ? pO.scores[g].discountScore : parseInt(pO.scores[g].value)), pO.scores[g].isActive = !0, e.app.pointTypeMap[e.app.pointTypes[w].id] = e.app.pointTypes[w].startingSum);
 								}
 								if (pO.multiplyPointtypeIsOn) {
 									pO.multiplyPointtypeIsOnCheck = !0;
@@ -11419,12 +11702,14 @@ updateScoresC: function(e, t, o, i) {
 												for (var x = 0; x < e.app.pointTypes.length; x++) e.app.pointTypes[x].id == pO.multiplyWithThis && (pO.startingSumAtMultiply = e.app.pointTypes[m].startingSum * e.app.pointTypes[x].startingSum, e.app.pointTypes[m].startingSum *= e.app.pointTypes[x].startingSum);
 											else pO.startingSumAtMultiply = e.app.pointTypes[m].startingSum * pO.multiplyWithThis, e.app.pointTypes[m].startingSum *= pO.multiplyWithThis;
 											e.app.mdObjects.push(pO);
+											e.app.pointTypeMap[e.app.pointTypes[m].id] = e.app.pointTypes[m].startingSum;
 										}
 								}
 								if (pO.dividePointtypeIsOn) {
 									pO.dividePointtypeIsOnCheck = !0;
 									for (var m = 0; m < e.app.pointTypes.length; m++) e.app.pointTypes[m].id == pO.pointTypeToDivide && (pO.startingSumAtDivide = e.app.pointTypes[m].startingSum / pO.divideWithThis, e.app.pointTypes[m].startingSum /= pO.divideWithThis);
 									e.app.mdObjects.push(pO);
+									e.app.pointTypeMap[e.app.pointTypes[m].id] = e.app.pointTypes[m].startingSum;
 								}
 							}
 						}
