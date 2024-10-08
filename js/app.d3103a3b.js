@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.10.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.10.4 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -22750,9 +22750,9 @@
 						e.$set(e.app, "compODG", {});
 						e.$set(e.app, "compRDG", {});
 						e.$set(e.app, "compGR", {});
-						e.app.pointTypes.forEach(pt => {e.$set(e.app.pointTypeMap, pt.id, pt.startingSum)});
-						e.app.words.forEach(w => {e.$set(e.app.wordMap, w.id, w.replaceText)});
-						e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
+						if ("undefined" !== typeof e.app.pointTypes) e.app.pointTypes.forEach(pt => {e.$set(e.app.pointTypeMap, pt.id, pt.startingSum)});
+						if ("undefined" !== typeof e.app.words) e.app.words.forEach(w => {e.$set(e.app.wordMap, w.id, w.replaceText)});
+						if ("undefined" !== typeof e.app.rows) e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
 						window.removeEventListener("keydown", e.$store.state.handleKeydown);
 						if (e.app.enableShortcut) window.addEventListener("keydown", e.$store.state.handleKeydown);
 						for (var b = 0; b < e.app.rows.length; b++) {
@@ -46085,7 +46085,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.10.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.10.4")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
