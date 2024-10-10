@@ -8913,7 +8913,7 @@
 								if (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) {
 									var a = this.rows[t].objects[o].id;
 									if (this.rows[t].objects[o].textfieldIsOn && this.rows[t].objects[o].customTextfieldIsOn) {
-										a += "/WORD#" + this.rows[t].objects[o].wordChangeSelect;
+										a += "/WORD#" + this.rows[t].objects[o].wordChangeSelect.replaceAll(",", "/CHAR#");
 									}
 									if (this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image !== this.rows[t].objects[o].defaultImage) {
 										a += "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#");
@@ -9312,7 +9312,7 @@
 						var eID = e.split("/IMG#"),
 							eImage = eID.length > 1 ? eID[1] : "";
 						eID = eID[0].split("/WORD#");
-						var eWord = eID.length > 1 ? eID[1] : "";
+						var eWord = eID.length > 1 ? eID[1].replaceAll("/CHAR#", ",") : "";
 						eID = eID[0];
 						if ("undefined" !== typeof this.app.comp[eID]) {
 							var co = this.app.comp[eID],

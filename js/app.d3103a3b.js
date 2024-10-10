@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.10.5 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.10.6 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -29853,7 +29853,7 @@
 								if (!this.rows[t].objects[o].isSelectableMultiple && this.rows[t].objects[o].isActive) {
 									var a = this.rows[t].objects[o].id;
 									if (this.rows[t].objects[o].textfieldIsOn && this.rows[t].objects[o].customTextfieldIsOn) {
-										a += "/WORD#" + this.rows[t].objects[o].wordChangeSelect;
+										a += "/WORD#" + this.rows[t].objects[o].wordChangeSelect.replaceAll(",", "/CHAR#");
 									}
 									if (this.rows[t].objects[o].isImageUpload && this.rows[t].objects[o].image !== this.rows[t].objects[o].defaultImage) {
 										a += "/IMG#" + this.rows[t].objects[o].image.replaceAll(",", "/CHAR#");
@@ -30249,7 +30249,7 @@
 						var eID = e.split("/IMG#"),
 							eImage = eID.length > 1 ? eID[1] : "";
 						eID = eID[0].split("/WORD#");
-						var eWord = eID.length > 1 ? eID[1] : "";
+						var eWord = eID.length > 1 ? eID[1].replaceAll("/CHAR#", ",") : "";
 						eID = eID[0];
 						if ("undefined" !== typeof this.app.comp[eID]) {
 							var co = this.app.comp[eID],
@@ -46085,7 +46085,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.10.5")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.10.6")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
