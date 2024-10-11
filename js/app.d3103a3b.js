@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.10.6 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.10.7 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -2408,7 +2408,7 @@
                     model: {
                         value: e.object.numActivateRandom,
                         callback: function(t) {
-                            e.$set(e.object, Math.max(t, 1))
+                            e.$set(e.object, "numActivateRandom", Math.max(t, 1))
                         },
                         expression: "object.isActivateRandom"
                     }
@@ -6661,7 +6661,7 @@
 					model: {
 						value: e.required.selNum,
 						callback: function(t) {
-							e.$set(e.required, Math.max(o, 0))
+							e.$set(e.required, "selNum", Math.max(t, 0))
 						}
 					}
 				}), o("v-select", {
@@ -6779,7 +6779,7 @@
 					model: {
 						value: e.required.selNum,
 						callback: function(t) {
-							e.$set(e.required, Math.max(t, 0))
+							e.$set(e.required, "selNum", Math.max(t, 0))
 						}
 					}
 				}), o("v-select", {
@@ -6916,7 +6916,7 @@
 					model: {
 						value: e.required.selNum,
 						callback: function(t) {
-							e.$set(e.required, Math.max(t, 0))
+							e.$set(e.required, "selNum", Math.max(t, 0))
 						}
 					}
 				})], 1) : "gid" == e.required.type ? o("span", [o("v-checkbox", {
@@ -7256,7 +7256,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-select", {
@@ -7312,7 +7312,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-select", {
@@ -7387,7 +7387,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-btn", {
@@ -8138,7 +8138,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-select", {
@@ -8194,7 +8194,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-select", {
@@ -8269,7 +8269,7 @@
 					model: {
 						value: t.selNum,
 						callback: function(o) {
-							e.$set(t, Math.max(o, 0))
+							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
 				}), o("v-btn", {
@@ -46085,7 +46085,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.10.6")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.10.7")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -47415,6 +47415,7 @@
 										e.app.rows[o].objects[t].scores[r].isActive = !1;
 									}
 									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+									if (e.app.rows[o].objects[t].scores[r].setValue) e.app.rows[o].objects[t].scores[r].setValue = !1;
 								}
 								e.app.rows[o].objects[t].forcedActivated = !1;
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {

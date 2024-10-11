@@ -11589,6 +11589,7 @@
 										e.app.rows[o].objects[t].scores[r].isActive = !1;
 									}
 									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
+									if (e.app.rows[o].objects[t].scores[r].setValue) e.app.rows[o].objects[t].scores[r].setValue = !1;
 								}
 								e.app.rows[o].objects[t].forcedActivated = !1;
 								if (e.app.rows[o].objects[t].isSelectableMultiple) {
