@@ -22506,10 +22506,10 @@
                             e.currentComponent = "appStats"
                         }
                     }
-                }, [e._v("Project Stats")])], 1), o("br"), e._v("If you want to the desktop verson of Interactive CYOA Creator Plus, you can download here. "), o("iframe", {
+                }, [e._v("Project Stats")])], 1), o("br"), e._v("If you want to download the desktop version of Interactive CYOA Creator Plus or support the developer, please check below. "), o("iframe", {
                     attrs: {
                         frameborder: "0",
-                        src: "https://hikawasisters.neocities.org/embed/",
+                        src: e.$vuetify.theme.isDark ? "https://hikawasisters.neocities.org/embed_dark/" : "https://hikawasisters.neocities.org/embed/",
                         width: "700",
                         height: "169"
                     }
