@@ -35092,11 +35092,11 @@
                             var i = this.allItems.findIndex((function(t) {
                                     var n = (e.getText(t) || "").toString();
                                     return n.toLowerCase().startsWith(e.keyboardLookupPrefix)
-                                })),
-                                o = this.allItems[i]; - 1 !== i && (this.lastItem = Math.max(this.lastItem, i + 5), this.$nextTick((function() {
+                                })), o = this.allItems[i];
+								-1 !== i && (this.lastItem = Math.max(this.lastItem, i + 5), this.$nextTick((function() {
                                 return e.$refs.menu.getTiles()
                             })), setTimeout((function() {
-                                return e.setMenuIndex(i)
+                                return e.setMenuIndex(i + e.enableSelectAll)
                             })))
                         }
                     },
