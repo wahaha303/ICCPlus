@@ -107,6 +107,9 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to set dark mode in the Viewer.
  - Added a feature to clean Selected Choices in the Viewer.
  - Added a feature to select multiple PointTypes in the Multiply/Divide functions.
+ - Added a feature to remove the space between addons in choice design.
+ - Added a feature to remove an image in the external image URL tab of the Change Image window.
+ - Updated the UI design for downloading the build as an image.
 
 
 ## Fixed
@@ -183,6 +186,12 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where the BGM did not change when using multiple BGM choices.
  - Fixed an issue where performance dropped when opening the Import Choice window.
  - Fixed an issue where the focus did not change correctly when typing in a dropdown menu with a Select All option.
- - Fixed an issue where the page would freeze when changing the order of rows by dragging in the Row list.
+ - Fixed an issue where the page froze when dragging to reorder rows in the Rows list.
  - Fixed an issue where the scores did not update when import choices included Multiply/Divide functions.
- 
+ - Fixed an issue where the page froze when dragging to reorder objects in the Objects list.
+ - Fixed an issue where the requirements could not delete in Manage Global Requirements.
+ - Fixed an issue where empty space appeared at the top and right of the downloaded build image.
+ - Fixed an issue where the UI in editor mode was not rendering correctly on small screens.
+ - Fixed an issue where white space appeared on the right side of the screen in mobile environments.
+ - Fixed an issue where other Viewer features were unavailable when Import Choices was disabled.
+ - Fixed an issue where the loading screen background color was overlaying the CYOA background color.

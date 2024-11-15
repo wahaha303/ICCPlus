@@ -210,13 +210,13 @@
                     }
                 }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-swap-vertical")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Top/Bottom Point Bar ")])], 1)], 1), i("v-list-item", t._g({
                     on: {
-                        click: t.openBuildForm
-                    }
-                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-format-list-checks")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Open Build Form ")])], 1)], 1), i("v-list-item", t._g({
-                    on: {
                         click: t.cleanActivated
                     }
-                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-select-off")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Clean Selected Choices ")])], 1)], 1), i("v-list-item", [i("v-list-item-content", [i("v-list-item-title", [i("v-row", [i("v-col", {
+                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-select-off")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Clean Selected Choices ")])], 1)], 1), t.app.importedChoicesIsOpen ? i("v-list-item", t._g({
+                    on: {
+                        click: t.openBuildForm
+                    }
+                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-format-list-checks")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Open Build Form ")])], 1)], 1) : t._e(), t.app.importedChoicesIsOpen ? i("v-list-item", [i("v-list-item-content", [i("v-list-item-title", [i("v-row", [i("v-col", {
 					staticClass: "pt-0 pb-0 pr-0",
 					attrs: {
 						cols: "9"
@@ -254,7 +254,7 @@
                     on: {
                         click: t.saveBuild
                     }
-                }, [i("v-icon", [t._v("mdi-plus-circle-outline")])], 1)], 1)], 1)])], 1)], 1), t._l(t.builds, (function(e) {
+                }, [i("v-icon", [t._v("mdi-plus-circle-outline")])], 1)], 1)], 1)])], 1)], 1) : t._e(), t.app.importedChoicesIsOpen ? t._l(t.builds, (function(e) {
                     return i("v-list-item", {
                         key: e.index,
                         on: {
@@ -280,7 +280,7 @@
                         }
                     }
                 }, [i("v-icon", [t._v("mdi-minus-circle-outline")])], 1)], 1)
-                }))], 2)], 1)], 1), t.app.pointTypes.length > 0 || t.app.backpack.length > 0 || t.app.importedChoicesIsOpen ? i("v-bottom-navigation", {
+                })) : t._e()], 2)], 1)], 1), t.app.pointTypes.length > 0 || t.app.backpack.length > 0 || t.app.importedChoicesIsOpen ? i("v-bottom-navigation", {
 					staticClass: t.isTop ? "v-bottom-navigation--top" : "",
                     style: t.pointBar,
                     attrs: {
@@ -291,8 +291,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: t.app.importedChoicesIsOpen,
-                        expression: "app.importedChoicesIsOpen"
+                        value: !0
                     }],
                     attrs: {
                         text: "",
@@ -523,7 +522,7 @@
                                 attrs: {
                                     src: t.row.image
                                 }
-                            }, s)) : t_.e()]
+                            }, s)) : t._e()]
                         }
                     }], null, !1, 3206076815)
                 }, [i("span", [t._v(t._s(t.row.imageSourceTooltip))])])], 1)]) : t._e(), 3 == t.row.template && t.window.width > 1e3 ? i("div", {
@@ -1928,7 +1927,7 @@
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;"
+                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -10234,28 +10233,22 @@
                     }
                 }, [i("v-card", {
                     style: t.background
-                }, [i("v-btn", {
-                    staticStyle: {
-                        color: t.$vuetify.theme.isDark ? "white" : "black"
-                    },
+                }, [i("v-toolbar", {
+					staticClass: t.$vuetify.theme.isDark ? "grey darken-2" : "grey lighten-4",
+					attrs: {
+						height: t.window.width > 500 ? "48" : "72"
+					}
+				}, [i("v-row", {
+					staticClass: "pa-0"
+				}, [i("v-col", {
+					staticClass: t.window.width > 500 ? "pa-0 align-content-center" : "py-0",
+					attrs: {
+						cols: t.window.width > 1200 ? "3" : t.window.width > 750 ? "4" : t.window.width > 600 ? "5" : t.window.width > 500 ? "6" : "12"
+					}
+				}, [i("v-radio-group", {
                     attrs: {
-                        small: ""
-                    },
-                    on: {
-                        click: function(e) {
-                            return t.print()
-                        }
-                    }
-                }, [t._v("Download Image (Go all the way to the bottom to load in the pictures first)")]), i("v-col", {
-                    staticClass: "text-center"
-                }, [i("v-select", {
-                    attrs: {
-						"hide-details" : "",
-                        items: t.extensions,
-                        "item-text": "text",
-                        "item-value": "value",
-                        filled: "",
-                        label: "Extension"
+                        row: "",
+						"hide-details": ""
                     },
                     model: {
                         value: t.extension,
@@ -10264,7 +10257,52 @@
                         },
                         expression: "extension"
                     }
-                })], 1), i("v-card-text", [i("v-container", [i("v-row", {
+                }, [i("v-radio", {
+                    attrs: {
+                        label: "png",
+                        color: "blue",
+                        value: "png"
+                    }
+                }), i("v-radio", {
+                    attrs: {
+                        label: "jpeg",
+                        color: "blue",
+                        value: "jpeg"
+                    }
+                }), i("v-radio", {
+                    attrs: {
+                        label: "webp",
+                        color: "blue",
+                        value: "webp"
+                    }
+                })], 1)], 1), i("v-col", {
+					staticClass: "pa-0" + (t.window.width > 500 ? "" : " col-12")
+				}, [i("v-tooltip", {
+					attrs: {
+						bottom: "",
+						"open-delay": "300"
+					},
+					scopedSlots: t._u([{
+						key: "activator",
+						fn: function(e) {
+							var s = e.on;
+							return [i("v-btn", t._g({
+								staticClass: "pa-0",
+								attrs: {
+									text: "",
+									large: ""
+								},
+								on: {
+									click: function(o) {
+										return t.print()
+									}
+								}
+							}, s), [i("v-icon", {
+								staticClass: "pr-2"
+							}, [t._v("mdi-file-image")]), t._v("Download Image")], 1)]
+						}
+					}], null, !0)
+				}, [i("span", [t._v("Go all the way to the bottom to load in the pictures first")])])], 1)], 1)], 1), i("v-card-text", [i("v-container", [i("v-row", {
                     ref: "printThis"
                 }, t._l(t.backpack, (function(e) {
                     return i("v-col", {
@@ -10335,17 +10373,11 @@
 						bUrls: [],
 						snackbar: !1,
 						text: "",
-						extension: "webp",
-						extensions: [{
-                            text: ".webp",
-                            value: "webp"
-                        }, {
-                            text: ".jpeg",
-                            value: "jpeg"
-                        }, {
-                            text: ".png",
-                            value: "png"
-                        }]
+						extension: "png",
+						window: {
+                            width: 0,
+                            height: 0
+                        }
                     }
                 },
                 components: {
@@ -10368,6 +10400,20 @@
 							bgStretch = this.app.styling.useBackpackDesign ? this.app.styling.isBackpackBgStretch : this.app.styling.isBackgroundStretch;
                         return bgImage ? 'background-image: url("' + bgImage + '");background-color: ' + bgColor + (bgRepeat ? ";background-repeat: repeat;" : (bgStretch ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + bgColor + ';'
                     }
+                },
+				mounted: function() {
+					this.resizeObserver = new ResizeObserver((e) => {
+						for (var t of e) {
+							this.window.width = t.contentRect.width;
+							this.window.hegiht = t.contentRect.height;
+						}
+					});
+					if ("undefined" !== typeof this.$refs.printThis) this.resizeObserver.observe(this.$refs.printThis.offsetParent);
+                },
+                destroyed: function() {
+                    if (this.resizeObserver) {
+						this.resizeObserver.disconnect();
+					}
                 },
                 methods: {
                     cleanCurrentComponent: function() {
@@ -10693,11 +10739,13 @@
 							e.$refs.printThis.style.backgroundPosition = 'center';
 							e.$refs.printThis.style.backgroundAttachment = 'fixed';
 						}
-						console.log(e.extension);
 						e.$refs.printThis.style.backgroundColor = bgColor;
 						htmlToImage.toBlob(e.$refs.printThis, {
 							type: "image/" + e.extension,
-							quality: 0.9
+							quality: 0.9,
+							style: {
+								margin: 0
+							}
 						}).then(function(t) {
 							var i = document.createEvent("MouseEvents"),
 								s = document.createElement("a");
@@ -10813,7 +10861,10 @@
 											e.$refs.printThis.appendChild(tempDiv);
 											htmlToImage.toBlob(tempDiv, {
 												type: "image/" + e.extension,
-												quality: 0.9
+												quality: 0.9,
+												style: {
+													margin: 0
+												}
 											}).then(function(t) {
 												var i = document.createEvent("MouseEvents"),
 													s = document.createElement("a");
@@ -10823,7 +10874,7 @@
 												i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 												s.dispatchEvent(i);
 											}).catch(function(err) {
-												e.text = "Failed to download the image. Please try again with a different browser.", e.snackbar = !0;
+												e.text = "Failed to download the image. Please try again with a different extension.", e.snackbar = !0;
 											}).finally(function() {
 												e.$refs.printThis.removeChild(tempDiv);
 												resolve();
@@ -10842,6 +10893,9 @@
             zt = Vt,
             $t = (i("2e98"), Object(b["a"])(zt, Mt, _t, !1, null, "26bce602", null)),
 			Vs = i("b974"),
+			Tb = i("71d9"),
+			Ma = i("67b6"),
+            Va = i("43a6"),
             Lt = $t.exports;
         v()($t, {
             VBtn: $["a"],
@@ -10851,9 +10905,14 @@
             VCol: S["a"],
             VContainer: E["a"],
             VDialog: N["a"],
+			VIcon: Q["a"],
+            VRow: k["a"],
+			VRadio: Ma["a"],
+            VRadioGroup: Va["a"],
 			VSnackbar: tt["a"],
 			VSelect: Vs["a"],
-            VRow: k["a"]
+			VToolbar: Tb["a"],
+			VTooltip: y["a"]
         });
         var Wt = i("63d6"),
             Et = i.n(Wt),
@@ -10958,6 +11017,7 @@
 										lm.style.opacity = 1;
 										indicator.remove();
 										projectSize.remove();
+										document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
 									}, 1000);
 									const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
 									new Promise(() => {
@@ -10988,6 +11048,7 @@
 								lm.style.opacity = 1;
 								indicator.remove();
 								projectSize.remove();
+								document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
 							}, 1000);
 							const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
 							new Promise(() => {
@@ -11022,6 +11083,7 @@
 								lm.style.opacity = 1;
 								indicator.remove();
 								projectSize.remove();
+								document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
 							}, 1000);
 							const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
 							new Promise(() => {
