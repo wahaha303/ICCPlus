@@ -110,7 +110,12 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to remove the space between addons in choice design.
  - Added a feature to remove an image in the external image URL tab of the Change Image window.
  - Updated the UI design for downloading the build as an image.
-
+ - Added a feature to set 'Image Center' option in Row/Choice/Addon Templates.
+ - Added a feature to set a Debug Title for each Choice.
+ - Added a feature to allow selecting choices directly instead of using groups for the discount function.
+ - Added a feature to allow stacking the discount function multiple times.
+ - Added an option in Global Settings to preload external images in Viewer.
+ - Added a feature to set fade-in and fade-out in the BGM function.
 
 ## Fixed
 
@@ -195,3 +200,7 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where white space appeared on the right side of the screen in mobile environments.
  - Fixed an issue where other Viewer features were unavailable when Import Choices was disabled.
  - Fixed an issue where the loading screen background color was overlaying the CYOA background color.
+ - Fixed an issue where some UIs in editor mode were not rendering correctly.
+ - Fixed an issue where the Debug Title was not displaying in the Row List and ID/Title List.
+ - Fixed an issue where discounted scores were displayed incorrectly.
+ - Fixed an issue where the 'Fit-in' option of the background did not work in the Viewer.

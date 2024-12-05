@@ -421,7 +421,103 @@
                     style: t.rowBody
                 }, [t.checkIfDeselect(t.row) ? i("span", [i("div", {
                     style: "" != t.row.title && "" != t.row.text ? t.rowBackground : ""
-                }, [1 == t.row.template || t.window.width < 1e3 ? i("div", {
+                }, [4 == t.row.template ? i("div", {
+                    staticClass: "col nopadding" + " row-" + t.row.id
+                }, ["" !== t.row.title ? i("h2", {
+                    staticClass: "mb-0",
+                    style: t.rowTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceRowTitle, t.sanitizeArg))
+                    }
+                }) : t._e(), "" !== t.row.titleText ? i("p", {
+                    staticClass: "mb-0",
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.rowText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceRowText, t.sanitizeArg))
+                    }
+                }) : t._e(), t.row.isButtonRow || "" === t.row.imageSourceTooltip || "undefined" === typeof t.row.imageSourceTooltip ? t.row.isButtonRow ? i("v-btn", {
+                    ref: "rowBtn",
+                    style: t.rowButton,
+                    attrs: {
+                        disabled: !t.row.buttonType && this.activated.includes(this.row.buttonId) || t.isButtonPressable
+                    },
+                    on: {
+                        click: t.buttonActivate
+                    }
+                }, [t._v(t._s(t.row.buttonText))]) : t.row.image.length > 0 ? i("img", {
+                    style: t.rowImage,
+                    attrs: {
+                        src: t.row.image
+                    }
+                }) : t._e() : i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return [t.row.image.length > 0 ? i("img", t._g({
+                                style: t.rowImage,
+                                attrs: {
+                                    src: t.row.image
+                                }
+                            }, s)) : t._e()]
+                        }
+                    }], null, !1, 3206076815)
+                }, [i("span", [t._v(t._s(t.row.imageSourceTooltip))])])], 1) : t._e(), 5 == t.row.template ? i("div", {
+                    staticClass: "col nopadding" + " row-" + t.row.id
+                }, ["" !== t.row.title ? i("h2", {
+                    staticClass: "mb-0",
+                    style: t.rowTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceRowTitle, t.sanitizeArg))
+                    }
+                }) : t._e(), t.row.isButtonRow || "" === t.row.imageSourceTooltip || "undefined" === typeof t.row.imageSourceTooltip ? t.row.isButtonRow ? i("v-btn", {
+                    ref: "rowBtn",
+                    style: t.rowButton,
+                    attrs: {
+                        disabled: !t.row.buttonType && this.activated.includes(this.row.buttonId) || t.isButtonPressable
+                    },
+                    on: {
+                        click: t.buttonActivate
+                    }
+                }, [t._v(t._s(t.row.buttonText))]) : t.row.image.length > 0 ? i("img", {
+                    style: t.rowImage,
+                    attrs: {
+                        src: t.row.image
+                    }
+                }) : t._e() : i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return [t.row.image.length > 0 ? i("img", t._g({
+                                style: t.rowImage,
+                                attrs: {
+                                    src: t.row.image
+                                }
+                            }, s)) : t._e()]
+                        }
+                    }], null, !1, 3206076815)
+                }, [i("span", [t._v(t._s(t.row.imageSourceTooltip))])]), "" !== t.row.titleText ? i("p", {
+                    staticClass: "mb-0",
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.rowText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceRowText, t.sanitizeArg))
+                    }
+                }) : t._e()], 1) : t._e(), 1 == t.row.template || t.window.width < 1e3 ? i("div", {
                     staticClass: "col pa-0" + " row-" + t.row.id
                 }, [t.row.isButtonRow || "" === t.row.imageSourceTooltip || "undefined" === typeof t.row.imageSourceTooltip ? t.row.isButtonRow ? i("v-btn", {
                     style: t.rowButton,
@@ -583,55 +679,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceRowText, t.sanitizeArg))
                     }
-                }) : t._e()])]) : t._e(), 4 == t.row.template ? i("div", {
-                    staticClass: "col nopadding" + " row-" + t.row.id
-                }, ["" !== t.row.title ? i("h2", {
-                    staticClass: "mb-0",
-                    style: t.rowTitle,
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(t.replaceRowTitle, t.sanitizeArg))
-                    }
-                }) : t._e(), "" !== t.row.titleText ? i("p", {
-                    staticClass: "mb-0",
-                    staticStyle: {
-                        "white-space": "pre-line"
-                    },
-                    style: t.rowText,
-                    domProps: {
-                        innerHTML: t._s(t.$sanitize(t.replaceRowText, t.sanitizeArg))
-                    }
-                }) : t._e(), t.row.isButtonRow || "" === t.row.imageSourceTooltip || "undefined" === typeof t.row.imageSourceTooltip ? t.row.isButtonRow ? i("v-btn", {
-                    ref: "rowBtn",
-                    style: t.rowButton,
-                    attrs: {
-                        disabled: !t.row.buttonType && this.activated.includes(this.row.buttonId) || t.isButtonPressable
-                    },
-                    on: {
-                        click: t.buttonActivate
-                    }
-                }, [t._v(t._s(t.row.buttonText))]) : t.row.image.length > 0 ? i("img", {
-                    style: t.rowImage,
-                    attrs: {
-                        src: t.row.image
-                    }
-                }) : t._e() : i("v-tooltip", {
-                    attrs: {
-                        top: "",
-                        "open-delay": "1500"
-                    },
-                    scopedSlots: t._u([{
-                        key: "activator",
-                        fn: function(e) {
-                            var s = e.on;
-                            return [t.row.image.length > 0 ? i("img", t._g({
-                                style: t.rowImage,
-                                attrs: {
-                                    src: t.row.image
-                                }
-                            }, s)) : t._e()]
-                        }
-                    }], null, !1, 3206076815)
-                }, [i("span", [t._v(t._s(t.row.imageSourceTooltip))])])], 1) : t._e()]), t.row.isResultRow ? i("v-row", {
+                }) : t._e()])]) : t._e()]), t.row.isResultRow ? i("v-row", {
                     staticClass: "display-flex row objectRow",
                     attrs: {
                         justify: t.row.rowJustify
@@ -717,7 +765,605 @@
                             t.row.isInfoRow || t.object.isNotSelectable || t.object.isSelectableMultiple || t.object.forcedActivated || t.object.isButtonObject ? !1 : t.activateObject(t.object, t.row)
                         }
                     }
-                }, [1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
+                }, [4 == t.object.template ? i("span", {
+                    staticClass: "ma-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [t.row.resultShowRowTitle ? i("div", {
+                    style: t.rowBody
+                }, [i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.scoreText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
+                    }
+                })], 1) : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                    staticClass: "mb-0",
+                    style: t.objectTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
+                    }
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "py-0"
+                    }, [e.showScore && t.checkRequireds(e) && !t.row.objectScoreRemoved ? i("ObjectScore", {
+                        attrs: {
+                            isEditModeOn: t.isEditModeOn,
+                            score: e
+                        },
+                        on: {
+                            scoreWasChanged: function(t) {
+                                e = t
+                            }
+                        }
+                    }) : t._e()], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "pa-0"
+                    }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
+							return i("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired && !t.row.objectRequirementRemoved ? i("v-col", {
+							staticClass: "pa-0",
+							style: t.scoreText,
+							domProps: {
+								innerHTML: t._s(t.$sanitize(t.getChoiceTitle(k), t.sanitizeArg))
+							}
+						}) : t._e()], 1)
+					})) : i("v-col", {
+                        staticClass: "pa-0",
+                        style: t.scoreText,
+                        domProps: {
+                            innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
+                        }
+                    })] : t._e()], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
+                    staticClass: "my-0",
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.objectText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
+                    }
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return ["undefined" !== typeof t.object.image && t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", t._g({
+                                attrs: {
+									src: t.object.image
+								},
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s)) : i("img", t._g({
+                                directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.object.image,
+                                    expression: "object.image"
+                                }],
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s))] : t._e()]
+                        }
+                    }], null, !1, 69075810)
+                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : "undefined" !== typeof t.object.image && t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", {
+                    attrs: {
+						src: t.object.image
+					},
+                    style: "" != t.object.image ? t.objectImage : ""
+                }) : i("img", {
+                    directives: [{
+                        name: "lazy",
+                        rawName: "v-lazy",
+                        value: t.object.image,
+                        expression: "object.image"
+                    }],
+                    style: "" != t.object.image ? t.objectImage : ""
+                })] : t._e(), t._l(t.object.addons, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "pa-0"
+                    }, [i("ObjectAddon", {
+                        attrs: {
+                            isEditModeOn: t.isEditModeOn,
+                            addon: e,
+                            row: t.row
+                        },
+                        on: {
+                            addonWasChanged: function(t) {
+                                e = t
+                            }
+                        }
+                    })], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 5 == t.object.template ? i("span", {
+                    staticClass: "ma-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [t.row.resultShowRowTitle ? i("div", {
+                    style: t.rowBody
+                }, [i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.scoreText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
+                    }
+                })], 1) : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                    staticClass: "mb-0",
+                    style: t.objectTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
+                    }
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "py-0"
+                    }, [e.showScore && t.checkRequireds(e) && !t.row.objectScoreRemoved ? i("ObjectScore", {
+                        attrs: {
+                            isEditModeOn: t.isEditModeOn,
+                            score: e
+                        },
+                        on: {
+                            scoreWasChanged: function(t) {
+                                e = t
+                            }
+                        }
+                    }) : t._e()], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "pa-0"
+                    }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
+							return i("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired && !t.row.objectRequirementRemoved ? i("v-col", {
+							staticClass: "pa-0",
+							style: t.scoreText,
+							domProps: {
+								innerHTML: t._s(t.$sanitize(t.getChoiceTitle(k), t.sanitizeArg))
+							}
+						}) : t._e()], 1)
+					})) : i("v-col", {
+                        staticClass: "pa-0",
+                        style: t.scoreText,
+                        domProps: {
+                            innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
+                        }
+                    })] : t._e()], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return ["undefined" !== typeof t.object.image && t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", t._g({
+                                attrs: {
+									src: t.object.image
+								},
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s)) : i("img", t._g({
+                                directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.object.image,
+                                    expression: "object.image"
+                                }],
+                                style: "" != t.object.image ? t.objectImage : ""
+                            }, s))] : t._e()]
+                        }
+                    }], null, !1, 69075810)
+                }, [i("span", [t._v(t._s(t.object.imageSourceTooltip))])]) : "undefined" !== typeof t.object.image && t.object.image.length > 0 && !t.row.objectImageRemoved ? [t.app.printThis ? i("img", {
+                    attrs: {
+						src: t.object.image
+					},
+                    style: "" != t.object.image ? t.objectImage : ""
+                }) : i("img", {
+                    directives: [{
+                        name: "lazy",
+                        rawName: "v-lazy",
+                        value: t.object.image,
+                        expression: "object.image"
+                    }],
+                    style: "" != t.object.image ? t.objectImage : ""
+                })] : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
+                    staticClass: "my-0",
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.objectText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
+                    }
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
+                    return i("v-col", {
+                        key: e.index,
+                        staticClass: "pa-0"
+                    }, [i("ObjectAddon", {
+                        attrs: {
+                            isEditModeOn: t.isEditModeOn,
+                            addon: e,
+                            row: t.row
+                        },
+                        on: {
+                            addonWasChanged: function(t) {
+                                e = t
+                            }
+                        }
+                    })], 1)
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -1656,7 +2302,87 @@
                 var t = this,
                     e = t.$createElement,
                     i = t._self._c || e;
-                return i("span", [t.checkRequireds(t.addon) ? i("div", [1 == t.addon.template || window.innerWidth < 1e3 || t.row.choicesShareTemplate ? i("span", {
+                return i("span", [t.checkRequireds(t.addon) ? i("div", [4 == t.addon.template ? i("span", {
+                    staticClass: "ma-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [i("span", ["" !== t.addon.title && !t.row.addonTitleRemoved ? i("h4", {
+                    style: t.addonTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
+                    }
+                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.addonText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceAddonText, t.sanitizeArg))
+                    }
+                }) : t._e()]), "" !== t.addon.imageSourceTooltip && "undefined" !== typeof t.addon.imageSourceTooltip ? i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                                style: t.objectImage,
+                                attrs: {
+                                    src: t.addon.image
+                                }
+                            }, s)) : t._e()]
+                        }
+                    }], null, !1, 4164976176)
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                    style: t.objectImage,
+                    attrs: {
+                        src: t.addon.image
+                    }
+                }) : t._e()], 1) : 5 == t.addon.template ? i("span", {
+                    staticClass: "ma-0",
+                    staticStyle: {
+                        width: "100%"
+                    }
+                }, [i("span", ["" !== t.addon.title && !t.row.addonTitleRemoved ? i("h4", {
+                    style: t.addonTitle,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
+                    }
+                }) : t._e(), "" !== t.addon.imageSourceTooltip && "undefined" !== typeof t.addon.imageSourceTooltip ? i("v-tooltip", {
+                    attrs: {
+                        top: "",
+                        "open-delay": "1500"
+                    },
+                    scopedSlots: t._u([{
+                        key: "activator",
+                        fn: function(e) {
+                            var s = e.on;
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                                style: t.objectImage,
+                                attrs: {
+                                    src: t.addon.image
+                                }
+                            }, s)) : t._e()]
+                        }
+                    }], null, !1, 4164976176)
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                    style: t.objectImage,
+                    attrs: {
+                        src: t.addon.image
+                    }
+                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                    staticStyle: {
+                        "white-space": "pre-line"
+                    },
+                    style: t.addonText,
+                    domProps: {
+                        innerHTML: t._s(t.$sanitize(t.replaceAddonText, t.sanitizeArg))
+                    }
+                }) : t._e()])], 1) : 1 == t.addon.template || window.innerWidth < 1e3 || t.row.choicesShareTemplate ? i("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -2641,14 +3367,20 @@
                         text: "",
                         templates: [{
                             text: "Image top",
-                            value: "1"
+                            value: 1
                         }, {
                             text: "Image left",
-                            value: "2"
+                            value: 2
                         }, {
                             text: "Image right",
-                            value: "3"
-                        }],
+                            value: 3
+                        }, {
+							text: "Image bottom",
+							value: 4
+						}, {
+							text: "Image center",
+							value: 5
+						}],
                         pointReqOperators: [{
                             text: "+ More than",
                             value: "1"
@@ -2872,7 +3604,7 @@
                     },
                     rowBody: function() {
                         var e = "margin-top: 0px;margin-bottom: 0px;";
-						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.rowBodyBgImage.isBackgroundStretch ? ";background-size: 100% 100%;" : ";background-size: cover;"));
+						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.rowBodyBgImage.isBackgroundFitIn ? ";background-size: 100% 100%;" : ";background-size: cover;"));
 						if (this.rowBodyBgColor !== !1) e += "background-color: " + this.rowBodyBgColor.backgroundColor + ";";
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
@@ -2889,7 +3621,7 @@
 						if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradient + ")");
 						else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnSelect + ")");
 						else if (!o) {
-							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : (this.backgroundStyling.isObjectBackgroundStretch ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
+							var rm = 'background-image: url("' + this.backgroundStyling.objectBackgroundImage + '");' + (this.backgroundStyling.isObjectBackgroundRepeat ? "background-repeat: repeat;" : (this.backgroundStyling.isObjectBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.backgroundStyling.objectBgColorIsOn ? "background-color: " + this.backgroundStyling.objectBgColor + "; " : ""));
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
@@ -3098,31 +3830,129 @@
                         return e
                     },
 					playBgm: function(e, t, i) {
+						function bgmFadeIn(th, f) {
+							if (th.app.isFadingOut) {
+								const lastTime = parseInt(th.app.lastFadeTime);
+								let v = 0;
+								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
+								th.app.bgmFadeTimer = setTimeout(() => {
+									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+									if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+										const iTime = e.bgmFadeInSec / 20;
+										th.app.lastFadeTime = e.bgmFadeInSec;
+										bgmPlayer.setVolume(0);
+										bgmPlayer.playVideo();
+										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.isFadingOut) th.app.isFadingOut = !1;
+										th.app.bgmFadeInterval = setInterval(() => {
+											if (bgmPlayer.playerInfo.playerState === 1) {
+												if (v < 100) {
+													v += 5;
+													bgmPlayer.setVolume(v);
+													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+												} else {
+													bgmPlayer.setVolume(100);
+													clearInterval(th.app.bgmFadeInterval);
+													th.app.bgmFadeInterval = 0;
+													th.app.lastFadeTime = 0;
+												}
+											}
+										}, iTime);
+									} else {
+										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										bgmPlayer.setVolume(100);
+										bgmPlayer.playVideo();
+									}
+									th.$set(th.app, "bgmObjectId", e.id);
+								}, lastTime);
+							} else {
+								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+									const iTime = e.bgmFadeInSec / 20;
+									th.app.lastFadeTime = e.bgmFadeInSec;
+									bgmPlayer.setVolume(0);
+									bgmPlayer.playVideo();
+									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.isFadingOut) th.app.isFadingOut = !1;
+									th.app.bgmFadeInterval = setInterval(() => {
+										if (bgmPlayer.playerInfo.playerState === 1) {
+											if (v < 100) {
+												v += 5;
+												bgmPlayer.setVolume(v);
+												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+											} else {
+												bgmPlayer.setVolume(100);
+												clearInterval(th.app.bgmFadeInterval);
+												th.app.bgmFadeInterval = 0;
+												th.app.lastFadeTime = 0;
+											}
+										}
+									}, iTime);
+								} else {
+									bgmPlayer.setVolume(100);
+									bgmPlayer.playVideo();
+								}
+								th.$set(th.app, "bgmObjectId", e.id);
+							}
+						}
+						function bgmFadeOut(th) {
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
+								const steps = bgmPlayer.getVolume() / 5;
+								const iTime = e.bgmFadeOutSec / steps;
+								let v = bgmPlayer.getVolume();
+								th.app.lastFadeTime = e.bgmFadeOutSec;
+								th.app.isFadingOut = !0;
+								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+								th.app.bgmFadeInterval = setInterval(() => {
+									if (v > 0) {
+										v -= 5;
+										bgmPlayer.setVolume(v);
+										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+									} else {
+										if (th.app.isFadingOut) {
+											bgmPlayer.setVolume(0);
+											clearInterval(th.app.bgmFadeInterval);
+											th.app.bgmFadeInterval = 0;
+											th.app.lastFadeTime = 0;
+											th.app.isFadingOut = !1;
+											bgmPlayer.pauseVideo();
+										}
+									}
+								}, iTime);
+							} else {
+								bgmPlayer.pauseVideo();
+							}
+						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
 							var p = this.app.bgmIsPlaying,
 								s = bgmPlayer.playerInfo.videoData.video_id,
-								o = bgmPlayer.playerInfo.playerState;
+								o = bgmPlayer.playerInfo.playerState,
+								v = 0,
+								f = !1;
 							if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
 							if (s == t) {
 								if (this.app.bgmObjectId == e.id) {
 									if (p) {
-										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
-										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										if (o === 2) {
+											bgmFadeIn(this, f);
+										} else {
+											bgmPlayer.stopVideo();
+											bgmFadeIn(this, f);
+										}
 									} else {
-										if (o != 2) bgmPlayer.pauseVideo();
+										if (o !== 2) bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
-										bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o === 1) bgmFadeOut(this);
 									}
 								}
 							} else {
 								if (p) {
-									e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
-									bgmPlayer.playVideo();
-									this.$set(this.app, "bgmObjectId", e.id);
+									f = !0;
+									bgmFadeIn(this, f);
 								}
 							}
 						} else {
@@ -3152,29 +3982,32 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+												if (coS.isChangeDiscount) {
+													if (coS.isChangeDiscount) {
+														for (var m = 0; m < this.app.pointTypes.length; m++) {
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSDiscount;
+																	if (coO.forcedActivated && nh > 0) {
+																		if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																		e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
-															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
-													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+													}
 												}
 											}
 										}
@@ -3295,29 +4128,29 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
 														if (this.app.pointTypes[m].id == coS.id) {
-															var nC = 0;
 															if (coO.isMultipleUseVariable) {
 																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																	}
 																	else {
-																		this.app.pointTypes[m].startingSum += coSDiscount;
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 																	}
 																}
-																if (coO.forcedActivated && nC > 0) {
+																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																	e.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 															}
 															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
 											}
@@ -3438,6 +4271,38 @@
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
 								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (!coS.isNotRecalculatable) {
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																	}
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																}
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
+															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+												}
+											}
+										}
+									}
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -3566,6 +4431,38 @@
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
 								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (!coS.isNotRecalculatable) {
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																	}
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																}
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
+															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+												}
+											}
+										}
+									}
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
@@ -3782,6 +4679,467 @@
 							if (pT < 0) return !1
 						}
 						return !0
+					},
+                    discountS: function(e, coS) {
+						if (e.stackableDiscount) {
+							var scoreVal = parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								bTempStacked = !1,
+								tmpNum = 0,
+								discountedFrom = [],
+								aDiscount = [];
+							if (coS.notStackableDiscount) {
+								for (var f = 0; f < coS.tmpDiscount.length; f++) {
+									if (coS.tmpDiscount[f][0]) {
+										discountedFrom = coS.tmpDiscount[f][1];
+										discountedFrom.push(e.id);
+										scoreVal = coS.tmpDiscount[f][2];
+										bTempStacked = !0;
+										tmpNum = f;
+									}
+								}
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if (coS.discountScore > stackDiscount) {
+									this.$set(coS, "tmpDisScore", coS.discountScore - stackDiscount);
+									this.$set(coS, "isChangeDiscount", true);
+									aDiscount.push(false);
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									if ("undefined" !== typeof coS.discountTextA) this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+									if ("undefined" !== typeof coS.discountTextB) this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+									if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+									coS.discountedFrom.push(...discountedFrom);
+									if (bTempStacked) coS.tmpDiscount.splice(tmpNum, 1);
+									coS.tmpDiscount.push(aDiscount);
+									this.$set(coS, "notStackableDiscount", false);
+								} else {
+									this.$set(coS, "isChangeDiscount", false);
+									discountedFrom.push(e.id);
+									if (bTempStacked) {
+										coS.tmpDiscount[tmpNum][1] = discountedFrom;
+										coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+										coS.tmpDiscount[tmpNum][3] = stackDiscount;
+									} else {
+										if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+										"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+										aDiscount.push(discountedFrom);
+										aDiscount.push(stackDiscountCal);
+										aDiscount.push(stackDiscount);
+										coS.tmpDiscount.push(aDiscount);
+									}
+								}
+							} else {
+								scoreVal = coS.discountIsOn ? coS.discountScoreCal : parseInt(coS.value);
+								var tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								coS.discountedFrom.push(e.id);
+								coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+								if (!coS.discountIsOn) this.$set(coS, "discountIsOn", true);
+							}
+						} else {
+							var scoreVal = parseInt(coS.value),
+								tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								aDiscount = [];
+							if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+							if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+							else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+							else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+							else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+							stackDiscountCal = stackDiscount;
+							if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+							if (coS.discountIsOn) {
+								"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+								if (coS.discountScore > stackDiscount) {
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									this.$set(coS, "discountShow", e.discountShow);
+									this.$set(coS, "discountBeforeText", e.discountBeforeText);
+									this.$set(coS, "discountAfterText", e.discountAfterText);
+									this.$set(coS, "discountedFrom", e.id);
+									this.$set(coS, "notStackableDiscount", true);
+								} else {
+									aDiscount.push(e.id);
+									aDiscount.push(stackDiscountCal);
+									aDiscount.push(stackDiscount);
+									if (e.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+								}
+								coS.tmpDiscount.push(aDiscount);
+							} else {
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+								this.$set(coS, "discountIsOn", true);
+								this.$set(coS, "discountedFrom", e.id);
+								this.$set(coS, "notStackableDiscount", true);
+							}
+							coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+						}
+					},
+					discountC: function(e, coS) {
+						if (e.stackableDiscount) {
+							var scoreVal = parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								tmpNum = 0,
+								discountedFrom = [],
+								aDiscount = [];
+							if (coS.notStackableDiscount) {
+								for (var f = 0; f < coS.tmpDiscount.length; f++) {
+									if (coS.tmpDiscount[f][0]) {
+										discountedFrom = coS.tmpDiscount[f][1];
+										scoreVal = coS.tmpDiscount[f][2];
+										tmpNum = f;
+									}
+								}
+								discountedFrom.splice(discountedFrom.indexOf(e.id), 1);
+								if (discountedFrom.length > 0) {
+									for (var f = 0; f < discountedFrom.length; f++) {
+										if ("undefined" !== typeof this.app.comp[discountedFrom[f]]) {
+											var coT = this.app.comp[discountedFrom[f]],
+												coTR = co.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+												coTO = coTR.objects[coT.objects];
+											if (1 == coTO.discountOperator) stackDiscount = scoreVal - parseInt(coTO.discountValue);
+											else if (2 == coTO.discountOperator) stackDiscount = scoreVal + parseInt(coTO.discountValue);
+											else if (3 == coTO.discountOperator) stackDiscount = parseInt(scoreVal * coTO.discountValue);
+											else if (4 == coTO.discountOperator) stackDiscount = parseInt(scoreVal / coTO.discountValue);
+											stackDiscountCal = stackDiscount;
+											if (coTO.discountLowLimitIsOn && "undefined" !== typeof coTO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coTO.discountLowLimit));
+										}
+									}
+									coS.tmpDiscount[tmpNum][1] = discountedFrom;
+									coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+									coS.tmpDiscount[tmpNum][3] = stackDiscount;
+								} else {
+									coS.tmpDiscount.splice(tmpNum, 1);
+								}
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+												if (coS.dupTextA[e.discountAfterText] == 0) {
+													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+													this.$delete(coS.dupTextA, e.discountAfterText);
+												}
+											}
+										} else {
+											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+										if (e.discountTextDuplicated) {
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+												if (coS.dupTextB[e.discountBeforeText] == 0) {
+													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+													this.$delete(coS.dupTextB, e.discountBeforeText);
+												}
+											}
+										} else {
+											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+										}
+									}
+								}
+								this.$set(coS, "isChangeDiscount", false);
+							} else {
+								var scoreVal = parseInt(coS.value),
+									indexId = coS.discountedFrom.indexOf(e.id),
+									tmpDisScore = coS.discountScore,
+									stackDiscount = 0,
+									stackDiscountCal = 0,
+									tmpNum = 0,
+									bTempChanged = !1,
+									discountedFrom = "";
+								coS.discountedFrom.splice(indexId, 1);
+								if (coS.discountedFrom.length > 0) {
+									for (var d = 0; d < coS.discountedFrom.length; d++) {
+										if ("undefined" !== typeof this.app.comp[coS.discountedFrom[d]]) {
+											var coT = this.app.comp[coS.discountedFrom[d]],
+												coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+												coTO = coTR.objects[coT.objects];
+											if (coTO.stackableDiscount) {
+												if (1 == coTO.discountOperator) stackDiscount = scoreVal - parseInt(coTO.discountValue);
+												else if (2 == coTO.discountOperator) stackDiscount = scoreVal + parseInt(coTO.discountValue);
+												else if (3 == coTO.discountOperator) stackDiscount = parseInt(scoreVal * coTO.discountValue);
+												else if (4 == coTO.discountOperator) stackDiscount = parseInt(scoreVal / coTO.discountValue);
+												stackDiscountCal = stackDiscount;
+												scoreVal = stackDiscountCal;
+												if (coTO.discountLowLimitIsOn && "undefined" !== typeof coTO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coTO.discountLowLimit));
+											}
+										}
+									}
+								} else {
+									stackDiscountCal = parseInt(coS.value);
+									stackDiscount = parseInt(coS.value);
+								}
+								if ("undefined" !== typeof coS.tmpDiscount) {
+									for (var f = 0; f < coS.tmpDiscount.length; f++) {
+										if (!coS.tmpDiscount[f][0]) {
+											if (stackDiscount > coS.tmpDiscount[f][3]) {
+												discountedFrom = coS.tmpDiscount[f][1];
+												stackDiscountCal = coS.tmpDiscount[f][2];
+												stackDiscount = coS.tmpDiscount[f][3];
+												tmpNum = f;
+												bTempChanged = !0;
+											}
+										}
+									}
+								}
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+												if (coS.dupTextA[e.discountAfterText] == 0) {
+													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+													this.$delete(coS.dupTextA, e.discountAfterText);
+												}
+											}
+										} else {
+											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+										if (e.discountTextDuplicated) {
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+												if (coS.dupTextB[e.discountBeforeText] == 0) {
+													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+													this.$delete(coS.dupTextB, e.discountBeforeText);
+												}
+											}
+										} else {
+											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+										}
+									}
+								}
+								if (bTempChanged) {
+									if (discountedFrom.length == 0) {
+										coS.tmpDiscount.splice(tmpNum, 1);
+									} else {
+										this.$set(coS, "discountedFrom", discountedFrom);
+										if (coS.tmpDiscount[tmpNum][4]) {
+											this.$set(coS, "discountBeforeText", coS.tmpDiscount[tmpNum][5]);
+											this.$set(coS, "discountAfterText", coS.tmpDiscount[tmpNum][6]);
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+										coS.notStackableDiscount = true;
+									}
+								} else {
+									this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+									this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+									if (coS.discountedFrom.length == 0) this.$set(coS, "discountIsOn", false);
+								}
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+							}
+						} else {
+							var scoreVal = parseInt(coS.value),
+								tmpDisScore = coS.discountScore,
+								tmpNum = 0,
+								bChanged = !1;
+							if (coS.notStackableDiscount) {
+								if (coS.discountedFrom == e.id) {
+									if ("undefined" !== typeof coS.tmpDiscount && coS.tmpDiscount.length > 0) {
+										scoreVal = coS.tmpDiscount[0][3];
+										bChanged = !0;
+										for (var f = 1; f < coS.tmpDiscount.length; f++) {
+											if (scoreVal > coS.tmpDiscount[f][3]) {
+												scoreVal = coS.tmpDiscount[f][3];
+												tmpNum = f;
+											}
+										}
+									}
+									if (bChanged) {
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", coS.tmpDiscount[tmpNum][2]);
+										this.$set(coS, "discountedFrom", coS.tmpDiscount[tmpNum][1]);
+										this.$set(coS, "notStackableDiscount", !coS.tmpDiscount[tmpNum][0]);
+										if (coS.tmpDiscount[tmpNum][0]) {
+											this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+											this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+										} else {
+											if (coS.tmpDiscount[tmpNum][4]) {
+												this.$set(coS, "discountBeforeText", coS.tmpDiscount[tmpNum][5]);
+												this.$set(coS, "discountAfterText", coS.tmpDiscount[tmpNum][6]);
+											} else {
+												this.$set(coS, "discountBeforeText", "");
+												this.$set(coS, "discountAfterText", "");
+											}
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+									} else {
+										this.$set(coS, "discountedFrom", "");
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", scoreVal);
+										this.$set(coS, "discountBeforeText", "");
+										this.$set(coS, "discountAfterText", "");
+										this.$set(coS, "discountIsOn", false);
+										this.$set(coS, "notStackableDiscount", false);
+									}
+								} else {
+									coS.tmpDiscount = coS.tmpDiscount.filter(item => item[1] !== e.id);
+								}
+							} else {
+								if ("undefined" !== typeof coS.tmpDiscount) {
+									coS.tmpDiscount = coS.tmpDiscount.filter(item => item[1] !== e.id);
+									if (coS.tmpDiscount.length > 0) {
+										scoreVal = coS.tmpDiscount[f][3];
+										bChanged = !0;
+										for (var f = 0; f < coS.tmpDiscount.length; f++) {
+											if (scoreVal > coS.tmpDiscount[f][3]) {
+												scoreVal = coS.tmpDiscount[f][3];
+												tmpNum = f;
+											}
+										}
+									}
+									if (bChanged) {
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", coS.tmpDiscount[tmpNum][2]);
+										this.$set(coS, "discountedFrom", coS.tmpDiscount[tmpNum][1]);
+										if (coS.tmpDiscount[tmpNum][0]) {
+											this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+											this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+										} else {
+											if (coS.tmpDiscount[tmpNum][4]) {
+												this.$set(coS, "discountBeforeText", coS.tmpDiscount[f][5]);
+												this.$set(coS, "discountAfterText", coS.tmpDiscount[f][6]);
+											} else {
+												this.$set(coS, "discountBeforeText", "");
+												this.$set(coS, "discountAfterText", "");
+											}
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+									}
+								}
+							}
+							coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+						}
 					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
@@ -4132,6 +5490,47 @@
 														}
 													}
 												}
+											if (e.discountOther) {
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+													if (e.isDisChoices) {
+														if ("undefined" !== typeof e.discountChoices) {
+															for (var a = 0; a < e.discountChoices.length; a++) {
+																if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																	var co = this.app.comp[e.discountChoices[a]],
+																		coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																		coO = coR.objects[co.objects];
+																	for (var c = 0; c < coO.scores.length; c++) {
+																		var coS = coO.scores[c];
+																		if (!coS.isNotDiscountable) {
+																			this.discountC(e, coS);
+																		}
+																	}
+																}
+															}
+														}
+													} else {
+														if ("undefined" !== typeof e.discountGroups) {
+															for (var a = 0; a < this.app.groups.length; a++) {
+																if (e.discountGroups.includes(this.app.groups[a].id)) {
+																	for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+																		if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																			var co = this.app.comp[this.app.groups[a].elements[b].id],
+																				coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																				coO = coR.objects[co.objects];
+																			for (var c = 0; c < coO.scores.length; c++) {
+																				var coS = coO.scores[c];
+																				if (!coS.isNotDiscountable) {
+																					this.discountC(e, coS);
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
 											this.updateScoresC(e, t, tmpScores, 0);
 											if (e.isImageUpload) {
 												this.$set(e, "image", e.defaultImage);
@@ -4177,22 +5576,6 @@
 													bgmPlayer.unMute();
 												}
 											}
-											if (e.discountOther)
-												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-													for (var a = 0; a < this.app.groups.length; a++) {
-														if (e.discountGroups.includes(this.app.groups[a].id)) {
-															for (var b = 0; b < this.app.groups[a].elements.length; b++)
-																if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																	var co = this.app.comp[this.app.groups[a].elements[b].id],
-																		coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-																		coO = coR.objects[co.objects];
-																	for (var c = 0; c < coO.scores.length; c++) {
-																		var coS = coO.scores[c];
-																		if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-																	}
-																}
-														}
-													}
 											if (e.isContentHidden) {
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
@@ -4215,33 +5598,50 @@
 											e.isActive = !e.isActive, this.updateActivated();
 										}
 									} else {
-										if (e.discountOther)
-											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-												for (var a = 0; a < this.app.groups.length; a++) {
-													if (e.discountGroups.includes(this.app.groups[a].id)) {
-														for (var b = 0; b < this.app.groups[a].elements.length; b++)
-															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																var co = this.app.comp[this.app.groups[a].elements[b].id],
+										if (e.discountOther) {
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+												if (e.isDisChoices) {
+													if ("undefined" !== typeof e.discountChoices) {
+														for (var a = 0; a < e.discountChoices.length; a++) {
+															if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																var co = this.app.comp[e.discountChoices[a]],
 																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 																	coO = coR.objects[co.objects];
 																for (var c = 0; c < coO.scores.length; c++) {
 																	var coS = coO.scores[c];
 																	if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
-																		if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																			if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																			else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																			else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																			else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																			if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																			if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																			this.$set(coS, "discountIsOn", true);
-																			this.$set(coS, "discountedFrom", e.id);
+																		if (!coS.isNotDiscountable) {
+																			this.discountS(e, coS);
 																		}
 																	}
 																}
 															}
+														}
 													}
-												}
+												} else {
+													if("undefined" !== typeof e.discountGroups) {
+														for (var a = 0; a < this.app.groups.length; a++) {
+															if (e.discountGroups.includes(this.app.groups[a].id)) {
+																for (var b = 0; b < this.app.groups[a].elements.length; b++)
+																	if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																		var co = this.app.comp[this.app.groups[a].elements[b].id],
+																			coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																			coO = coR.objects[co.objects];
+																		for (var c = 0; c < coO.scores.length; c++) {
+																			var coS = coO.scores[c];
+																			if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																				if (!coS.isNotDiscountable) {
+																					this.discountS(e, coS);
+																				}
+																			}
+																		}
+																	}
+															}
+														}
+													}
+												} 
+											}
+										}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
@@ -4889,6 +6289,47 @@
 													}
 												}
 											}
+										if (e.discountOther) {
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+												if (e.isDisChoices) {
+													if ("undefined" !== typeof e.discountChoices) {
+														for (var a = 0; a < e.discountChoices.length; a++) {
+															if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																var co = this.app.comp[e.discountChoices[a]],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (!coS.isNotDiscountable) {
+																		this.discountC(e, coS);
+																	}
+																}
+															}
+														}
+													}
+												} else {
+													if ("undefined" !== typeof e.discountGroups) {
+														for (var a = 0; a < this.app.groups.length; a++) {
+															if (e.discountGroups.includes(this.app.groups[a].id)) {
+																for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+																	if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																		var co = this.app.comp[this.app.groups[a].elements[b].id],
+																			coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																			coO = coR.objects[co.objects];
+																		for (var c = 0; c < coO.scores.length; c++) {
+																			var coS = coO.scores[c];
+																			if (!coS.isNotDiscountable) {
+																				this.discountC(e, coS);
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
 										this.updateScoresC(e, t, tmpScores, 0);
 										if (e.isImageUpload) {
 											this.$set(e, "image", e.defaultImage);
@@ -4923,22 +6364,6 @@
 												this.$set(e, "changedBarIconColor", a);
 											}
 										}
-										if (e.discountOther)
-											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-												for (var a = 0; a < this.app.groups.length; a++) {
-													if (e.discountGroups.includes(this.app.groups[a].id)) {
-														for (var b = 0; b < this.app.groups[a].elements.length; b++)
-															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																var co = this.app.comp[this.app.groups[a].elements[b].id],
-																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-																	coO = coR.objects[co.objects];
-																for (var c = 0; c < coO.scores.length; c++) {
-																	var coS = coO.scores[c];
-																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-																}
-															}
-													}
-												}
 										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 											if (e.bgmId) {
 												this.app.bgmIsPlaying = !1;
@@ -5018,6 +6443,50 @@
 								var tmpVariable = e.isMultipleUseVariable ? Math.abs(parseInt(e.multipleUseVariable)) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (e.discountOther && e.isMultipleUseVariable && e.multipleUseVariable > 0) {
+									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+										if (e.isDisChoices) {
+											if ("undefined" !== typeof e.discountChoices) {
+												for (var a = 0; a < e.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+														var co = this.app.comp[e.discountChoices[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														for (var c = 0; c < coO.scores.length; c++) {
+															var coS = coO.scores[c];
+															if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																if (!coS.isNotDiscountable) {
+																	this.discountS(e, coS);
+																}
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if("undefined" !== typeof e.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (e.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																		if (!coS.isNotDiscountable) {
+																			this.discountS(e, coS);
+																		}
+																	}
+																}
+															}
+													}
+												}
+											}
+										} 
+									}
+								}
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -5297,6 +6766,47 @@
 								}
 								var tmpScores = [];
 								var tmpVariable = e.isMultipleUseVariable ? Math.abs(parseInt(e.multipleUseVariable)) : tmpPoint.value;
+								if (e.discountOther && e.isMultipleUseVariable && e.multipleUseVariable >= 0) {
+									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+										if (e.isDisChoices) {
+											if ("undefined" !== typeof e.discountChoices) {
+												for (var a = 0; a < e.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+														var co = this.app.comp[e.discountChoices[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														for (var c = 0; c < coO.scores.length; c++) {
+															var coS = coO.scores[c];
+															if (!coS.isNotDiscountable) {
+																this.discountC(e, coS);
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if ("undefined" !== typeof e.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (e.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (!coS.isNotDiscountable) {
+																		this.discountC(e, coS);
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -5769,17 +7279,20 @@
                         },
                         templates: [{
                             text: "Image Top",
-                            value: "1"
+                            value: 1
                         }, {
                             text: "Image Right",
-                            value: "2"
+                            value: 2
                         }, {
                             text: "Image Left",
-                            value: "3"
+                            value: 3
                         }, {
                             text: "Image Bottom",
-                            value: "4"
-                        }],
+                            value: 4
+                        }, {
+							text: "Image Center",
+							value: 5
+						}],
                         pointReqOperators: [{
                             text: "+ More than",
                             value: "1"
@@ -5954,7 +7467,7 @@
                     },
                     rowBody: function() {
                         var e = "margin-top: " + this.rowStyling.rowBodyMarginTop + "px;margin-bottom:" + this.rowStyling.rowBodyMarginBottom + "px;";
-						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.rowBodyBgImage.isBackgroundStretch ? ";background-size: 100% 100%;" : ";background-size: cover;"));
+						if (this.rowBodyBgImage !== !1) e += 'background-image: url("' + this.rowBodyBgImage.backgroundImage + '")' + (this.rowBodyBgImage.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.rowBodyBgImage.isBackgroundFitIn ? ";background-size: 100% 100%;" : ";background-size: cover;"));
 						if (this.rowBodyBgColor !== !1) e += "background-color: " + this.rowBodyBgColor.backgroundColor + ";";
                         return this.row.isEditModeOn ? e += "margin-left: 1%;margin-right: 1%;" : e += "margin-left: " + this.rowStyling.rowBodyMarginSides + "%;margin-right: " + this.rowStyling.rowBodyMarginSides + "%;", e
                     },
@@ -6152,31 +7665,129 @@
                         return e
                     },
 					playBgm: function(e, t, i) {
+						function bgmFadeIn(th, f) {
+							if (th.app.isFadingOut) {
+								const lastTime = parseInt(th.app.lastFadeTime);
+								let v = 0;
+								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
+								th.app.bgmFadeTimer = setTimeout(() => {
+									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+									if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+										const iTime = e.bgmFadeInSec / 20;
+										th.app.lastFadeTime = e.bgmFadeInSec;
+										bgmPlayer.setVolume(0);
+										bgmPlayer.playVideo();
+										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.isFadingOut) th.app.isFadingOut = !1;
+										th.app.bgmFadeInterval = setInterval(() => {
+											if (bgmPlayer.playerInfo.playerState === 1) {
+												if (v < 100) {
+													v += 5;
+													bgmPlayer.setVolume(v);
+													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+												} else {
+													bgmPlayer.setVolume(100);
+													clearInterval(th.app.bgmFadeInterval);
+													th.app.bgmFadeInterval = 0;
+													th.app.lastFadeTime = 0;
+												}
+											}
+										}, iTime);
+									} else {
+										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										bgmPlayer.setVolume(100);
+										bgmPlayer.playVideo();
+									}
+									th.$set(th.app, "bgmObjectId", e.id);
+								}, lastTime);
+							} else {
+								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+									const iTime = e.bgmFadeInSec / 20;
+									th.app.lastFadeTime = e.bgmFadeInSec;
+									bgmPlayer.setVolume(0);
+									bgmPlayer.playVideo();
+									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.isFadingOut) th.app.isFadingOut = !1;
+									th.app.bgmFadeInterval = setInterval(() => {
+										if (bgmPlayer.playerInfo.playerState === 1) {
+											if (v < 100) {
+												v += 5;
+												bgmPlayer.setVolume(v);
+												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+											} else {
+												bgmPlayer.setVolume(100);
+												clearInterval(th.app.bgmFadeInterval);
+												th.app.bgmFadeInterval = 0;
+												th.app.lastFadeTime = 0;
+											}
+										}
+									}, iTime);
+								} else {
+									bgmPlayer.setVolume(100);
+									bgmPlayer.playVideo();
+								}
+								th.$set(th.app, "bgmObjectId", e.id);
+							}
+						}
+						function bgmFadeOut(th) {
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
+								const steps = bgmPlayer.getVolume() / 5;
+								const iTime = e.bgmFadeOutSec / steps;
+								let v = bgmPlayer.getVolume();
+								th.app.lastFadeTime = e.bgmFadeOutSec;
+								th.app.isFadingOut = !0;
+								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+								th.app.bgmFadeInterval = setInterval(() => {
+									if (v > 0) {
+										v -= 5;
+										bgmPlayer.setVolume(v);
+										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+									} else {
+										if (th.app.isFadingOut) {
+											bgmPlayer.setVolume(0);
+											clearInterval(th.app.bgmFadeInterval);
+											th.app.bgmFadeInterval = 0;
+											th.app.lastFadeTime = 0;
+											th.app.isFadingOut = !1;
+											bgmPlayer.pauseVideo();
+										}
+									}
+								}, iTime);
+							} else {
+								bgmPlayer.pauseVideo();
+							}
+						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
 							var p = this.app.bgmIsPlaying,
 								s = bgmPlayer.playerInfo.videoData.video_id,
-								o = bgmPlayer.playerInfo.playerState;
+								o = bgmPlayer.playerInfo.playerState,
+								v = 0,
+								f = !1;
 							if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
 							if (s == t) {
 								if (this.app.bgmObjectId == e.id) {
 									if (p) {
-										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
-										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										if (o === 2) {
+											bgmFadeIn(this, f);
+										} else {
+											bgmPlayer.stopVideo();
+											bgmFadeIn(this, f);
+										}
 									} else {
-										if (o != 2) bgmPlayer.pauseVideo();
+										if (o !== 2) bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
-										bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o === 1) bgmFadeOut(this);
 									}
 								}
 							} else {
 								if (p) {
-									e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
-									bgmPlayer.playVideo();
-									this.$set(this.app, "bgmObjectId", e.id);
+									f = !0;
+									bgmFadeIn(this, f);
 								}
 							}
 						} else {
@@ -6206,29 +7817,32 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
-														if (this.app.pointTypes[m].id == coS.id) {
-															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+												if (coS.isChangeDiscount) {
+													if (coS.isChangeDiscount) {
+														for (var m = 0; m < this.app.pointTypes.length; m++) {
+															if (this.app.pointTypes[m].id == coS.id) {
+																if (coO.isMultipleUseVariable) {
+																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																		}
+																		else {
+																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																		}
 																	}
-																	else {
-																		this.app.pointTypes[m].startingSum -= coSDiscount;
+																	if (coO.forcedActivated && nh > 0) {
+																		if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																		e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																	}
+																} else {
+																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 																}
-																if (coO.forcedActivated && nh > 0) {
-																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
-																}
-															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum - coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum -= coSDiscount);
+																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 															}
-															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
-													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+														coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+													}
 												}
 											}
 										}
@@ -6349,29 +7963,29 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
 														if (this.app.pointTypes[m].id == coS.id) {
-															var nC = 0;
 															if (coO.isMultipleUseVariable) {
 																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) {
-																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(coO, coR), coO.forcedActivated = !coO.forcedActivated, nC++) : this.selectedOneLess(coO, coR);
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																	}
 																	else {
-																		this.app.pointTypes[m].startingSum += coSDiscount;
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 																	}
 																}
-																if (coO.forcedActivated && nC > 0) {
+																if (coO.forcedActivated && nh > 0) {
 																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																	e.cancelForcedActivated.push(coO.id + "/ON#" + nC);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
 																}
 															} else {
-																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coSDiscount < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coSDiscount);
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 															}
 															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
 													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
 											}
@@ -6492,6 +8106,38 @@
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
 								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (!coS.isNotRecalculatable) {
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																	}
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																}
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
+															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+												}
+											}
+										}
+									}
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
@@ -6620,6 +8266,38 @@
 									coO = coR.objects[co.objects],
 									nR = this.activated.indexOf(eid);
 								if (!this.exceptedScores.includes(coO.id)) {
+									if (e.discountOther) {
+										for (var b = 0; b < coO.scores.length; b++) {
+											var coS = coO.scores[b];
+											if (!coS.isNotRecalculatable) {
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
+																	}
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																}
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
+															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
+												}
+											}
+										}
+									}
 									for (var b = 0; b < coO.scores.length; b++) {
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
@@ -6836,6 +8514,467 @@
 							if (pT < 0) return !1
 						}
 						return !0
+					},
+                    discountS: function(e, coS) {
+						if (e.stackableDiscount) {
+							var scoreVal = parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								bTempStacked = !1,
+								tmpNum = 0,
+								discountedFrom = [],
+								aDiscount = [];
+							if (coS.notStackableDiscount) {
+								for (var f = 0; f < coS.tmpDiscount.length; f++) {
+									if (coS.tmpDiscount[f][0]) {
+										discountedFrom = coS.tmpDiscount[f][1];
+										discountedFrom.push(e.id);
+										scoreVal = coS.tmpDiscount[f][2];
+										bTempStacked = !0;
+										tmpNum = f;
+									}
+								}
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if (coS.discountScore > stackDiscount) {
+									this.$set(coS, "tmpDisScore", coS.discountScore - stackDiscount);
+									this.$set(coS, "isChangeDiscount", true);
+									aDiscount.push(false);
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									if ("undefined" !== typeof coS.discountTextA) this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+									if ("undefined" !== typeof coS.discountTextB) this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+									if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+									coS.discountedFrom.push(...discountedFrom);
+									if (bTempStacked) coS.tmpDiscount.splice(tmpNum, 1);
+									coS.tmpDiscount.push(aDiscount);
+									this.$set(coS, "notStackableDiscount", false);
+								} else {
+									this.$set(coS, "isChangeDiscount", false);
+									discountedFrom.push(e.id);
+									if (bTempStacked) {
+										coS.tmpDiscount[tmpNum][1] = discountedFrom;
+										coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+										coS.tmpDiscount[tmpNum][3] = stackDiscount;
+									} else {
+										if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+										"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+										aDiscount.push(discountedFrom);
+										aDiscount.push(stackDiscountCal);
+										aDiscount.push(stackDiscount);
+										coS.tmpDiscount.push(aDiscount);
+									}
+								}
+							} else {
+								scoreVal = coS.discountIsOn ? coS.discountScoreCal : parseInt(coS.value);
+								var tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								coS.discountedFrom.push(e.id);
+								coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+								if (!coS.discountIsOn) this.$set(coS, "discountIsOn", true);
+							}
+						} else {
+							var scoreVal = parseInt(coS.value),
+								tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								aDiscount = [];
+							if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+							if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+							else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+							else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+							else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+							stackDiscountCal = stackDiscount;
+							if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+							if (coS.discountIsOn) {
+								"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+								if (coS.discountScore > stackDiscount) {
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									this.$set(coS, "discountShow", e.discountShow);
+									this.$set(coS, "discountBeforeText", e.discountBeforeText);
+									this.$set(coS, "discountAfterText", e.discountAfterText);
+									this.$set(coS, "discountedFrom", e.id);
+									this.$set(coS, "notStackableDiscount", true);
+								} else {
+									aDiscount.push(e.id);
+									aDiscount.push(stackDiscountCal);
+									aDiscount.push(stackDiscount);
+									if (e.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+								}
+								coS.tmpDiscount.push(aDiscount);
+							} else {
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+								this.$set(coS, "discountIsOn", true);
+								this.$set(coS, "discountedFrom", e.id);
+								this.$set(coS, "notStackableDiscount", true);
+							}
+							coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+						}
+					},
+					discountC: function(e, coS) {
+						if (e.stackableDiscount) {
+							var scoreVal = parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								tmpNum = 0,
+								discountedFrom = [],
+								aDiscount = [];
+							if (coS.notStackableDiscount) {
+								for (var f = 0; f < coS.tmpDiscount.length; f++) {
+									if (coS.tmpDiscount[f][0]) {
+										discountedFrom = coS.tmpDiscount[f][1];
+										scoreVal = coS.tmpDiscount[f][2];
+										tmpNum = f;
+									}
+								}
+								discountedFrom.splice(discountedFrom.indexOf(e.id), 1);
+								if (discountedFrom.length > 0) {
+									for (var f = 0; f < discountedFrom.length; f++) {
+										if ("undefined" !== typeof this.app.comp[discountedFrom[f]]) {
+											var coT = this.app.comp[discountedFrom[f]],
+												coTR = co.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+												coTO = coTR.objects[coT.objects];
+											if (1 == coTO.discountOperator) stackDiscount = scoreVal - parseInt(coTO.discountValue);
+											else if (2 == coTO.discountOperator) stackDiscount = scoreVal + parseInt(coTO.discountValue);
+											else if (3 == coTO.discountOperator) stackDiscount = parseInt(scoreVal * coTO.discountValue);
+											else if (4 == coTO.discountOperator) stackDiscount = parseInt(scoreVal / coTO.discountValue);
+											stackDiscountCal = stackDiscount;
+											if (coTO.discountLowLimitIsOn && "undefined" !== typeof coTO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coTO.discountLowLimit));
+										}
+									}
+									coS.tmpDiscount[tmpNum][1] = discountedFrom;
+									coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+									coS.tmpDiscount[tmpNum][3] = stackDiscount;
+								} else {
+									coS.tmpDiscount.splice(tmpNum, 1);
+								}
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+												if (coS.dupTextA[e.discountAfterText] == 0) {
+													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+													this.$delete(coS.dupTextA, e.discountAfterText);
+												}
+											}
+										} else {
+											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+										if (e.discountTextDuplicated) {
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+												if (coS.dupTextB[e.discountBeforeText] == 0) {
+													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+													this.$delete(coS.dupTextB, e.discountBeforeText);
+												}
+											}
+										} else {
+											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+										}
+									}
+								}
+								this.$set(coS, "isChangeDiscount", false);
+							} else {
+								var scoreVal = parseInt(coS.value),
+									indexId = coS.discountedFrom.indexOf(e.id),
+									tmpDisScore = coS.discountScore,
+									stackDiscount = 0,
+									stackDiscountCal = 0,
+									tmpNum = 0,
+									bTempChanged = !1,
+									discountedFrom = "";
+								coS.discountedFrom.splice(indexId, 1);
+								if (coS.discountedFrom.length > 0) {
+									for (var d = 0; d < coS.discountedFrom.length; d++) {
+										if ("undefined" !== typeof this.app.comp[coS.discountedFrom[d]]) {
+											var coT = this.app.comp[coS.discountedFrom[d]],
+												coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+												coTO = coTR.objects[coT.objects];
+											if (coTO.stackableDiscount) {
+												if (1 == coTO.discountOperator) stackDiscount = scoreVal - parseInt(coTO.discountValue);
+												else if (2 == coTO.discountOperator) stackDiscount = scoreVal + parseInt(coTO.discountValue);
+												else if (3 == coTO.discountOperator) stackDiscount = parseInt(scoreVal * coTO.discountValue);
+												else if (4 == coTO.discountOperator) stackDiscount = parseInt(scoreVal / coTO.discountValue);
+												stackDiscountCal = stackDiscount;
+												scoreVal = stackDiscountCal;
+												if (coTO.discountLowLimitIsOn && "undefined" !== typeof coTO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coTO.discountLowLimit));
+											}
+										}
+									}
+								} else {
+									stackDiscountCal = parseInt(coS.value);
+									stackDiscount = parseInt(coS.value);
+								}
+								if ("undefined" !== typeof coS.tmpDiscount) {
+									for (var f = 0; f < coS.tmpDiscount.length; f++) {
+										if (!coS.tmpDiscount[f][0]) {
+											if (stackDiscount > coS.tmpDiscount[f][3]) {
+												discountedFrom = coS.tmpDiscount[f][1];
+												stackDiscountCal = coS.tmpDiscount[f][2];
+												stackDiscount = coS.tmpDiscount[f][3];
+												tmpNum = f;
+												bTempChanged = !0;
+											}
+										}
+									}
+								}
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+												if (coS.dupTextA[e.discountAfterText] == 0) {
+													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+													this.$delete(coS.dupTextA, e.discountAfterText);
+												}
+											}
+										} else {
+											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+										if (e.discountTextDuplicated) {
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+												if (coS.dupTextB[e.discountBeforeText] == 0) {
+													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+													this.$delete(coS.dupTextB, e.discountBeforeText);
+												}
+											}
+										} else {
+											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+										}
+									}
+								}
+								if (bTempChanged) {
+									if (discountedFrom.length == 0) {
+										coS.tmpDiscount.splice(tmpNum, 1);
+									} else {
+										this.$set(coS, "discountedFrom", discountedFrom);
+										if (coS.tmpDiscount[tmpNum][4]) {
+											this.$set(coS, "discountBeforeText", coS.tmpDiscount[tmpNum][5]);
+											this.$set(coS, "discountAfterText", coS.tmpDiscount[tmpNum][6]);
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+										coS.notStackableDiscount = true;
+									}
+								} else {
+									this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+									this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+									if (coS.discountedFrom.length == 0) this.$set(coS, "discountIsOn", false);
+								}
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+							}
+						} else {
+							var scoreVal = parseInt(coS.value),
+								tmpDisScore = coS.discountScore,
+								tmpNum = 0,
+								bChanged = !1;
+							if (coS.notStackableDiscount) {
+								if (coS.discountedFrom == e.id) {
+									if ("undefined" !== typeof coS.tmpDiscount && coS.tmpDiscount.length > 0) {
+										scoreVal = coS.tmpDiscount[0][3];
+										bChanged = !0;
+										for (var f = 1; f < coS.tmpDiscount.length; f++) {
+											if (scoreVal > coS.tmpDiscount[f][3]) {
+												scoreVal = coS.tmpDiscount[f][3];
+												tmpNum = f;
+											}
+										}
+									}
+									if (bChanged) {
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", coS.tmpDiscount[tmpNum][2]);
+										this.$set(coS, "discountedFrom", coS.tmpDiscount[tmpNum][1]);
+										this.$set(coS, "notStackableDiscount", !coS.tmpDiscount[tmpNum][0]);
+										if (coS.tmpDiscount[tmpNum][0]) {
+											this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+											this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+										} else {
+											if (coS.tmpDiscount[tmpNum][4]) {
+												this.$set(coS, "discountBeforeText", coS.tmpDiscount[tmpNum][5]);
+												this.$set(coS, "discountAfterText", coS.tmpDiscount[tmpNum][6]);
+											} else {
+												this.$set(coS, "discountBeforeText", "");
+												this.$set(coS, "discountAfterText", "");
+											}
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+									} else {
+										this.$set(coS, "discountedFrom", "");
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", scoreVal);
+										this.$set(coS, "discountBeforeText", "");
+										this.$set(coS, "discountAfterText", "");
+										this.$set(coS, "discountIsOn", false);
+										this.$set(coS, "notStackableDiscount", false);
+									}
+								} else {
+									coS.tmpDiscount = coS.tmpDiscount.filter(item => item[1] !== e.id);
+								}
+							} else {
+								if ("undefined" !== typeof coS.tmpDiscount) {
+									coS.tmpDiscount = coS.tmpDiscount.filter(item => item[1] !== e.id);
+									if (coS.tmpDiscount.length > 0) {
+										scoreVal = coS.tmpDiscount[f][3];
+										bChanged = !0;
+										for (var f = 0; f < coS.tmpDiscount.length; f++) {
+											if (scoreVal > coS.tmpDiscount[f][3]) {
+												scoreVal = coS.tmpDiscount[f][3];
+												tmpNum = f;
+											}
+										}
+									}
+									if (bChanged) {
+										this.$set(coS, "discountScore", scoreVal);
+										this.$set(coS, "discountScoreCal", coS.tmpDiscount[tmpNum][2]);
+										this.$set(coS, "discountedFrom", coS.tmpDiscount[tmpNum][1]);
+										if (coS.tmpDiscount[tmpNum][0]) {
+											this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+											this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+										} else {
+											if (coS.tmpDiscount[tmpNum][4]) {
+												this.$set(coS, "discountBeforeText", coS.tmpDiscount[f][5]);
+												this.$set(coS, "discountAfterText", coS.tmpDiscount[f][6]);
+											} else {
+												this.$set(coS, "discountBeforeText", "");
+												this.$set(coS, "discountAfterText", "");
+											}
+										}
+										coS.tmpDiscount.splice(tmpNum, 1);
+									}
+								}
+							}
+							coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+						}
 					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
@@ -7186,6 +9325,47 @@
 														}
 													}
 												}
+											if (e.discountOther) {
+												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+													if (e.isDisChoices) {
+														if ("undefined" !== typeof e.discountChoices) {
+															for (var a = 0; a < e.discountChoices.length; a++) {
+																if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																	var co = this.app.comp[e.discountChoices[a]],
+																		coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																		coO = coR.objects[co.objects];
+																	for (var c = 0; c < coO.scores.length; c++) {
+																		var coS = coO.scores[c];
+																		if (!coS.isNotDiscountable) {
+																			this.discountC(e, coS);
+																		}
+																	}
+																}
+															}
+														}
+													} else {
+														if ("undefined" !== typeof e.discountGroups) {
+															for (var a = 0; a < this.app.groups.length; a++) {
+																if (e.discountGroups.includes(this.app.groups[a].id)) {
+																	for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+																		if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																			var co = this.app.comp[this.app.groups[a].elements[b].id],
+																				coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																				coO = coR.objects[co.objects];
+																			for (var c = 0; c < coO.scores.length; c++) {
+																				var coS = coO.scores[c];
+																				if (!coS.isNotDiscountable) {
+																					this.discountC(e, coS);
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
 											this.updateScoresC(e, t, tmpScores, 0);
 											if (e.isImageUpload) {
 												this.$set(e, "image", e.defaultImage);
@@ -7231,22 +9411,6 @@
 													bgmPlayer.unMute();
 												}
 											}
-											if (e.discountOther)
-												if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-													for (var a = 0; a < this.app.groups.length; a++) {
-														if (e.discountGroups.includes(this.app.groups[a].id)) {
-															for (var b = 0; b < this.app.groups[a].elements.length; b++)
-																if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																	var co = this.app.comp[this.app.groups[a].elements[b].id],
-																		coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-																		coO = coR.objects[co.objects];
-																	for (var c = 0; c < coO.scores.length; c++) {
-																		var coS = coO.scores[c];
-																		if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-																	}
-																}
-														}
-													}
 											if (e.isContentHidden) {
 												for (var a = 0; a < e.hiddenContentsRow.length; a++) {
 													if ("undefined" !== typeof this.app.compR[e.hiddenContentsRow[a]]) {
@@ -7269,33 +9433,50 @@
 											e.isActive = !e.isActive, this.updateActivated();
 										}
 									} else {
-										if (e.discountOther)
-											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-												for (var a = 0; a < this.app.groups.length; a++) {
-													if (e.discountGroups.includes(this.app.groups[a].id)) {
-														for (var b = 0; b < this.app.groups[a].elements.length; b++)
-															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																var co = this.app.comp[this.app.groups[a].elements[b].id],
+										if (e.discountOther) {
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+												if (e.isDisChoices) {
+													if ("undefined" !== typeof e.discountChoices) {
+														for (var a = 0; a < e.discountChoices.length; a++) {
+															if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																var co = this.app.comp[e.discountChoices[a]],
 																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 																	coO = coR.objects[co.objects];
 																for (var c = 0; c < coO.scores.length; c++) {
 																	var coS = coO.scores[c];
 																	if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
-																		if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																			if (1 == e.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(e.discountValue);
-																			else if (2 == e.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(e.discountValue);
-																			else if (3 == e.discountOperator) coS.discountScore = parseInt(coS.value) * e.discountValue;
-																			else if (4 == e.discountOperator) coS.discountScore = parseInt(coS.value) / e.discountValue;
-																			if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) coS.discountScore = coS.discountScore < e.discountLowLimit ? parseInt(e.discountLowLimit) : coS.discountScore;
-																			if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
-																			this.$set(coS, "discountIsOn", true);
-																			this.$set(coS, "discountedFrom", e.id);
+																		if (!coS.isNotDiscountable) {
+																			this.discountS(e, coS);
 																		}
 																	}
 																}
 															}
+														}
 													}
-												}
+												} else {
+													if("undefined" !== typeof e.discountGroups) {
+														for (var a = 0; a < this.app.groups.length; a++) {
+															if (e.discountGroups.includes(this.app.groups[a].id)) {
+																for (var b = 0; b < this.app.groups[a].elements.length; b++)
+																	if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																		var co = this.app.comp[this.app.groups[a].elements[b].id],
+																			coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																			coO = coR.objects[co.objects];
+																		for (var c = 0; c < coO.scores.length; c++) {
+																			var coS = coO.scores[c];
+																			if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																				if (!coS.isNotDiscountable) {
+																					this.discountS(e, coS);
+																				}
+																			}
+																		}
+																	}
+															}
+														}
+													}
+												} 
+											}
+										}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
 												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
@@ -7943,6 +10124,47 @@
 													}
 												}
 											}
+										if (e.discountOther) {
+											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+												if (e.isDisChoices) {
+													if ("undefined" !== typeof e.discountChoices) {
+														for (var a = 0; a < e.discountChoices.length; a++) {
+															if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+																var co = this.app.comp[e.discountChoices[a]],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (!coS.isNotDiscountable) {
+																		this.discountC(e, coS);
+																	}
+																}
+															}
+														}
+													}
+												} else {
+													if ("undefined" !== typeof e.discountGroups) {
+														for (var a = 0; a < this.app.groups.length; a++) {
+															if (e.discountGroups.includes(this.app.groups[a].id)) {
+																for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+																	if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																		var co = this.app.comp[this.app.groups[a].elements[b].id],
+																			coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																			coO = coR.objects[co.objects];
+																		for (var c = 0; c < coO.scores.length; c++) {
+																			var coS = coO.scores[c];
+																			if (!coS.isNotDiscountable) {
+																				this.discountC(e, coS);
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
 										this.updateScoresC(e, t, tmpScores, 0);
 										if (e.isImageUpload) {
 											this.$set(e, "image", e.defaultImage);
@@ -7977,22 +10199,6 @@
 												this.$set(e, "changedBarIconColor", a);
 											}
 										}
-										if (e.discountOther)
-											if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue && "undefined" !== typeof e.discountGroups)
-												for (var a = 0; a < this.app.groups.length; a++) {
-													if (e.discountGroups.includes(this.app.groups[a].id)) {
-														for (var b = 0; b < this.app.groups[a].elements.length; b++)
-															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
-																var co = this.app.comp[this.app.groups[a].elements[b].id],
-																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-																	coO = coR.objects[co.objects];
-																for (var c = 0; c < coO.scores.length; c++) {
-																	var coS = coO.scores[c];
-																	if (coS.discountedFrom == e.id) this.$set(coS, "discountIsOn", false);
-																}
-															}
-													}
-												}
 										if (e.setBgmIsOn && "undefined" !== typeof bgmPlayer) {
 											if (e.bgmId) {
 												this.app.bgmIsPlaying = !1;
@@ -8072,6 +10278,50 @@
 								var tmpVariable = e.isMultipleUseVariable ? Math.abs(parseInt(e.multipleUseVariable)) : tmpPoint.value;
 								if ("undefined" === typeof this.exceptedObjects) this.$set(this, "exceptedObjects", []);
 								if (!this.exceptedObjects.length == 0) this.exceptedObjects.push(e.id);
+								if (e.discountOther && e.isMultipleUseVariable && e.multipleUseVariable > 0) {
+									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+										if (e.isDisChoices) {
+											if ("undefined" !== typeof e.discountChoices) {
+												for (var a = 0; a < e.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+														var co = this.app.comp[e.discountChoices[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														for (var c = 0; c < coO.scores.length; c++) {
+															var coS = coO.scores[c];
+															if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																if (!coS.isNotDiscountable) {
+																	this.discountS(e, coS);
+																}
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if("undefined" !== typeof e.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (e.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
+																		if (!coS.isNotDiscountable) {
+																			this.discountS(e, coS);
+																		}
+																	}
+																}
+															}
+													}
+												}
+											}
+										} 
+									}
+								}
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -8351,6 +10601,47 @@
 								}
 								var tmpScores = [];
 								var tmpVariable = e.isMultipleUseVariable ? Math.abs(parseInt(e.multipleUseVariable)) : tmpPoint.value;
+								if (e.discountOther && e.isMultipleUseVariable && e.multipleUseVariable >= 0) {
+									if ("undefined" !== typeof e.discountOperator && "undefined" !== typeof e.discountValue) {
+										if (e.isDisChoices) {
+											if ("undefined" !== typeof e.discountChoices) {
+												for (var a = 0; a < e.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[e.discountChoices[a]]) {
+														var co = this.app.comp[e.discountChoices[a]],
+															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+															coO = coR.objects[co.objects];
+														for (var c = 0; c < coO.scores.length; c++) {
+															var coS = coO.scores[c];
+															if (!coS.isNotDiscountable) {
+																this.discountC(e, coS);
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if ("undefined" !== typeof e.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (e.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++) {
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var co = this.app.comp[this.app.groups[a].elements[b].id],
+																	coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+																	coO = coR.objects[co.objects];
+																for (var c = 0; c < coO.scores.length; c++) {
+																	var coS = coO.scores[c];
+																	if (!coS.isNotDiscountable) {
+																		this.discountC(e, coS);
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
 								if ("undefined" !== typeof e.scores) {
 									for (var i = 0; i < e.scores.length; i++)
 										for (var s = 0; s < this.app.pointTypes.length; s++) {
@@ -9101,7 +11392,7 @@
                                     binary: !0
                                 }), i.rows[o].objects[r].addons[a].image = "images/R" + (s + 1) + "C" + (r + 1) + "A" + (a + 1) + "." + ext)
                             }
-                        }				
+                        }
 						for (o = 0; o < this.app.backpack.length; o++) {
 							this.app.backpack[o].image.length > 30 && (m = this.getMime(this.app.backpack[o].image), ext = this.getExt(m), i = F()(this.app.backpack[o].image.split(",")[1], m), e.file("images/BR" + (s + 1) + "." + ext, s, {
                                 binary: !0
@@ -9259,7 +11550,7 @@
                 },
                 computed: {
                     background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundStretch ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundFitIn ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     activated: function() {
 						for (var e = [], t = 0; t < this.app.activated.length; t++) {
@@ -9313,31 +11604,129 @@
                 },
                 methods: {
 					playBgm: function(e, t, i) {
+						function bgmFadeIn(th, f) {
+							if (th.app.isFadingOut) {
+								const lastTime = parseInt(th.app.lastFadeTime);
+								let v = 0;
+								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
+								th.app.bgmFadeTimer = setTimeout(() => {
+									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+									if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+										const iTime = e.bgmFadeInSec / 20;
+										th.app.lastFadeTime = e.bgmFadeInSec;
+										bgmPlayer.setVolume(0);
+										bgmPlayer.playVideo();
+										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.isFadingOut) th.app.isFadingOut = !1;
+										th.app.bgmFadeInterval = setInterval(() => {
+											if (bgmPlayer.playerInfo.playerState === 1) {
+												if (v < 100) {
+													v += 5;
+													bgmPlayer.setVolume(v);
+													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+												} else {
+													bgmPlayer.setVolume(100);
+													clearInterval(th.app.bgmFadeInterval);
+													th.app.bgmFadeInterval = 0;
+													th.app.lastFadeTime = 0;
+												}
+											}
+										}, iTime);
+									} else {
+										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										bgmPlayer.setVolume(100);
+										bgmPlayer.playVideo();
+									}
+									th.$set(th.app, "bgmObjectId", e.id);
+								}, lastTime);
+							} else {
+								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+									const iTime = e.bgmFadeInSec / 20;
+									th.app.lastFadeTime = e.bgmFadeInSec;
+									bgmPlayer.setVolume(0);
+									bgmPlayer.playVideo();
+									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.isFadingOut) th.app.isFadingOut = !1;
+									th.app.bgmFadeInterval = setInterval(() => {
+										if (bgmPlayer.playerInfo.playerState === 1) {
+											if (v < 100) {
+												v += 5;
+												bgmPlayer.setVolume(v);
+												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+											} else {
+												bgmPlayer.setVolume(100);
+												clearInterval(th.app.bgmFadeInterval);
+												th.app.bgmFadeInterval = 0;
+												th.app.lastFadeTime = 0;
+											}
+										}
+									}, iTime);
+								} else {
+									bgmPlayer.setVolume(100);
+									bgmPlayer.playVideo();
+								}
+								th.$set(th.app, "bgmObjectId", e.id);
+							}
+						}
+						function bgmFadeOut(th) {
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
+								const steps = bgmPlayer.getVolume() / 5;
+								const iTime = e.bgmFadeOutSec / steps;
+								let v = bgmPlayer.getVolume();
+								th.app.lastFadeTime = e.bgmFadeOutSec;
+								th.app.isFadingOut = !0;
+								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+								th.app.bgmFadeInterval = setInterval(() => {
+									if (v > 0) {
+										v -= 5;
+										bgmPlayer.setVolume(v);
+										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+									} else {
+										if (th.app.isFadingOut) {
+											bgmPlayer.setVolume(0);
+											clearInterval(th.app.bgmFadeInterval);
+											th.app.bgmFadeInterval = 0;
+											th.app.lastFadeTime = 0;
+											th.app.isFadingOut = !1;
+											bgmPlayer.pauseVideo();
+										}
+									}
+								}, iTime);
+							} else {
+								bgmPlayer.pauseVideo();
+							}
+						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
 							var p = this.app.bgmIsPlaying,
 								s = bgmPlayer.playerInfo.videoData.video_id,
-								o = bgmPlayer.playerInfo.playerState;
+								o = bgmPlayer.playerInfo.playerState,
+								v = 0,
+								f = !1;
 							if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
 							if (s == t) {
 								if (this.app.bgmObjectId == e.id) {
 									if (p) {
-										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
-										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										if (o === 2) {
+											bgmFadeIn(this, f);
+										} else {
+											bgmPlayer.stopVideo();
+											bgmFadeIn(this, f);
+										}
 									} else {
-										if (o != 2) bgmPlayer.pauseVideo();
+										if (o !== 2) bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
-										bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o === 1) bgmFadeOut(this);
 									}
 								}
 							} else {
 								if (p) {
-									e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
-									bgmPlayer.playVideo();
-									this.$set(this.app, "bgmObjectId", e.id);
+									f = !0;
+									bgmFadeIn(this, f);
 								}
 							}
 						} else {
@@ -9349,7 +11738,7 @@
 							}
 						}
 					},
-                    updateScores: function(e, t, o, i) {
+					updateScores: function(e, t, o, i) {
 						var tmpScores = [],
 							count = i;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
@@ -9365,18 +11754,20 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
 														if (this.app.pointTypes[m].id == coS.id) {
-															var nC = 0;
 															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) this.app.pointTypes[m].startingSum += coSDiscount;
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																}
 															} else {
-																this.app.pointTypes[m].startingSum += coSDiscount;
+																this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 															}
 															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
 												}
 											}
 										}
@@ -9438,7 +11829,7 @@
 																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
 																			coS.isActiveMul[ee] = !0;
 																		}
-																	}																	
+																	}
 																} else {
 																	this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
@@ -9476,6 +11867,28 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											if (e.discountOther) {
+												for (var b = 0; b < coO.scores.length; b++) {
+													var coS = coO.scores[b];
+													if (!coS.isNotRecalculatable) {
+														if (coS.isChangeDiscount) {
+															for (var m = 0; m < this.app.pointTypes.length; m++) {
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																		}
+																	} else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																	this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+																}
+															}
+															coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+														}
+													}
+												}
+											}
 											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable - 1] : coS.isActive;
 											for (var a = 0; a < o.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -9679,6 +12092,217 @@
 							this.$set(this, "exceptedScores", []);
 						}
 					},
+					discountS: function(e, coS) {
+						if (e.stackableDiscount) {
+							var scoreVal = parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								bTempStacked = !1,
+								tmpNum = 0,
+								discountedFrom = [],
+								aDiscount = [];
+							if (coS.notStackableDiscount) {
+								for (var f = 0; f < coS.tmpDiscount.length; f++) {
+									if (coS.tmpDiscount[f][0]) {
+										discountedFrom = coS.tmpDiscount[f][1];
+										discountedFrom.push(e.id);
+										scoreVal = coS.tmpDiscount[f][2];
+										bTempStacked = !0;
+										tmpNum = f;
+									}
+								}
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if (coS.discountScore > stackDiscount) {
+									this.$set(coS, "tmpDisScore", coS.discountScore - stackDiscount);
+									this.$set(coS, "isChangeDiscount", true);
+									aDiscount.push(false);
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									if ("undefined" !== typeof coS.discountTextA) this.$set(coS, "discountAfterText", coS.discountTextA.join(""));
+									if ("undefined" !== typeof coS.discountTextB) this.$set(coS, "discountBeforeText", coS.discountTextB.join(""));
+									if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+									coS.discountedFrom.push(...discountedFrom);
+									if (bTempStacked) coS.tmpDiscount.splice(tmpNum, 1);
+									coS.tmpDiscount.push(aDiscount);
+									this.$set(coS, "notStackableDiscount", false);
+								} else {
+									this.$set(coS, "isChangeDiscount", false);
+									discountedFrom.push(e.id);
+									if (bTempStacked) {
+										coS.tmpDiscount[tmpNum][1] = discountedFrom;
+										coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+										coS.tmpDiscount[tmpNum][3] = stackDiscount;
+									} else {
+										if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+										"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+										aDiscount.push(discountedFrom);
+										aDiscount.push(stackDiscountCal);
+										aDiscount.push(stackDiscount);
+										coS.tmpDiscount.push(aDiscount);
+									}
+								}
+							} else {
+								scoreVal = coS.discountIsOn ? coS.discountScoreCal : parseInt(coS.value);
+								var tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
+								if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+								else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+								else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+								else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+								if (e.discountShow) {
+									if (e.discountAfterText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+										var dA = !1;
+										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+											if (dA) {
+												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
+											} else {
+												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+												coS.dupTextA[e.discountAfterText] = 1;
+												coS.discountTextA.push(e.discountAfterText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.discountTextA.push(e.discountAfterText);
+										}
+									}
+									if (e.discountBeforeText != "") {
+										this.$set(coS, "discountShow", e.discountShow);
+										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+										var dB = !1;
+										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+										if (e.discountTextDuplicated) {
+											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+											if (dB) {
+												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
+											} else {
+												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+												coS.dupTextB[e.discountBeforeText] = 1;
+												coS.discountTextB.push(e.discountBeforeText);
+											}
+										} else {
+											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.discountTextB.push(e.discountBeforeText);
+										}
+									}
+								}
+								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								coS.discountedFrom.push(e.id);
+								coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+								if (!coS.discountIsOn) this.$set(coS, "discountIsOn", true);
+							}
+						} else {
+							var scoreVal = parseInt(coS.value),
+								tmpDisScore = coS.discountIsOn ? coS.discountScore : parseInt(coS.value),
+								stackDiscount = 0,
+								stackDiscountCal = 0,
+								aDiscount = [];
+							if ("undefined" === typeof coS.tmpDiscount) this.$set(coS, "tmpDiscount", []);
+							if (1 == e.discountOperator) stackDiscount = scoreVal - parseInt(e.discountValue);
+							else if (2 == e.discountOperator) stackDiscount = scoreVal + parseInt(e.discountValue);
+							else if (3 == e.discountOperator) stackDiscount = parseInt(scoreVal * e.discountValue);
+							else if (4 == e.discountOperator) stackDiscount = parseInt(scoreVal / e.discountValue);
+							stackDiscountCal = stackDiscount;
+							if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
+							if (coS.discountIsOn) {
+								"undefined" === typeof e.stackableDiscount ? aDiscount.push(false) : aDiscount.push(e.stackableDiscount);
+								if (coS.discountScore > stackDiscount) {
+									aDiscount.push(coS.discountedFrom);
+									aDiscount.push(coS.discountScoreCal);
+									aDiscount.push(coS.discountScore);
+									if (coS.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+									this.$set(coS, "discountScore", stackDiscount);
+									this.$set(coS, "discountScoreCal", stackDiscountCal);
+									this.$set(coS, "discountShow", e.discountShow);
+									this.$set(coS, "discountBeforeText", e.discountBeforeText);
+									this.$set(coS, "discountAfterText", e.discountAfterText);
+									this.$set(coS, "discountedFrom", e.id);
+									this.$set(coS, "notStackableDiscount", true);
+								} else {
+									aDiscount.push(e.id);
+									aDiscount.push(stackDiscountCal);
+									aDiscount.push(stackDiscount);
+									if (e.discountShow) {
+										aDiscount.push(true);
+										aDiscount.push(e.discountBeforeText);
+										aDiscount.push(e.discountAfterText);
+									} else {
+										aDiscount.push(false);
+									}
+								}
+								coS.tmpDiscount.push(aDiscount);
+							} else {
+								this.$set(coS, "discountScore", stackDiscount);
+								this.$set(coS, "discountScoreCal", stackDiscountCal);
+								if (e.discountShow) this.$set(coS, "discountShow", e.discountShow), this.$set(coS, "discountBeforeText", e.discountBeforeText), this.$set(coS, "discountAfterText", e.discountAfterText);
+								this.$set(coS, "discountIsOn", true);
+								this.$set(coS, "discountedFrom", e.id);
+								this.$set(coS, "notStackableDiscount", true);
+							}
+							coS.discountScore != tmpDisScore ? (this.$set(coS, "tmpDisScore", tmpDisScore - coS.discountScore), this.$set(coS, "isChangeDiscount", true)) : this.$set(coS, "isChangeDiscount", false);
+						}
+					},
 					activateObjectI: function(e) {
 						var eID = e.split("/IMG#"),
 							eImage = eID.length > 1 ? eID[1] : "";
@@ -9693,29 +12317,48 @@
 								coO = coR.objects[co.objects];
 							var tmpScores = [];
 							if (coO.discountOther) {
-								if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue && "undefined" !== typeof coO.discountGroups)
-									for (var c = 0; c < this.app.groups.length; c++)
-										for (var d = 0; d < this.app.groups[c].elements.length; d++)
-											if ("undefined" !== typeof this.app.comp[this.app.groups[c].elements[d].id]) {
-												var coT = this.app.comp[this.app.groups[c].elements[d].id],
-													coTR = this.app.rows[coT.rows],
-													coTO = coTR.objects[coT.objects];
-												for (var f = 0; f < coTO.scores.length; f++) {
-													var coTS = coTO.scores[f];															
-													if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
-														if (!coTS.isNotDiscountable && !coTS.discountIsOn) {
-															if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
-															else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
-															else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
-															else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
-															if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? parseInt(coO.discountLowLimit) : coTS.discountScore;
-															if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
-															this.$set(coTS, "discountIsOn", true);
-															this.$set(coTS, "discountedFrom", coO.id);
+								if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue) {
+									if (coO.isDisChoices) {
+										if ("undefined" !== typeof coO.discountChoices) {
+											for (var a = 0; a < coO.discountChoices.length; a++) {
+												if ("undefined" !== typeof this.app.comp[coO.discountChoices[a]]) {
+													var coT = this.app.comp[coO.discountChoices[a]],
+														coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+														coTO = coTR.objects[coT.objects];
+													for (var c = 0; c < coTO.scores.length; c++) {
+														var coTS = coTO.scores[c];
+														if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+															if (!coTS.isNotDiscountable) {
+																this.discountS(coO, coTS);
+															}
 														}
 													}
 												}
 											}
+										}
+									} else {
+										if("undefined" !== typeof coO.discountGroups) {
+											for (var a = 0; a < this.app.groups.length; a++) {
+												if (coO.discountGroups.includes(this.app.groups[a].id)) {
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var coT = this.app.comp[this.app.groups[a].elements[b].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															for (var c = 0; c < coTO.scores.length; c++) {
+																var coTS = coTO.scores[c];
+																if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																	if (!coTS.isNotDiscountable) {
+																		this.discountS(coO, coTS);
+																	}
+																}
+															}
+														}
+												}
+											}
+										}
+									} 
+								}
 							}
 							for (var h = 0; h < coO.scores.length; h++) {
 								var coS = coO.scores[h];
@@ -9864,7 +12507,6 @@
 							}
 							if (coO.dividePointtypeIsOn) {
 								coO.dividePointtypeIsOnCheck = !0;
-								if ("object" !== typeof coO.startingSumAtDivide) this.$set(coO, "startingSumAtDivide", []);
 								for (var l = 0; l < coO.pointTypeToDivide.length; l++) {
 									for (var m = 0; m < this.app.pointTypes.length; m++) {
 										if (this.app.pointTypes[m].id == coO.pointTypeToDivide[l]) {
@@ -9943,6 +12585,50 @@
 							coO.numMultipleTimesPluss > coO.multipleUseVariable ? (coO.multipleUseVariable++, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable), this.$set(this.app.objectMap, coO.id, coO.multipleUseVariable)) : s = !1;
 							if (s) {
 								var tmpScores = [];
+								if (coO.discountOther) {
+									if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue) {
+										if (coO.isDisChoices) {
+											if ("undefined" !== typeof coO.discountChoices) {
+												for (var a = 0; a < coO.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[coO.discountChoices[a]]) {
+														var coT = this.app.comp[coO.discountChoices[a]],
+															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+															coTO = coTR.objects[coT.objects];
+														for (var c = 0; c < coTO.scores.length; c++) {
+															var coTS = coTO.scores[c];
+															if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																if (!coTS.isNotDiscountable) {
+																	this.discountS(coO, coTS);
+																}
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if("undefined" !== typeof coO.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (coO.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var coT = this.app.comp[this.app.groups[a].elements[b].id],
+																	coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																	coTO = coTR.objects[coT.objects];
+																for (var c = 0; c < coTO.scores.length; c++) {
+																	var coTS = coTO.scores[c];
+																	if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																		if (!coTS.isNotDiscountable) {
+																			this.discountS(coO, coTS);
+																		}
+																	}
+																}
+															}
+													}
+												}
+											}
+										} 
+									}
+								}
 								for (var h = 0; h < coO.scores.length; h++) {
 									var coS = coO.scores[h],
 										k = coO.multipleUseVariable;
@@ -10186,7 +12872,7 @@
 									} else {
 										this.activateObjectI(ea[0]);
 									}
-								}								
+								}
 							}
 							this.newActivatedList.splice(0);
 						}
@@ -10397,7 +13083,7 @@
 						var bgColor = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgColor : this.app.styling.backgroundColor,
 							bgImage = this.app.styling.useBackpackDesign ? this.app.styling.backpackBgImage : this.app.styling.backgroundImage,
 							bgRepeat = this.app.styling.useBackpackDesign ? this.app.styling.isBackpackBgRepeat : this.app.styling.isBackgroundRepeat,
-							bgStretch = this.app.styling.useBackpackDesign ? this.app.styling.isBackpackBgStretch : this.app.styling.isBackgroundStretch;
+							bgStretch = this.app.styling.useBackpackDesign ? this.app.styling.isBackpackBgStretch : this.app.styling.isBackgroundFitIn;
                         return bgImage ? 'background-image: url("' + bgImage + '");background-color: ' + bgColor + (bgRepeat ? ";background-repeat: repeat;" : (bgStretch ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + bgColor + ';'
                     }
                 },
@@ -10934,7 +13620,8 @@
 						newActivated: "",
 						newActivatedList: [],
 						snackbar: !1,
-						text: ""
+						text: "",
+						externalImages: {}
                     }
                 },
                 components: {
@@ -10944,8 +13631,8 @@
                     appBackpackPreview: Lt
                 },
                 computed: {
-                   background: function() {
-                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundStretch ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
+					background: function() {
+                        return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundFitIn ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
                         return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
@@ -10998,8 +13685,8 @@
 						lm = document.getElementById('lm'),
 						sizeTotal = parseInt(projectSize.innerHTML),
 						ps = indicator.className,
-						indDiv = document.getElementById('indicator'),
-						oriText = indDiv.innerHTML;
+						indDiv = document.getElementById('indicator');
+					lm.style.pointerEvents = "none";
 					if (window.fetch) {
 						fetch("project.json")
 						.then(response => {
@@ -11013,29 +13700,36 @@
 									var i = JSON.parse(data);
 									t.$store.commit("loadApp", i);
 									t.initializeApp(t);
-									setTimeout(function() {
-										lm.style.opacity = 1;
-										indicator.remove();
-										projectSize.remove();
-										document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
-									}, 1000);
-									const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
-									new Promise(() => {
-										const image = new Image();
-										image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
-										image.onload = () => {}
-										image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
-									}).catch(() => false);
-									return;
+									lm.style.height = "0";
+									if (t.app.preloadExternalImages && t.externalImages.size > 0) {
+										return t.loadImagesSequentially(t.externalImages);
+									} else {
+										setTimeout(function() {
+											lm.style.height = "";
+											lm.style.opacity = 1;
+											lm.style.transform = "";
+											indicator.remove();
+											projectSize.remove();
+											document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 2s}", 0);
+										}, 1000);
+										const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
+										new Promise(() => {
+											const image = new Image();
+											image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
+											image.onload = () => {}
+											image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
+										}).catch(() => false);
+										return;
+									}
 								}
 								receivedLength += value.length;
 								data += decoder.decode(value, { stream:true });
 								if (ps == "ind2" && sizeTotal > 0) {
-									indDiv.innerHTML = oriText + `${(receivedLength / sizeTotal * 100).toFixed(1)} %`;
+									indicator.innerHTML = `<div>Loading</div><div>${(receivedLength / sizeTotal * 100).toFixed(1)} %</div>`;
 								} else if (ps == "ind3" && sizeTotal > 0) {
-									indDiv.innerHTML = oriText + `${(receivedLength / 1e6).toFixed(1)}/${sizeTotal.toFixed(1)} MB`;
+									indicator.innerHTML = `<div>Loading</div><div>${(receivedLength / 1e6).toFixed(1)}/${sizeTotal.toFixed(1)} MB</div>`;
 								} else {
-									indDiv.innerHTML = oriText + `${(receivedLength / 1e6).toFixed(1)} MB`;
+									indicator.innerHTML = `<div>Loading</div><div>${(receivedLength / 1e6).toFixed(1)} MB</div>`;
 								}
 								return reader.read().then(processText);
 							};
@@ -11044,19 +13738,26 @@
 						.catch(error => {
 							console.log(error);
 							t.initializeApp(t);
-							setTimeout(function() {
-								lm.style.opacity = 1;
-								indicator.remove();
-								projectSize.remove();
-								document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
-							}, 1000);
-							const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
-							new Promise(() => {
-								const image = new Image();
-								image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
-								image.onload = () => {}
-								image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
-							}).catch(() => false);
+							lm.style.height = "0";
+							if (t.app.preloadExternalImages && t.externalImages.size > 0) {
+								return t.loadImagesSequentially(t.externalImages);
+							} else {
+								setTimeout(function() {
+									lm.style.height = "";
+									lm.style.opacity = 1;
+									lm.style.pointerEvents = "";
+									indicator.remove();
+									projectSize.remove();
+									document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 2s}", 0);
+								}, 1000);
+								const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
+								new Promise(() => {
+									const image = new Image();
+									image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
+									image.onload = () => {}
+									image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
+								}).catch(() => false);
+							}
 						});
 					} else {
 						e.onreadystatechange = function() {
@@ -11065,33 +13766,41 @@
 								i = JSON.parse(r);
 								t.$store.commit("loadApp", i);
 								t.initializeApp(t);
+								lm.style.height = "0";
 							} else if ((4 == this.readyState && 404 == this.status) || (4 == this.readyState && 0 == this.status)) {
 								t.initializeApp(t);
+								lm.style.height = "0";
 							}
 						};
 						e.addEventListener("progress", function(e) {
-							if (ps == "ind2" && parseInt(sizeTotal) > 0) {
-								indicator.innerHTML = "Loading<br>" + `${(e.loaded / sizeTotal * 100).toFixed(1)} %`;
-							} else if (ps == "ind3" && parseInt(sizeTotal) > 0) {
-								indicator.innerHTML = "Loading<br>" + `${(e.loaded / 1e6).toFixed(1)}/${sizeTotal.toFixed(1)} MB`;
+							if (ps == "ind2" && sizeTotal > 0) {
+								indicator.innerHTML = `<div>Loading</div><div>${(e.loaded / sizeTotal * 100).toFixed(1)} %</div>`;
+							} else if (ps == "ind3" && sizeTotal > 0) {
+								indicator.innerHTML = `<div>Loading</div><div>${(e.loaded / 1e6).toFixed(1)}/${sizeTotal.toFixed(1)} MB</div>`;
 							} else {
-								indicator.innerHTML = "Loading<br>" + `${(e.loaded / 1e6).toFixed(1)} MB`;
+								indicator.innerHTML = `<div>Loading</div><div>${(e.loaded / 1e6).toFixed(1)} MB</div>`;
 							}
 						});
 						e.addEventListener("loadend", function() {
-							setTimeout(function() {
-								lm.style.opacity = 1;
-								indicator.remove();
-								projectSize.remove();
-								document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 0.5s}", 0);
-							}, 1000);
-							const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
-							new Promise(() => {
-								const image = new Image();
-								image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
-								image.onload = () => {}
-								image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
-							}).catch(() => false);
+							if (t.app.preloadExternalImages && t.externalImages.size > 0) {
+								t.loadImagesSequentially(t.externalImages);
+							} else {
+								setTimeout(function() {
+									lm.style.height = "";
+									lm.style.opacity = 1;
+									lm.style.pointerEvents = "";
+									indicator.remove();
+									projectSize.remove();
+									document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 2s}", 0);
+								}, 1000);
+								const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
+								new Promise(() => {
+									const image = new Image();
+									image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
+									image.onload = () => {}
+									image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
+								}).catch(() => false);
+							}
 						});
 						e.open("GET", "project.json", true), e.send();
 					}
@@ -11117,8 +13826,51 @@
                             type: "cleanActivated"
                         })
                     },
+					loadImage: function(e) {
+						return new Promise((resolve, reject) => {
+							const img = new Image();
+							img.onload = () => resolve(img);
+							img.onerror = () => reject(new Error('Failed to load image: ' + url));
+							img.src = e;
+						});
+					},
+					loadImagesSequentially: function(e) {
+						var t = this;
+						const urls = Array.from(e);
+						const loadNextImage = (index) => {
+							if (index >= urls.length) {
+								indicator.innerHTML = `<div>Images</div><div>${index} / ${urls.length}</div>`;
+								return Promise.resolve();
+							}
+							return t.loadImage(urls[index]).then(() => {
+								indicator.innerHTML = `<div>Images</div><div>${index} / ${urls.length}</div>`;
+								return loadNextImage(index + 1);
+							}).catch(error => {
+								console.error(error);
+								return loadNextImage(index + 1);
+							});
+						}
+						return loadNextImage(0).then(() => {
+							setTimeout(function() {
+								lm.style.height = "";
+								lm.style.opacity = 1;
+								lm.style.pointerEvents = "";
+								indicator.remove();
+								projectSize.remove();
+								document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 2s}", 0);
+							}, 1000);
+							const errorMsg = "Your browser does not support the .avif format.\n Avif images may not be displayed.";
+							new Promise(() => {
+								const image = new Image();
+								image.onerror = () => {t.text = errorMsg, t.snackbar = !0;}
+								image.onload = () => {}
+								image.src = "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=";
+							}).catch(() => false);
+						});
+					},
 					initializeApp: function(e) {
 						if (e.app.darkMode) e.$set(e.$vuetify.theme, "isDark", e.app.darkMode);
+						this.externalImages = new Set();
 						for (var a = 0; a < e.app.pointTypes.length; a++) {
 							if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownPointBar) e.app.pointTypes[a].isNotShownPointBar = !0;
@@ -11127,6 +13879,11 @@
 						if ("undefined" === typeof e.app.pointTypeMap) e.$set(e.app, "pointTypeMap", {});
 						if ("undefined" === typeof e.app.wordMap) e.$set(e.app, "wordMap", {});
 						if ("undefined" === typeof e.app.objectMap) e.$set(e.app, "objectMap", {});
+						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, "tmpRequired", []);
+						if ("undefined" === typeof e.app.isFadingOut) e.$set(e.app, "isFadingOut", !1);
+						if ("undefined" === typeof e.app.bgmFadeInterval) e.$set(e.app, "bgmFadeInterval", 0);
+						if ("undefined" === typeof e.app.bgmFadeTimer) e.$set(e.app, "bgmFadeTimer", 0);
+						if ("undefined" === typeof e.app.lastFadeTime) e.$set(e.app, "lastFadeTime", 0);
 						e.$set(e.app, "comp", {});
 						e.$set(e.app, "compR", {});
 						e.$set(e.app, "compG", {});
@@ -11145,66 +13902,81 @@
 						if ("undefined" === typeof e.app.orderSelReqText) e.$set(e.app, "orderSelReqText", "0");
 						if ("undefined" === typeof e.app.defaultSelReq) e.$set(e.app, "defaultSelReq", "choice from");
 						for (var b = 0; b < e.app.rows.length; b++) {
-							var g = e.app.rows[b].id;
+							var coR = e.app.rows[b],
+								g = coR.id;
 							e.app.compR[g] = {rows: b, type: "app"};
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateFilterIsOn) e.$set(e.app.rows[b], "privateFilterIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateTextIsOn) e.$set(e.app.rows[b], "privateTextIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectImageIsOn) e.$set(e.app.rows[b], "privateObjectImageIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateObjectIsOn) e.$set(e.app.rows[b], "privateObjectIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowImageIsOn) e.$set(e.app.rows[b], "privateRowImageIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateRowIsOn) e.$set(e.app.rows[b], "privateRowIsOn", !0);
-							if (e.app.rows[b].isPrivateStyling && "undefined" === typeof e.app.rows[b].privateBackgroundIsOn) e.$set(e.app.rows[b], "privateBackgroundIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) e.$set(coR, "privateFilterIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) e.$set(coR, "privateTextIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) e.$set(coR, "privateObjectImageIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) e.$set(coR, "privateObjectIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) e.$set(coR, "privateRowImageIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) e.$set(coR, "privateRowIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) e.$set(coR, "privateBackgroundIsOn", !0);
 							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
 							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
-							if (e.app.rows[b].textIsRemoved) {
-								if ("undefined" === typeof e.app.rows[b].objectTextRemoved) e.$set(e.app.rows[b], "objectTextRemoved", !0);
-								if ("undefined" === typeof e.app.rows[b].addonTextRemoved) e.$set(e.app.rows[b], "addonTextRemoved", !0);
+							if (coR.textIsRemoved) {
+								if ("undefined" === typeof coR.objectTextRemoved) e.$set(coR, "objectTextRemoved", !0);
+								if ("undefined" === typeof coR.addonTextRemoved) e.$set(coR, "addonTextRemoved", !0);
 							}
-							for (var c = 0; c < e.app.rows[b].objects.length; c++) {
-								var d = e.app.rows[b].objects[c].id;
+							if ("undefined" !== typeof coR.image && coR.image.length > 0 && !this.isDataURL(coR.image)) this.externalImages.add(coR.image);
+							for (var c = 0; c < coR.objects.length; c++) {
+								var coO = coR.objects[c],
+									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "app"};
-								if (!e.app.rows[b].objects[c].isSelectableMultiple && e.app.rows[b].objects[c].isMultipleUseVariable) e.$set(e.app.rows[b].objects[c], "isMultipleUseVariable", !1);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateFilterIsOn) e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !0);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateTextIsOn) e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !0);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectImageIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !0);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateObjectIsOn) e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !0);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].privateBackgroundIsOn) e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !0);
-								if (e.app.rows[b].objects[c].isPrivateStyling && "undefined" === typeof e.app.rows[b].objects[c].styling) {
-									e.$set(e.app.rows[b].objects[c], "styling", {});
-									e.$set(e.app.rows[b].objects[c], "privateFilterIsOn", !1);
-									e.$set(e.app.rows[b].objects[c], "privateTextIsOn", !1);
-									e.$set(e.app.rows[b].objects[c], "privateObjectImageIsOn", !1);
-									e.$set(e.app.rows[b].objects[c], "privateObjectIsOn", !1);
-									e.$set(e.app.rows[b].objects[c], "privateBackgroundIsOn", !1);
+								if (!coO.isSelectableMultiple && coO.isMultipleUseVariable) e.$set(coO, "isMultipleUseVariable", !1);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) e.$set(coO, "privateFilterIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) e.$set(coO, "privateTextIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) e.$set(coO, "privateObjectImageIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) e.$set(coO, "privateObjectIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) e.$set(coO, "privateBackgroundIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.styling) {
+									e.$set(coO, "styling", {});
+									e.$set(coO, "privateFilterIsOn", !1);
+									e.$set(coO, "privateTextIsOn", !1);
+									e.$set(coO, "privateObjectImageIsOn", !1);
+									e.$set(coO, "privateObjectIsOn", !1);
+									e.$set(coO, "privateBackgroundIsOn", !1);
 								}
-								if (e.app.rows[b].objects[c].isMultipleUseVariable && "number" !== typeof e.app.rows[b].objects[c].initMultipleTimesMinus) {
-									e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", 0);
-									e.$set(e.app.rows[b].objects[c], "initMultipleTimesMinus", parseInt(e.app.rows[b].objects[c].numMultipleTimesMinus));
+								if (coO.isMultipleUseVariable && "number" !== typeof coO.initMultipleTimesMinus) {
+									e.$set(coO, "initMultipleTimesMinus", 0);
+									e.$set(coO, "initMultipleTimesMinus", parseInt(coO.numMultipleTimesMinus));
 								}
-								if (e.app.rows[b].objects[c].discountOther && "undefined" === typeof e.app.rows[b].objects[c].discountPointTypes) e.$set(e.app.rows[b].objects[c], "discountPointTypes", []);
-								if (e.app.rows[b].objects[c].multiplyPointtypeIsOn && "string" === typeof e.app.rows[b].objects[c].pointTypeToMultiply) e.$set(e.app.rows[b].objects[c], "pointTypeToMultiply", [e.app.rows[b].objects[c].pointTypeToMultiply]);
-								if (e.app.rows[b].objects[c].dividePointtypeIsOn && "string" === typeof e.app.rows[b].objects[c].pointTypeToDivide) e.$set(e.app.rows[b].objects[c], "pointTypeToDivide", [e.app.rows[b].objects[c].pointTypeToDivide]);
-								if (e.app.rows[b].objects[c].multiplyPointtypeIsOn && "number" === typeof e.app.rows[b].objects[c].startingSumAtMultiply) e.$set(e.app.rows[b].objects[c], "startingSumAtMultiply", [e.app.rows[b].objects[c].startingSumAtMultiply]);
-								if (e.app.rows[b].objects[c].dividePointtypeIsOn && "number" === typeof e.app.rows[b].objects[c].startingSumAtDivide) e.$set(e.app.rows[b].objects[c], "startingSumAtDivide", [e.app.rows[b].objects[c].startingSumAtDivide]);
-								for (var f = 0; f < e.app.rows[b].objects[c].addons.length; f++) {
-									if ("undefined" === typeof e.app.rows[b].objects[c].addons[f].template || 0 == e.app.rows[b].objects[c].addons[f].template) e.$set(e.app.rows[b].objects[c].addons[f], "template", 1);
+								if (coO.discountOther && "undefined" === typeof coO.discountPointTypes) e.$set(coO, "discountPointTypes", []);
+								if (coO.multiplyPointtypeIsOn && "string" === typeof coO.pointTypeToMultiply) e.$set(coO, "pointTypeToMultiply", [coO.pointTypeToMultiply]);
+								if (coO.dividePointtypeIsOn && "string" === typeof coO.pointTypeToDivide) e.$set(coO, "pointTypeToDivide", [coO.pointTypeToDivide]);
+								if (coO.multiplyPointtypeIsOn && "number" === typeof coO.startingSumAtMultiply) e.$set(coO, "startingSumAtMultiply", [coO.startingSumAtMultiply]);
+								if (coO.dividePointtypeIsOn && "number" === typeof coO.startingSumAtDivide) e.$set(coO, "startingSumAtDivide", [coO.startingSumAtDivide]);
+								if ("undefined" !== typeof coO.image && coO.image.length > 0 && !this.isDataURL(coO.image)) this.externalImages.add(coO.image);
+								for (var f = 0; f < coO.addons.length; f++) {
+									var coA = coO.addons[f];
+									if ("undefined" === typeof coA.template || 0 == coA.template) e.$set(coA, "template", 1);
+									if ("undefined" !== typeof coA.image && coA.image.length > 0 && !this.isDataURL(coA.image)) this.externalImages.add(coA.image);
 								}
 							}
 						}
 						for (var b = 0; b < e.app.backpack.length; b++) {
-							var g = e.app.backpack[b].id;
+							var coR = e.app.backpack[b],
+								g = coR.id;
 							e.app.compR[g] = {rows: b, type: "backpack"};
-							if (e.app.backpack[b].textIsRemoved) {
-								if ("undefined" === typeof e.app.backpack[b].objectTextRemoved) e.$set(e.app.backpack[b], "objectTextRemoved", !0);
-								if ("undefined" === typeof e.app.backpack[b].addonTextRemoved) e.$set(e.app.backpack[b], "addonTextRemoved", !0);
+							if (coR.textIsRemoved) {
+								if ("undefined" === typeof coR.objectTextRemoved) e.$set(coR, "objectTextRemoved", !0);
+								if ("undefined" === typeof coR.addonTextRemoved) e.$set(coR, "addonTextRemoved", !0);
 							}
-							for (var c = 0; c < e.app.backpack[b].objects.length; c++) {
-								var d = e.app.backpack[b].objects[c].id;
+							if ("undefined" !== typeof coR.image && coR.image.length > 0 && !this.isDataURL(coR.image)) this.externalImages.add(coR.image);
+							for (var c = 0; c < coR.objects.length; c++) {
+								var coO = coR.objects[c],
+									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "backpack"};
-								if (e.app.backpack[b].objects[c].multiplyPointtypeIsOn && "string" === typeof e.app.backpack[b].objects[c].pointTypeToMultiply) e.$set(e.app.backpack[b].objects[c], "pointTypeToMultiply", [e.app.backpack[b].objects[c].pointTypeToMultiply]);
-								if (e.app.backpack[b].objects[c].dividePointtypeIsOn && "string" === typeof e.app.backpack[b].objects[c].pointTypeToDivide) e.$set(e.app.backpack[b].objects[c], "pointTypeToDivide", [e.app.backpack[b].objects[c].pointTypeToDivide]);
-								if (e.app.backpack[b].objects[c].multiplyPointtypeIsOn && "number" === typeof e.app.backpack[b].objects[c].startingSumAtMultiply) e.$set(e.app.backpack[b].objects[c], "startingSumAtMultiply", [e.app.backpack[b].objects[c].startingSumAtMultiply]);
-								if (e.app.backpack[b].objects[c].dividePointtypeIsOn && "number" === typeof e.app.backpack[b].objects[c].startingSumAtDivide) e.$set(e.app.backpack[b].objects[c], "startingSumAtDivide", [e.app.backpack[b].objects[c].startingSumAtDivide]);
+								if (coO.multiplyPointtypeIsOn && "string" === typeof coO.pointTypeToMultiply) e.$set(coO, "pointTypeToMultiply", [coO.pointTypeToMultiply]);
+								if (coO.dividePointtypeIsOn && "string" === typeof coO.pointTypeToDivide) e.$set(coO, "pointTypeToDivide", [coO.pointTypeToDivide]);
+								if (coO.multiplyPointtypeIsOn && "number" === typeof coO.startingSumAtMultiply) e.$set(coO, "startingSumAtMultiply", [coO.startingSumAtMultiply]);
+								if (coO.dividePointtypeIsOn && "number" === typeof coO.startingSumAtDivide) e.$set(coO, "startingSumAtDivide", [coO.startingSumAtDivide]);
+								if ("undefined" !== typeof coO.image && coO.image.length > 0 && !this.isDataURL(coO.image)) this.externalImages.add(coO.image);
+								for (var f = 0; f < coO.addons.length; f++) {
+									var coA = coO.addons[f];
+									if ("undefined" === typeof coA.template || 0 == coA.template) e.$set(coA, "template", 1);
+									if ("undefined" !== typeof coA.image && coA.image.length > 0 && !this.isDataURL(coA.image)) this.externalImages.add(coA.image);
+								}
 							}
 						}
 						for (var f = 0; f < e.app.groups.length; f++) {
@@ -11292,187 +14064,130 @@
 						}
 						this.buildTitle = "";
 					},
-                    print: function() {
-						var e = this,
-							bgColor = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgColor : e.app.styling.backgroundColor,
-							bgImage = e.app.styling.useBackpackDesign ? e.app.styling.backpackBgImage : e.app.styling.backgroundImage,
-							bgRepeat = e.app.styling.useBackpackDesign ? e.app.styling.isBackpackBgRepeat : e.app.styling.isBackgroundRepeat,
-							bSuccess = !1;
-						if (bgImage) {
-							e.$refs.printThis.style.backgroundImage = 'url("' + bgImage + '")';
-							bgRepeat ? e.$refs.printThis.style.backgroundRepeat = 'repeat' : e.$refs.printThis.style.backgroundSize = 'cover';
-							e.$refs.printThis.style.backgroundPosition = 'center';
-							e.$refs.printThis.style.backgroundAttachment = 'fixed';
-						}
-						e.$refs.printThis.style.backgroundColor = bgColor;
-						htmlToImage.toBlob(e.$refs.printThis, {
-							type: "image/webp",
-							quality: 0.9
-						}).then(function(t) {
-							var i = document.createEvent("MouseEvents"),
-								s = document.createElement("a");
-							s.download = "Finalized Build.webp";
-							s.href = window.URL.createObjectURL(t);
-							s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
-							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-							s.dispatchEvent(i);
-							e.$refs.printThis.removeAttribute('style');
-							bSuccess = !0;
-						}).catch(function(error) {
-							if (!bSuccess) {
-								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
-								setTimeout(() => {
-									var maxLength = 6e6;
-									var container = e.$refs.printThis.cloneNode(true);
-
-									function splitNodes(node, maxLength) {
-										var parts = [];
-										var currentPart = document.createElement("div");
-										currentPart.style.cssText = node.style.cssText;
-										var currentLength = 0;
-										
-										function getBlobSize(node) {
-											const s = new XMLSerializer();
-											const str = s.serializeToString(node);
-											const blob = new Blob([str], {type: "image/webp"});
-											return blob.size;
-										}
-										
-										function addNodeToCurrentPart(node) {
-											var clone = node.cloneNode(true);
-											currentPart.appendChild(clone);
-											currentLength += getBlobSize(node);
-										}
-										
-										function addNodeToCurrentPartChild(node) {
-											var clone = node.cloneNode(true);
-											currentPart.childNodes[0].childNodes[0].childNodes[0].childNodes[1].appendChild(clone);
-											currentLength += getBlobSize(node);
-										}
-										
-										function initNode(node) {
-											var c1 = node.cloneNode(false),
-												c2 = node.childNodes[0].cloneNode(false),
-												c3 = node.childNodes[0].childNodes[0].cloneNode(false),
-												c4 = node.childNodes[0].childNodes[0].childNodes[0].cloneNode(true),
-												c5 = node.childNodes[0].childNodes[0].childNodes[1].cloneNode(false);
-											currentPart.appendChild(c1);
-											currentPart.childNodes[0].appendChild(c2);
-											currentPart.childNodes[0].childNodes[0].appendChild(c3);
-											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c4);
-											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c5);
-											currentLength += getBlobSize(c1);
-											currentLength += getBlobSize(c2);
-											currentLength += getBlobSize(c3);
-											currentLength += getBlobSize(c4);
-											currentLength += getBlobSize(c5);
-										}
-
-										Array.from(node.childNodes).forEach(function(child) {
-											var childLength = (new XMLSerializer().serializeToString(child)).length;
-											if (childLength > maxLength) {
-												var cParent = child.childNodes[0].childNodes[0],
-													cRow = cParent.childNodes[0];
-												if (currentLength > 0) parts.push(currentPart.innerHTML);
-												currentPart = document.createElement("div");
-												currentPart.style.cssText = node.style.cssText;
-												currentLength = 0;
-												initNode(child);
-												Array.from(cParent.childNodes[1].childNodes).forEach(function(c) {
-													var cLength = (new XMLSerializer().serializeToString(c)).length;
-													if (currentLength + cLength > maxLength) {
-														parts.push(currentPart.innerHTML);
-														currentPart = document.createElement("div");
-														currentPart.style.cssText = node.style.cssText;
-														currentLength = 0;
-														initNode(child);
-													}
-													addNodeToCurrentPartChild(c);
-												});
-											} else {
-												if (currentLength + childLength > maxLength) {
-														parts.push(currentPart.innerHTML);
-														currentPart = document.createElement("div");
-														currentPart.style.cssText = node.style.cssText;
-														currentLength = 0;
-												}
-												addNodeToCurrentPart(child);
-											}
-										});
-
-										if (currentPart.innerHTML) {
-											parts.push(currentPart.innerHTML);
-										}
-
-										return parts;
-									}
-
-									var parts = splitNodes(container, maxLength),
-										bS = !0;
-									var promises = parts.map(function(part, index) {
-										return new Promise(function(resolve) {
-											var tempDiv = document.createElement("div");
-											tempDiv.innerHTML = part;
-											if (bgImage) {
-												tempDiv.style.backgroundImage = 'url("' + bgImage + '")';
-												bgRepeat ? tempDiv.style.backgroundRepeat = 'repeat' : tempDiv.style.backgroundSize = 'cover';
-												tempDiv.style.backgroundPosition = 'center';
-												tempDiv.style.backgroundAttachment = 'fixed';
-											}
-											tempDiv.style.backgroundColor = bgColor;
-											e.$refs.printThis.appendChild(tempDiv);
-											htmlToImage.toBlob(tempDiv, {
-												type: "image/webp",
-												quality: 0.9
-											}).then(function(t) {
-												var i = document.createEvent("MouseEvents"),
-													s = document.createElement("a");
-												s.download = "Finalized_Build_Part_" + (index + 1) + ".webp";
-												s.href = window.URL.createObjectURL(t);
-												s.dataset.downloadurl = ["image/webp", s.download, s.href].join(":");
-												i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-												s.dispatchEvent(i);
-											}).catch(function(err) {
-												e.text = "Failed to download the image. Please try again with a different browser.", e.snackbar = !0;
-											}).finally(function() {
-												e.$refs.printThis.removeChild(tempDiv);
-												resolve();
-											});
-										});
-									});
-									Promise.all(promises).then(function() {
-										e.$refs.printThis.removeAttribute('style');
-									});
-								}, 1000);
-							}
-						});
-					},
 					playBgm: function(e, t, i) {
+						function bgmFadeIn(th, f) {
+							if (th.app.isFadingOut) {
+								const lastTime = parseInt(th.app.lastFadeTime);
+								let v = 0;
+								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
+								th.app.bgmFadeTimer = setTimeout(() => {
+									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+									if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+										const iTime = e.bgmFadeInSec / 20;
+										th.app.lastFadeTime = e.bgmFadeInSec;
+										bgmPlayer.setVolume(0);
+										bgmPlayer.playVideo();
+										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.isFadingOut) th.app.isFadingOut = !1;
+										th.app.bgmFadeInterval = setInterval(() => {
+											if (bgmPlayer.playerInfo.playerState === 1) {
+												if (v < 100) {
+													v += 5;
+													bgmPlayer.setVolume(v);
+													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+												} else {
+													bgmPlayer.setVolume(100);
+													clearInterval(th.app.bgmFadeInterval);
+													th.app.bgmFadeInterval = 0;
+													th.app.lastFadeTime = 0;
+												}
+											}
+										}, iTime);
+									} else {
+										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										bgmPlayer.setVolume(100);
+										bgmPlayer.playVideo();
+									}
+									th.$set(th.app, "bgmObjectId", e.id);
+								}, lastTime);
+							} else {
+								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
+								if (e.bgmFadeIn && e.bgmFadeInSec > 0) {
+									const iTime = e.bgmFadeInSec / 20;
+									th.app.lastFadeTime = e.bgmFadeInSec;
+									bgmPlayer.setVolume(0);
+									bgmPlayer.playVideo();
+									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.isFadingOut) th.app.isFadingOut = !1;
+									th.app.bgmFadeInterval = setInterval(() => {
+										if (bgmPlayer.playerInfo.playerState === 1) {
+											if (v < 100) {
+												v += 5;
+												bgmPlayer.setVolume(v);
+												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+											} else {
+												bgmPlayer.setVolume(100);
+												clearInterval(th.app.bgmFadeInterval);
+												th.app.bgmFadeInterval = 0;
+												th.app.lastFadeTime = 0;
+											}
+										}
+									}, iTime);
+								} else {
+									bgmPlayer.setVolume(100);
+									bgmPlayer.playVideo();
+								}
+								th.$set(th.app, "bgmObjectId", e.id);
+							}
+						}
+						function bgmFadeOut(th) {
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
+								const steps = bgmPlayer.getVolume() / 5;
+								const iTime = e.bgmFadeOutSec / steps;
+								let v = bgmPlayer.getVolume();
+								th.app.lastFadeTime = e.bgmFadeOutSec;
+								th.app.isFadingOut = !0;
+								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+								th.app.bgmFadeInterval = setInterval(() => {
+									if (v > 0) {
+										v -= 5;
+										bgmPlayer.setVolume(v);
+										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
+									} else {
+										if (th.app.isFadingOut) {
+											bgmPlayer.setVolume(0);
+											clearInterval(th.app.bgmFadeInterval);
+											th.app.bgmFadeInterval = 0;
+											th.app.lastFadeTime = 0;
+											th.app.isFadingOut = !1;
+											bgmPlayer.pauseVideo();
+										}
+									}
+								}, iTime);
+							} else {
+								bgmPlayer.pauseVideo();
+							}
+						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
 							var p = this.app.bgmIsPlaying,
 								s = bgmPlayer.playerInfo.videoData.video_id,
-								o = bgmPlayer.playerInfo.playerState;
+								o = bgmPlayer.playerInfo.playerState,
+								v = 0,
+								f = !1;
 							if ("undefined" === typeof this.app.bgmObjectId) this.$set(this.app, "bgmObjectId", e.id);
 							if (s == t) {
 								if (this.app.bgmObjectId == e.id) {
 									if (p) {
-										if (o == 2) bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
-										else bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										if (o === 2) {
+											bgmFadeIn(this, f);
+										} else {
+											bgmPlayer.stopVideo();
+											bgmFadeIn(this, f);
+										}
 									} else {
-										if (o != 2) bgmPlayer.pauseVideo();
+										if (o !== 2) bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
-										bgmPlayer.stopVideo(), bgmPlayer.playVideo(), this.$set(this.app, "bgmObjectId", e.id);
+										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o == 1) bgmPlayer.pauseVideo();
+										if (o === 1) bgmFadeOut(this);
 									}
 								}
 							} else {
 								if (p) {
-									e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
-									bgmPlayer.playVideo();
-									this.$set(this.app, "bgmObjectId", e.id);
+									f = !0;
+									bgmFadeIn(this, f);
 								}
 							}
 						} else {
@@ -11500,18 +14215,20 @@
 										for (var b = 0; b < coO.scores.length; b++) {
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
-												if (coS.discountIsOn && coS.discountedFrom == e.id) {
-													var coSDiscount = parseInt(coS.value) - coS.discountScore;
-													for (var m = 0; m < this.app.pointTypes.length; m++)
+												if (coS.isChangeDiscount) {
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
 														if (this.app.pointTypes[m].id == coS.id) {
-															var nC = 0;
 															if (coO.isMultipleUseVariable) {
-																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) this.app.pointTypes[m].startingSum += coSDiscount;
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																}
 															} else {
-																this.app.pointTypes[m].startingSum += coSDiscount;
+																this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 															}
 															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
+													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
 												}
 											}
 										}
@@ -11573,7 +14290,7 @@
 																		for (var ee = 0; ee < coO.multipleUseVariable; ee++) {
 																			coS.isActiveMul[ee] = !0;
 																		}
-																	}																	
+																	}
 																} else {
 																	this.app.pointTypes[m].startingSum -= coSValue, coS.isActive = !0, tmpScores.push({id: this.app.pointTypes[m].id, value: coSValue});
 																}
@@ -11611,6 +14328,28 @@
 										var coS = coO.scores[b],
 											coSValue = coS.discountIsOn ? coS.discountScore : parseInt(coS.value);
 										if (!coS.isNotRecalculatable) {
+											if (e.discountOther) {
+												for (var b = 0; b < coO.scores.length; b++) {
+													var coS = coO.scores[b];
+													if (!coS.isNotRecalculatable) {
+														if (coS.isChangeDiscount) {
+															for (var m = 0; m < this.app.pointTypes.length; m++) {
+																if (this.app.pointTypes[m].id == coS.id) {
+																	if (coO.isMultipleUseVariable) {
+																		for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																		}
+																	} else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
+																	}
+																	this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+																}
+															}
+															coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+														}
+													}
+												}
+											}
 											var isActive = coO.isSelectableMultiple ? coS.isActiveMul[coO.multipleUseVariable - 1] : coS.isActive;
 											for (var a = 0; a < o.length; a++) {
 												for (var n = 0; n < this.app.pointTypes.length; n++) {
@@ -11828,29 +14567,458 @@
 								coO = coR.objects[co.objects];
 							var tmpScores = [];
 							if (coO.discountOther) {
-								if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue && "undefined" !== typeof coO.discountGroups)
-									for (var c = 0; c < this.app.groups.length; c++)
-										for (var d = 0; d < this.app.groups[c].elements.length; d++)
-											if ("undefined" !== typeof this.app.comp[this.app.groups[c].elements[d].id]) {
-												var coT = this.app.comp[this.app.groups[c].elements[d].id],
-													coTR = this.app.rows[coT.rows],
-													coTO = coTR.objects[coT.objects];
-												for (var f = 0; f < coTO.scores.length; f++) {
-													var coTS = coTO.scores[f];															
-													if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
-														if (!coTS.isNotDiscountable && !coTS.discountIsOn) {
-															if (1 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) - parseInt(coO.discountValue);
-															else if (2 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) + parseInt(coO.discountValue);
-															else if (3 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) * coO.discountValue;
-															else if (4 == coO.discountOperator) coTS.discountScore = parseInt(coTS.value) / coO.discountValue;
-															if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = coTS.discountScore < coO.discountLowLimit ? parseInt(coO.discountLowLimit) : coTS.discountScore;
-															if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
-															this.$set(coTS, "discountIsOn", true);
-															this.$set(coTS, "discountedFrom", coO.id);
+								if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue) {
+									if (coO.isDisChoices) {
+										if ("undefined" !== typeof coO.discountChoices) {
+											for (var a = 0; a < coO.discountChoices.length; a++) {
+												if ("undefined" !== typeof this.app.comp[coO.discountChoices[a]]) {
+													var coT = this.app.comp[coO.discountChoices[a]],
+														coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+														coTO = coTR.objects[coT.objects];
+													for (var c = 0; c < coTO.scores.length; c++) {
+														var coTS = coTO.scores[c];
+														if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+															if (!coTS.isNotDiscountable) {
+																if (coO.stackableDiscount) {
+																	var scoreVal = parseInt(coTS.value),
+																		stackDiscount = 0,
+																		stackDiscountCal = 0,
+																		bTempStacked = !1,
+																		tmpNum = 0,
+																		discountedFrom = [],
+																		aDiscount = [];
+																	if (coTS.notStackableDiscount) {
+																		for (var f = 0; f < coTS.tmpDiscount.length; f++) {
+																			if (coTS.tmpDiscount[f][0]) {
+																				discountedFrom = coTS.tmpDiscount[f][1];
+																				discountedFrom.push(coO.id);
+																				scoreVal = coTS.tmpDiscount[f][2];
+																				bTempStacked = !0;
+																				tmpNum = f;
+																			}
+																		}
+																		if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																		else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																		else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																		else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																		stackDiscountCal = stackDiscount;
+																		if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																		if (coO.discountShow) {
+																			if (coO.discountAfterText != "") {
+																				if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																				var dA = !1;
+																				if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																				if (coO.discountTextDuplicated) {
+																					if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																					if (dA) {
+																						coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																					} else {
+																						coTS.dupTextA[coO.discountAfterText] = 1;
+																						coTS.discountTextA.push(coO.discountAfterText);
+																					}
+																				} else {
+																					coTS.discountTextA.push(coO.discountAfterText);
+																				}
+																			}
+																			if (coO.discountBeforeText != "") {
+																				if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																				var dB = !1;
+																				if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																				if (coO.discountTextDuplicated) {
+																					if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																					if (dB) {
+																						coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																					} else {
+																						coTS.dupTextB[coO.discountBeforeText] = 1;
+																						coTS.discountTextB.push(coO.discountBeforeText);
+																					}
+																				} else {
+																					coTS.discountTextB.push(coO.discountBeforeText);
+																				}
+																			}
+																		}
+																		if (coTS.discountScore > stackDiscount) {
+																			this.$set(coTS, "tmpDisScore", stackDiscount - coTS.discountScore);
+																			this.$set(coTS, "isChangeDiscount", true);
+																			aDiscount.push(false);
+																			aDiscount.push(coTS.discountedFrom);
+																			aDiscount.push(coTS.discountScoreCal);
+																			aDiscount.push(coTS.discountScore);
+																			if (coTS.discountShow) {
+																				aDiscount.push(true);
+																				aDiscount.push(coO.discountBeforeText);
+																				aDiscount.push(coO.discountAfterText);
+																			} else {
+																				aDiscount.push(false);
+																			}
+																			coTS.discountScore = stackDiscount;
+																			coTS.discountScoreCal = stackDiscountCal;
+																			if ("undefined" !== typeof coTS.discountTextA) this.$set(coTS, "discountAfterText", coTS.discountTextA.join(""));
+																			if ("undefined" !== typeof coTS.discountTextB) this.$set(coTS, "discountBeforeText", coTS.discountTextB.join(""));
+																			if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																			coTS.discountedFrom.push(...discountedFrom);
+																			if (bTempStacked) coTS.tmpDiscount.splice(tmpNum, 1);
+																			coTS.tmpDiscount.push(aDiscount);
+																			this.$set(coTS, "notStackableDiscount", false);
+																		} else {
+																			discountedFrom.push(coO.id);
+																			if (bTempStacked) {
+																				coTS.tmpDiscount[tmpNum][1] = discountedFrom;
+																				coTS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+																				coTS.tmpDiscount[tmpNum][3] = stackDiscount;
+																			} else {
+																				if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																				"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																				aDiscount.push(discountedFrom);
+																				aDiscount.push(stackDiscountCal);
+																				aDiscount.push(stackDiscount);
+																				coTS.tmpDiscount.push(aDiscount);
+																			}
+																		}
+																	} else {
+																		scoreVal = coTS.discountIsOn ? coTS.discountScoreCal : parseInt(coTS.value);
+																		var tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value);
+																		if (1 == coO.discountOperator) coTS.discountScore = scoreVal - parseInt(coO.discountValue);
+																		else if (2 == coO.discountOperator) coTS.discountScore = scoreVal + parseInt(coO.discountValue);
+																		else if (3 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal * coO.discountValue);
+																		else if (4 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal / coO.discountValue);
+																		this.$set(coTS, "discountScoreCal", coTS.discountScore);
+																		if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = Math.max(coTS.discountScore, parseInt(coO.discountLowLimit));
+																		if (coO.discountShow) {
+																			if (coO.discountAfterText != "") {
+																				this.$set(coTS, "discountShow", coO.discountShow);
+																				if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																				var dA = !1;
+																				if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																				if (coO.discountTextDuplicated) {
+																					if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																					if (dA) {
+																						coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																					} else {
+																						"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																						coTS.dupTextA[coO.discountAfterText] = 1;
+																						coTS.discountTextA.push(coO.discountAfterText);
+																					}
+																				} else {
+																					"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																					coTS.discountTextA.push(coO.discountAfterText);
+																				}
+																			}
+																			if (coO.discountBeforeText != "") {
+																				this.$set(coTS, "discountShow", coO.discountShow);
+																				if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																				var dB = !1;
+																				if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																				if (coO.discountTextDuplicated) {
+																					if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																					if (dB) {
+																						coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																					} else {
+																						"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																						coTS.dupTextB[coO.discountBeforeText] = 1;
+																						coTS.discountTextB.push(coO.discountBeforeText);
+																					}
+																				} else {
+																					"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																					coTS.discountTextB.push(coO.discountBeforeText);
+																				}
+																			}
+																		}
+																		if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																		coTS.discountedFrom.push(coO.id);
+																		if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																		if (!coTS.discountIsOn) this.$set(coTS, "discountIsOn", true);
+																	}
+																} else {
+																	var scoreVal = parseInt(coTS.value),
+																		tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value),
+																		stackDiscount = 0,
+																		stackDiscountCal = 0,
+																		aDiscount = [];
+																	if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																	if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																	else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																	else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																	else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																	stackDiscountCal = stackDiscount;
+																	if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																	if (coTS.discountIsOn) {
+																		"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																		if (coTS.discountScore > stackDiscount) {
+																			aDiscount.push(coTS.discountedFrom);
+																			aDiscount.push(coTS.discountScoreCal);
+																			aDiscount.push(coTS.discountScore);
+																			if (coTS.discountShow) {
+																				aDiscount.push(true);
+																				aDiscount.push(coO.discountBeforeText);
+																				aDiscount.push(coO.discountAfterText);
+																			} else {
+																				aDiscount.push(false);
+																			}
+																			this.$set(coTS, "discountScore", stackDiscount);
+																			this.$set(coTS, "discountScoreCal", stackDiscountCal);
+																			this.$set(coTS, "discountShow", coO.discountShow);
+																			this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																			this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																			this.$set(coTS, "discountedFrom", coO.id);
+																			this.$set(coTS, "notStackableDiscount", true);
+																		} else {
+																			aDiscount.push(coO.id);
+																			aDiscount.push(stackDiscountCal);
+																			aDiscount.push(stackDiscount);
+																			if (coO.discountShow) {
+																				aDiscount.push(true);
+																				aDiscount.push(coO.discountBeforeText);
+																				aDiscount.push(coO.discountAfterText);
+																			} else {
+																				aDiscount.push(false);
+																			}
+																		}
+																		coTS.tmpDiscount.push(aDiscount);
+																	} else {
+																		coTS.discountScore = stackDiscount;
+																		coTS.discountScoreCal = stackDiscountCal;
+																		if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																		this.$set(coTS, "discountIsOn", true);
+																		this.$set(coTS, "discountedFrom", coO.id);
+																		this.$set(coTS, "notStackableDiscount", true);
+																	}
+																	if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																}
+															}
 														}
 													}
 												}
 											}
+										}
+									} else {
+										if("undefined" !== typeof coO.discountGroups) {
+											for (var a = 0; a < this.app.groups.length; a++) {
+												if (coO.discountGroups.includes(this.app.groups[a].id)) {
+													for (var b = 0; b < this.app.groups[a].elements.length; b++)
+														if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+															var coT = this.app.comp[this.app.groups[a].elements[b].id],
+																coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																coTO = coTR.objects[coT.objects];
+															for (var c = 0; c < coTO.scores.length; c++) {
+																var coTS = coTO.scores[c];
+																if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																	if (!coTS.isNotDiscountable) {
+																		if (coO.stackableDiscount) {
+																			var scoreVal = parseInt(coTS.value),
+																				stackDiscount = 0,
+																				stackDiscountCal = 0,
+																				bTempStacked = !1,
+																				tmpNum = 0,
+																				discountedFrom = [],
+																				aDiscount = [];
+																			if (coTS.notStackableDiscount) {
+																				for (var f = 0; f < coTS.tmpDiscount.length; f++) {
+																					if (coTS.tmpDiscount[f][0]) {
+																						discountedFrom = coTS.tmpDiscount[f][1];
+																						discountedFrom.push(coO.id);
+																						scoreVal = coTS.tmpDiscount[f][2];
+																						bTempStacked = !0;
+																						tmpNum = f;
+																					}
+																				}
+																				if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																				else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																				else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																				else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																				stackDiscountCal = stackDiscount;
+																				if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																				if (coO.discountShow) {
+																					if (coO.discountAfterText != "") {
+																						if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																						var dA = !1;
+																						if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																						if (coO.discountTextDuplicated) {
+																							if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																							if (dA) {
+																								coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																							} else {
+																								coTS.dupTextA[coO.discountAfterText] = 1;
+																								coTS.discountTextA.push(coO.discountAfterText);
+																							}
+																						} else {
+																							coTS.discountTextA.push(coO.discountAfterText);
+																						}
+																					}
+																					if (coO.discountBeforeText != "") {
+																						if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																						var dB = !1;
+																						if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																						if (coO.discountTextDuplicated) {
+																							if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																							if (dB) {
+																								coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																							} else {
+																								coTS.dupTextB[coO.discountBeforeText] = 1;
+																								coTS.discountTextB.push(coO.discountBeforeText);
+																							}
+																						} else {
+																							coTS.discountTextB.push(coO.discountBeforeText);
+																						}
+																					}
+																				}
+																				if (coTS.discountScore > stackDiscount) {
+																					this.$set(coTS, "tmpDisScore", stackDiscount - coTS.discountScore);
+																					this.$set(coTS, "isChangeDiscount", true);
+																					aDiscount.push(false);
+																					aDiscount.push(coTS.discountedFrom);
+																					aDiscount.push(coTS.discountScoreCal);
+																					aDiscount.push(coTS.discountScore);
+																					if (coTS.discountShow) {
+																						aDiscount.push(true);
+																						aDiscount.push(coO.discountBeforeText);
+																						aDiscount.push(coO.discountAfterText);
+																					} else {
+																						aDiscount.push(false);
+																					}
+																					coTS.discountScore = stackDiscount;
+																					coTS.discountScoreCal = stackDiscountCal;
+																					if ("undefined" !== typeof coTS.discountTextA) this.$set(coTS, "discountAfterText", coTS.discountTextA.join(""));
+																					if ("undefined" !== typeof coTS.discountTextB) this.$set(coTS, "discountBeforeText", coTS.discountTextB.join(""));
+																					if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																					coTS.discountedFrom.push(...discountedFrom);
+																					if (bTempStacked) coTS.tmpDiscount.splice(tmpNum, 1);
+																					coTS.tmpDiscount.push(aDiscount);
+																					this.$set(coTS, "notStackableDiscount", false);
+																				} else {
+																					discountedFrom.push(coO.id);
+																					if (bTempStacked) {
+																						coTS.tmpDiscount[tmpNum][1] = discountedFrom;
+																						coTS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+																						coTS.tmpDiscount[tmpNum][3] = stackDiscount;
+																					} else {
+																						if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																						"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																						aDiscount.push(discountedFrom);
+																						aDiscount.push(stackDiscountCal);
+																						aDiscount.push(stackDiscount);
+																						coTS.tmpDiscount.push(aDiscount);
+																					}
+																				}
+																			} else {
+																				scoreVal = coTS.discountIsOn ? coTS.discountScoreCal : parseInt(coTS.value);
+																				var tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value);
+																				if (1 == coO.discountOperator) coTS.discountScore = scoreVal - parseInt(coO.discountValue);
+																				else if (2 == coO.discountOperator) coTS.discountScore = scoreVal + parseInt(coO.discountValue);
+																				else if (3 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal * coO.discountValue);
+																				else if (4 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal / coO.discountValue);
+																				this.$set(coTS, "discountScoreCal", coTS.discountScore);
+																				if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = Math.max(coTS.discountScore, parseInt(coO.discountLowLimit));
+																				if (coO.discountShow) {
+																					if (coO.discountAfterText != "") {
+																						this.$set(coTS, "discountShow", coO.discountShow);
+																						if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																						var dA = !1;
+																						if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																						if (coO.discountTextDuplicated) {
+																							if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																							if (dA) {
+																								coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																							} else {
+																								"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																								coTS.dupTextA[coO.discountAfterText] = 1;
+																								coTS.discountTextA.push(coO.discountAfterText);
+																							}
+																						} else {
+																							"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																							coTS.discountTextA.push(coO.discountAfterText);
+																						}
+																					}
+																					if (coO.discountBeforeText != "") {
+																						this.$set(coTS, "discountShow", coO.discountShow);
+																						if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																						var dB = !1;
+																						if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																						if (coO.discountTextDuplicated) {
+																							if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																							if (dB) {
+																								coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																							} else {
+																								"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																								coTS.dupTextB[coO.discountBeforeText] = 1;
+																								coTS.discountTextB.push(coO.discountBeforeText);
+																							}
+																						} else {
+																							"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																							coTS.discountTextB.push(coO.discountBeforeText);
+																						}
+																					}
+																				}
+																				if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																				coTS.discountedFrom.push(coO.id);
+																				if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																				if (!coTS.discountIsOn) this.$set(coTS, "discountIsOn", true);
+																			}
+																		} else {
+																			var scoreVal = parseInt(coTS.value),
+																				tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value),
+																				stackDiscount = 0,
+																				stackDiscountCal = 0,
+																				aDiscount = [];
+																			if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																			if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																			else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																			else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																			else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																			stackDiscountCal = stackDiscount;
+																			if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																			if (coTS.discountIsOn) {
+																				"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																				if (coTS.discountScore > stackDiscount) {
+																					aDiscount.push(coTS.discountedFrom);
+																					aDiscount.push(coTS.discountScoreCal);
+																					aDiscount.push(coTS.discountScore);
+																					if (coTS.discountShow) {
+																						aDiscount.push(true);
+																						aDiscount.push(coO.discountBeforeText);
+																						aDiscount.push(coO.discountAfterText);
+																					} else {
+																						aDiscount.push(false);
+																					}
+																					this.$set(coTS, "discountScore", stackDiscount);
+																					this.$set(coTS, "discountScoreCal", stackDiscountCal);
+																					this.$set(coTS, "discountShow", coO.discountShow);
+																					this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																					this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																					this.$set(coTS, "discountedFrom", coO.id);
+																					this.$set(coTS, "notStackableDiscount", true);
+																				} else {
+																					aDiscount.push(coO.id);
+																					aDiscount.push(stackDiscountCal);
+																					aDiscount.push(stackDiscount);
+																					if (coO.discountShow) {
+																						aDiscount.push(true);
+																						aDiscount.push(coO.discountBeforeText);
+																						aDiscount.push(coO.discountAfterText);
+																					} else {
+																						aDiscount.push(false);
+																					}
+																				}
+																				coTS.tmpDiscount.push(aDiscount);
+																			} else {
+																				coTS.discountScore = stackDiscount;
+																				coTS.discountScoreCal = stackDiscountCal;
+																				if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																				this.$set(coTS, "discountIsOn", true);
+																				this.$set(coTS, "discountedFrom", coO.id);
+																				this.$set(coTS, "notStackableDiscount", true);
+																			}
+																			if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																		}
+																	}
+																}
+															}
+														}
+												}
+											}
+										}
+									} 
+								}
 							}
 							for (var h = 0; h < coO.scores.length; h++) {
 								var coS = coO.scores[h];
@@ -11979,12 +15147,43 @@
 									}
 								}
 							}
-							this.updateScores(coO, coR, tmpScores, 0);
+							if (coO.multiplyPointtypeIsOn) {
+								coO.multiplyPointtypeIsOnCheck = !0;
+								if ("object" !== typeof coO.startingSumAtMultiply) this.$set(coO, "startingSumAtMultiply", []);
+								for (var l = 0; l < coO.pointTypeToMultiply.length; l++) {
+									for (var m = 0; m < this.app.pointTypes.length; m++)
+										if (this.app.pointTypes[m].id == coO.pointTypeToMultiply[l]) {
+											if (coO.multiplyPointtypeIsId)
+												for (var x = 0; x < this.app.pointTypes.length; x++) {
+													if (this.app.pointTypes[x].id == coO.multiplyWithThis) {
+														coO.startingSumAtMultiply[l] = this.app.pointTypes[m].startingSum * this.app.pointTypes[x].startingSum;
+														this.app.pointTypes[m].startingSum *= this.app.pointTypes[x].startingSum;
+													}
+												}
+											else coO.startingSumAtMultiply[l] = this.app.pointTypes[m].startingSum * coO.multiplyWithThis, this.app.pointTypes[m].startingSum *= coO.multiplyWithThis; this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+										}
+								}
+								this.app.mdObjects.push(coO);
+							}
+							if (coO.dividePointtypeIsOn) {
+								coO.dividePointtypeIsOnCheck = !0;
+								for (var l = 0; l < coO.pointTypeToDivide.length; l++) {
+									for (var m = 0; m < this.app.pointTypes.length; m++) {
+										if (this.app.pointTypes[m].id == coO.pointTypeToDivide[l]) {
+											coO.startingSumAtDivide[l] = this.app.pointTypes[m].startingSum / coO.divideWithThis;
+											this.app.pointTypes[m].startingSum /= coO.divideWithThis;
+											this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+										}
+									}
+								}
+								this.app.mdObjects.push(coO);
+							}
 							if (coO.addToAllowChoice)
 								for (var m = 0; m < this.app.rows.length; m++)
 									if (coO.idOfAllowChoice == this.app.rows[m].id) {
 										this.app.rows[m].allowedChoices += coO.numbAddToAllowChoice, isNaN(this.app.rows[m].allowedChoicesChange) && (this.app.rows[m].allowedChoicesChange = 0), this.app.rows[m].allowedChoicesChange += coO.numbAddToAllowChoice;
 									}
+							this.updateScores(coO, coR, tmpScores, 0);
 							if (coO.changeBackground) {
 								if (coO.changeBgImage) {
 									var a = this.app.styling.backgroundImage;
@@ -12046,6 +15245,460 @@
 							coO.numMultipleTimesPluss > coO.multipleUseVariable ? (coO.multipleUseVariable++, this.$set(coO, "selectedThisManyTimesProp", coO.multipleUseVariable), this.$set(this.app.objectMap, coO.id, coO.multipleUseVariable)) : s = !1;
 							if (s) {
 								var tmpScores = [];
+								if (coO.discountOther) {
+									if ("undefined" !== typeof coO.discountOperator && "undefined" !== typeof coO.discountValue) {
+										if (coO.isDisChoices) {
+											if ("undefined" !== typeof coO.discountChoices) {
+												for (var a = 0; a < coO.discountChoices.length; a++) {
+													if ("undefined" !== typeof this.app.comp[coO.discountChoices[a]]) {
+														var coT = this.app.comp[coO.discountChoices[a]],
+															coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+															coTO = coTR.objects[coT.objects];
+														for (var c = 0; c < coTO.scores.length; c++) {
+															var coTS = coTO.scores[c];
+															if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																if (!coTS.isNotDiscountable) {
+																	if (coO.stackableDiscount) {
+																		var scoreVal = parseInt(coTS.value),
+																			stackDiscount = 0,
+																			stackDiscountCal = 0,
+																			bTempStacked = !1,
+																			tmpNum = 0,
+																			discountedFrom = [],
+																			aDiscount = [];
+																		if (coTS.notStackableDiscount) {
+																			for (var f = 0; f < coTS.tmpDiscount.length; f++) {
+																				if (coTS.tmpDiscount[f][0]) {
+																					discountedFrom = coTS.tmpDiscount[f][1];
+																					discountedFrom.push(coO.id);
+																					scoreVal = coTS.tmpDiscount[f][2];
+																					bTempStacked = !0;
+																					tmpNum = f;
+																				}
+																			}
+																			if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																			else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																			else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																			else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																			stackDiscountCal = stackDiscount;
+																			if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																			if (coO.discountShow) {
+																				if (coO.discountAfterText != "") {
+																					if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																					var dA = !1;
+																					if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																					if (coO.discountTextDuplicated) {
+																						if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																						if (dA) {
+																							coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																						} else {
+																							coTS.dupTextA[coO.discountAfterText] = 1;
+																							coTS.discountTextA.push(coO.discountAfterText);
+																						}
+																					} else {
+																						coTS.discountTextA.push(coO.discountAfterText);
+																					}
+																				}
+																				if (coO.discountBeforeText != "") {
+																					if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																					var dB = !1;
+																					if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																					if (coO.discountTextDuplicated) {
+																						if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																						if (dB) {
+																							coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																						} else {
+																							coTS.dupTextB[coO.discountBeforeText] = 1;
+																							coTS.discountTextB.push(coO.discountBeforeText);
+																						}
+																					} else {
+																						coTS.discountTextB.push(coO.discountBeforeText);
+																					}
+																				}
+																			}
+																			if (coTS.discountScore > stackDiscount) {
+																				this.$set(coTS, "tmpDisScore", stackDiscount - coTS.discountScore);
+																				this.$set(coTS, "isChangeDiscount", true);
+																				aDiscount.push(false);
+																				aDiscount.push(coTS.discountedFrom);
+																				aDiscount.push(coTS.discountScoreCal);
+																				aDiscount.push(coTS.discountScore);
+																				if (coTS.discountShow) {
+																					aDiscount.push(true);
+																					aDiscount.push(coO.discountBeforeText);
+																					aDiscount.push(coO.discountAfterText);
+																				} else {
+																					aDiscount.push(false);
+																				}
+																				coTS.discountScore = stackDiscount;
+																				coTS.discountScoreCal = stackDiscountCal;
+																				if ("undefined" !== typeof coTS.discountTextA) this.$set(coTS, "discountAfterText", coTS.discountTextA.join(""));
+																				if ("undefined" !== typeof coTS.discountTextB) this.$set(coTS, "discountBeforeText", coTS.discountTextB.join(""));
+																				if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																				coTS.discountedFrom.push(...discountedFrom);
+																				if (bTempStacked) coTS.tmpDiscount.splice(tmpNum, 1);
+																				coTS.tmpDiscount.push(aDiscount);
+																				this.$set(coTS, "notStackableDiscount", false);
+																			} else {
+																				discountedFrom.push(coO.id);
+																				if (bTempStacked) {
+																					coTS.tmpDiscount[tmpNum][1] = discountedFrom;
+																					coTS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+																					coTS.tmpDiscount[tmpNum][3] = stackDiscount;
+																				} else {
+																					if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																					"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																					aDiscount.push(discountedFrom);
+																					aDiscount.push(stackDiscountCal);
+																					aDiscount.push(stackDiscount);
+																					coTS.tmpDiscount.push(aDiscount);
+																				}
+																			}
+																		} else {
+																			scoreVal = coTS.discountIsOn ? coTS.discountScoreCal : parseInt(coTS.value);
+																			var tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value);
+																			if (1 == coO.discountOperator) coTS.discountScore = scoreVal - parseInt(coO.discountValue);
+																			else if (2 == coO.discountOperator) coTS.discountScore = scoreVal + parseInt(coO.discountValue);
+																			else if (3 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal * coO.discountValue);
+																			else if (4 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal / coO.discountValue);
+																			this.$set(coTS, "discountScoreCal", coTS.discountScore);
+																			if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = Math.max(coTS.discountScore, parseInt(coO.discountLowLimit));
+																			if (coO.discountShow) {
+																				if (coO.discountAfterText != "") {
+																					this.$set(coTS, "discountShow", coO.discountShow);
+																					if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																					var dA = !1;
+																					if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																					if (coO.discountTextDuplicated) {
+																						if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																						if (dA) {
+																							coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																						} else {
+																							"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																							coTS.dupTextA[coO.discountAfterText] = 1;
+																							coTS.discountTextA.push(coO.discountAfterText);
+																						}
+																					} else {
+																						"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																						coTS.discountTextA.push(coO.discountAfterText);
+																					}
+																				}
+																				if (coO.discountBeforeText != "") {
+																					this.$set(coTS, "discountShow", coO.discountShow);
+																					if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																					var dB = !1;
+																					if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																					if (coO.discountTextDuplicated) {
+																						if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																						if (dB) {
+																							coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																						} else {
+																							"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																							coTS.dupTextB[coO.discountBeforeText] = 1;
+																							coTS.discountTextB.push(coO.discountBeforeText);
+																						}
+																					} else {
+																						"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																						coTS.discountTextB.push(coO.discountBeforeText);
+																					}
+																				}
+																			}
+																			if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																			coTS.discountedFrom.push(coO.id);
+																			if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																			if (!coTS.discountIsOn) this.$set(coTS, "discountIsOn", true);
+																		}
+																	} else {
+																		var scoreVal = parseInt(coTS.value),
+																			tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value),
+																			stackDiscount = 0,
+																			stackDiscountCal = 0,
+																			aDiscount = [];
+																		if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																		if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																		else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																		else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																		else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																		stackDiscountCal = stackDiscount;
+																		if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																		if (coTS.discountIsOn) {
+																			"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																			if (coTS.discountScore > stackDiscount) {
+																				aDiscount.push(coTS.discountedFrom);
+																				aDiscount.push(coTS.discountScoreCal);
+																				aDiscount.push(coTS.discountScore);
+																				if (coTS.discountShow) {
+																					aDiscount.push(true);
+																					aDiscount.push(coO.discountBeforeText);
+																					aDiscount.push(coO.discountAfterText);
+																				} else {
+																					aDiscount.push(false);
+																				}
+																				this.$set(coTS, "discountScore", stackDiscount);
+																				this.$set(coTS, "discountScoreCal", stackDiscountCal);
+																				this.$set(coTS, "discountShow", coO.discountShow);
+																				this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																				this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																				this.$set(coTS, "discountedFrom", coO.id);
+																				this.$set(coTS, "notStackableDiscount", true);
+																			} else {
+																				aDiscount.push(coO.id);
+																				aDiscount.push(stackDiscountCal);
+																				aDiscount.push(stackDiscount);
+																				if (coO.discountShow) {
+																					aDiscount.push(true);
+																					aDiscount.push(coO.discountBeforeText);
+																					aDiscount.push(coO.discountAfterText);
+																				} else {
+																					aDiscount.push(false);
+																				}
+																			}
+																			coTS.tmpDiscount.push(aDiscount);
+																		} else {
+																			coTS.discountScore = stackDiscount;
+																			coTS.discountScoreCal = stackDiscountCal;
+																			if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																			this.$set(coTS, "discountIsOn", true);
+																			this.$set(coTS, "discountedFrom", coO.id);
+																			this.$set(coTS, "notStackableDiscount", true);
+																		}
+																		if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										} else {
+											if("undefined" !== typeof coO.discountGroups) {
+												for (var a = 0; a < this.app.groups.length; a++) {
+													if (coO.discountGroups.includes(this.app.groups[a].id)) {
+														for (var b = 0; b < this.app.groups[a].elements.length; b++)
+															if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
+																var coT = this.app.comp[this.app.groups[a].elements[b].id],
+																	coTR = coT.type == "app" ? this.app.rows[coT.rows] : this.app.backpack[coT.rows],
+																	coTO = coTR.objects[coT.objects];
+																for (var c = 0; c < coTO.scores.length; c++) {
+																	var coTS = coTO.scores[c];
+																	if (coO.discountPointTypes.length === 0 || coO.discountPointTypes.includes(coTS.id)) {
+																		if (!coTS.isNotDiscountable) {
+																			if (coO.stackableDiscount) {
+																				var scoreVal = parseInt(coTS.value),
+																					stackDiscount = 0,
+																					stackDiscountCal = 0,
+																					bTempStacked = !1,
+																					tmpNum = 0,
+																					discountedFrom = [],
+																					aDiscount = [];
+																				if (coTS.notStackableDiscount) {
+																					for (var f = 0; f < coTS.tmpDiscount.length; f++) {
+																						if (coTS.tmpDiscount[f][0]) {
+																							discountedFrom = coTS.tmpDiscount[f][1];
+																							discountedFrom.push(coO.id);
+																							scoreVal = coTS.tmpDiscount[f][2];
+																							bTempStacked = !0;
+																							tmpNum = f;
+																						}
+																					}
+																					if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																					else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																					else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																					else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																					stackDiscountCal = stackDiscount;
+																					if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																					if (coO.discountShow) {
+																						if (coO.discountAfterText != "") {
+																							if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																							var dA = !1;
+																							if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																							if (coO.discountTextDuplicated) {
+																								if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																								if (dA) {
+																									coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																								} else {
+																									coTS.dupTextA[coO.discountAfterText] = 1;
+																									coTS.discountTextA.push(coO.discountAfterText);
+																								}
+																							} else {
+																								coTS.discountTextA.push(coO.discountAfterText);
+																							}
+																						}
+																						if (coO.discountBeforeText != "") {
+																							if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																							var dB = !1;
+																							if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																							if (coO.discountTextDuplicated) {
+																								if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																								if (dB) {
+																									coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																								} else {
+																									coTS.dupTextB[coO.discountBeforeText] = 1;
+																									coTS.discountTextB.push(coO.discountBeforeText);
+																								}
+																							} else {
+																								coTS.discountTextB.push(coO.discountBeforeText);
+																							}
+																						}
+																					}
+																					if (coTS.discountScore > stackDiscount) {
+																						this.$set(coTS, "tmpDisScore", stackDiscount - coTS.discountScore);
+																						this.$set(coTS, "isChangeDiscount", true);
+																						aDiscount.push(false);
+																						aDiscount.push(coTS.discountedFrom);
+																						aDiscount.push(coTS.discountScoreCal);
+																						aDiscount.push(coTS.discountScore);
+																						if (coTS.discountShow) {
+																							aDiscount.push(true);
+																							aDiscount.push(coO.discountBeforeText);
+																							aDiscount.push(coO.discountAfterText);
+																						} else {
+																							aDiscount.push(false);
+																						}
+																						coTS.discountScore = stackDiscount;
+																						coTS.discountScoreCal = stackDiscountCal;
+																						if ("undefined" !== typeof coTS.discountTextA) this.$set(coTS, "discountAfterText", coTS.discountTextA.join(""));
+																						if ("undefined" !== typeof coTS.discountTextB) this.$set(coTS, "discountBeforeText", coTS.discountTextB.join(""));
+																						if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																						coTS.discountedFrom.push(...discountedFrom);
+																						if (bTempStacked) coTS.tmpDiscount.splice(tmpNum, 1);
+																						coTS.tmpDiscount.push(aDiscount);
+																						this.$set(coTS, "notStackableDiscount", false);
+																					} else {
+																						discountedFrom.push(coO.id);
+																						if (bTempStacked) {
+																							coTS.tmpDiscount[tmpNum][1] = discountedFrom;
+																							coTS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+																							coTS.tmpDiscount[tmpNum][3] = stackDiscount;
+																						} else {
+																							if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																							"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																							aDiscount.push(discountedFrom);
+																							aDiscount.push(stackDiscountCal);
+																							aDiscount.push(stackDiscount);
+																							coTS.tmpDiscount.push(aDiscount);
+																						}
+																					}
+																				} else {
+																					scoreVal = coTS.discountIsOn ? coTS.discountScoreCal : parseInt(coTS.value);
+																					var tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value);
+																					if (1 == coO.discountOperator) coTS.discountScore = scoreVal - parseInt(coO.discountValue);
+																					else if (2 == coO.discountOperator) coTS.discountScore = scoreVal + parseInt(coO.discountValue);
+																					else if (3 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal * coO.discountValue);
+																					else if (4 == coO.discountOperator) coTS.discountScore = parseInt(scoreVal / coO.discountValue);
+																					this.$set(coTS, "discountScoreCal", coTS.discountScore);
+																					if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) coTS.discountScore = Math.max(coTS.discountScore, parseInt(coO.discountLowLimit));
+																					if (coO.discountShow) {
+																						if (coO.discountAfterText != "") {
+																							this.$set(coTS, "discountShow", coO.discountShow);
+																							if ("undefined" === typeof coTS.discountTextA) this.$set(coTS, "discountTextA", []);
+																							var dA = !1;
+																							if (coTS.discountTextA.includes(coO.discountAfterText)) dA = !0;
+																							if (coO.discountTextDuplicated) {
+																								if ("undefined" === typeof coTS.dupTextA) this.$set(coTS, "dupTextA", {});
+																								if (dA) {
+																									coTS.dupTextA[coO.discountAfterText] = coTS.dupTextA[coO.discountAfterText] + 1
+																								} else {
+																									"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																									coTS.dupTextA[coO.discountAfterText] = 1;
+																									coTS.discountTextA.push(coO.discountAfterText);
+																								}
+																							} else {
+																								"undefined" !== typeof coTS.discountAfterText ? this.$set(coTS, "discountAfterText", coTS.discountAfterText + coO.discountAfterText) : this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																								coTS.discountTextA.push(coO.discountAfterText);
+																							}
+																						}
+																						if (coO.discountBeforeText != "") {
+																							this.$set(coTS, "discountShow", coO.discountShow);
+																							if ("undefined" === typeof coTS.discountTextB) this.$set(coTS, "discountTextB", []);
+																							var dB = !1;
+																							if (coTS.discountTextB.includes(coO.discountBeforeText)) dB = !0
+																							if (coO.discountTextDuplicated) {
+																								if ("undefined" === typeof coTS.dupTextB) this.$set(coTS, "dupTextB", {});
+																								if (dB) {
+																									coTS.dupTextB[coO.discountBeforeText] = coTS.dupTextB[coO.discountBeforeText] + 1
+																								} else {
+																									"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																									coTS.dupTextB[coO.discountBeforeText] = 1;
+																									coTS.discountTextB.push(coO.discountBeforeText);
+																								}
+																							} else {
+																								"undefined" !== typeof coTS.discountBeforeText ? this.$set(coTS, "discountBeforeText", coTS.discountBeforeText + coO.discountBeforeText) : this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																								coTS.discountTextB.push(coO.discountBeforeText);
+																							}
+																						}
+																					}
+																					if ("undefined" === typeof coTS.discountedFrom || "string" === typeof coTS.discountedFrom) this.$set(coTS, "discountedFrom", []);
+																					coTS.discountedFrom.push(coO.id);
+																					if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																					if (!coTS.discountIsOn) this.$set(coTS, "discountIsOn", true);
+																				}
+																			} else {
+																				var scoreVal = parseInt(coTS.value),
+																					tmpDisScore = coTS.discountIsOn ? coTS.discountScore : parseInt(coTS.value),
+																					stackDiscount = 0,
+																					stackDiscountCal = 0,
+																					aDiscount = [];
+																				if ("undefined" === typeof coTS.tmpDiscount) this.$set(coTS, "tmpDiscount", []);
+																				if (1 == coO.discountOperator) stackDiscount = scoreVal - parseInt(coO.discountValue);
+																				else if (2 == coO.discountOperator) stackDiscount = scoreVal + parseInt(coO.discountValue);
+																				else if (3 == coO.discountOperator) stackDiscount = parseInt(scoreVal * coO.discountValue);
+																				else if (4 == coO.discountOperator) stackDiscount = parseInt(scoreVal / coO.discountValue);
+																				stackDiscountCal = stackDiscount;
+																				if (coO.discountLowLimitIsOn && "undefined" !== typeof coO.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(coO.discountLowLimit));
+																				if (coTS.discountIsOn) {
+																					"undefined" === typeof coO.stackableDiscount ? aDiscount.push(false) : aDiscount.push(coO.stackableDiscount);
+																					if (coTS.discountScore > stackDiscount) {
+																						aDiscount.push(coTS.discountedFrom);
+																						aDiscount.push(coTS.discountScoreCal);
+																						aDiscount.push(coTS.discountScore);
+																						if (coTS.discountShow) {
+																							aDiscount.push(true);
+																							aDiscount.push(coO.discountBeforeText);
+																							aDiscount.push(coO.discountAfterText);
+																						} else {
+																							aDiscount.push(false);
+																						}
+																						this.$set(coTS, "discountScore", stackDiscount);
+																						this.$set(coTS, "discountScoreCal", stackDiscountCal);
+																						this.$set(coTS, "discountShow", coO.discountShow);
+																						this.$set(coTS, "discountBeforeText", coO.discountBeforeText);
+																						this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																						this.$set(coTS, "discountedFrom", coO.id);
+																						this.$set(coTS, "notStackableDiscount", true);
+																					} else {
+																						aDiscount.push(coO.id);
+																						aDiscount.push(stackDiscountCal);
+																						aDiscount.push(stackDiscount);
+																						if (coO.discountShow) {
+																							aDiscount.push(true);
+																							aDiscount.push(coO.discountBeforeText);
+																							aDiscount.push(coO.discountAfterText);
+																						} else {
+																							aDiscount.push(false);
+																						}
+																					}
+																					coTS.tmpDiscount.push(aDiscount);
+																				} else {
+																					coTS.discountScore = stackDiscount;
+																					coTS.discountScoreCal = stackDiscountCal;
+																					if (coO.discountShow) this.$set(coTS, "discountShow", coO.discountShow), this.$set(coTS, "discountBeforeText", coO.discountBeforeText), this.$set(coTS, "discountAfterText", coO.discountAfterText);
+																					this.$set(coTS, "discountIsOn", true);
+																					this.$set(coTS, "discountedFrom", coO.id);
+																					this.$set(coTS, "notStackableDiscount", true);
+																				}
+																				if (coTS.discountScore != tmpDisScore) this.$set(coTS, "tmpDisScore", tmpDisScore - coTS.discountScore), this.$set(coTS, "isChangeDiscount", true);
+																			}
+																		}
+																	}
+																}
+															}
+													}
+												}
+											}
+										} 
+									}
+								}
 								for (var h = 0; h < coO.scores.length; h++) {
 									var coS = coO.scores[h],
 										k = coO.multipleUseVariable;
@@ -12297,7 +15950,10 @@
                     },
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
-                    }
+                    },
+					isDataURL: function(e) {
+						return /^data:(image\/[a-zA-Z]*);base64,/.test(e);
+					}
                 }
             },
             Ut = Nt,
@@ -12362,14 +16018,18 @@
                         isChoicesOpen: !1,
                         isDesignOpen: !1,
                         isViewerVersion: !1,
+						isFadingOut: !1,
                         backpack: [],
+						bgmFadeInterval: 0,
+						bgmFadeTimer: 0,
+						lastFadeTime: 0,
 						comp: {},
 						compR: {},
 						compG: {},
 						compODG: {},
 						compRDG: {},
-						tmpRequired: {},
-						pointTypeMap: {},
+						compGR: {},
+						tmpRequired: [],
 						wordMap: {},
 						objectMap: {},
 						rowIdLength: 4,
@@ -12379,6 +16039,7 @@
                         groups: [],
 						rowDesignGroups: [],
 						objectDesignGroups: [],
+						globalRequirements: [],
                         chapters: [],
                         activated: [],
                         rows: [],
@@ -13004,7 +16665,7 @@
 											}
 										}
 									}
-								} else {	
+								} else {
 									var y = t.activateThisChoice.split(",");
 									for (var b = 0; b < y.length; b++) {
 										var yb = y[b].split("/ON#"),
@@ -13096,12 +16757,219 @@
 							}
 							t.isActive = !1;
 						}
+						function discountS(t, coS) {
+							if (t.stackableDiscount) {
+								var scoreVal = parseInt(coS.value),
+									stackDiscount = 0,
+									stackDiscountCal = 0,
+									bTempStacked = !1,
+									tmpNum = 0,
+									discountedFrom = [],
+									aDiscount = [];
+								if (coS.notStackableDiscount) {
+									for (var f = 0; f < coS.tmpDiscount.length; f++) {
+										if (coS.tmpDiscount[f][0]) {
+											discountedFrom = coS.tmpDiscount[f][1];
+											discountedFrom.push(t.id);
+											scoreVal = coS.tmpDiscount[f][2];
+											bTempStacked = !0;
+											tmpNum = f;
+										}
+									}
+									if (1 == t.discountOperator) stackDiscount = scoreVal - parseInt(t.discountValue);
+									else if (2 == t.discountOperator) stackDiscount = scoreVal + parseInt(t.discountValue);
+									else if (3 == t.discountOperator) stackDiscount = parseInt(scoreVal * t.discountValue);
+									else if (4 == t.discountOperator) stackDiscount = parseInt(scoreVal / t.discountValue);
+									stackDiscountCal = stackDiscount;
+									if (t.discountLowLimitIsOn && "undefined" !== typeof t.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(t.discountLowLimit));
+									if (t.discountShow) {
+										if (t.discountAfterText != "") {
+											if ("undefined" === typeof coS.discountTextA) coS.discountTextA = [];
+											var dA = !1;
+											if (coS.discountTextA.includes(t.discountAfterText)) dA = !0;
+											if (t.discountTextDuplicated) {
+												if ("undefined" === typeof coS.dupTextA) coS.dupTextA = {};
+												if (dA) {
+													coS.dupTextA[t.discountAfterText] = coS.dupTextA[t.discountAfterText] + 1
+												} else {
+													coS.dupTextA[t.discountAfterText] = 1;
+													coS.discountTextA.push(t.discountAfterText);
+												}
+											} else {
+												coS.discountTextA.push(t.discountAfterText);
+											}
+										}
+										if (t.discountBeforeText != "") {
+											if ("undefined" === typeof coS.discountTextB) coS.discountTextB = [];
+											var dB = !1;
+											if (coS.discountTextB.includes(t.discountBeforeText)) dB = !0
+											if (t.discountTextDuplicated) {
+												if ("undefined" === typeof coS.dupTextB) coS.dupTextB = {};
+												if (dB) {
+													coS.dupTextB[t.discountBeforeText] = coS.dupTextB[t.discountBeforeText] + 1
+												} else {
+													coS.dupTextB[t.discountBeforeText] = 1;
+													coS.discountTextB.push(t.discountBeforeText);
+												}
+											} else {
+												coS.discountTextB.push(t.discountBeforeText);
+											}
+										}
+									}
+									if (coS.discountScore > stackDiscount) {
+										aDiscount.push(false);
+										aDiscount.push(coS.discountedFrom);
+										aDiscount.push(coS.discountScoreCal);
+										aDiscount.push(coS.discountScore);
+										if (coS.discountShow) {
+											aDiscount.push(true);
+											aDiscount.push(t.discountBeforeText);
+											aDiscount.push(t.discountAfterText);
+										} else {
+											aDiscount.push(false);
+										}
+										coS.discountScore = stackDiscount;
+										coS.discountScoreCal = stackDiscountCal;
+										if ("undefined" !== typeof coS.discountTextA) coS.discountAfterText = coS.discountTextA.join("");
+										if ("undefined" !== typeof coS.discountTextB) coS.discountBeforeText = coS.discountTextB.join("");
+										if ("object" !== typeof coS.discountedFrom) coS.discountedFrom = [];
+										coS.discountedFrom.push(...discountedFrom);
+										if (bTempStacked) coS.tmpDiscount.splice(tmpNum, 1);
+										coS.tmpDiscount.push(aDiscount);
+										coS.notStackableDiscount = !1;
+									} else {
+										discountedFrom.push(t.id);
+										if (bTempStacked) {
+											coS.tmpDiscount[tmpNum][1] = discountedFrom;
+											coS.tmpDiscount[tmpNum][2] = stackDiscountCal;
+											coS.tmpDiscount[tmpNum][3] = stackDiscount;
+										} else {
+											if ("undefined" === typeof coS.tmpDiscount) coS.tmpDiscount = [];
+											"undefined" === typeof t.stackableDiscount ? aDiscount.push(false) : aDiscount.push(t.stackableDiscount);
+											aDiscount.push(discountedFrom);
+											aDiscount.push(stackDiscountCal);
+											aDiscount.push(stackDiscount);
+											coS.tmpDiscount.push(aDiscount);
+										}
+									}
+								} else {
+									scoreVal = coS.discountIsOn ? coS.discountScoreCal : parseInt(coS.value);
+									if (1 == t.discountOperator) stackDiscount = scoreVal - parseInt(t.discountValue);
+									else if (2 == t.discountOperator) stackDiscount = scoreVal + parseInt(t.discountValue);
+									else if (3 == t.discountOperator) stackDiscount = parseInt(scoreVal * t.discountValue);
+									else if (4 == t.discountOperator) stackDiscount = parseInt(scoreVal / t.discountValue);
+									stackDiscountCal = stackDiscount;
+									if (t.discountLowLimitIsOn && "undefined" !== typeof t.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(t.discountLowLimit));
+									if (t.discountShow) {
+										if (t.discountAfterText != "") {
+											coS.discountShow = t.discountShow;
+											if ("undefined" === typeof coS.discountTextA) coS.discountTextA = [];
+											var dA = !1;
+											if (coS.discountTextA.includes(t.discountAfterText)) dA = !0;
+											if (t.discountTextDuplicated) {
+												if ("undefined" === typeof coS.dupTextA) coS.dupTextA = {};
+												if (dA) {
+													coS.dupTextA[t.discountAfterText] = coS.dupTextA[t.discountAfterText] + 1
+												} else {
+													"undefined" !== typeof coS.discountAfterText ? coS.discountAfterText = coS.discountAfterText + t.discountAfterText : coS.discountAfterText = t.discountAfterText;
+													coS.dupTextA[t.discountAfterText] = 1;
+													coS.discountTextA.push(t.discountAfterText);
+												}
+											} else {
+												"undefined" !== typeof coS.discountAfterText ? coS.discountAfterText = coS.discountAfterText + t.discountAfterText : coS.discountAfterText = t.discountAfterText;
+												coS.discountTextA.push(t.discountAfterText);
+											}
+										}
+										if (t.discountBeforeText != "") {
+											coS.discountShow = t.discountShow;
+											if ("undefined" === typeof coS.discountTextB) coS.discountTextB = [];
+											var dB = !1;
+											if (coS.discountTextB.includes(t.discountBeforeText)) dB = !0
+											if (t.discountTextDuplicated) {
+												if ("undefined" === typeof coS.dupTextB) coS.dupTextB = {};
+												if (dB) {
+													coS.dupTextB[t.discountBeforeText] = coS.dupTextB[t.discountBeforeText] + 1
+												} else {
+													"undefined" !== typeof coS.discountBeforeText ? coS.discountBeforeText = coS.discountBeforeText + t.discountBeforeText : coS.discountBeforeText = t.discountBeforeText;
+													coS.dupTextB[t.discountBeforeText] = 1;
+													coS.discountTextB.push(t.discountBeforeText);
+												}
+											} else {
+												"undefined" !== typeof coS.discountBeforeText ? coS.discountBeforeText = coS.discountBeforeText + t.discountBeforeText : coS.discountBeforeText = t.discountBeforeText;
+												coS.discountTextB.push(t.discountBeforeText);
+											}
+										}
+									}
+									if ("object" !== typeof coS.discountedFrom) coS.discountedFrom = [];
+									coS.discountScore = stackDiscount;
+									coS.discountScoreCal = stackDiscountCal;
+									coS.discountedFrom.push(t.id);
+									if (!coS.discountIsOn) coS.discountIsOn = true;
+								}
+							} else {
+								var scoreVal = parseInt(coS.value),
+									stackDiscount = 0,
+									stackDiscountCal = 0,
+									aDiscount = [];
+								if ("undefined" === typeof coS.tmpDiscount) coS.tmpDiscount = [];
+								if (1 == t.discountOperator) stackDiscount = scoreVal - parseInt(t.discountValue);
+								else if (2 == t.discountOperator) stackDiscount = scoreVal + parseInt(t.discountValue);
+								else if (3 == t.discountOperator) stackDiscount = parseInt(scoreVal * t.discountValue);
+								else if (4 == t.discountOperator) stackDiscount = parseInt(scoreVal / t.discountValue);
+								stackDiscountCal = stackDiscount;
+								if (t.discountLowLimitIsOn && "undefined" !== typeof t.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(t.discountLowLimit));
+								if (coS.discountIsOn) {
+									"undefined" === typeof t.stackableDiscount ? aDiscount.push(false) : aDiscount.push(t.stackableDiscount);
+									if (coS.discountScore > stackDiscount) {
+										aDiscount.push(coS.discountedFrom);
+										aDiscount.push(coS.discountScoreCal);
+										aDiscount.push(coS.discountScore);
+										if (coS.discountShow) {
+											aDiscount.push(true);
+											aDiscount.push(t.discountBeforeText);
+											aDiscount.push(t.discountAfterText);
+										} else {
+											aDiscount.push(false);
+										}
+										coS.discountScore = stackDiscount;
+										coS.discountScoreCal = stackDiscountCal;
+										coS.discountShow = t.discountShow;
+										coS.discountBeforeText = t.discountBeforeText;
+										coS.discountAfterText = t.discountAfterText;
+										coS.discountedFrom = t.id;
+										coS.notStackableDiscount = true;
+									} else {
+										aDiscount.push(t.id);
+										aDiscount.push(stackDiscountCal);
+										aDiscount.push(stackDiscount);
+										if (t.discountShow) {
+											aDiscount.push(true);
+											aDiscount.push(t.discountBeforeText);
+											aDiscount.push(t.discountAfterText);
+										} else {
+											aDiscount.push(false);
+										}
+									}
+									coS.tmpDiscount.push(aDiscount);
+								} else {
+									coS.discountScore = stackDiscount;
+									coS.discountScoreCal = stackDiscountCal;
+									if (t.discountShow) coS.discountShow = t.discountShow, coS.discountBeforeText = t.discountBeforeText, coS.discountAfterText = t.discountAfterText;
+									coS.discountIsOn = true;
+									coS.discountedFrom = t.id;
+									coS.notStackableDiscount = true;
+								}
+							}
+						}
 						var tmpList = new Set(e.app.activated.map(item => item.split("/ON#")[0])),
 							preserveList = new Set(),
 							forcedList = new Set(),
 							multiList = new Map(),
 							forcedMulList = new Map();
 						e.app.activated.splice(0), e.app.mdObjects.splice(0);
+						if (e.app.bgmFadeInterval !== 0) clearInterval(e.app.bgmFadeInterval), e.app.bgmFadeInterval = 0;
+						if (e.app.bgmFadeTimer !== 0) clearInterval(e.app.bgmFadeTimer), e.app.bgmFadeTimer = 0;
+						e.app.isFadingOut = !1, e.app.lastFadeTime = 0;
 						for (const item of tmpList) {
 							if ("undefined" !== typeof e.app.comp[item]) {
 								var co = e.app.comp[item],
@@ -13115,40 +16983,56 @@
 							}
 						}
                         for (var o = 0; o < e.app.rows.length; o++) {
-							e.app.rows[o].isEditModeOn = !1;
-							e.app.rows[o].allowedChoicesChange > 0 && (e.app.rows[o].allowedChoices -= e.app.rows[o].allowedChoicesChange, e.app.rows[o].allowedChoicesChange = 0);
-							for (var t = 0; t < e.app.rows[o].objects.length; t++) {
-								for (var r = 0; r < e.app.rows[o].objects[t].scores.length; r++) {
-									if (e.app.rows[o].objects[t].isSelectableMultiple) {
-										if (e.app.rows[o].objects[t].isMultipleUseVariable) {
-											if (e.app.rows[o].objects[t].multipleUseVariable < 0) {
-												for (var k = 0; k <= Math.abs(e.app.rows[o].objects[t].multipleUseVariable) - 1; k++) {
-													e.app.rows[o].objects[t].scores[r].isActiveMulMinus[k] = !1;
+							var coR = e.app.rows[o];
+							coR.isEditModeOn = !1;
+							coR.allowedChoicesChange > 0 && (coR.allowedChoices -= coR.allowedChoicesChange, coR.allowedChoicesChange = 0);
+							for (var t = 0; t < coR.objects.length; t++) {
+								var coO = coR.objects[t];
+								for (var r = 0; r < coO.scores.length; r++) {
+									var coS = coO.scores[r];
+									if (coO.isSelectableMultiple) {
+										if (coO.isMultipleUseVariable) {
+											if (coO.multipleUseVariable < 0) {
+												for (var k = 0; k <= Math.abs(coO.multipleUseVariable) - 1; k++) {
+													coS.isActiveMulMinus[k] = !1;
 												}
-											} else {												
-												for (var k = 0; k <= e.app.rows[o].objects[t].multipleUseVariable - 1; k++) {
-													e.app.rows[o].objects[t].scores[r].isActiveMul[k] = !1;
+											} else {
+												for (var k = 0; k <= coO.multipleUseVariable - 1; k++) {
+													coS.isActiveMul[k] = !1;
 												}
 											}
 										}
 									} else {
-										e.app.rows[o].objects[t].scores[r].isActive = !1;
+										coS.isActive = !1;
 									}
-									e.app.rows[o].objects[t].scores[r].discountIsOn = !1;
-									if (e.app.rows[o].objects[t].scores[r].setValue) e.app.rows[o].objects[t].scores[r].setValue = !1;
+									coS.discountIsOn = !1;
+									if ("undefined" !== typeof coS.discountedFrom) coS.discountedFrom = "";
+									coS.discountShow = !1;
+									if ("undefined" !== typeof coS.discountScore) coS.discountScore = 0;
+									if ("undefined" !== typeof coS.discountScoreCal) coS.discountScoreCal = 0;
+									if ("undefined" !== typeof coS.tmpDisScore) coS.tmpDisScore = 0;
+									if ("undefined" !== typeof coS.tmpDiscount) coS.tmpDiscount.splice(0);
+									if ("undefined" !== typeof coS.isChangeDiscount) coS.isChangeDiscount = !1;
+									if ("undefined" !== typeof coS.dupTextA) coS.dupTextA = {};
+									if ("undefined" !== typeof coS.dupTextB) coS.dupTextB = {};
+									if ("undefined" !== typeof coS.discountTextA) coS.discountTextA.splice(0);
+									if ("undefined" !== typeof coS.discountTextB) coS.discountTextB.splice(0);
+									if ("undefined" !== typeof coS.discountAfterText) coS.discountAfterText = "";
+									if ("undefined" !== typeof coS.discountBeforeText) coS.discountBeforeText = "";
+									if (coS.setValue) coS.setValue = !1;
 								}
-								e.app.rows[o].objects[t].forcedActivated = !1;
-								if (e.app.rows[o].objects[t].isSelectableMultiple) {
-									if (e.app.rows[o].objects[t].isMultipleUseVariable)
-										e.app.rows[o].objects[t].multipleUseVariable = 0, e.app.rows[o].objects[t].selectedThisManyTimesProp = 0, e.app.rows[o].objects[t].numMultipleTimesMinus = e.app.rows[o].objects[t].initMultipleTimesMinus, e.app.objectMap[e.app.rows[o].objects[t].id] = 0;
+								coO.forcedActivated = !1;
+								if (coO.isSelectableMultiple) {
+									if (coO.isMultipleUseVariable)
+										coO.multipleUseVariable = 0, coO.selectedThisManyTimesProp = 0, coO.numMultipleTimesMinus = coO.initMultipleTimesMinus, e.app.objectMap[coO.id] = 0;
 									else
-										for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == e.app.rows[o].objects[t].multipleScoreId && (e.app.rows[o].objects[t].selectedThisManyTimesProp = e.app.pointTypes[a].initValue);
+										for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].id == coO.multipleScoreId && (coO.selectedThisManyTimesProp = e.app.pointTypes[a].initValue);
 								}
-								if (!preserveList.has(e.app.rows[o].objects[t].id)) {
-									clearChoices(e.app.rows[o].objects[t]);
+								if (!preserveList.has(coO.id)) {
+									clearChoices(coO);
 								}
 							}
-							e.app.rows[o].currentChoices = 0;
+							coR.currentChoices = 0;
 						}
 						for (var a = 0; a < e.app.pointTypes.length; a++) e.app.pointTypes[a].startingSum = e.app.pointTypes[a].initValue, e.app.pointTypeMap[e.app.pointTypes[a].id] = e.app.pointTypes[a].startingSum;
 						e.app.wordChangeComplete = !1;
@@ -13158,30 +17042,50 @@
 									pR = p.type == "app" ? e.app.rows[p.rows] : e.app.backpack[p.rows],
 									pO = pR.objects[p.objects];
 								if(checkRequireds(pO)) {
-									if (pO.discountOther)
-										if ("undefined" !== typeof pO.discountOperator && "undefined" !== typeof pO.discountValue && "undefined" !== typeof pO.discountGroups)
-											for (var a = 0; a < e.app.groups.length; a++)
-												for (var b = 0; b < e.app.groups[a].elements.length; b++)
-													if ("undefined" !== typeof e.app.comp[e.app.groups[a].elements[b].id]) {
-														var co = e.app.comp[e.app.groups[a].elements[b].id],
-															coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														for (var c = 0; c < coO.scores.length; c++) {
-															var coS = coO.scores[c];
-															if (pO.discountPointTypes.length === 0 || pO.discountPointTypes.includes(coS.id)) {
-																if (!coS.isNotDiscountable && !coS.discountIsOn) {
-																	if (1 == pO.discountOperator) coS.discountScore = parseInt(coS.value) - parseInt(pO.discountValue);
-																	else if (2 == pO.discountOperator) coS.discountScore = parseInt(coS.value) + parseInt(pO.discountValue);
-																	else if (3 == pO.discountOperator) coS.discountScore = parseInt(coS.value) * pO.discountValue;
-																	else if (4 == pO.discountOperator) coS.discountScore = parseInt(coS.value) / pO.discountValue;
-																	if (pO.discountLowLimitIsOn && "undefined" !== typeof pO.discountLowLimit) coS.discountScore = coS.discountScore < pO.discountLowLimit ? parseInt(pO.discountLowLimit) : coS.discountScore;
-																	if (pO.discountShow) e.$set(coS, "discountShow", pO.discountShow), e.$set(coS, "discountBeforeText", pO.discountBeforeText), e.$set(coS, "discountAfterText", pO.discountAfterText);
-																	coS.discountIsOn = true;
-																	coS.discountedFrom = pO.id;
+									if (pO.discountOther) {
+										if ("undefined" !== typeof pO.discountOperator && "undefined" !== typeof pO.discountValue) {
+											if (pO.isDisChoices) {
+												if ("undefined" !== typeof pO.discountChoices) {
+													for (var a = 0; a < pO.discountChoices.length; a++) {
+														if ("undefined" !== typeof e.app.comp[pO.discountChoices[a]]) {
+															var co = e.app.comp[pO.discountChoices[a]],
+																coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+																coO = coR.objects[co.objects];
+															for (var c = 0; c < coO.scores.length; c++) {
+																var coS = coO.scores[c];
+																if (pO.discountPointTypes.length === 0 || pO.discountPointTypes.includes(coS.id)) {
+																	if (!coS.isNotDiscountable) {
+																		discountS(pO, coS);
+																	}
 																}
 															}
 														}
 													}
+												}
+											} else {
+												if("undefined" !== typeof pO.discountGroups) {
+													for (var a = 0; a < e.app.groups.length; a++) {
+														if (pO.discountGroups.includes(e.app.groups[a].id)) {
+															for (var b = 0; b < e.app.groups[a].elements.length; b++)
+																if ("undefined" !== typeof e.app.comp[e.app.groups[a].elements[b].id]) {
+																	var co = e.app.comp[e.app.groups[a].elements[b].id],
+																		coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+																		coO = coR.objects[co.objects];
+																	for (var c = 0; c < coO.scores.length; c++) {
+																		var coS = coO.scores[c];
+																		if (pO.discountPointTypes.length === 0 || pO.discountPointTypes.includes(coS.id)) {
+																			if (!coS.isNotDiscountable) {
+																				discountS(pO, coS);
+																			}
+																		}
+																	}
+																}
+														}
+													}
+												}
+											} 
+										}
+									}
 									if (pO.addToAllowChoice)
 										if ("undefined" !== typeof e.app.compR[pO.idOfAllowChoice]) {
 											var co = e.app.compR[pO.idOfAllowChoice],
