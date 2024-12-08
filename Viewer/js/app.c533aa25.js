@@ -788,16 +788,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -809,16 +809,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -839,16 +839,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -860,16 +860,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -897,16 +897,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -918,16 +918,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticClass: "my-0",
@@ -942,16 +942,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -963,16 +963,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
                     attrs: {
@@ -1032,16 +1032,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1053,16 +1053,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 5 == t.object.template ? i("span", {
                     staticClass: "ma-0",
@@ -1087,16 +1087,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1108,16 +1108,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -1138,16 +1138,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1159,16 +1159,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1196,16 +1196,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1217,16 +1217,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
                     attrs: {
@@ -1279,16 +1279,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1300,16 +1300,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1331,16 +1331,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1352,16 +1352,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
                     staticClass: "ma-0",
@@ -1424,16 +1424,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1445,16 +1445,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -1475,16 +1475,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1496,16 +1496,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1533,16 +1533,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1554,16 +1554,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticClass: "my-0",
@@ -1578,16 +1578,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1599,16 +1599,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1630,16 +1630,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1651,16 +1651,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 2 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -1724,16 +1724,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1745,16 +1745,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("div", {
@@ -1774,16 +1774,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1795,16 +1795,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1832,16 +1832,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1853,16 +1853,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticStyle: {
@@ -1876,16 +1876,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1897,16 +1897,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1931,16 +1931,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1952,16 +1952,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : 3 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -1982,16 +1982,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2003,16 +2003,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("div", {
@@ -2032,16 +2032,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2053,16 +2053,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -2090,16 +2090,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2111,16 +2111,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticStyle: {
@@ -2134,16 +2134,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2155,16 +2155,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
                     staticClass: "pa-0 mb-0",
@@ -2232,16 +2232,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2253,16 +2253,16 @@
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
                     },
                     on: {
                         click: function(e) {
                             return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
                         }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.app.styling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : t._e()], 1) : t._e(), i(t.currentComponent, {
                     tag: "component",

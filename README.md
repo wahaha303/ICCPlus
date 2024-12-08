@@ -204,3 +204,4 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where the Debug Title was not displaying in the Row List and ID/Title List.
  - Fixed an issue where discounted scores were displayed incorrectly.
  - Fixed an issue where the 'Fit-in' option of the background did not work in the Viewer.
+ - Fixed an issue where the buttons did not work when clicking outside the icon area.
