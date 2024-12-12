@@ -1,0 +1,18 @@
+{
+  "name": "iccplus",
+  "version": "1.0.0",
+  "description": "Stable Version:<br>\r Link to [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-creator": "terser -c -m -o build/creator/js/chunk-vendors.ae283b72.js -- js/chunk-vendors.ae283b72.js && terser -c -m -o build/creator/js/chunk-2d0e6102.09695d49.js -- js/chunk-2d0e6102.09695d49.js && terser -c -m -o build/creator/js/app.d3103a3b.js -- js/app.d3103a3b.js && copyfiles css/* build/creator/ && copyfiles favicon.ico build/creator/ && copyfiles index.html build/creator/ && copyfiles LICENSE.txt build/creator/ && copyfiles js/html-to-image.min.js build/creator/",
+    "build-viewer": "terser -c -m -o build/Viewer/js/app.c533aa25.js -- Viewer/js/app.c533aa25.js && terser -c -m -o build/Viewer/js/chunk-2d0e6102.09695d49.js -- Viewer/js/chunk-2d0e6102.09695d49.js && terser -c -m -o build/Viewer/js/chunk-vendors.59af3576.js -- Viewer/js/chunk-vendors.59af3576.js && copyfiles Viewer/css/* build/ && copyfiles Viewer/index.html build/ && copyfiles Viewer/js/html-to-image.min.js build/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copyfiles": "^2.4.1",
+    "terser": "^5.37.0"
+  }
+}
