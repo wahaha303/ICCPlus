@@ -13707,7 +13707,7 @@
 										setTimeout(function() {
 											lm.style.height = "";
 											lm.style.opacity = 1;
-											lm.style.transform = "";
+											lm.style.pointerEvents = "";
 											indicator.remove();
 											projectSize.remove();
 											document.styleSheets[0].insertRule("body::before{opacity:0;transition:opacity 2s}", 0);

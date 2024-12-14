@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.13.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.13.2 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -1796,7 +1796,7 @@
                         },
                         expression: "object.id"
                     }
-                })], 1)], 1), o("v-row", {
+                })], 1)], 1), !e.app.hideChoiceDT ? o("v-row", {
                     staticClass: "py-0"
                 }, [o("v-col", {
                     staticClass: "col-12 pt-1 pb-2"
@@ -1814,7 +1814,7 @@
                         },
                         expression: "object.debugTitle"
                     }
-                })], 1)], 1), o("v-row", {
+                })], 1)], 1) : e._e(), o("v-row", {
                     staticClass: "py-0"
                 }, [o("v-col", {
                     staticClass: "col-md-6 pr-1 pt-1"
@@ -33330,6 +33330,18 @@
 							e.$set(e.app, "useVW", o);
 						},
 						expression: "app.useVW"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Hide Debug Title of Choices."
+					},
+					model: {
+						value: e.app.hideChoiceDT,
+						callback: function(o) {
+							e.$set(e.app, "hideChoiceDT", o);
+						},
+						expression: "app.hideChoiceDT"
 					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
