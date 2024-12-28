@@ -2818,7 +2818,11 @@
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";"
+                        if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.addonStyling.addonTitlePaddingIsOn ? ("padding: " + this.addonStyling.objectTextPadding + "px;") : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
+						}
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
@@ -3876,7 +3880,7 @@
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"

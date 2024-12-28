@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.14.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.14.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -7336,7 +7336,11 @@
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";"
+						if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.addonStyling.addonTitlePaddingIsOn ? ("padding: " + this.addonStyling.objectTextPadding + "px;") : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
+						}
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
@@ -14200,6 +14204,19 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
+                        label: "Apply padding to the Addon Title"
+                    },
+                    model: {
+                        value: e.styling.addonTitlePaddingIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTitlePaddingIsOn", t)
+                        },
+                        expression: "styling.addonTitlePaddingIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
                         label: "Remove the space between addons"
                     },
                     model: {
@@ -15495,6 +15512,19 @@
 						cols: e.window.width > 719 ? "4" : "12"
 					}
 				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Apply padding to the Choice Title"
+                    },
+                    model: {
+                        value: e.styling.titlePaddingIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "titlePaddingIsOn", t)
+                        },
+                        expression: "styling.titlePaddingIsOn"
+                    }
+                }), o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
@@ -17730,7 +17760,7 @@
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -34303,13 +34333,75 @@
 									e.currentComponent = "appRowDesignGroupSettings"
 								}
 							}
-						}, [e._v("Set Design")])], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+						}, [e._v("Set Design")])], 1)], 1), o("v-row", (e.window.width > 1000 || (e.window.width <= 800 && e.window.width > 500)) ? [o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
                         staticClass: "py-0",
                         attrs: {
                             "hide-details": ""
                         },
                         on: {
-                            click: function(t) {
+                            click: function(o) {
+                                return e.changeRDGOrderUp(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-up")])])], 1), o("v-col", {
+                        staticClass: "col-8"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.deleteRowDesignGroup(i)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1), o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeRDGOrderDown(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-down")])])], 1)] : [o("v-col", {
+                        staticClass: "col-6"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeRDGOrderUp(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-up")])])], 1), o("v-col", {
+                        staticClass: "col-6"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeRDGOrderDown(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-down")])])], 1), o("v-col", {
+                        staticClass: "col-12"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
                                 return e.deleteRowDesignGroup(i)
                             }
                         }
@@ -34551,13 +34643,75 @@
 									e.currentComponent = "appObjectDesginGroupSettings"
 								}
 							}
-						}, [e._v("Set Design")])], 1)], 1), o("v-row", [o("v-col", [o("v-btn", {
+						}, [e._v("Set Design")])], 1)], 1), o("v-row", (e.window.width > 1000 || (e.window.width <= 800 && e.window.width > 500)) ? [o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
                         staticClass: "py-0",
                         attrs: {
                             "hide-details": ""
                         },
                         on: {
-                            click: function(t) {
+                            click: function(o) {
+                                return e.changeODGOrderUp(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-up")])])], 1), o("v-col", {
+                        staticClass: "col-8"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.deleteObjectDesignGroup(i)
+                            }
+                        }
+                    }, [e._v("Delete")])], 1), o("v-col", {
+                        staticClass: "col-2"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeODGOrderDown(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-down")])])], 1)] : [o("v-col", {
+                        staticClass: "col-6"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeODGOrderUp(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-up")])])], 1), o("v-col", {
+                        staticClass: "col-6"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
+                                return e.changeODGOrderDown(i)
+                            }
+                        }
+                    }, [o("v-icon", [e._v("mdi-chevron-down")])])], 1), o("v-col", {
+                        staticClass: "col-12"
+                    }, [o("v-btn", {
+                        staticClass: "py-0",
+                        attrs: {
+                            "hide-details": ""
+                        },
+                        on: {
+                            click: function(o) {
                                 return e.deleteObjectDesignGroup(i)
                             }
                         }
@@ -34682,6 +34836,38 @@
                         });
 						this.app.compODG[e] = {designGroups: this.objectDesignGroups.length - 1};
                     },
+					changeRDGOrderUp: function(e) {
+						if (e > 0) {
+							var t = this.rowDesignGroups[e].id,
+								o = this.rowDesignGroups[e - 1].id;
+							this.app.compRDG[t].designGroups = e - 1, this.app.compRDG[o].designGroups = e;
+							this.rowDesignGroups.splice(e - 1, 2, this.rowDesignGroups[e], this.rowDesignGroups[e - 1]);
+						}
+					},
+					changeRDGOrderDown: function(e) {
+						if (e < this.rowDesignGroups.length - 1) {
+							var t = this.rowDesignGroups[e].id,
+								o = this.rowDesignGroups[e + 1].id;
+							this.app.compRDG[t].designGroups = e + 1, this.app.compRDG[o].designGroups = e;
+							this.rowDesignGroups.splice(e, 2, this.rowDesignGroups[e + 1], this.rowDesignGroups[e]);
+						}
+					},
+					changeODGOrderUp: function(e) {
+						if (e > 0) {
+							var t = this.app.objectDesignGroups[e].id,
+								o = this.app.objectDesignGroups[e - 1].id;
+							this.app.compODG[t].designGroups = e - 1, this.app.compODG[o].designGroups = e;
+							this.objectDesignGroups.splice(e - 1, 2, this.objectDesignGroups[e], this.objectDesignGroups[e - 1]);
+						}
+					},
+					changeODGOrderDown: function(e) {
+						if (e < this.objectDesignGroups.length - 1) {
+							var t = this.objectDesignGroups[e].id,
+								o = this.objectDesignGroups[e + 1].id;
+							this.app.compODG[t].designGroups = e + 1, this.app.compODG[o].designGroups = e;
+							this.objectDesignGroups.splice(e, 2, this.objectDesignGroups[e + 1], this.objectDesignGroups[e]);
+						}
+					},
                     deleteGroupElement: function(e, t) {
                         t.splice(e, 1)
                     },
@@ -34733,6 +34919,7 @@
             VContainer: k["a"],
             VDialog: B["a"],
             VDivider: li["a"],
+			VIcon: J["a"],
             VRow: S["a"],
 			VSelect: K["a"],
             VTextField: R["a"]
@@ -39494,7 +39681,11 @@
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";"
+                        if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.addonStyling.addonTitlePaddingIsOn ? ("padding: " + this.addonStyling.objectTextPadding + "px;") : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonTitle + '";font-size: ' + this.textStyling.addonTitleTextSize + "%;text-align: " + this.textStyling.addonTitleAlign + ";color: " + (!e && this.filterStyling.reqATitleColorIsOn ? this.filterStyling.reqFilterATitleColor : (this.object.isActive && this.filterStyling.selATitleColorIsOn ? this.filterStyling.selFilterATitleColor : this.textStyling.addonTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
+						}
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
@@ -40165,7 +40356,7 @@
                     },
                     objectTitle: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";"
+                        return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
                         return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
@@ -50835,6 +51026,19 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
+                        label: "Apply padding to the Choice Title"
+                    },
+                    model: {
+                        value: e.styling.titlePaddingIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "titlePaddingIsOn", t)
+                        },
+                        expression: "styling.titlePaddingIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
                         label: "Remove the space between addons"
                     },
                     model: {
@@ -52035,6 +52239,20 @@
                             e.$set(e.styling, "addonDesignIsAdvanced", t)
                         },
                         expression: "styling.addonDesignIsAdvanced"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Apply padding to the Addon Title",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonTitlePaddingIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTitlePaddingIsOn", t)
+                        },
+                        expression: "styling.addonTitlePaddingIsOn"
                     }
                 }), o("v-checkbox", {
                     staticClass: "auto shrink mr-2 mt-0",
@@ -59327,7 +59545,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.14.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.14.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -60148,7 +60366,8 @@
 						objectBorderImageSliceBottom: 5,
 						objectBorderImageSliceLeft: 5,
 						objectBorderImageSliceRight: 5,
-						removeSpaceAddonIsOn: !1
+						removeSpaceAddonIsOn: !1,
+						titlePaddingIsOn: !1
 					},
 					rowStyling: {
 						rowDesignIsAdvanced: !1,
@@ -60229,7 +60448,8 @@
 						isAddonBackgroundFitIn: !1,
 						isAddonBackgroundRepeat: !1,
 						addonBgColorIsOn: !1,
-						addonBgColor: "#FFFFFFFF"
+						addonBgColor: "#FFFFFFFF",
+						addonTitlePaddingIsOn: !1
 					},
 					globalVariables: {
 						text: "",
