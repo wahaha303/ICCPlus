@@ -45713,7 +45713,7 @@
                         },
                         accept: {
                             type: String,
-                            default: "image/*"
+                            default: "image/*, image/avif"
                         },
                         size: {
                             type: [String, Number],
@@ -45832,7 +45832,7 @@
                             var e = this.$refs.previewCanvas;
                             e.getContext && (this.context = e.getContext("2d"), this.context.scale(this.pixelRatio, this.pixelRatio))
                         }
-                        "image/*" !== this.accept && (this.fileTypes = this.accept.split(","), this.fileTypes = this.fileTypes.map((function(t) {
+                        "image/*, image/avif" !== this.accept && (this.fileTypes = this.accept.split(","), this.fileTypes = this.fileTypes.map((function(t) {
                             return t.trim()
                         }))), this.canvasWidth = this.width, this.canvasHeight = this.height, this.$on("error", this.onError)
                     },
@@ -45869,7 +45869,7 @@
                                     message: this.strings.fileSize + " (" + this.size + "MB)"
                                 });
                                 else if (n[0].name !== this.fileName || n[0].size !== this.fileSize || this.fileModified !== n[0].lastModified) {
-                                if (this.file = n[0], this.fileName = n[0].name, this.fileSize = n[0].size, this.fileModified = n[0].lastModified, this.fileType = n[0].type, "image/*" === this.accept) {
+                                if (this.file = n[0], this.fileName = n[0].name, this.fileSize = n[0].size, this.fileModified = n[0].lastModified, this.fileType = n[0].type, "image/*, image/avif" === this.accept) {
                                     if ("image/" !== n[0].type.substr(0, 6)) return
                                 } else if (-1 === this.fileTypes.indexOf(n[0].type)) return void this.$emit("error", {
                                     type: "fileType",
@@ -45987,7 +45987,7 @@
                             }
                             if (e = Object.assign({}, e), "object" === Object(i["a"])(t)) return this.imageSelected = !0, this.image = "", void(this.supportsPreview ? this.loadImage(t, !0) : this.$emit("prefill"));
                             var A = new Headers;
-                            A.append("Accept", "image/*"), fetch(t, {
+                            A.append("Accept", "image/*, image/avif"), fetch(t, {
                                 method: "GET",
                                 mode: "cors",
                                 headers: A

@@ -116,6 +116,10 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to allow stacking the discount function multiple times.
  - Added an option in Global Settings to preload external images in Viewer.
  - Added a feature to set fade-in and fade-out in the BGM function.
+ - Added a feature to set Addon Design/Addon Image Design.
+ - Added a feature to allow uploading .avif format images.
+ - Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Points.
+ - Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Design Groups.
 
 ## Fixed
 
@@ -205,3 +209,6 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where discounted scores were displayed incorrectly.
  - Fixed an issue where the 'Fit-in' option of the background did not work in the Viewer.
  - Fixed an issue where the buttons did not work when clicking outside the icon area.
+ - Fixed an issue where the display of discounted scores was not refreshing.
+ - Fixed an issue where the choice with the discount function could not be deselected.
+ - Fixed an issue where the border-radius was not applied to the Addon Image.

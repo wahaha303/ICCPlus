@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.13.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.14.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 08.12.2024")]), o("v-col", {
+                }, [e._v("Update: 28.12.2024")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to set 'Image Center' option in Row/Choice/Addon Templates. "), o("br"), e._v(" Added a feature to set a Debug Title for each Choice. "), o("br"), e._v(" Added a feature to allow selecting choices directly instead of using groups for the discount function. "), o("br"), e._v(" Added a feature to allow stacking the discount function multiple times. "), o("br"), e._v(" Added an option in Global Settings to preload external images in Viewer. "), o("br"), e._v(" Added a feature to set fade-in and fade-out in the BGM function. ")]), o("v-col", {
+                }, [e._v(" Added a feature to set Addon Design/Addon Image Design. "), o("br"), e._v(" Added a feature to allow uploading .avif format images. "), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Points. "), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Design Groups. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where some UIs in editor mode were not rendering correctly. "), o("br"), e._v(" Fixed an issue where the Debug Title was not displaying in the Row List and ID/Title List. "), o("br"), e._v(" Fixed an issue where discounted scores were displayed incorrectly. "), o("br"), e._v(" Fixed an issue where the 'Fit-in' option of the background did not work in the Viewer. "), o("br"), e._v(" Fixed an issue where the buttons did not work when clicking outside the icon area. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the display of discounted scores was not refreshing. "), o("br"), e._v(" Fixed an issue where the choice with the discount function could not be deselected. "), o("br"), e._v(" Fixed an issue where discounted scores were displayed incorrectly. "), o("br"), e._v(" Fixed an issue where the border-radius was not applied to the Addon Image. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -493,7 +493,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: "" != t.activatedId ? (e.app.activated.includes(t.activatedId) || !t.isNotShownPointBar) : !t.isNotShownPointBar,
+                            value: e.isPointtypeActivated(t),
                             expression: "\n            score.activatedId == '' ||\n            app.activated.includes(score.activatedId)\n          "
                         }],
                         key: t.index,
@@ -5716,7 +5716,9 @@
                             }
                         }
                     }, [e._v("Delete")])], 1) : e._e()])], 1)
-                })), 1)], 1) : e.checkRequireds(e.addon) ? o("div", [4 == e.addon.template ? o("span", {
+                })), 1)], 1) : e.checkRequireds(e.addon) ? o("div", {
+					style: e.addonBackground
+				}, [4 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -7057,9 +7059,17 @@
                 },
                 computed: {
 					objectImage: function() {
-                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-						this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
-                        return e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						if (this.addonImageStyling.useAddonImage) {
+							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.styling.addonImgObjectFillHeight + "px;");
+							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
+						} else {
+							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						}
                     },
                     activated: function() {
                         return this.$store.state.app.activated
@@ -7073,15 +7083,23 @@
 					object: function() {
 						return this.$parent.object
 					},
-					objectStyling: function() {
-						if (this.object.privateObjectIsOn) return this.object.styling;
-						if (this.row.privateObjectIsOn) return this.row.styling;
+					addonStyling: function() {
+						if (this.object.privateAddonIsOn) return this.object.styling;
+						if (this.row.privateAddonIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7090,7 +7108,93 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling
+					},
+					addonImageStyling: function() {
+						if (this.object.privateAddonImageIsOn) return this.object.styling;
+						if (this.row.privateAddonImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					objectStyling: function() {
+						if (this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.privateObjectIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7104,7 +7208,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7113,7 +7225,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7127,7 +7247,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7136,7 +7264,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7150,7 +7286,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7159,11 +7303,36 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
 						return this.$store.state.app.styling;
+					},
+					addonBackground: function() {
+						if (this.addonStyling.useAddonDesign) {
+							var e = (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;",
+							t = this.addonStyling.addonBorderRadiusIsPixels ? "px" : "%",
+							o = this.checkRequireds(this.object);
+							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
+							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
+							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
+							else if (!o) {
+								var rm = 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : ""));
+								if (this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
+								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
+							}
+							return e += ";", e
+						}
+						return "";
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
@@ -7171,7 +7340,11 @@
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.addonStyling.addonTextPadding + "px;" + (this.addonStyling.addonRemoveSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						}
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -9827,8 +10000,17 @@
                     isPointtypeActivated: function() {
                         for (var e = 0; e < this.pointTypes.length; e++)
                             if (this.pointTypes[e].id == this.score.id) {
-								if ("" != this.pointTypes[e].activatedId) return !!(this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
-								else return !this.pointTypes[e].isNotShownObjects;
+								if ("" != this.pointTypes[e].activatedId) {
+									if ("undefined" !== typeof this.app.compGR[this.pointTypes[e].activatedId]) {
+										var co = this.app.compGR[this.pointTypes[e].activatedId],
+											cGR = this.app.globalRequirements[co.globalRequirements];
+										return this.checkRequireds(cGR);
+									} else {
+										return (this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
+									}
+								} else {
+									return !this.pointTypes[e].isNotShownObjects;
+								}
 							}
                         return !0
                     },
@@ -9866,6 +10048,9 @@
                     },
                     changedOption: function(e) {
                         this.score.name = e.target.options[e.target.options.selectedIndex].text
+                    },
+					checkRequireds: function(e) {
+                        return this.$store.getters.checkRequireds(e)
                     },
 					moveScoreUp: function() {
 						var e = this.scores.indexOf(this.score);
@@ -10024,6 +10209,8 @@
 							e.$set(e.row, "privateTextIsOn", !1);
 							e.$set(e.row, "privateObjectImageIsOn", !1);
 							e.$set(e.row, "privateObjectIsOn", !1);
+							e.$set(e.row, "privateAddonImageIsOn", !1);
+							e.$set(e.row, "privateAddonIsOn", !1);
 							e.$set(e.row, "privateBackgroundIsOn", !1);
 							e.$set(e.row, "styling", {});
                         },
@@ -10165,13 +10352,13 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appObjectImage"
+                                        e.currentComponent = "appObjectDesign"
                                     }
                                 }
-                            }, i), [e._v("Manage Choices Image Design")])], 1)]
+                            }, i), [e._v("Manage Choice Design")])], 1)]
                         }
-                    }], null, !1, 1468014515)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -10190,13 +10377,63 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appBackground"
+                                        e.currentComponent = "appObjectImage"
                                     }
                                 }
-                            }, i), [e._v("Manage Background Design")])], 1)]
+                            }, i), [e._v("Manage Choices Image Design")])], 1)]
                         }
-                    }], null, !1, 187463358)
-                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
+                    }], null, !1, 1468014515)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on addons. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Image Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on addons. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -10215,13 +10452,13 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appObjectDesign"
+                                        e.currentComponent = "appBackground"
                                     }
                                 }
-                            }, i), [e._v("Manage Choice Design")])], 1)]
+                            }, i), [e._v("Manage Background Design")])], 1)]
                         }
-                    }], null, !1, 2942481490)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         from: "private",
@@ -13059,6 +13296,1356 @@
             VSwitch: L["a"],
             VTextField: R["a"]
         });
+		var aRe = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        "max-width": "1200px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", {
+					ref: "dialog"
+				}, [o("v-card-title", {
+                    staticClass: "headline"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateAddonImageIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateAddonImageIsOn", t);
+							if (t) {
+								Object.keys(e.addonImageStyling).forEach(key => {
+									e.$set(e.styling, key, e.addonImageStyling[key]);
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.addonImageStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateAddonImageIsOn"
+                    }
+                }), e._v("Addon Images")]), o("v-card-text", {
+					staticClass: !e.row.privateAddonImageIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", {
+					staticClass: e.window.width > 400 ? "" : "col-12"
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Style of the border"
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderStyle", t)
+                        },
+                        expression: "styling.addonImgBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        suffix: "px",
+                        type: "number",
+                        label: "Thickness of the border",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderWidth", t)
+                        },
+                        expression: "styling.addonImgBorderWidth"
+                    }
+                }, [e._v("px")]), o("v-col", {
+                    staticClass: "pt-2 pb-0"
+                }, [e._v("Size and Margin of the addon image")]), o("v-text-field", {
+                    attrs: {
+                        label: "Width of the image inside of a addon",
+                        suffix: "%",
+                        type: "number",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImageWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageWidth", t)
+                        },
+                        expression: "styling.addonImageWidth"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Distance Between Top of addon and Image",
+                        suffix: "%",
+                        type: "number",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImageMarginTop,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageMarginTop", t)
+                        },
+                        expression: "styling.addonImageMarginTop"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Distance Between Title and Image",
+                        suffix: "%",
+                        type: "number",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImageMarginBottom,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageMarginBottom", t)
+                        },
+                        expression: "styling.addonImageMarginBottom"
+                    }
+                }), o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Works only with the Image Left/Right template.")]), o("v-text-field", {
+                    attrs: {
+                        label: "Width of the image box inside of choice",
+                        suffix: "%",
+						placeholder: 50,
+                        type: "number",
+                        filled: "",
+						min: 0,
+						max: 100
+                    },
+                    model: {
+                        value: e.styling.addonImageBoxWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageBoxWidth", Math.min(Math.max(0, t), 100));
+                        },
+                        expression: "styling.addonImageBoxWidth"
+                    }
+                })], 1), o("v-col", {
+					staticClass: e.window.width > 400 ? "" : "col-12"
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the addons")]), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusTopRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusTopRight", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusTopRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusBottomRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusBottomRight", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusBottomRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusBottomLeft"
+                    }
+                }), o("v-switch", {
+                    staticClass: "auto shrink mt-n3",
+                    attrs: {
+                        label: "Pixels or Percents",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusIsPixels,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusIsPixels", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusIsPixels"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border Is On"
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderIsOn", t)
+                        },
+                        expression: "styling.addonImgBorderIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Cut off overflow images/text"
+                    },
+                    model: {
+                        value: e.styling.addonImgOverflowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgOverflowIsOn", t)
+                        },
+                        expression: "styling.addonImgOverflowIsOn"
+                    }
+                })], 1), o("v-col", [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    model: {
+                        value: e.styling.addonImgBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderColor", t)
+                        },
+                        expression: "styling.addonImgBorderColor"
+                    }
+                })], 1)], 1), o("v-row", [o("v-col", {
+                    staticClass: "py-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Object Fit"), o("br"), e._v(" How the images fit inside of the addon."), o("br"), e._v(" A textfield where you can decide the Size of the container will appear in Row Settings when the switch is on.")]), o("v-col", {
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [o("v-select", {
+                    attrs: {
+                        items: e.objectFitStyles,
+                        "item-value": "value",
+                        "item-text": "text",
+                        filled: "",
+                        "hide-details": "",
+                        label: "Object Fill"
+                    },
+                    model: {
+                        value: e.styling.addonImgObjectFillStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgObjectFillStyle", t)
+                        },
+                        expression: "styling.addonImgObjectFillStyle"
+                    }
+                })], 1), o("v-col", [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Object Fit Is On"
+                    },
+                    model: {
+                        value: e.styling.addonImgObjectFillIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgObjectFillIsOn", t)
+                        },
+                        expression: "styling.addonImgObjectFillIsOn"
+                    }
+                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            aFe = [],
+            a_e = {
+                props: {
+                    from: String,
+                    row: Object,
+                    isAdvanced: Boolean
+                },
+                data: function() {
+                    return {
+                        dialog: !0,
+                        borderStyles: [{
+                            text: "solid"
+                        }, {
+                            text: "dotted"
+                        }, {
+                            text: "dashed"
+                        }, {
+                            text: "double"
+                        }, {
+                            text: "groove"
+                        }, {
+                            text: "ridge"
+                        }, {
+                            text: "inset"
+                        }, {
+                            text: "outset"
+                        }, {
+                            text: "hidden"
+                        }],
+                        objectFitStyles: [{
+                            value: "fill",
+                            text: "Fill: The replaced content is sized to fill the element's content box. If necessary, the object will be stretched or squished to fit"
+                        }, {
+                            value: "contain",
+                            text: "Contain: The replaced content is scaled to maintain its aspect ratio while fitting within the element's content box"
+                        }, {
+                            value: "cover",
+                            text: "Cover: The replaced content is sized to maintain its aspect ratio while filling the element's entire content box. The object will be clipped to fit"
+                        }, {
+                            value: "scale-down",
+                            text: "Scale-down: The content is sized as if none or contain were specified (would result in a smaller concrete object size)"
+                        }, {
+                            value: "none",
+                            text: "None: The replaced content is not resized"
+                        }],
+						window: {
+							width: 0,
+							height: 0
+						}
+                    }
+                },
+                computed: {
+                    styling: function() {
+                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
+                    },
+                    borderRadiusSuffix: function() {
+                        return this.styling.objectImgBorderRadiusIsPixels ? "px" : "%"
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					}
+                },
+				mounted: function() {
+					this.resizeObserver = new ResizeObserver((e) => {
+						for (var t of e) {
+							this.window.width = t.contentRect.width;
+							this.window.hegiht = t.contentRect.height;
+						}
+					});
+					if ("undefined" !== typeof this.$refs.dialog) this.resizeObserver.observe(this.$refs.dialog.$el);
+                },
+                destroyed: function() {
+                    if (this.resizeObserver) {
+						this.resizeObserver.disconnect();
+					}
+                },
+                methods: {
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    }
+                }
+            },
+            aqe = a_e,
+            aAe = Object(w["a"])(aqe, aRe, aFe, !1, null, null, null),
+            a$e = aAe.exports;
+        x()(aAe, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCheckbox: ae["a"],
+            VCol: I["a"],
+            VColorPicker: xe["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"]
+        });
+		var aYe = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        "max-width": "1200px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", {
+					ref: "dialog"
+				}, [o("v-card-title", {
+                    staticClass: "headline"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateAddonIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateAddonIsOn", t);
+							if (t) {
+								if (e.app.styling.useAddonDesign) {
+									Object.keys(e.addonStyling).forEach(key => {
+										if (e.app.styling.hasOwnProperty(key)) {
+											e.$set(e.styling, key, e.app.styling[key]);
+										}
+									});
+								} else {
+									Object.keys(e.addonStyling).forEach(key => {
+										e.$set(e.styling, key, e.addonStyling[key]);
+									});
+								}
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.addonStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateAddonIsOn"
+                    }
+                }), e._v("Addon Design")]), o("v-card-text", {
+					staticClass: !e.row.privateAddonIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", [o("v-switch", {
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        label: "Advanced Design?"
+                    },
+                    model: {
+                        value: e.styling.addonDesignIsAdvanced,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDesignIsAdvanced", t)
+                        },
+                        expression: "styling.addonDesignIsAdvanced"
+                    }
+                })], 1)], 1), e.styling.addonDesignIsAdvanced ? o("v-row", [o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "pa-0"
+                }, [e._v("Margin and Padding of the addons")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Margin",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonMargin,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonMargin", t)
+                        },
+                        expression: "styling.addonMargin"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Padding",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonTextPadding,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTextPadding", t)
+                        },
+                        expression: "styling.addonTextPadding"
+                    }
+                }), o("v-col", {
+                    staticClass: "py-0 mt-n6"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Border Styles"
+                    },
+                    model: {
+                        value: e.styling.addonBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderStyle", t)
+                        },
+                        expression: "styling.addonBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Border Width",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderWidth", t)
+                        },
+                        expression: "styling.addonBorderWidth"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border is turned on"
+                    },
+                    model: {
+                        value: e.styling.addonBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderIsOn", t)
+                        },
+                        expression: "styling.addonBorderIsOn"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Shadow that the choice makes")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Horizontal Shadow",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowH,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowH", t)
+                        },
+                        expression: "styling.addonDropShadowH"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Vertical Shadow",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowV,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowV", t)
+                        },
+                        expression: "styling.addonDropShadowV"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Shadow Blur",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowBlur,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowBlur", t)
+                        },
+                        expression: "styling.addonDropShadowBlur"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Shadow Spread",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowSpread,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowSpread", t)
+                        },
+                        expression: "styling.addonDropShadowSpread"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Drop Shadow Is turned on"
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowIsOn", t)
+                        },
+                        expression: "styling.addonDropShadowIsOn"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the addons")]), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopRight", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomRight", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomLeft"
+                    }
+                }), o("v-switch", {
+                    staticClass: "auto shrink mt-n3",
+                    attrs: {
+                        label: "Border-Radius Percent or Pixels?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusIsPixels,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusIsPixels", t)
+                        },
+                        expression: "styling.addonBorderRadiusIsPixels"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border-Radius Cuts off overflow"
+                    },
+                    model: {
+                        value: e.styling.addonOverflowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonOverflowIsOn", t)
+                        },
+                        expression: "styling.addonOverflowIsOn"
+                    }
+                })], 1)], 1)], 1) : o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "pa-0"
+                }, [e._v("Margin and Padding of the addons")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Space between the addons",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonMargin,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonMargin", t)
+                        },
+                        expression: "styling.addonMargin"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Space between the text in the addons and its border",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonTextPadding,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTextPadding", t)
+                        },
+                        expression: "styling.addonTextPadding"
+                    }
+                }), o("v-col", {
+                    staticClass: "py-0 mt-n4"
+                }, [e._v("Shadow that the addon makes")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "The Higher the number the bigger the shadow will be.",
+                        filled: ""
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.shadowIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowH,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowH", t)
+                        },
+                        expression: "styling.addonDropShadowH"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Border Styles"
+                    },
+                    model: {
+                        value: e.styling.addonBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderStyle", t)
+                        },
+                        expression: "styling.addonBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Border Width",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderWidth", t)
+                        },
+                        expression: "styling.addonBorderWidth"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border is turned on"
+                    },
+                    model: {
+                        value: e.styling.addonBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderIsOn", t)
+                        },
+                        expression: "styling.addonBorderIsOn"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the addons")]), o("v-text-field", {
+                    attrs: {
+                        label: "Rounded corners in the top of each addon",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.topBorderIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Rounded corners in the bottom of each addon",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: ""
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.bottomBorderIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomLeft"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Drop Shadow Is turned on"
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowIsOn", t)
+                        },
+                        expression: "styling.addonDropShadowIsOn"
+                    }
+                })], 1)], 1), o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0 colorPickerText"
+                }, [e._v("Color of the Drop Shadow")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    model: {
+                        value: e.styling.addonDropShadowColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowColor", t)
+                        },
+                        expression: "styling.addonDropShadowColor"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Remove the space between addons"
+                    },
+                    model: {
+                        value: e.styling.addonRemoveSpaceAddonIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonRemoveSpaceAddonIsOn", t)
+                        },
+                        expression: "styling.addonRemoveSpaceAddonIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Addon Gradient is turned on"
+                    },
+                    model: {
+                        value: e.styling.addonGradientIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientIsOn", t)
+                        },
+                        expression: "styling.addonGradientIsOn"
+                    }
+                }), e.styling.objectGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when not selected",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red"
+                    },
+                    model: {
+                        value: e.styling.addonGradient,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradient", t)
+                        },
+                        expression: "styling.addonGradient"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when selected",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red"
+                    },
+                    model: {
+                        value: e.styling.addonGradientOnSelect,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientOnSelect", t)
+                        },
+                        expression: "styling.addonGradientOnSelect"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when missing requirement",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red"
+                    },
+                    model: {
+                        value: e.styling.addonGradientOnReq,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientOnReq", t)
+                        },
+                        expression: "styling.addonGradientOnReq"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("span", [e._v("You might need to leave for the main menu if things stop updating, using the background colors for filters does not work well, so you'll need to place gradients in ALL of them, but using something like (green, green) works. "), o("a", {
+                    attrs: {
+                        target: "_blank",
+                        href: "https://www.w3schools.com/css/css3_gradients.asp"
+                    }
+                }, [e._v("https://www.w3schools.com/css/css3_gradients.asp")])]) : e._e()], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 719 ? "4" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0 colorPickerText"
+                }, [e._v("Color of the choice border")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    model: {
+                        value: e.styling.addonBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderColor", t)
+                        },
+                        expression: "styling.addonBorderColor"
+                    }
+                })], 1)], 1), o("v-row", [o("v-col", {
+					staticClass: "text-center",
+					attrs: {
+						cols: "12"
+					}
+				}, [e.window.width > 911 ? e._v("Background & Border Image") : e._v("Background")], 1), o("v-col", {
+					staticClass: "pt-0",
+					attrs: {
+						cols: e.window.width > 911 ? "3" : "12"
+					}
+				}, [o("v-switch", {
+                    staticClass: "mt-0 pt-0 auto shrink",
+                    attrs: {
+                        label: "Use a Background Image?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.useAddonBackgroundImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "useAddonBackgroundImage", t)
+							if (!t) e.$delete(e.styling, "addonBackgroundImage");
+                        },
+                        expression: "styling.useAddonBackgroundImage"
+                    }
+                }), e.styling.useAddonBackgroundImage ? [o("v-col", {
+					staticClass: "pa-0"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Does it repeat?"
+                    },
+                    model: {
+                        value: e.styling.isAddonBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isAddonBackgroundRepeat", t);
+							if (t) e.$set(e.styling, "isAddonBackgroundFitIn", !t);
+                        },
+                        expression: "styling.isAddonBackgroundRepeat"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        label: "Does it fit in?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.isAddonBackgroundFitIn,
+                        callback: function(t) {
+                            e.$set(e.styling, "isAddonBackgroundFitIn", t);
+							if (t) e.$set(e.styling, "isAddonBackgroundRepeat", !t);
+                        },
+                        expression: "styling.isAddonBackgroundFitIn"
+                    }
+                }), o("picture-input", {
+                    ref: "pictureInput",
+                    staticClass: "col",
+                    attrs: {
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                        hideChangeButton: !0,
+                        removable: !0,
+                        crop: !1,
+                        zIndex: 0,
+                        width: 200,
+						height: 200,
+                        prefill: e.styling.addonBackgroundImage,
+                        "custom-strings": {
+                            upload: "<h1>Error!</h1>",
+                            drag: "Upload Addon Background Image"
+                        }
+                    },
+                    on: {
+                        change: e.onImageChangeAddon,
+                        remove: e.onImageRemovalAddon
+                    }
+                })], 1)] : [o("v-checkbox", {
+                    staticClass: "auto shrink mt-0 pt-0",
+                    attrs: {
+						"hide-details": "",
+                        label: "Color of the addon backgrounds"
+                    },
+                    model: {
+                        value: e.styling.addonBgColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBgColorIsOn", t)
+                        },
+                        expression: "styling.addonBgColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+					attrs: {
+						disabled: !e.styling.addonBgColorIsOn
+					},
+                    model: {
+                        value: e.styling.addonBgColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBgColor", t)
+                        },
+                        expression: "styling.addonBgColor"
+                    }
+                })]], 1), e.window.width > 911 ? e._e() : o("v-col", {
+					staticClass: "text-center",
+					attrs: {
+						cols: "12"
+					}
+				}, [e._v("Border Image")], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 911 ? "3" : "12"
+					}
+				}, [o("picture-input", {
+                    ref: "pictureInput",
+                    staticClass: "col",
+                    attrs: {
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                        hideChangeButton: !0,
+                        removable: !0,
+                        crop: !1,
+                        zIndex: 0,
+                        width: 200,
+						height: 200,
+                        prefill: e.styling.addonBorderImage,
+                        "custom-strings": {
+                            upload: "<h1>Error!</h1>",
+                            drag: "Upload Addon Border Image"
+                        },
+                    },
+                    on: {
+                        change: e.onBorderImageChangeAddon,
+                        remove: e.onBorderImageRemovalAddon
+                    }
+                })], 1), o("v-col", {
+					staticClass: "pa-0",
+					attrs: {
+						cols: e.window.width > 911 ? "6" : "12"
+					}
+				}, [o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 450 ? "4" : "12"
+					}
+				}, [o("v-select", {
+                    attrs: {
+                        items: e.borderImageRepeat,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Repeat"
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageRepeat", t)
+                        },
+                        expression: "styling.addonBorderImageRepeat"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Width",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageWidth", t)
+                        },
+                        expression: "styling.addonBorderImageWidth"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 450 ? "4" : "12"
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Top",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceTop,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceTop", t)
+                        },
+                        expression: "styling.addonBorderImageSliceTop"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Bottom",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceBottom,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceBottom", t)
+                        },
+                        expression: "styling.addonBorderImageSliceBottom"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 450 ? "4" : "12"
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Left",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceLeft", t)
+                        },
+                        expression: "styling.addonBorderImageSliceLeft"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Right",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceRight", t)
+                        },
+                        expression: "styling.addonBorderImageSliceRight"
+                    }
+                }, [e._v("px")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            aJe = [],
+            aXe = {
+                props: {
+                    from: String,
+                    row: Object,
+                    isAdvanced: Boolean
+                },
+                data: function() {
+                    return {
+                        dialog: !0,
+                        borderStyles: [{
+                            text: "solid"
+                        }, {
+                            text: "dotted"
+                        }, {
+                            text: "dashed"
+                        }, {
+                            text: "double"
+                        }, {
+                            text: "groove"
+                        }, {
+                            text: "ridge"
+                        }, {
+                            text: "inset"
+                        }, {
+                            text: "outset"
+                        }, {
+                            text: "hidden"
+                        }],
+						borderImageRepeat: [{
+							text: "stretch"
+						}, {
+							text: "repeat"
+						}, {
+							text: "round"
+						}, {
+							text: "space"
+						}],
+						window: {
+							width: 0,
+							height: 0
+						}
+                    }
+                },
+				components: {
+                    PictureInput: $["a"]
+                },
+                computed: {
+                    styling: function() {
+                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
+                    },
+                    borderRadiusSuffix: function() {
+                        return this.styling.objectBorderRadiusIsPixels ? "px" : "%"
+                    },
+					app: function() {
+						return this.$store.state.app
+					},
+					addonStyling: function() {
+						return this.$store.state.addonStyling
+					}
+                },
+				mounted: function() {
+					this.resizeObserver = new ResizeObserver((e) => {
+						for (var t of e) {
+							this.window.width = t.contentRect.width;
+							this.window.hegiht = t.contentRect.height;
+						}
+					});
+					if ("undefined" !== typeof this.$refs.dialog) this.resizeObserver.observe(this.$refs.dialog.$el);
+                },
+                destroyed: function() {
+                    if (this.resizeObserver) {
+						this.resizeObserver.disconnect();
+					}
+                },
+                methods: {
+                    shadowIsChanged: function() {
+                        this.styling.objectDropShadowV = this.styling.objectDropShadowH, this.styling.objectDropShadowSpread = this.styling.objectDropShadowH, this.styling.objectDropShadowBlur = this.styling.objectDropShadowH
+                    },
+                    topBorderIsChanged: function() {
+                        this.styling.objectBorderRadiusTopRight = this.styling.objectBorderRadiusTopLeft
+                    },
+                    bottomBorderIsChanged: function() {
+                        this.styling.objectBorderRadiusBottomRight = this.styling.objectBorderRadiusBottomLeft
+                    },
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    },
+					onBorderImageChangeAddon: function(e) {
+						this.$set(this.styling, "objectBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+					},
+					onBorderImageRemovalAddon: function() {
+						this.$set(this.styling, "objectBorderImage", "")
+					},
+					onBorderImageChangeAddon: function(e) {
+						this.$set(this.styling, "objectBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+					},
+					onBorderImageRemovalAddon: function() {
+						this.$set(this.styling, "objectBorderImage", "")
+					}
+                }
+            },
+            aKe = aXe,
+            aZe = (o("bb36"), Object(w["a"])(aKe, aYe, aJe, !1, null, "adbdef3c", null)),
+            aQe = aZe.exports;
+        x()(aZe, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+            VCheckbox: ae["a"],
+            VCol: I["a"],
+            VColorPicker: xe["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"]
+        });
         var We = function() {
                 var e = this,
                     t = e.$createElement,
@@ -13373,26 +14960,23 @@
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     },
-                    onChange: function(e) {
-                        this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
-                    },
                     onImageChangeBackground: function(e) {
-                        this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "backgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeObject: function(e) {
-                        this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "objectBackgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeRow: function(e) {
-                        this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "rowBackgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageRemoval: function() {
-                        this.styling.backgroundImage = ""
+                        this.$set(this.styling, "backgroundImage", "")
                     },
                     onImageRemovalObject: function() {
-                        this.styling.objectBackgroundImage = ""
+                        this.$set(this.styling, "objectBackgroundImage", "")
                     },
                     onImageRemovalRow: function() {
-                        this.styling.rowBackgroundImage = ""
+                        this.$set(this.styling, "rowBackgroundImage", "")
                     }
                 }
             },
@@ -14227,14 +15811,11 @@
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     },
-					onChange: function(e) {
-						this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
-					},
 					onBorderImageChangeObject: function(e) {
-						this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.$set(this.styling, "objectBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalObject: function() {
-						this.styling.objectBorderImage = ""
+						this.$set(this.styling, "objectBorderImage", "")
 					}
                 }
             },
@@ -15150,10 +16731,10 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
 					onBorderImageChangeRow: function(e) {
-						this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.$set(this.styling, "rowBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalRow: function() {
-						this.styling.rowBorderImage = ""
+						this.$set(this.styling, "rowBorderImage", "")
 					}
                 }
             },
@@ -15465,7 +17046,9 @@
                     appObjectDesign: Qe,
                     appRowDesign: rt,
                     appPointBar: pt,
-                    appRowImage: Le
+                    appRowImage: Le,
+					appAddonImage: a$e,
+					appAddonDesign: aQe
                 },
                 computed: {
                     styling: function() {
@@ -15494,7 +17077,13 @@
 					},
 					objectStyling: function() {
 						return this.$store.state.objectStyling
-					},					
+					},
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					},
+					addonStyling: function() {
+						return this.$store.state.addonStyling
+					},
 					tRow: function() {
 						if ("undefined" !== typeof this.app.comp[this.row.id]) {
 							var co = this.app.comp[this.row.id],
@@ -15614,6 +17203,18 @@
 							Object.keys(e.objectStyling).forEach(key => {
 								if (o.styling.hasOwnProperty(key)) {
 									if (!e.row.privateObjectIsOn) e.$set(e.row, "privateObjectIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonImageStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonImageIsOn) e.$set(e.row, "privateAddonImageIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
@@ -15937,7 +17538,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -15946,7 +17555,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -15960,7 +17577,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -15969,7 +17594,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -15983,7 +17616,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -15992,7 +17633,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -16006,7 +17655,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -16015,7 +17672,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -16029,7 +17694,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -16038,7 +17711,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -17246,37 +18927,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -17328,43 +19005,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -17469,35 +19142,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -17546,35 +19215,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -19938,7 +21603,7 @@
                         "item-text": "id",
                         "item-value": "id",
                         filled: "",
-                        label: "All choices In Row Is Members Of This Group",
+                        label: "All choices In Row Are Members Of This Group In Result Row",
                         placeholder: "All Rows and Objects"
                     },
 					scopedSlots: {
@@ -19991,6 +21656,8 @@
 							e.$set(e.row, "privateObjectIsOn", !1);
 							e.$set(e.row, "privateRowImageIsOn", !1);
 							e.$set(e.row, "privateRowIsOn", !1);
+							e.$set(e.row, "privateAddonImageIsOn", !1);
+							e.$set(e.row, "privateAddonIsOn", !1);
 							e.$set(e.row, "privateBackgroundIsOn", !1);
 							e.$set(e.row, "styling", {});
                         },
@@ -20132,6 +21799,31 @@
                                 },
                                 on: {
                                     click: function(t) {
+                                        e.currentComponent = "appObjectDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choice Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
                                         e.currentComponent = "appObjectImage"
                                     }
                                 }
@@ -20139,6 +21831,31 @@
                         }
                     }], null, !1, 1468014515)
                 }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appRowDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Row Design")])], 1)]
+                        }
+                    }], null, !1, 2123780716)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on rows. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -20182,13 +21899,13 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appBackground"
+                                        e.currentComponent = "appAddonDesign"
                                     }
                                 }
-                            }, i), [e._v("Manage Background Design")])], 1)]
+                            }, i), [e._v("Manage Addon Design")])], 1)]
                         }
-                    }], null, !1, 187463358)
-                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
+                    }], null, !1, 2123780716)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on addons. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -20207,13 +21924,13 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appRowDesign"
+                                        e.currentComponent = "appAddonImage"
                                     }
                                 }
-                            }, i), [e._v("Manage Row Design")])], 1)]
+                            }, i), [e._v("Manage Addon Image Design")])], 1)]
                         }
-                    }], null, !1, 2123780716)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on rows. ")])]), o("v-tooltip", {
+                    }], null, !1, 3359790558)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on addons. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -20232,13 +21949,13 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appObjectDesign"
+                                        e.currentComponent = "appBackground"
                                     }
                                 }
-                            }, i), [e._v("Manage Choice Design")])], 1)]
+                            }, i), [e._v("Manage Background Design")])], 1)]
                         }
-                    }], null, !1, 2942481490)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])])], 1) : e._e()], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         from: "private",
@@ -20335,7 +22052,9 @@
                     appObjectDesign: Qe,
                     appRowDesign: rt,
                     appPointBar: pt,
-                    appRowImage: Le
+                    appRowImage: Le,
+					appAddonImage: a$e,
+					appAddonDesign: aQe
                 },
                 computed: {
                     styling: function() {
@@ -20370,6 +22089,12 @@
 					},
 					rowStyling: function() {
 						return this.$store.state.rowStyling
+					},
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					},
+					addonStyling: function() {
+						return this.$store.state.addonStyling
 					}
                 },
 				mounted: function() {
@@ -20525,6 +22250,18 @@
 							Object.keys(e.rowStyling).forEach(key => {
 								if (o.styling.hasOwnProperty(key)) {
 									if (!e.row.privateRowIsOn) e.$set(e.row, "privateRowIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonImageStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonImageIsOn) e.$set(e.row, "privateAddonImageIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
@@ -20975,6 +22712,18 @@
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
+							Object.keys(e.addonImageStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonImageIsOn) e.$set(e.row, "privateAddonImageIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
                         }, t.readAsText(this.files[0]);
                     },
 					exportDesign: function() {
@@ -21351,6 +23100,18 @@
 							Object.keys(e.objectStyling).forEach(key => {
 								if (o.styling.hasOwnProperty(key)) {
 									if (!e.row.privateObjectIsOn) e.$set(e.row, "privateObjectIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonImageStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonImageIsOn) e.$set(e.row, "privateAddonImageIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.addonStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
@@ -22181,7 +23942,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22194,7 +23963,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22207,7 +23984,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22220,7 +24005,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22233,7 +24026,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22246,7 +24047,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -22375,7 +24184,15 @@
 								if ("undefined" !== typeof this.app.compODG[t.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[t.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -22384,7 +24201,15 @@
 								if ("undefined" !== typeof this.app.compRDG[e.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[e.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -23404,37 +25229,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -23486,43 +25307,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -23627,35 +25444,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -23704,35 +25517,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -27368,19 +29177,27 @@
                         designComponentButtons: [{
                             component: "appObjectDesign",
                             text: "Manage Choice Design",
-                            tooltip: " Here you can change the margin,<br />padding, borders, and drop-shadow on choices."
-                        }, {
-                            component: "appRowDesign",
-                            text: "Manage Row Design",
-                            tooltip: "Here you can change the margin, <br />padding, borders, and drop-shadow on rows."
+                            tooltip: "Here you can change the margin,<br />padding, borders, and drop-shadow on choices."
                         }, {
                             component: "appObjectImage",
                             text: "Manage Choices Image Design",
                             tooltip: "Here you can change the margin and padding <br />of images on rows and objects."
                         }, {
+                            component: "appRowDesign",
+                            text: "Manage Row Design",
+                            tooltip: "Here you can change the margin, <br />padding, borders, and drop-shadow on rows."
+                        }, {
                             component: "appRowImage",
                             text: "Manage Row Image Design",
                             tooltip: "Here you can change the margin and padding <br />of images on rows and objects."
+                        }, {
+                            component: "appAddonDesign",
+                            text: "Manage Addon Design",
+                            tooltip: "Here you can change the margin,<br />padding, borders, and drop-shadow on Addon."
+                        }, {
+                            component: "appAddonImage",
+                            text: "Manage Addon Image Design",
+                            tooltip: "Here you can change the margin and padding <br />of images on Addon."
                         }, {
                             component: "appFilter",
                             text: "Manage Filter Design",
@@ -27424,6 +29241,8 @@
                     appBackground: Ue,
                     appObjectDesign: Qe,
                     appRowDesign: rt,
+					appAddonImage: a$e,
+					appAddonDesign: aQe,
                     appPointBar: pt,
                     appBackpack: ko,
                     appRowImage: Le,
@@ -34350,37 +36169,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -34432,43 +36247,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -37167,7 +38978,9 @@
                 var e = this,
                     t = e.$createElement,
                     o = e._self._c || t;
-                return o("span", [e.checkRequireds(e.addon) ? o("div", [4 == e.addon.template ? o("span", {
+                return o("span", [e.checkRequireds(e.addon) ? o("div", {
+					style: e.addonBackground
+				}, [4 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -37407,9 +39220,17 @@
                 },
                 computed: {
                     objectImage: function() {
-                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-						this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
-                        return e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						if (this.addonImageStyling.useAddonImage) {
+							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.styling.addonImgObjectFillHeight + "px;");
+							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
+						} else {
+							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						}
                     },
                     activated: function() {
                         return this.$store.state.app.activated
@@ -37420,15 +39241,23 @@
                     object: function() {
 						return this.$parent.object
 					},
-					objectStyling: function() {
-						if (this.object.privateObjectIsOn) return this.object.styling;
-						if (this.row.privateObjectIsOn) return this.row.styling;
+					addonStyling: function() {
+						if (this.object.privateAddonIsOn) return this.object.styling;
+						if (this.row.privateAddonIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37437,7 +39266,93 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling
+					},
+					addonImageStyling: function() {
+						if (this.object.privateAddonImageIsOn) return this.object.styling;
+						if (this.row.privateAddonImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					objectStyling: function() {
+						if (this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.privateObjectIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37451,7 +39366,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37460,7 +39383,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37474,7 +39405,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37483,7 +39422,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37497,7 +39444,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37506,11 +39461,36 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
 						return this.$store.state.app.styling;
+					},
+                    addonBackground: function() {
+						if (this.addonStyling.useAddonDesign) {
+							var e = (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;",
+							t = this.addonStyling.addonBorderRadiusIsPixels ? "px" : "%",
+							o = this.checkRequireds(this.object);
+							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
+							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
+							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
+							else if (!o) {
+								var rm = 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : ""));
+								if (this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
+								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
+							}
+							return e += ";", e
+						}
+						return "";
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
@@ -37518,7 +39498,11 @@
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.addonStyling.addonTextPadding + "px;" + (this.addonStyling.addonRemoveSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						}
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -37763,11 +39747,23 @@
                     isPointtypeActivated: function() {
                         for (var e = 0; e < this.pointTypes.length; e++)
                             if (this.pointTypes[e].id == this.score.id) {
-								if ("" != this.pointTypes[e].activatedId) return !!(this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
-								else return !this.pointTypes[e].isNotShownObjects;
+								if ("" != this.pointTypes[e].activatedId) {
+									if ("undefined" !== typeof this.app.compGR[this.pointTypes[e].activatedId]) {
+										var co = this.app.compGR[this.pointTypes[e].activatedId],
+											cGR = this.app.globalRequirements[co.globalRequirements];
+										return this.checkRequireds(cGR);
+									} else {
+										return (this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
+									}
+								} else {
+									return !this.pointTypes[e].isNotShownObjects;
+								}
 							}
                         return !0
                     },
+					app: function() {
+                        return this.$store.state.app
+                    }
                 },
                 methods: {
                     deleteEvent: function(e, t) {
@@ -37778,6 +39774,9 @@
                     },
                     changedOption: function(e) {
                         this.score.name = e.target.options[e.target.options.selectedIndex].text
+                    },
+					checkRequireds: function(e) {
+                        return this.$store.getters.checkRequireds(e)
                     }
                 }
             },
@@ -37911,7 +39910,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37920,7 +39927,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37934,7 +39949,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37943,7 +39966,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37957,7 +39988,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37966,7 +40005,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37980,7 +40027,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -37989,7 +40044,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -38003,7 +40066,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -38012,7 +40083,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -38025,7 +40104,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -38038,7 +40125,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -38051,7 +40146,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -39184,37 +41287,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -39266,43 +41365,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -39407,35 +41502,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -39484,35 +41575,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -41883,7 +43970,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -41896,7 +43991,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -41909,7 +44012,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -41922,7 +44033,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -41935,7 +44054,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -41948,7 +44075,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -42077,7 +44212,15 @@
 								if ("undefined" !== typeof this.app.compODG[t.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[t.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -42086,7 +44229,15 @@
 								if ("undefined" !== typeof this.app.compRDG[e.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[e.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -43067,37 +45218,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -43149,43 +45296,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -43290,35 +45433,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -43367,35 +45506,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -47799,26 +49934,23 @@
                     cleanCurrentDesignComponent: function() {
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
-                    onChange: function(e) {
-                        this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
-                    },
                     onImageChangeBackground: function(e) {
-                        this.styling.backgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "backgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeObject: function(e) {
-                        this.styling.objectBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "objectBackgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageChangeRow: function(e) {
-                        this.styling.rowBackgroundImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "rowBackgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
                     onImageRemoval: function() {
-                        this.styling.backgroundImage = ""
+                        this.$set(this.styling, "backgroundImage", "")
                     },
                     onImageRemovalObject: function() {
-                        this.styling.objectBackgroundImage = ""
+                        this.$set(this.styling, "objectBackgroundImage", "")
                     },
                     onImageRemovalRow: function() {
-                        this.styling.rowBackgroundImage = ""
+                        this.$set(this.styling, "rowBackgroundImage", "")
                     }
                 }
             },
@@ -47986,10 +50118,10 @@
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
 					onImageChangeBackground: function(e) {
-                        this.styling.backpackBgImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "backpackBgImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
 					onImageRemoval: function() {
-						this.styling.backpackBgImage = ""
+						this.$set(this.styling, "backpackBgImage", "")
 					}
                 }
             },
@@ -49012,10 +51144,10 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
 					onBorderImageChangeObject: function(e) {
-                        this.styling.objectBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                        this.$set(this.styling, "objectBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
                     },
 					onBorderImageRemovalObject: function() {
-                        this.styling.objectBorderImage = ""
+                        this.$set(this.styling, "objectBorderImage" ,"")
                     }
                 }
             },
@@ -49397,6 +51529,1384 @@
             fr = Object(w["a"])(mr, gr, br, !1, null, null, null),
             wr = fr.exports;
         x()(fr, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCheckbox: ae["a"],
+            VCol: I["a"],
+            VColorPicker: xe["a"],
+            VContainer: k["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"]
+        });
+		var alr = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-card", {
+                    attrs: {
+                        width: "100%"
+                    }
+                }, [o("v-card-text", [o("v-container", [o("v-col", {
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-switch", {
+                    staticClass: "auto shrink",
+                    attrs: {
+                        label: "Use a Seperate Design?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.useAddonDesign,
+                        callback: function(t) {
+                            e.$set(e.styling, "useAddonDesign", t);
+							if (t) {
+								Object.keys(e.addonStyling).forEach(key => {
+									e.$set(e.styling, key, e.addonStyling[key]);
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.addonStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "styling.useAddonImage"
+                    }
+                })], 1), e.styling.addonDesignIsAdvanced ? o("v-row", [o("v-row", [o("v-col", [o("v-col", {
+                    staticClass: "pa-0"
+                }, [e._v("Margin and Padding of the choices")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Margin",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonMargin,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonMargin", t)
+                        },
+                        expression: "styling.addonMargin"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Padding",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonTextPadding,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTextPadding", t)
+                        },
+                        expression: "styling.addonTextPadding"
+                    }
+                }), o("v-col", {
+                    staticClass: "py-0 mt-n6"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Border Styles",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderStyle", t)
+                        },
+                        expression: "styling.addonBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Border Width",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderWidth", t)
+                        },
+                        expression: "styling.addonBorderWidth"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border-Radius Cuts off overflow",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonOverflowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonOverflowIsOn", t)
+                        },
+                        expression: "styling.addonOverflowIsOn"
+                    }
+                })], 1), o("v-col", [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Shadow that the choice makes")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Horizontal Shadow",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowH,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowH", t)
+                        },
+                        expression: "styling.addonDropShadowH"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Vertical Shadow",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowV,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowV", t)
+                        },
+                        expression: "styling.addonDropShadowV"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Shadow Blur",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowBlur,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowBlur", t)
+                        },
+                        expression: "styling.addonDropShadowBlur"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Shadow Spread",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowSpread,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowSpread", t)
+                        },
+                        expression: "styling.addonDropShadowSpread"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Drop Shadow is turned on",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowIsOn", t)
+                        },
+                        expression: "styling.addonDropShadowIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border is turned on",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderIsOn", t)
+                        },
+                        expression: "styling.addonBorderIsOn"
+                    }
+                })], 1), o("v-col", [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the choices")]), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopRight", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomRight", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomLeft"
+                    }
+                }), o("v-switch", {
+                    staticClass: "auto shrink mt-n3",
+                    attrs: {
+                        label: "Border-Radius Percent or Pixels?",
+                        "hide-details": "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusIsPixels,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusIsPixels", t)
+                        },
+                        expression: "styling.addonBorderRadiusIsPixels"
+                    }
+                })], 1)], 1)], 1) : o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 780 ? "3" : e.window.width > 480 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "pa-0"
+                }, [e._v("Margin and Padding of the choices")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Space between the choices",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonMargin,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonMargin", t)
+                        },
+                        expression: "styling.addonMargin"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "Space between the text in the choices and its border",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonTextPadding,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonTextPadding", t)
+                        },
+                        expression: "styling.addonTextPadding"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 780 ? "3" : e.window.width > 480 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Shadow that the choice makes")]), o("v-text-field", {
+                    attrs: {
+                        type: "number",
+                        suffix: "px",
+                        label: "The Higher the number the bigger the shadow will be.",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.shadowIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowH,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowH", t)
+                        },
+                        expression: "styling.addonDropShadowH"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Drop Shadow Is turned on",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowIsOn", t)
+                        },
+                        expression: "styling.addonDropShadowIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border is turned on",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderIsOn", t)
+                        },
+                        expression: "styling.addonBorderIsOn"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 780 ? "3" : e.window.width > 480 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Border Styles",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderStyle", t)
+                        },
+                        expression: "styling.addonBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Border Width",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderWidth", t)
+                        },
+                        expression: "styling.addonBorderWidth"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 780 ? "3" : e.window.width > 480 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the choices")]), o("v-text-field", {
+                    attrs: {
+                        label: "Rounded corners in the top of each choice",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.topBorderIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Rounded corners in the bottom of each choice",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    on: {
+                        change: function(t) {
+                            return e.bottomBorderIsChanged()
+                        }
+                    },
+                    model: {
+                        value: e.styling.addonBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonBorderRadiusBottomLeft"
+                    }
+                })], 1)], 1), o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 1263 ? "3" : e.window.width > 620 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0 colorPickerText"
+                }, [e._v("Color of the Drop Shadow")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDropShadowColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDropShadowColor", t)
+                        },
+                        expression: "styling.addonDropShadowColor"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1263 ? "3" : e.window.width > 620 ? "6" : "12"
+					}
+				}, [o("v-switch", {
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        label: "Advanced Design?",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonDesignIsAdvanced,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonDesignIsAdvanced", t)
+                        },
+                        expression: "styling.addonDesignIsAdvanced"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Remove the space between addons",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonRemoveSpaceAddonIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonRemoveSpaceAddonIsOn", t)
+                        },
+                        expression: "styling.addonRemoveSpaceAddonIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Addon Gradient is turned on",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonGradientIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientIsOn", t)
+                        },
+                        expression: "styling.addonGradientIsOn"
+                    }
+                }), e.styling.addonGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when not selected",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonGradient,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradient", t)
+                        },
+                        expression: "styling.addonGradient"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when selected",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonGradientOnSelect,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientOnSelect", t)
+                        },
+                        expression: "styling.addonGradientOnSelect"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("v-text-field", {
+                    attrs: {
+                        label: "Gradient when missing requirement",
+                        filled: "",
+                        "hide-details": "",
+                        placeholder: "to left, blue, red",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonGradientOnReq,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonGradientOnReq", t)
+                        },
+                        expression: "styling.addonGradientOnReq"
+                    }
+                }, [e._v("px")]) : e._e(), e.styling.addonGradientIsOn ? o("span", [e._v("You might need to leave for the main menu if things stop updating, using the background colors for filters does not work well, so you'll need to place gradients in ALL of them, but using something like (green, green) works. "), o("a", {
+                    attrs: {
+                        target: "_blank",
+                        href: "https://www.w3schools.com/css/css3_gradients.asp"
+                    }
+                }, [e._v("https://www.w3schools.com/css/css3_gradients.asp")])]) : e._e()], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1263 ? "3" : e.window.width > 620 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0 colorPickerText"
+                }, [e._v("Color of the choice border")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderColor", t)
+                        },
+                        expression: "styling.addonBorderColor"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "pt-0",
+					attrs: {
+						cols: e.window.width > 1263 ? "3" : e.window.width > 620 ? "6" : "12"
+					}
+				}, [o("v-col", {
+					staticClass: "pa-0"
+				}, [o("v-switch", {
+                    staticClass: "mt-0 pt-0 auto shrink",
+                    attrs: {
+                        label: "Use a Background Image?",
+                        "hide-details": "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.useAddonBackgroundImage,
+                        callback: function(t) {
+                            e.$set(e.styling, "useAddonBackgroundImage", t);
+							if (!t) e.$delete(e.styling, "addonBackgroundImage");
+                        },
+                        expression: "styling.useAddonBackgroundImage"
+                    }
+                }), e.styling.useAddonBackgroundImage ? o("v-col", {
+					staticClass: "pa-0"
+				}, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Does it repeat?",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.isAddonBackgroundRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "isAddonBackgroundRepeat", t);
+							if (t) e.$set(e.styling, "isAddonBackgroundFitIn", !t);
+                        },
+                        expression: "styling.isAddonBackgroundRepeat"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        label: "Does it fit in?",
+                        "hide-details": "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.isAddonBackgroundFitIn,
+                        callback: function(t) {
+                            e.$set(e.styling, "isAddonBackgroundFitIn", t);
+							if (t) e.$set(e.styling, "isAddonBackgroundRepeat", !t);
+                        },
+                        expression: "styling.isAddonBackgroundFitIn"
+                    }
+                }), o("picture-input", {
+                    ref: "pictureInput",
+                    staticClass: "col",
+                    attrs: {
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                        hideChangeButton: !0,
+                        removable: !0,
+                        crop: !1,
+                        zIndex: 0,
+                        width: 200,
+						height: 200,
+                        prefill: e.styling.addonBackgroundImage,
+                        "custom-strings": {
+                            upload: "<h1>Error!</h1>",
+                            drag: "Upload Addon Background Image"
+                        },
+						disabled: !e.styling.useAddonDesign
+                    },
+                    on: {
+                        change: e.onImageChangeAddon,
+                        remove: e.onImageRemovalAddon
+                    }
+                })], 1) : [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+						"hide-details": "",
+                        label: "Color of the addon backgrounds",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBgColorIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBgColorIsOn", t)
+                        },
+                        expression: "styling.addonBgColorIsOn"
+                    }
+                }), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+						"canvas-height": "50",
+                        disabled: !e.styling.useAddonDesign || !e.styling.addonBgColorIsOn
+                    },
+                    model: {
+                        value: e.styling.addonBgColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBgColor", t)
+                        },
+                        expression: "styling.addonBgColor"
+                    }
+                })]], 1)])], 1), o("v-row", [o("v-col", {
+					staticClass: "text-center",
+					attrs: {
+						cols: "12"
+					}
+				}, [e._v("Border Image")], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 630 ? "4" : "12"
+					}
+				}, [o("picture-input", {
+                    ref: "pictureInput",
+                    staticClass: "col",
+                    attrs: {
+                        removeButtonClass: "v-btn v-btn--contained " + (this.$vuetify.theme.isDark ? "theme--dark" : "theme--light") + " v-size--default",
+                        hideChangeButton: !0,
+                        removable: !0,
+                        crop: !1,
+                        zIndex: 0,
+                        width: 200,
+						height: 200,
+                        prefill: e.styling.addonBorderImage,
+                        "custom-strings": {
+                            upload: "<h1>Error!</h1>",
+                            drag: "Upload Addon Border Image"
+                        }
+                    },					
+					class: {
+						"disabled": !e.styling.useAddonDesign
+					},
+                    on: {
+                        change: e.onBorderImageChangeAddon,
+                        remove: e.onBorderImageRemovalAddon
+                    }
+                })], 1), o("v-col", {
+					staticClass: "pa-0",
+					attrs: {
+						cols: e.window.width > 630 ? "8" : "12"
+					}
+				}, [o("v-row", [o("v-col", {
+					attrs: {
+						cols: e.window.width > 510 ? "4" : "12"
+					}
+				}, [o("v-select", {
+                    attrs: {
+                        items: e.borderImageRepeat,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Repeat",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageRepeat,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageRepeat", t)
+                        },
+                        expression: "styling.addonBorderImageRepeat"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Width",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageWidth", t)
+                        },
+                        expression: "styling.addonBorderImageWidth"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 510 ? "4" : "12"
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Top",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceTop,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceTop", t)
+                        },
+                        expression: "styling.addonBorderImageSliceTop"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Bottom",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceBottom,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceBottom", t)
+                        },
+                        expression: "styling.addonBorderImageSliceBottom"
+                    }
+                }, [e._v("px")])], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 510 ? "4" : "12"
+					}
+				}, [o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Left",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceLeft", t)
+                        },
+                        expression: "styling.addonBorderImageSliceLeft"
+                    }
+                }, [e._v("px")]), o("v-text-field", {
+                    attrs: {
+                        suffix: "px",
+                        type: "number",
+                        label: "Slice Right",
+                        filled: "",
+						disabled: !e.styling.useAddonDesign
+                    },
+                    model: {
+                        value: e.styling.addonBorderImageSliceRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonBorderImageSliceRight", t)
+                        },
+                        expression: "styling.addonBorderImageSliceRight"
+                    }
+                }, [e._v("px")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentDesignComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)
+            },
+            acr = [],
+            adr = {
+                props: {
+                    from: String,
+                    row: Object,
+                    isAdvanced: Boolean
+                },
+                data: function() {
+                    return {
+                        dialog: !0,
+                        borderStyles: [{
+                            text: "solid"
+                        }, {
+                            text: "dotted"
+                        }, {
+                            text: "dashed"
+                        }, {
+                            text: "double"
+                        }, {
+                            text: "groove"
+                        }, {
+                            text: "ridge"
+                        }, {
+                            text: "inset"
+                        }, {
+                            text: "outset"
+                        }, {
+                            text: "hidden"
+                        }],
+						borderImageRepeat: [{
+							text: "stretch"
+						}, {
+							text: "repeat"
+						}, {
+							text: "round"
+						}, {
+							text: "space"
+						}],
+						window: {
+							width: 0,
+							height: 0
+						}
+                    }
+                },
+				components: {
+                    PictureInput: $["a"]
+                },
+                computed: {
+                    styling: function() {
+                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
+                    },
+                    borderRadiusSuffix: function() {
+                        return this.styling.addonBorderRadiusIsPixels ? "px" : "%"
+                    },
+					addonStyling: function() {
+						return this.$store.state.addonStyling
+					}
+                },
+				mounted: function() {
+                    window.addEventListener("resize", this.handleResize), this.handleResize()
+                },
+                destroyed: function() {
+                    window.removeEventListener("resize", this.handleResize)
+                },
+                methods: {
+					handleResize: function() {
+						this.window.width = window.innerWidth, this.window.height = window.innerHeight
+                    },
+                    shadowIsChanged: function() {
+                        this.styling.addonDropShadowV = this.styling.addonDropShadowH, this.styling.addonDropShadowSpread = this.styling.addonDropShadowH, this.styling.addonDropShadowBlur = this.styling.addonDropShadowH
+                    },
+                    topBorderIsChanged: function() {
+                        this.styling.addonBorderRadiusTopRight = this.styling.addonBorderRadiusTopLeft
+                    },
+                    bottomBorderIsChanged: function() {
+                        this.styling.addonBorderRadiusBottomRight = this.styling.addonBorderRadiusBottomLeft
+                    },
+                    cleanCurrentDesignComponent: function() {
+                        this.$emit("cleanCurrentDesignComponent", "")
+                    },
+					cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    },
+					onBorderImageChangeAddon: function(e) {
+                        this.$set(this.styling, "addonBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+                    },
+					onBorderImageRemovalAddon: function() {
+                        this.$set(this.styling, "addonBorderImage", "")
+                    },
+					onImageChangeAddon: function(e) {
+						this.$set(this.styling, "addonBackgroundImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+					},
+					onImageRemovalAddon: function() {
+						this.$set(this.styling, "addonBackgroundImage", "")
+					}
+                }
+            },
+            apr = adr,
+            aur = (o("cb3f"), Object(w["a"])(apr, alr, acr, !1, null, "44585128", null)),
+            ahr = aur.exports;
+        x()(aur, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCheckbox: ae["a"],
+            VCol: I["a"],
+            VColorPicker: xe["a"],
+            VContainer: k["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
+            VSwitch: L["a"],
+            VTextField: R["a"]
+        });
+		var agr = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-card", {
+                    attrs: {
+                        width: "100%"
+                    }
+                }, [o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-switch", {
+                    staticClass: "auto shrink",
+                    attrs: {
+                        label: "Use a Seperate Design?",
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.styling.useAddonImage,
+                        callback: function(t) {
+							if (t) {
+								Object.keys(e.addonImageStyling).forEach(key => {
+									e.$set(e.styling, key, e.addonImageStyling[key]);
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.addonImageStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "styling.useAddonImage"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1903 ? "3" : e.window.width > 610 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Size and Margin of the addon image")]), o("v-text-field", {
+                    attrs: {
+                        label: "Width of the image inside of a addon",
+                        suffix: "%",
+                        type: "number",
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImageWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageWidth", t)
+                        },
+                        expression: "styling.addonImageWidth"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Distance Between Top of addon and Image",
+                        suffix: "%",
+                        type: "number",
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImageMarginTop,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageMarginTop", t)
+                        },
+                        expression: "styling.addonImageMarginTop"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        label: "Distance Between Title and Image",
+                        suffix: "%",
+                        type: "number",
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImageMarginBottom,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageMarginBottom", t)
+                        },
+                        expression: "styling.addonImageMarginBottom"
+                    }
+                }), o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Works only with the Image Left/Right template.")]), o("v-text-field", {
+                    attrs: {
+                        label: "Width of the image box inside of addon",
+                        suffix: "%",
+						placeholder: 50,
+                        type: "number",
+                        filled: "",
+						min: 0,
+						max: 100,
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImageBoxWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImageBoxWidth", Math.min(Math.max(0, t), 100));
+                        },
+                        expression: "styling.addonImageBoxWidth"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1903 ? "3" : e.window.width > 610 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-select", {
+                    attrs: {
+                        items: e.borderStyles,
+                        "item-value": "text",
+                        filled: "",
+                        label: "Style of the border",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderStyle", t)
+                        },
+                        expression: "styling.addonImgBorderStyle"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        suffix: "px",
+                        type: "number",
+                        label: "Thickness of the border",
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderWidth,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderWidth", t)
+                        },
+                        expression: "styling.addonImgBorderWidth"
+                    }
+                }, [e._v("px")]), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border Is On",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderIsOn", t)
+                        },
+                        expression: "styling.addonImgBorderIsOn"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Cut off overflow images/text",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgOverflowIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgOverflowIsOn", t)
+                        },
+                        expression: "styling.addonImgOverflowIsOn"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1903 ? "3" : e.window.width > 610 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Rounded corners on the choices")]), o("v-row", [o("v-col", {
+                    staticClass: "pt-0"
+                }, [o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Top Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusTopLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusTopLeft", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusTopLeft"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border-radius Top Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusTopRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusTopRight", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusTopRight"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "pt-0"
+                }, [o("v-text-field", {
+                    attrs: {
+                        label: "Border-radius Bottom Right",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusBottomRight,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusBottomRight", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusBottomRight"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Border-radius Bottom Left",
+                        placeholder: "0",
+                        type: "number",
+                        suffix: e.borderRadiusSuffix,
+                        filled: "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusBottomLeft,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusBottomLeft", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusBottomLeft"
+                    }
+                })], 1)], 1), o("v-switch", {
+                    staticClass: "auto shrink pt-0",
+                    attrs: {
+                        label: "Pixels or Percents",
+                        "hide-details": "",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderRadiusIsPixels,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderRadiusIsPixels", t)
+                        },
+                        expression: "styling.addonImgBorderRadiusIsPixels"
+                    }
+                })], 1), o("v-col", {
+					attrs: {
+						cols: e.window.width > 1903 ? "3" : e.window.width > 610 ? "6" : "12"
+					}
+				}, [o("v-col", {
+                    staticClass: "py-0"
+                }, [e._v("Style and Width of the border")]), o("v-color-picker", {
+                    staticClass: "mx-auto",
+                    attrs: {
+                        "canvas-height": "50",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgBorderColor,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgBorderColor", t)
+                        },
+                        expression: "styling.addonImgBorderColor"
+                    }
+                })], 1)], 1), o("v-row", [o("v-col", {
+                    staticClass: "py-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Object Fit"), o("br"), e._v(" How the images fit inside of the addon."), o("br"), e._v(" A textfield where you can decide the Size of the container will appear in Row Settings when the switch is on.")]), o("v-col", [o("v-select", {
+                    attrs: {
+                        items: e.objectFitStyles,
+                        "item-value": "value",
+                        "item-text": "text",
+                        filled: "",
+                        "hide-details": "",
+                        label: "Object Fill",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgObjectFillStyle,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgObjectFillStyle", t)
+                        },
+                        expression: "styling.addonImgObjectFillStyle"
+                    }
+                }), o("v-checkbox", {
+                    staticClass: "auto shrink mr-2",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Object Fit Is On",
+						disabled: !e.styling.useAddonImage
+                    },
+                    model: {
+                        value: e.styling.addonImgObjectFillIsOn,
+                        callback: function(t) {
+                            e.$set(e.styling, "addonImgObjectFillIsOn", t)
+                        },
+                        expression: "styling.addonImgObjectFillIsOn"
+                    }
+                })], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentDesignComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)
+            },
+            abr = [],
+            avr = {
+                props: {
+                    from: String,
+                    row: Object,
+                    isAdvanced: Boolean
+                },
+                data: function() {
+                    return {
+                        dialog: !0,
+                        borderStyles: [{
+                            text: "solid"
+                        }, {
+                            text: "dotted"
+                        }, {
+                            text: "dashed"
+                        }, {
+                            text: "double"
+                        }, {
+                            text: "groove"
+                        }, {
+                            text: "ridge"
+                        }, {
+                            text: "inset"
+                        }, {
+                            text: "outset"
+                        }, {
+                            text: "hidden"
+                        }],
+                        objectFitStyles: [{
+                            value: "fill",
+                            text: "Fill: The replaced content is sized to fill the element's content box. If necessary, the object will be stretched or squished to fit"
+                        }, {
+                            value: "contain",
+                            text: "Contain: The replaced content is scaled to maintain its aspect ratio while fitting within the element's content box"
+                        }, {
+                            value: "cover",
+                            text: "Cover: The replaced content is sized to maintain its aspect ratio while filling the element's entire content box. The object will be clipped to fit"
+                        }, {
+                            value: "scale-down",
+                            text: "Scale-down: The content is sized as if none or contain were specified (would result in a smaller concrete object size)"
+                        }, {
+                            value: "none",
+                            text: "None: The replaced content is not resized"
+                        }],
+						window: {
+							width: 0,
+							height: 0
+						}
+                    }
+                },
+                computed: {
+                    styling: function() {
+                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
+                    },
+                    borderRadiusSuffix: function() {
+                        return this.styling.addonImgBorderRadiusIsPixels ? "px" : "%"
+                    },
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					}
+                },
+				mounted: function() {
+                    window.addEventListener("resize", this.handleResize), this.handleResize()
+                },
+                destroyed: function() {
+                    window.removeEventListener("resize", this.handleResize)
+                },
+                methods: {
+					handleResize: function() {
+						this.window.width = window.innerWidth, this.window.height = window.innerHeight
+                    },
+                    cleanCurrentDesignComponent: function() {
+                        this.$emit("cleanCurrentDesignComponent", "")
+                    }
+                }
+            },
+            amr = avr,
+            afr = Object(w["a"])(amr, agr, abr, !1, null, null, null),
+            awr = afr.exports;
+        x()(afr, {
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -50587,10 +54097,10 @@
                         this.$emit("cleanCurrentDesignComponent", "")
                     },
 					onBorderImageChangeRow: function(e) {
-						this.styling.rowBorderImage = e, this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
+						this.$set(this.styling, "rowBorderImage", e), this.$refs.pictureInput.image ? console.log("Picture loaded.") : console.log("FileReader API not supported: use the <form>, Luke!")
 					},
 					onBorderImageRemovalRow: function() {
-						this.styling.rowBorderImage = ""
+						this.$set(this.styling, "rowBorderImage", "")
 					}
                 }
             },
@@ -51825,6 +55335,8 @@
                     appMultiChoice: nr,
                     appObjectDesign: hr,
                     appObjectImage: wr,
+					appAddonDesign: ahr,
+					appAddonImage: awr,
                     appPointBar: Ir,
                     appRowDesign: Fr,
                     appRowImage: Vr,
@@ -51856,6 +55368,9 @@
 					},
                     app: function() {
                         return this.$store.state.app
+                    },
+					activated: function() {
+                        return this.$store.state.app.activated
                     },
                     currentDesignComponent: function() {
                         return this.$store.state.currentDesignComponent
@@ -52036,6 +55551,23 @@
                     },
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
+                    },
+					isPointtypeActivated: function(e) {
+						if ("" != e.activatedId) {
+							if ("undefined" !== typeof this.app.compGR[e.activatedId]) {
+								var co = this.app.compGR[e.activatedId],
+									cGR = this.app.globalRequirements[co.globalRequirements];
+								return this.checkRequireds(cGR);
+							} else {
+								return (this.activated.includes(e.activatedId) || !e.isNotShownPointBar);
+							}
+						} else {
+							return !e.isNotShownPointBar;
+						}
+                        return !0
+                    },
+					checkRequireds: function(e) {
+                        return this.$store.getters.checkRequireds(e)
                     }
                 }
             },
@@ -52286,7 +55818,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: "" != t.activatedId ? (e.app.activated.includes(t.activatedId) || !t.isNotShownPointBar) : !t.isNotShownPointBar,
+                            value: e.isPointtypeActivated(t),
                             expression: "\n            score.activatedId == '' ||\n            app.activated.includes(score.activatedId)\n          "
                         }],
                         key: t.index,
@@ -52557,7 +56089,21 @@
 							this.text = "Build: " + e + " is saved.", this.snackbar = !0;
 						}
 						this.buildTitle = "";
-					},
+					},					
+					isPointtypeActivated: function(e) {
+						if ("" != e.activatedId) {
+							if ("undefined" !== typeof this.app.compGR[e.activatedId]) {
+								var co = this.app.compGR[e.activatedId],
+									cGR = this.app.globalRequirements[co.globalRequirements];
+								return this.checkRequireds(cGR);
+							} else {
+								return (this.activated.includes(e.activatedId) || !e.isNotShownPointBar);
+							}
+						} else {
+							return !e.isNotShownPointBar;
+						}
+                        return !0
+                    },
                     print: function() {
 						var e = this;
 						htmlToImage.toBlob(e.$refs.printThiss, {
@@ -54592,7 +58138,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("15.11.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("08.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 08.12.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to set 'Image Center' option in Row/Choice/Addon Templates. "), o("br"), o("br"), e._v(" Added a feature to set a Debug Title for each Choice. "), o("br"), o("br"), e._v(" Added a feature to allow selecting choices directly instead of using groups for the discount function. "), o("br"), o("br"), e._v(" Added a feature to allow stacking the discount function multiple times. "), o("br"), o("br"), e._v(" Added an option in Global Settings to preload external images in Viewer. "), o("br"), o("br"), e._v(" Added a feature to set fade-in and fade-out in the BGM function. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where some UIs in editor mode were not rendering correctly. "), o("br"), o("br"), e._v(" Fixed an issue where the Debug Title was not displaying in the Row List and ID/Title List. "), o("br"), o("br"), e._v(" Fixed an issue where discounted scores were displayed incorrectly. "), o("br"), o("br"), e._v(" Fixed an issue where the 'Fit-in' option of the background did not work in the Viewer. "), o("br"), o("br"), e._v(" Fixed an issue where the buttons did not work when clicking outside the icon area. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("15.11.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -55741,7 +59327,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.13.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.14.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -56494,6 +60080,25 @@
 						rowImgBorderColor: "red",
 						rowImageBoxWidth: 50
 					},
+					addonImageStyling: {
+						useAddonImage: !0,
+						addonImgBorderStyle: "solid",
+						addonImgBorderWidth: 2,
+						addonImageWidth: 100,
+						addonImageMarginTop: 0,
+						addonImageMarginBottom: 0,
+						addonImgBorderRadiusTopLeft: 0,
+						addonImgBorderRadiusTopRight: 0,
+						addonImgBorderRadiusBottomRight: 0,
+						addonImgBorderRadiusBottomLeft: 0,
+						addonImgBorderRadiusIsPixels: !0,
+						addonImgBorderIsOn: !1,
+						addonImgOverflowIsOn: !1,
+						addonImgBorderColor: "red",
+						addonImgObjectFillStyle: null,
+						addonImgObjectFillIsOn: null,
+						addonImageBoxWidth: 50
+					},
 					backgroundStyling: {
 						bgColorIsOn: !1,
 						backgroundColor: "#FFFFFFFF",
@@ -56585,6 +60190,46 @@
 						rowBorderImageSliceBottom: 5,
 						rowBorderImageSliceLeft: 5,
 						rowBorderImageSliceRight: 5
+					},
+					addonStyling: {
+						useAddonDesign: !0,
+						addonDesignIsAdvanced: !1,
+						addonMargin: 10,
+						addonTextPadding: 10,
+						addonBorderStyle: "solid",
+						addonBorderWidth: 2,
+						addonBorderIsOn: !1,
+						addonDropShadowH: 0,
+						addonDropShadowV: 0,
+						addonDropShadowBlur: 0,
+						addonDropShadowSpread: 0,
+						addonDropShadowIsOn: !1,
+						addonBorderRadiusTopLeft: 0,
+						addonBorderRadiusTopRight: 0,
+						addonBorderRadiusBottomRight: 0,
+						addonBorderRadiusBottomLeft: 0,
+						addonBorderRadiusIsPixels: !0,
+						addonOverflowIsOn: !0,
+						addonDropShadowColor: "grey",
+						addonGradientIsOn: null,
+						addonGradient: null,
+						addonGradientOnSelect: null,
+						addonGradientOnReq: null,
+						addonBorderColor: "red",
+						addonBorderImage: "",
+						addonBorderImageRepeat: "stretch",
+						addonBorderImageWidth: 5,
+						addonBorderImageSliceTop: 5,
+						addonBorderImageSliceBottom: 5,
+						addonBorderImageSliceLeft: 5,
+						addonBorderImageSliceRight: 5,
+						removeSpaceAddonIsOn: !1,
+						useAddonBackgroundImage: !1,
+						addonBackgroundImage: "",
+						isAddonBackgroundFitIn: !1,
+						isAddonBackgroundRepeat: !1,
+						addonBgColorIsOn: !1,
+						addonBgColor: "#FFFFFFFF"
 					},
 					globalVariables: {
 						text: "",

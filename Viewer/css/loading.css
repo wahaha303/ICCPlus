@@ -13,7 +13,7 @@ body:before {
 	background:#232428;
 }
 .ind1 {
-	padding-top:50x;
+	padding-top:5px;
 	font-size:18px;
 }
 .ind2 {
@@ -29,7 +29,6 @@ body:before {
 	position:absolute;
 	top:50%;
 	left:50%;
-	padding-top:2px;
 	padding-left:2px;
 	transform:translate(-50%,-50%);
 	width:150px;

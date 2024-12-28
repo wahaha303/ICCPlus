@@ -309,7 +309,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: "" != e.activatedId ? (t.app.activated.includes(e.activatedId) || !e.isNotShownPointBar) : !e.isNotShownPointBar,
+                            value: t.isPointtypeActivated(e),
                             expression: "\n        score.activatedId == '' || app.activated.includes(score.activatedId)\n      "
                         }],
                         key: e.index,
@@ -2302,7 +2302,9 @@
                 var t = this,
                     e = t.$createElement,
                     i = t._self._c || e;
-                return i("span", [t.checkRequireds(t.addon) ? i("div", [4 == t.addon.template ? i("span", {
+                return i("span", [t.checkRequireds(t.addon) ? i("div", {
+					style: t.addonBackground
+				}, [4 == t.addon.template ? i("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -2542,9 +2544,17 @@
                 },
                 computed: {
                     objectImage: function() {
-                        var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-						this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
-                        return e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						if (this.addonImageStyling.useAddonImage) {
+							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.styling.addonImgObjectFillHeight + "px;");
+							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
+						} else {
+							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
+							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
+						}
                     },
                     activated: function() {
                         return this.$store.state.app.activated
@@ -2555,15 +2565,23 @@
                     object: function() {
 						return this.$parent.object
 					},
-					objectStyling: function() {
-						if (this.object.privateObjectIsOn) return this.object.styling;
-						if (this.row.privateObjectIsOn) return this.row.styling;
+					addonStyling: function() {
+						if (this.object.privateAddonIsOn) return this.object.styling;
+						if (this.row.privateAddonIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2572,7 +2590,93 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateAddonIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling
+					},
+					addonImageStyling: function() {
+						if (this.object.privateAddonImageIsOn) return this.object.styling;
+						if (this.row.privateAddonImageIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					objectStyling: function() {
+						if (this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.privateObjectIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id];
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2586,7 +2690,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2595,7 +2707,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2609,7 +2729,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2618,7 +2746,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2632,7 +2768,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -2641,11 +2785,36 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
 						return this.$store.state.app.styling;
+					},
+                    addonBackground: function() {
+						if (this.addonStyling.useAddonDesign) {
+							var e = (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;",
+							t = this.addonStyling.addonBorderRadiusIsPixels ? "px" : "%",
+							o = this.checkRequireds(this.object);
+							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
+							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
+							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
+							else if (!o) {
+								var rm = 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : ""));
+								if (this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
+								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
+							}
+							return e += ";", e
+						}
+						return "";
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
@@ -2653,7 +2822,11 @@
                     },
                     addonText: function() {
 						var e = this.checkRequireds(this.object);
-                        return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						if (this.addonStyling.useAddonDesign) {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.addonStyling.addonTextPadding + "px;" + (this.addonStyling.addonRemoveSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						} else {
+							return 'font-family: "' + this.textStyling.addonText + '";font-size: ' + this.textStyling.addonTextTextSize + "%;text-align: " + this.textStyling.addonTextAlign + ";color: " + (!e && this.filterStyling.reqATextColorIsOn ? this.filterStyling.reqFilterATextColor : (this.object.isActive && this.filterStyling.selATextColorIsOn ? this.filterStyling.selFilterATextColor : this.textStyling.addonTextColor)) + ";padding: " + this.objectStyling.objectTextPadding + "px;" + (this.objectStyling.removeSpaceAddonIsOn ? "margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;" : "")
+						}
                     },
                     styling: function() {
                         return this.row.isPrivateStyling ? this.row.styling : this.$store.state.app.styling
@@ -2856,17 +3029,29 @@
 							e = maxPosOrNeg ? -1 * this.score.maxValue : this.score.maxValue;
 						return this.pointType.plussOrMinusAdded && (e = maxPosOrNeg && !this.pointType.plussOrMinusInverted || this.pointType.plussOrMinusInverted && !maxPosOrNeg ? "+" + e : "-" + e), e
 					},
+					app: function() {
+                        return this.$store.state.app
+                    },
                     activated: function() {
                         return this.$store.state.app.activated
                     },
                     isPointtypeActivated: function() {
                         for (var e = 0; e < this.pointTypes.length; e++)
                             if (this.pointTypes[e].id == this.score.id) {
-								if ("" != this.pointTypes[e].activatedId) return !!(this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
-								else return !this.pointTypes[e].isNotShownObjects;
+								if ("" != this.pointTypes[e].activatedId) {
+									if ("undefined" !== typeof this.app.compGR[this.pointTypes[e].activatedId]) {
+										var co = this.app.compGR[this.pointTypes[e].activatedId],
+											cGR = this.app.globalRequirements[co.globalRequirements];
+										return this.checkRequireds(cGR);
+									} else {
+										return (this.activated.includes(this.pointTypes[e].activatedId) || !this.pointTypes[e].isNotShownObjects);
+									}
+								} else {
+									return !this.pointTypes[e].isNotShownObjects;
+								}
 							}
                         return !0
-                    },
+                    }
                 },
                 methods: {
                     deleteEvent: function(t, e) {
@@ -2877,6 +3062,9 @@
                     },
                     changedOption: function(t) {
                         this.score.name = t.target.options[t.target.options.selectedIndex].text
+                    },
+					checkRequireds: function(t) {
+                        return this.$store.getters.checkRequireds(t)
                     }
                 }
             },
@@ -3433,7 +3621,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3442,7 +3638,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3456,7 +3660,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3465,7 +3677,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateObjectImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateObjectImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3479,7 +3699,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3488,7 +3716,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3502,7 +3738,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3511,7 +3755,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3525,7 +3777,15 @@
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3534,7 +3794,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3547,7 +3815,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3560,7 +3836,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -3573,7 +3857,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -4706,37 +4998,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -4788,43 +5076,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -4929,35 +5213,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -5006,35 +5286,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -7365,7 +7641,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7378,7 +7662,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateTextIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateTextIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7391,7 +7683,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateRowImageIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateRowImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7404,7 +7704,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7417,7 +7725,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7430,7 +7746,15 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling;
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
 								}
 							}
 						}
@@ -7559,7 +7883,15 @@
 								if ("undefined" !== typeof this.app.compODG[t.objectDesignGroups[a].id]) {
 									var co = this.app.compODG[t.objectDesignGroups[a].id],
 										coD = this.app.objectDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -7568,7 +7900,15 @@
 								if ("undefined" !== typeof this.app.compRDG[e.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[e.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateFilterIsOn && ("" == coD.activatedId || this.activated.includes(coD.activatedId))) return coD.styling.reqFilterVisibleIsOn;
+									if (coD.privateFilterIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling.reqFilterVisibleIsOn;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling.reqFilterVisibleIsOn;
+										}
+									}
 								}
 							}
 						}
@@ -8541,37 +8881,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -8623,43 +8959,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -8764,35 +9096,31 @@
 									coS.tmpDiscount.splice(tmpNum, 1);
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								this.$set(coS, "isChangeDiscount", false);
@@ -8841,35 +9169,31 @@
 									}
 								}
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
-												if (coS.dupTextA[e.discountAfterText] == 0) {
-													coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
-													this.$delete(coS.dupTextA, e.discountAfterText);
-												}
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] - 1;
+											if (coS.dupTextA[e.discountAfterText] == 0) {
+												coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
+												this.$delete(coS.dupTextA, e.discountAfterText);
 											}
-										} else {
-											coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 										}
+									} else {
+										coS.discountTextA.splice(coS.discountTextA.indexOf(e.discountAfterText), 1);
 									}
-									if (e.discountBeforeText != "") {
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
-										if (e.discountTextDuplicated) {
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
-												if (coS.dupTextB[e.discountBeforeText] == 0) {
-													coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
-													this.$delete(coS.dupTextB, e.discountBeforeText);
-												}
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0;
+									if (e.discountTextDuplicated) {
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] - 1;
+											if (coS.dupTextB[e.discountBeforeText] == 0) {
+												coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
+												this.$delete(coS.dupTextB, e.discountBeforeText);
 											}
-										} else {
-											coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 										}
+									} else {
+										coS.discountTextB.splice(coS.discountTextB.indexOf(e.discountBeforeText), 1);
 									}
 								}
 								if (bTempChanged) {
@@ -12118,37 +12442,33 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if (coS.discountScore > stackDiscount) {
@@ -12200,43 +12520,39 @@
 								stackDiscountCal = stackDiscount;
 								if (e.discountLowLimitIsOn && "undefined" !== typeof e.discountLowLimit) stackDiscount = Math.max(stackDiscount, parseInt(e.discountLowLimit));
 								if (e.discountShow) {
-									if (e.discountAfterText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
-										var dA = !1;
-										if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
-											if (dA) {
-												coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
-											} else {
-												"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
-												coS.dupTextA[e.discountAfterText] = 1;
-												coS.discountTextA.push(e.discountAfterText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextA) this.$set(coS, "discountTextA", []);
+									var dA = !1;
+									if (coS.discountTextA.includes(e.discountAfterText)) dA = !0;
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextA) this.$set(coS, "dupTextA", {});
+										if (dA) {
+											coS.dupTextA[e.discountAfterText] = coS.dupTextA[e.discountAfterText] + 1
 										} else {
 											"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+											coS.dupTextA[e.discountAfterText] = 1;
 											coS.discountTextA.push(e.discountAfterText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountAfterText ? this.$set(coS, "discountAfterText", coS.discountAfterText + e.discountAfterText) : this.$set(coS, "discountAfterText", e.discountAfterText);
+										coS.discountTextA.push(e.discountAfterText);
 									}
-									if (e.discountBeforeText != "") {
-										this.$set(coS, "discountShow", e.discountShow);
-										if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
-										var dB = !1;
-										if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
-										if (e.discountTextDuplicated) {
-											if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
-											if (dB) {
-												coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
-											} else {
-												"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
-												coS.dupTextB[e.discountBeforeText] = 1;
-												coS.discountTextB.push(e.discountBeforeText);
-											}
+									this.$set(coS, "discountShow", e.discountShow);
+									if ("undefined" === typeof coS.discountTextB) this.$set(coS, "discountTextB", []);
+									var dB = !1;
+									if (coS.discountTextB.includes(e.discountBeforeText)) dB = !0
+									if (e.discountTextDuplicated) {
+										if ("undefined" === typeof coS.dupTextB) this.$set(coS, "dupTextB", {});
+										if (dB) {
+											coS.dupTextB[e.discountBeforeText] = coS.dupTextB[e.discountBeforeText] + 1
 										} else {
 											"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+											coS.dupTextB[e.discountBeforeText] = 1;
 											coS.discountTextB.push(e.discountBeforeText);
 										}
+									} else {
+										"undefined" !== typeof coS.discountBeforeText ? this.$set(coS, "discountBeforeText", coS.discountBeforeText + e.discountBeforeText) : this.$set(coS, "discountBeforeText", e.discountBeforeText);
+										coS.discountTextB.push(e.discountBeforeText);
 									}
 								}
 								if ("object" !== typeof coS.discountedFrom) this.$set(coS, "discountedFrom", []);
@@ -14064,6 +14380,20 @@
 						}
 						this.buildTitle = "";
 					},
+					isPointtypeActivated: function(e) {
+						if ("" != e.activatedId) {
+							if ("undefined" !== typeof this.app.compGR[e.activatedId]) {
+								var co = this.app.compGR[e.activatedId],
+									cGR = this.app.globalRequirements[co.globalRequirements];
+								return this.checkRequireds(cGR);
+							} else {
+								return (this.activated.includes(e.activatedId) || !e.isNotShownPointBar);
+							}
+						} else {
+							return !e.isNotShownPointBar;
+						}
+                        return !0
+                    },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
 							if (th.app.isFadingOut) {
