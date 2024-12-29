@@ -6790,7 +6790,10 @@
                         return this.$store.state.app.styling
                     },
                     rows: function() {
-                        return this.$store.state.app.rows
+						if ("undefined" !== typeof this.app.compR[this.row.id]) {
+							var co = this.app.compR[this.row.id];
+							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
+						}
                     },
 					app: function() {
                         return this.$store.state.app
