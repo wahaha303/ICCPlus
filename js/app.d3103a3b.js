@@ -6793,6 +6793,9 @@
 						if ("undefined" !== typeof this.app.compR[this.row.id]) {
 							var co = this.app.compR[this.row.id];
 							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
+						} else if ("undefined" !== typeof this.app.comp[this.row.id]) {
+							var co = this.app.comp[this.row.id];
+							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
 						}
                     },
 					app: function() {
