@@ -1793,6 +1793,7 @@
                         callback: function(t) {
 							if (e.object.isMultipleUseVariable) e.$delete(e.app.objectMap, e.object.id), e.$set(e.app.objectMap, t, e.object.multipleUseVariable);
                             e.app.comp[t] = e.app.comp[e.object.id], e.$delete(e.app.comp, e.object.id), e.$set(e.object, "id", t);
+							for (var a = 0; a < e.object.addons.length; a++) e.$set(e.object.addons[a], "parentId", t);
                         },
                         expression: "object.id"
                     }
@@ -6790,11 +6791,12 @@
                         return this.$store.state.app.styling
                     },
                     rows: function() {
-						if ("undefined" !== typeof this.app.compR[this.row.id]) {
-							var co = this.app.compR[this.row.id];
+						var rowId = "undefined" !== typeof this.row.parentId ? this.row.parentId : this.row.id
+						if ("undefined" !== typeof this.app.compR[rowId]) {
+							var co = this.app.compR[rowId];
 							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
-						} else if ("undefined" !== typeof this.app.comp[this.row.id]) {
-							var co = this.app.comp[this.row.id];
+						} else if ("undefined" !== typeof this.app.comp[rowId]) {
+							var co = this.app.comp[rowId];
 							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
 						}
                     },
@@ -17986,7 +17988,8 @@
                             text: this.app.defaultAddonText,
                             template: 1,
                             image: "",
-                            requireds: []
+                            requireds: [],
+							parentId: this.object.id
                         }), console.log(this.object.addons)
                     },
                     createNewScore: function() {
@@ -28272,6 +28275,7 @@
 								for (var f = 0; f < coO.addons.length; f++) {
 									var coA = coO.addons[f];
 									if ("undefined" === typeof coA.template || 0 == coA.template) e.$set(coA, "template", 1);
+									if ("undefined" === typeof coA.parentId) e.$set(coA, "parentId", coO.id)
 								}
 							}
 						}
@@ -28305,7 +28309,7 @@
 							}
 							for (var c = 0; c < coR.objects.length; c++) {
 								var coO = coR.objects[c],
-									g = coO.id;
+									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "backpack"};
 								if (coO.isPrivateStyling && "undefined" !== typeof coO.styling && coO.privateFilterIsOn) {
 									if ("undefined" === typeof coO.styling.unselFilterBlurIsOn) e.$set(coO.styling, "unselFilterBlurIsOn", !1);
@@ -28334,6 +28338,7 @@
 								for (var f = 0; f < coO.addons.length; f++) {
 									var coA = coO.addons[f];
 									if ("undefined" === typeof coA.template || 0 == coA.template) e.$set(coA, "template", 1);
+									if ("undefined" === typeof coA.parentId) e.$set(coA, "parentId", coO.id)
 								}
 							}
 						}
@@ -40556,7 +40561,8 @@
                             text: this.app.defaultAddonText,
                             template: 1,
                             image: "",
-                            requireds: []
+                            requireds: [],
+							parentId: this.object.id
                         }), console.log(this.object.addons)
                     },
                     createNewScore: function() {
