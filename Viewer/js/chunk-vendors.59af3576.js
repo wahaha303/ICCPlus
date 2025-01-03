@@ -26049,6 +26049,8 @@
 				return V
 			})), n.d(e, "N", (function() {
 				return P
+			})), n.d(e, "x", (function() {
+				return s
 			}));
             n("99af"), n("a623"), n("cb29"), n("4de4"), n("a630"), n("c975"), n("d81d"), n("13d5"), n("fb6a"), n("45fc"), n("b0c0"), n("a9e3"), n("b680"), n("dca8"), n("b64b"), n("d3b7"), n("ac1f"), n("25f0"), n("3ca3"), n("38cf"), n("5319"), n("1276"), n("2ca0"), n("498a"), n("3835");
             var r = n("53ca"),
@@ -28005,6 +28007,7 @@
                 }
             })
         },
+		"9e29": function(t, e, n) {},
         "9ed3": function(t, e, n) {
             "use strict";
             var r = n("ae93").IteratorPrototype,
@@ -34902,6 +34905,429 @@
                     isAppendInner: function(t) {
                         var e = this.$refs["append-inner"];
                         return e && (e === t || e.contains(t))
+                    }
+                }
+            })
+        },
+		ba0d: function(t, e, i) {
+            "use strict";
+            i("9e29");
+            var s = i("c37a"),
+                r = i("0789"),
+                o = i("58df"),
+                a = i("297c"),
+                l = i("a293"),
+                c = i("80d2"),
+                p = i("d9bd");
+            e.a = Object(o.a)(s.a, a.a).extend({
+                name: "v-slider",
+                directives: {
+                    ClickOutside: l.a
+                },
+                mixins: [a.a],
+                props: {
+                    disabled: Boolean,
+                    inverseLabel: Boolean,
+                    max: {
+                        type: [Number, String],
+                        default: 100
+                    },
+                    min: {
+                        type: [Number, String],
+                        default: 0
+                    },
+                    step: {
+                        type: [Number, String],
+                        default: 1
+                    },
+                    thumbColor: String,
+                    thumbLabel: {
+                        type: [Boolean, String],
+                        default: void 0,
+                        validator: t => "boolean" == typeof t || "always" === t
+                    },
+                    thumbSize: {
+                        type: [Number, String],
+                        default: 32
+                    },
+                    tickLabels: {
+                        type: Array,
+                        default: () => []
+                    },
+                    ticks: {
+                        type: [Boolean, String],
+                        default: !1,
+                        validator: t => "boolean" == typeof t || "always" === t
+                    },
+                    tickSize: {
+                        type: [Number, String],
+                        default: 2
+                    },
+                    trackColor: String,
+                    trackFillColor: String,
+                    value: [Number, String],
+                    vertical: Boolean
+                },
+                data: () => ({
+                    app: null,
+                    oldValue: null,
+                    thumbPressed: !1,
+                    mouseTimeout: -1,
+                    isFocused: !1,
+                    isActive: !1,
+                    noClick: !1,
+                    startOffset: 0
+                }),
+                computed: {
+                    classes() {
+                        return {
+                            ...s.a.options.computed.classes.call(this),
+                            "v-input__slider": !0,
+                            "v-input__slider--vertical": this.vertical,
+                            "v-input__slider--inverse-label": this.inverseLabel
+                        }
+                    },
+                    internalValue: {
+                        get() {
+                            return this.lazyValue
+                        },
+                        set(t) {
+                            t = isNaN(t) ? this.minValue : t;
+                            const e = this.roundValue(Math.min(Math.max(t, this.minValue), this.maxValue));
+                            e !== this.lazyValue && (this.lazyValue = e, this.$emit("input", e))
+                        }
+                    },
+                    trackTransition() {
+                        return this.thumbPressed ? this.showTicks || this.stepNumeric ? "0.1s cubic-bezier(0.25, 0.8, 0.5, 1)" : "none" : ""
+                    },
+                    minValue() {
+                        return parseFloat(this.min)
+                    },
+                    maxValue() {
+                        return parseFloat(this.max)
+                    },
+                    stepNumeric() {
+                        return this.step > 0 ? parseFloat(this.step) : 0
+                    },
+                    inputWidth() {
+                        const t = (this.roundValue(this.internalValue) - this.minValue) / (this.maxValue - this.minValue) * 100;
+                        return isNaN(t) ? 0 : t
+                    },
+                    trackFillStyles() {
+                        const t = this.vertical ? "bottom" : "left",
+                            e = this.vertical ? "top" : "right",
+                            i = this.vertical ? "height" : "width",
+                            s = this.$vuetify.rtl ? "auto" : "0",
+                            r = this.$vuetify.rtl ? "0" : "auto",
+                            o = this.isDisabled ? `calc(${this.inputWidth}% - 10px)` : this.inputWidth + "%";
+                        return {
+                            transition: this.trackTransition,
+                            [t]: s,
+                            [e]: r,
+                            [i]: o
+                        }
+                    },
+                    trackStyles() {
+                        const t = this.vertical ? this.$vuetify.rtl ? "bottom" : "top" : this.$vuetify.rtl ? "left" : "right",
+                            e = this.vertical ? "height" : "width",
+                            i = this.isDisabled ? `calc(${100-this.inputWidth}% - 10px)` : `calc(${100-this.inputWidth}%)`;
+                        return {
+                            transition: this.trackTransition,
+                            [t]: "0px",
+                            [e]: i
+                        }
+                    },
+                    showTicks() {
+                        return this.tickLabels.length > 0 || !(this.isDisabled || !this.stepNumeric || !this.ticks)
+                    },
+                    numTicks() {
+                        return Math.ceil((this.maxValue - this.minValue) / this.stepNumeric)
+                    },
+                    showThumbLabel() {
+                        return !(this.isDisabled || !this.thumbLabel && !this.$scopedSlots["thumb-label"])
+                    },
+                    computedTrackColor() {
+                        if (!this.isDisabled) return this.trackColor ? this.trackColor : this.isDark ? this.validationState : this.validationState || "primary lighten-3"
+                    },
+                    computedTrackFillColor() {
+                        if (!this.isDisabled) return this.trackFillColor ? this.trackFillColor : this.validationState || this.computedColor
+                    },
+                    computedThumbColor() {
+                        return this.thumbColor ? this.thumbColor : this.validationState || this.computedColor
+                    }
+                },
+                watch: {
+                    min(t) {
+                        const e = parseFloat(t);
+                        e > this.internalValue && this.$emit("input", e)
+                    },
+                    max(t) {
+                        const e = parseFloat(t);
+                        e < this.internalValue && this.$emit("input", e)
+                    },
+                    value: {
+                        handler(t) {
+                            this.internalValue = t
+                        }
+                    }
+                },
+                beforeMount() {
+                    this.internalValue = this.value
+                },
+                mounted() {
+                    this.app = document.querySelector("[data-app]") || Object(p.c)("Missing v-app or a non-body wrapping element with the [data-app] attribute", this)
+                },
+                methods: {
+                    genDefaultSlot() {
+                        const t = [this.genLabel()],
+                            e = this.genSlider();
+                        return this.inverseLabel ? t.unshift(e) : t.push(e), t.push(this.genProgress()), t
+                    },
+                    genSlider() {
+                        return this.$createElement("div", {
+                            class: {
+                                "v-slider": !0,
+                                "v-slider--horizontal": !this.vertical,
+                                "v-slider--vertical": this.vertical,
+                                "v-slider--focused": this.isFocused,
+                                "v-slider--active": this.isActive,
+                                "v-slider--disabled": this.isDisabled,
+                                "v-slider--readonly": this.isReadonly,
+                                ...this.themeClasses
+                            },
+                            directives: [{
+                                name: "click-outside",
+                                value: this.onBlur
+                            }],
+                            on: {
+                                click: this.onSliderClick,
+                                mousedown: this.onSliderMouseDown,
+                                touchstart: this.onSliderMouseDown
+                            }
+                        }, this.genChildren())
+                    },
+                    genChildren() {
+                        return [this.genInput(), this.genTrackContainer(), this.genSteps(), this.genThumbContainer(this.internalValue, this.inputWidth, this.isActive, this.isFocused, this.onFocus, this.onBlur)]
+                    },
+                    genInput() {
+                        return this.$createElement("input", {
+                            attrs: {
+                                value: this.internalValue,
+                                id: this.computedId,
+                                disabled: !0,
+                                readonly: !0,
+                                tabindex: -1,
+                                ...this.$attrs
+                            }
+                        })
+                    },
+                    genTrackContainer() {
+                        const t = [this.$createElement("div", this.setBackgroundColor(this.computedTrackColor, {
+                            staticClass: "v-slider__track-background",
+                            style: this.trackStyles
+                        })), this.$createElement("div", this.setBackgroundColor(this.computedTrackFillColor, {
+                            staticClass: "v-slider__track-fill",
+                            style: this.trackFillStyles
+                        }))];
+                        return this.$createElement("div", {
+                            staticClass: "v-slider__track-container",
+                            ref: "track"
+                        }, t)
+                    },
+                    genSteps() {
+                        if (!this.step || !this.showTicks) return null;
+                        const t = parseFloat(this.tickSize),
+                            e = Object(c.f)(this.numTicks + 1),
+                            i = this.vertical ? "bottom" : this.$vuetify.rtl ? "right" : "left",
+                            s = this.vertical ? this.$vuetify.rtl ? "left" : "right" : "top";
+                        this.vertical && e.reverse();
+                        const r = e.map(e => {
+                            const r = [];
+                            this.tickLabels[e] && r.push(this.$createElement("div", {
+                                staticClass: "v-slider__tick-label"
+                            }, this.tickLabels[e]));
+                            const o = e * (100 / this.numTicks),
+                                a = this.$vuetify.rtl ? 100 - this.inputWidth < o : o < this.inputWidth;
+                            return this.$createElement("span", {
+                                key: e,
+                                staticClass: "v-slider__tick",
+                                class: {
+                                    "v-slider__tick--filled": a
+                                },
+                                style: {
+                                    width: t + "px",
+                                    height: t + "px",
+                                    [i]: `calc(${o}% - ${t/2}px)`,
+                                    [s]: `calc(50% - ${t/2}px)`
+                                }
+                            }, r)
+                        });
+                        return this.$createElement("div", {
+                            staticClass: "v-slider__ticks-container",
+                            class: {
+                                "v-slider__ticks-container--always-show": "always" === this.ticks || this.tickLabels.length > 0
+                            }
+                        }, r)
+                    },
+                    genThumbContainer(t, e, i, s, r, o, a = "thumb") {
+                        const l = [this.genThumb()],
+                            c = this.genThumbLabelContent(t);
+                        return this.showThumbLabel && l.push(this.genThumbLabel(c)), this.$createElement("div", this.setTextColor(this.computedThumbColor, {
+                            ref: a,
+                            key: a,
+                            staticClass: "v-slider__thumb-container",
+                            class: {
+                                "v-slider__thumb-container--active": i,
+                                "v-slider__thumb-container--focused": s,
+                                "v-slider__thumb-container--show-label": this.showThumbLabel
+                            },
+                            style: this.getThumbContainerStyles(e),
+                            attrs: {
+                                role: "slider",
+                                tabindex: this.isDisabled ? -1 : this.$attrs.tabindex ? this.$attrs.tabindex : 0,
+                                "aria-label": this.$attrs["aria-label"] || this.label,
+                                "aria-valuemin": this.min,
+                                "aria-valuemax": this.max,
+                                "aria-valuenow": this.internalValue,
+                                "aria-readonly": String(this.isReadonly),
+                                "aria-orientation": this.vertical ? "vertical" : "horizontal"
+                            },
+                            on: {
+                                focus: r,
+                                blur: o,
+                                keydown: this.onKeyDown
+                            }
+                        }), l)
+                    },
+                    genThumbLabelContent(t) {
+                        return this.$scopedSlots["thumb-label"] ? this.$scopedSlots["thumb-label"]({
+                            value: t
+                        }) : [this.$createElement("span", [String(t)])]
+                    },
+                    genThumbLabel(t) {
+                        const e = Object(c.f)(this.thumbSize),
+                            i = this.vertical ? `translateY(20%) translateY(${Number(this.thumbSize)/3-1}px) translateX(55%) rotate(135deg)` : "translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg)";
+                        return this.$createElement(r.d, {
+                            props: {
+                                origin: "bottom center"
+                            }
+                        }, [this.$createElement("div", {
+                            staticClass: "v-slider__thumb-label-container",
+                            directives: [{
+                                name: "show",
+                                value: this.isFocused || this.isActive || "always" === this.thumbLabel
+                            }]
+                        }, [this.$createElement("div", this.setBackgroundColor(this.computedThumbColor, {
+                            staticClass: "v-slider__thumb-label",
+                            style: {
+                                height: e,
+                                width: e,
+                                transform: i
+                            }
+                        }), [this.$createElement("div", t)])])])
+                    },
+                    genThumb() {
+                        return this.$createElement("div", this.setBackgroundColor(this.computedThumbColor, {
+                            staticClass: "v-slider__thumb"
+                        }))
+                    },
+                    getThumbContainerStyles(t) {
+                        const e = this.vertical ? "top" : "left";
+                        let i = this.$vuetify.rtl ? 100 - t : t;
+                        return i = this.vertical ? 100 - i : i, {
+                            transition: this.trackTransition,
+                            [e]: i + "%"
+                        }
+                    },
+                    onSliderMouseDown(t) {
+                        var e;
+                        if (t.preventDefault(), this.oldValue = this.internalValue, this.isActive = !0, null != (e = t.target) && e.matches(".v-slider__thumb-container, .v-slider__thumb-container *")) {
+                            this.thumbPressed = !0;
+                            const e = t.target.getBoundingClientRect(),
+                                i = "touches" in t ? t.touches[0] : t;
+                            this.startOffset = this.vertical ? i.clientY - (e.top + e.height / 2) : i.clientX - (e.left + e.width / 2)
+                        } else this.startOffset = 0, window.clearTimeout(this.mouseTimeout), this.mouseTimeout = window.setTimeout(() => {
+                            this.thumbPressed = !0
+                        }, 300);
+                        const i = !c.x || {
+                                passive: !0,
+                                capture: !0
+                            },
+                            s = !!c.x && {
+                                passive: !0
+                            },
+                            r = "touches" in t;
+                        this.onMouseMove(t), this.app.addEventListener(r ? "touchmove" : "mousemove", this.onMouseMove, s), Object(c.a)(this.app, r ? "touchend" : "mouseup", this.onSliderMouseUp, i), this.$emit("start", this.internalValue)
+                    },
+                    onSliderMouseUp(t) {
+                        t.stopPropagation(), window.clearTimeout(this.mouseTimeout), this.thumbPressed = !1;
+                        const e = !!c.x && {
+                            passive: !0
+                        };
+                        this.app.removeEventListener("touchmove", this.onMouseMove, e), this.app.removeEventListener("mousemove", this.onMouseMove, e), this.$emit("mouseup", t), this.$emit("end", this.internalValue), Object(c.h)(this.oldValue, this.internalValue) || (this.$emit("change", this.internalValue), this.noClick = !0), this.isActive = !1
+                    },
+                    onMouseMove(t) {
+                        "mousemove" === t.type && (this.thumbPressed = !0), this.internalValue = this.parseMouseMove(t)
+                    },
+                    onKeyDown(t) {
+                        if (!this.isInteractive) return;
+                        const e = this.parseKeyDown(t, this.internalValue);
+                        null == e || e < this.minValue || e > this.maxValue || (this.internalValue = e, this.$emit("change", e))
+                    },
+                    onSliderClick(t) {
+                        if (this.noClick) return void(this.noClick = !1);
+                        this.$refs.thumb.focus(), this.onMouseMove(t), this.$emit("change", this.internalValue)
+                    },
+                    onBlur(t) {
+                        this.isFocused = !1, this.$emit("blur", t)
+                    },
+                    onFocus(t) {
+                        this.isFocused = !0, this.$emit("focus", t)
+                    },
+                    parseMouseMove(t) {
+                        const e = this.vertical ? "top" : "left",
+                            i = this.vertical ? "height" : "width",
+                            s = this.vertical ? "clientY" : "clientX",
+                            {
+                                [e]: r,
+                                [i]: o
+                            } = this.$refs.track.getBoundingClientRect(),
+                            a = "touches" in t ? t.touches[0][s] : t[s];
+                        let l = Math.min(Math.max((a - r - this.startOffset) / o, 0), 1) || 0;
+                        return this.vertical && (l = 1 - l), this.$vuetify.rtl && (l = 1 - l), parseFloat(this.min) + l * (this.maxValue - this.minValue)
+                    },
+                    parseKeyDown(t, e) {
+                        if (!this.isInteractive) return;
+                        const {
+                            pageup: i,
+                            pagedown: s,
+                            end: r,
+                            home: o,
+                            left: a,
+                            right: l,
+                            down: p,
+                            up: f
+                        } = c.q;
+                        if (![i, s, r, o, a, l, p, f].includes(t.keyCode)) return;
+                        t.preventDefault();
+                        const v = this.stepNumeric || 1,
+                            m = (this.maxValue - this.minValue) / v;
+                        if ([a, l, p, f].includes(t.keyCode)) {
+                            e += ((this.$vuetify.rtl ? [a, f] : [l, f]).includes(t.keyCode) ? 1 : -1) * v * (t.shiftKey ? 3 : t.ctrlKey ? 2 : 1)
+                        } else if (t.keyCode === o) e = this.minValue;
+                        else if (t.keyCode === r) e = this.maxValue;
+                        else {
+                            e -= (t.keyCode === s ? 1 : -1) * v * (m > 100 ? m / 10 : 10)
+                        }
+                        return e
+                    },
+                    roundValue(t) {
+                        if (!this.stepNumeric) return t;
+                        const e = this.step.toString().trim(),
+                            i = e.indexOf(".") > -1 ? e.length - e.indexOf(".") - 1 : 0,
+                            s = this.minValue % this.stepNumeric,
+                            r = Math.round((t - s) / this.stepNumeric) * this.stepNumeric + s;
+                        return parseFloat(Math.min(r, this.maxValue).toFixed(i))
                     }
                 }
             })

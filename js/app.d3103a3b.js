@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.14.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.15.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 28.12.2024")]), o("v-col", {
+                }, [e._v("Update: 03.01.2025")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to set Addon Design/Addon Image Design. "), o("br"), e._v(" Added a feature to allow uploading .avif format images. "), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Points. "), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Design Groups. ")]), o("v-col", {
+                }, [e._v(" Added an option in Global Settings to enable Music Player. "), o("br"), e._v(" Added a feature to enable Music Player in Viewer. "), o("br"), e._v(" Added a feature to search items in the dropdown menu. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where the display of discounted scores was not refreshing. "), o("br"), e._v(" Fixed an issue where the choice with the discount function could not be deselected. "), o("br"), e._v(" Fixed an issue where discounted scores were displayed incorrectly. "), o("br"), e._v(" Fixed an issue where the border-radius was not applied to the Addon Image. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the default value of the Multi Choice Design was not being set automatically. "), o("br"), e._v(" Fixed an issue where Multi Choice Design could not be set in the Private Styling/Design Group. "), o("br"), e._v(" Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -287,13 +287,19 @@
                     t = e.$createElement,
                     o = e._self._c || t;
                 return o("div", {
-                    staticClass: "pb-12",
+                    staticClass: "ab-0",
                     staticStyle: {
                         "text-align": "center",
-						"font-size": e.app.useVW ? "0.835vw" : "16px"
+						"font-size": e.app.useVW ? "0.835vw" : "16px",
+						"padding-top": e.app.showMusicPlayer ? "32px" : "",
+						"padding-bottom": (e.app.pointTypes.length > 0 || e.app.backpack.length > 0 || e.app.importedChoicesIsOpen) ? "56px" : ""
                     },
                     style: e.background
                 }, [o("v-navigation-drawer", {
+					staticStyle: {
+						top: e.app.showMusicPlayer ? "32px" : "0px",
+						"max-height": e.app.showMusicPlayer ? "calc(100% - 32px)" : "calc(100% - 0px)"
+					},
                     attrs: {
                         "data-html2canvas-ignore": "",
                         "expand-on-hover": "",
@@ -681,7 +687,173 @@
                     })], 1)
                 })), 1), o("ConfirmDlg", {
                     ref: "confirm"
-                })], 1), e.globalVariables.snackbar ? o("span", [o("v-snackbar", {
+                })], 1), e.app.showMusicPlayer ? o("v-bottom-navigation", {
+					staticClass: "v-bottom-navigation--top",
+					staticStyle: {
+						overflow: "hidden",
+						height: "32px"
+					},
+					attrs: {
+                        "data-html2canvas-ignore": "",
+                        fixed: ""
+                    }
+				}, [o("v-row", [o("v-toolbar", {
+					staticClass: "px-4 " + (e.$vuetify.theme.isDark ? "grey darken-2" : "grey lighten-5"),
+					attrs: {
+						height: "32"
+					}
+				}, [o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.curBgmLength !== 0) {
+								e.app.bgmIsPlaying ? bgmPlayer.pauseVideo() : bgmPlayer.playVideo();
+								e.$set(e.app, "bgmIsPlaying", !e.app.bgmIsPlaying);
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+									let k = 0,
+										o = 0;
+									e.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !e.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== e.app.curBgmTime) {
+												if (k !== curTime) {
+													e.$set(e.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > e.app.curBgmLength) o = 1;
+													e.$set(e.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												e.$set(e.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								} else {
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								}
+							}
+                        }
+                    }
+                }, [o("v-icon", [e.app.bgmIsPlaying ? e._v("mdi-pause") : e._v("mdi-play")])], 1), o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.curBgmLength !== 0) {
+								bgmPlayer.stopVideo();
+								e.$set(e.app, "bgmIsPlaying", !1);
+								if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								e.$set(e.app, "curBgmTime", 0);
+							}
+                        }
+                    }
+                }, [o("v-icon", [e._v("mdi-stop")])], 1), o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer) {
+								if (!e.app.isMute && "undefined" !== typeof bgmPlayer.mute) {
+									e.$set(e.app, "isMute", !0);
+									bgmPlayer.mute();
+								} else if (e.app.isMute && "undefined" !== typeof bgmPlayer.unMute) {
+									e.$set(e.app, "isMute", !1);
+									bgmPlayer.unMute();
+								}
+							}
+                        }
+                    }
+                }, [o("v-icon", [e.app.isMute ? e._v("mdi-volume-off") : e._v("mdi-volume-high")])], 1), o("v-slider", {
+					staticStyle: {
+						"max-width": "104px",
+						"padding-right": "4px"
+					},
+					attrs: {
+						"hide-details": "",
+						max: 100,
+						min: 0,
+						color: e.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: e.app.isMute || e.app.isFadingOut
+					},
+					model: {
+						value: e.app.curVolume,
+						expression: "app.curVolume"
+					},
+					on: {
+						change: function(t) {
+							e.$set(e.app, "curVolume", t);
+							if ("undefined" !== typeof bgmPlayer.setVolume) {
+								if (!e.app.isFadingOut) bgmPlayer.setVolume(t);
+							}
+						}
+					}
+				}), e.window.width > 600 ? e._e() : o("v-spacer"), o("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px",
+						overflow: "hidden"
+					}
+				}, [o("span", {
+					staticClass: "scrolling-text"
+				}, [e._v(e._s(e.app.bgmTitle))])], 1), e.window.width > 600 ? [o("v-slider", {
+					attrs: {
+						"hide-details": "",
+						max: e.app.curBgmLength,
+						min: 0,
+						color: e.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
+					},
+					model: {
+						value: e.app.curBgmTime,
+						expression: "app.curBgmTime"
+					},
+					on: {
+						change: function(t) {
+							e.$set(e.app, "curBgmTime", t);
+							bgmPlayer.seekTo(t, true);
+						},
+						mousedown: function(t) {
+							e.$set(e.app, "isSeeking", !0);
+						},
+						mouseup: function(t) {
+							setTimeout(() => {
+								e.$set(e.app, "isSeeking", !1);
+							}, 100);
+						},
+					},
+				}), o("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px"
+					}
+				}, [o("span", [e._v(e._s(e.bgmTime))])], 1)] : e._e()], 1)], 1)], 1) : e._e(), e.globalVariables.snackbar ? o("span", [o("v-snackbar", {
                     attrs: {
                         top: "",
                         timeout: 2e3
@@ -881,7 +1053,7 @@
                         },
                         expression: "row.width"
                     }
-                })], 1), e.row.isResultRow ? o("v-select", {
+                })], 1), e.row.isResultRow ? o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
                         "deletable-chips": "",
@@ -2101,9 +2273,11 @@
                         attrs: {
                             cols: e.pWindow.width > 301 ? "6" : "12"
                         }
-                    }, [o("v-card", [o("v-select", {
+                    }, [o("v-card", [o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
                             items: e.app.groups,
                             "item-text": "name",
                             "item-value": "id",
@@ -2200,10 +2374,12 @@
                         },
                         expression: "object.hideMultipleCounter"
                     }
-                }) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("p", [e._v(" The point type used here should only be used for this choice, and it can be hidden by placing something in 'Id needed to activate' in Features -> Manage Points. ")]) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("v-select", {
+                }) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("p", [e._v(" The point type used here should only be used for this choice, and it can be hidden by placing something in 'Id needed to activate' in Features -> Manage Points. ")]) : e._e(), e.object.isSelectableMultiple && !e.object.isMultipleUseVariable ? o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "id",
                         "item-value": "id",
@@ -2303,10 +2479,12 @@
                     }
                 }), e.object.multiplyPointtypeIsOn ? o("v-col", {
                     staticClass: "pb-0"
-                }, [e._v("Not to be used on choices with scores. Wont work if the Allowed Choices on the row is bigger than 0.")]) : e._e(), e.object.multiplyPointtypeIsOn ? o("v-select", {
+                }, [e._v("Not to be used on choices with scores. Wont work if the Allowed Choices on the row is bigger than 0.")]) : e._e(), e.object.multiplyPointtypeIsOn ? o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -2336,10 +2514,12 @@
                         },
                         expression: "object.multiplyWithThis"
                     }
-                }) : e._e(), e.object.multiplyPointtypeIsOn && e.object.multiplyPointtypeIsId ? o("v-select", {
+                }) : e._e(), e.object.multiplyPointtypeIsOn && e.object.multiplyPointtypeIsId ? o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -2378,10 +2558,12 @@
                         },
                         expression: "object.dividePointtypeIsOn"
                     }
-                }), e.object.dividePointtypeIsOn ? o("v-select", {
+                }), e.object.dividePointtypeIsOn ? o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -2664,11 +2846,13 @@
                         },
                         expression: "object.isDisChoices"
                     }
-                }), e.object.isDisChoices ? o("v-select", {
+                }), e.object.isDisChoices ? o("v-autocomplete", {
 					attrs: {
 						"hide-details": "",
 						label: "Object Id",
 						filled: "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: [...e.app.rows.flatMap(row => row.objects), ...e.app.backpack.flatMap(backpack => backpack.objects)],
 						"item-text": "id",
 						"item-value": "id",
@@ -2701,9 +2885,11 @@
 						},
 						expression: "elements.id"
 					}
-				}) : o("v-select", {
+				}) : o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: this.app.groups,
                         "item-text": "id",
                         "item-value": "id",
@@ -2718,9 +2904,11 @@
                         },
                         expression: "object.discountGroups"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: this.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -2826,9 +3014,11 @@
                     }
                 }), o("v-col", {
                     staticClass: "pb-0"
-                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-select", {
+                }, [e._v("The ID of duplicated row will have /D#n added to the end.")]), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: this.app.rows,
                         "item-text": "id",
                         "item-value": "id",
@@ -2850,9 +3040,11 @@
                         },
                         expression: "object.duplicateRowId"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: this.app.rows,
                         "item-text": "id",
                         "item-value": "id",
@@ -2886,9 +3078,11 @@
                         },
                         expression: "object.scrollToRow"
                     }
-                }), e.object.scrollToRow ? o("v-select", {
+                }), e.object.scrollToRow ? o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: this.app.comp[e.object.id].type == "app" ? this.app.rows : this.app.backpack,
                         "item-text": "id",
                         "item-value": "id",
@@ -3182,9 +3376,11 @@
                         },
                         expression: "object.isContentHidden"
                     }
-                }), e.object.isContentHidden ? [o("v-select", {
+                }), e.object.isContentHidden ? [o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: e.app.compR[e.row.id].type == "app" ? e.app.rows : e.app.backpack,
                         "item-text": "id",
                         "item-value": "id",
@@ -3251,9 +3447,11 @@
                         },
                         expression: "object.isChangeVariables"
                     }
-                }), e.object.isChangeVariables ? [o("v-select", {
+                }), e.object.isChangeVariables ? [o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						items: e.app.variables,
                         "item-text": "id",
                         "item-value": "id",
@@ -3309,10 +3507,12 @@
                         },
                         expression: "object.customTextfieldIsOn"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.words,
                         "item-text": "id",
                         "item-value": "id",
@@ -3392,10 +3592,12 @@
                         },
                         expression: "object.addToAllowChoice"
                     }
-                }), e.object.addToAllowChoice ? o("v-select", {
+                }), e.object.addToAllowChoice ? o("v-autocomplete", {
                     staticClass: "pa-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: this.app.rows,
                         "item-text": "id",
                         "item-value": "id",
@@ -3504,7 +3706,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3525,7 +3727,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -3555,7 +3757,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3576,7 +3778,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -3613,7 +3815,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3634,7 +3836,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
@@ -3676,7 +3878,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3697,7 +3899,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -3766,7 +3968,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3787,7 +3989,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 5 == e.object.template ? o("span", {
                     staticClass: "ma-0",
@@ -3821,7 +4023,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3842,7 +4044,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -3872,7 +4074,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3893,7 +4095,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -3930,7 +4132,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -3951,7 +4153,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -4031,7 +4233,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4052,7 +4254,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -4083,7 +4285,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4104,7 +4306,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
                     staticClass: "ma-0",
@@ -4176,7 +4378,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4197,7 +4399,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -4227,7 +4429,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4248,7 +4450,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -4285,7 +4487,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4306,7 +4508,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
@@ -4348,7 +4550,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4369,7 +4571,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -4400,7 +4602,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4421,7 +4623,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -4494,7 +4696,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4515,7 +4717,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("div", {
@@ -4544,7 +4746,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4565,7 +4767,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -4602,7 +4804,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4623,7 +4825,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     },
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
@@ -4646,7 +4848,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4667,7 +4869,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -4701,7 +4903,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4722,7 +4924,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -4752,7 +4954,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4773,7 +4975,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("div", {
@@ -4802,7 +5004,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4823,7 +5025,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -4860,7 +5062,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4881,7 +5083,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
@@ -4904,7 +5106,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -4925,7 +5127,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0",
@@ -5002,7 +5204,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -5023,7 +5225,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
@@ -5271,9 +5473,11 @@
                             },
                             expression: "required.operator"
                         }
-                    }), o("v-select", {
+                    }), o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
                             items: e.pointTypes,
                             "item-text": "name",
                             "item-value": "id",
@@ -5331,9 +5535,11 @@
 							t.more.push({operator: "1", type: "points", points: 0});
 						}
 					}
-				}, [e._v("Add Point")]), o("v-select", {
+				}, [e._v("Add Point")]), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -5363,9 +5569,11 @@
                         },
                         expression: "required.operator"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -5398,9 +5606,11 @@
                         },
                         expression: "s.oprator"
                     }
-                }), "id" == s.type ? o("v-select", {
+                }), "id" == s.type ? o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							items: e.pointTypes,
 							"item-text": "name",
 							"item-value": "id",
@@ -5532,9 +5742,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Groups",
 						filled: "",
 						items: e.app.groups,
@@ -5607,9 +5819,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Rows",
 						filled: "",
 						items: e.app.rows,
@@ -5691,9 +5905,11 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-autocomplete", {
 						attrs: {
 							"hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							label: "Global Requirement",
 							filled: "",
 							items: e.app.globalRequirements,
@@ -6479,6 +6695,7 @@
             R = o("8654"),
 			li = o("ce7e"),
 			vo = o("23a7"),
+			Ac = o("c6a6"),
 			Ct = o("2db4"),
             F = Object(w["a"])(f, b, v, !1, null, null, null),
             _ = F.exports;
@@ -6791,7 +7008,7 @@
                         return this.$store.state.app.styling
                     },
                     rows: function() {
-						var rowId = "undefined" !== typeof this.row.parentId ? this.row.parentId : this.row.id
+						var rowId = "undefined" !== typeof this.row.parentId ? this.row.parentId : this.row.id;
 						if ("undefined" !== typeof this.app.compR[rowId]) {
 							var co = this.app.compR[rowId];
 							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
@@ -6799,6 +7016,7 @@
 							var co = this.app.comp[rowId];
 							return co.type == "app" ? this.$store.state.app.rows : this.$store.state.app.backpack
 						}
+						return this.$store.state.app.rows
                     },
 					app: function() {
                         return this.$store.state.app
@@ -7464,6 +7682,7 @@
             ee = Object(w["a"])(Y, h, g, !1, null, "8bccda0e", null),
             te = ee.exports;
         x()(ee, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCol: I["a"],
@@ -7705,9 +7924,11 @@
                         },
                         expression: "required.operator"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -7756,9 +7977,11 @@
 							e.required.more.push({operator: "1", type: "points", points: 0});
 						}
 					}
-				}, [e._v("Add Point")]), o("v-select", {
+				}, [e._v("Add Point")]), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -7788,9 +8011,11 @@
                         },
                         expression: "required.operator"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -7823,9 +8048,11 @@
                         },
                         expression: "i.oprator"
                     }
-                }), "id" == i.type ? o("v-select", {
+                }), "id" == i.type ? o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							items: e.app.pointTypes,
 							"item-text": "name",
 							"item-value": "id",
@@ -8081,9 +8308,11 @@
 							e.$set(e.required, "selNum", Math.max(t, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Groups",
 						filled: "",
 						items: e.app.groups,
@@ -8218,9 +8447,11 @@
 							e.$set(e.required, "selNum", Math.max(t, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Rows",
 						filled: "",
 						items: e.app.rows,
@@ -8368,9 +8599,11 @@
                         },
                         expression: "required.showRequired"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Global Requirement",
 						filled: "",
 						items: e.app.globalRequirements,
@@ -8432,9 +8665,11 @@
                             },
                             expression: "requiredReq.operator"
                         }
-                    }), o("v-select", {
+                    }), o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
                             items: e.app.pointTypes,
                             "item-text": "name",
                             "item-value": "id",
@@ -8492,9 +8727,11 @@
 							t.more.push({operator: "1", type: "points", points: 0});
 						}
 					}
-				}, [e._v("Add Point")]), o("v-select", {
+				}, [e._v("Add Point")]), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -8524,9 +8761,11 @@
                         },
                         expression: "t.operator"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.app.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -8559,9 +8798,11 @@
                         },
                         expression: "s.oprator"
                     }
-                }), "id" == s.type ? o("v-select", {
+                }), "id" == s.type ? o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							items: e.app.pointTypes,
 							"item-text": "name",
 							"item-value": "id",
@@ -8693,9 +8934,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Groups",
 						filled: "",
 						items: e.app.groups,
@@ -8768,9 +9011,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Rows",
 						filled: "",
 						items: e.app.rows,
@@ -8852,9 +9097,11 @@
                                 return e.deleteEvent(i, e.required.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-autocomplete", {
 						attrs: {
 							"hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							label: "Global Requirement",
 							filled: "",
 							items: e.app.globalRequirements,
@@ -9013,6 +9260,7 @@
             ne = Object(w["a"])(re, oe, ie, !1, null, "9ac8589a", null),
             le = ne.exports;
         x()(ne, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCheckbox: ae["a"],
             VCol: I["a"],
@@ -9166,10 +9414,12 @@
 					attrs: {
 						cols: e.window.width > 301 ? "6" : "12"
 					}
-                }, [o("v-select", {
+                }, [o("v-autocomplete", {
                     staticClass: "my-1",
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -9345,9 +9595,11 @@
                             },
                             expression: "required.operator"
                         }
-                    }), o("v-select", {
+                    }), o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
                             items: e.pointTypes,
                             "item-text": "name",
                             "item-value": "id",
@@ -9406,9 +9658,11 @@
 							t.more.push({operator: "1", type: "points", points: 0});
 						}
 					}
-				}, [e._v("Add Point")]), o("v-select", {
+				}, [e._v("Add Point")]), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -9438,9 +9692,11 @@
                         },
                         expression: "required.operator"
                     }
-                }), o("v-select", {
+                }), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.pointTypes,
                         "item-text": "name",
                         "item-value": "id",
@@ -9473,9 +9729,11 @@
                         },
                         expression: "s.oprator"
                     }
-                }), "id" == s.type ? o("v-select", {
+                }), "id" == s.type ? o("v-autocomplete", {
                         attrs: {
                             "hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							items: e.pointTypes,
 							"item-text": "name",
 							"item-value": "id",
@@ -9607,9 +9865,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Groups",
 						filled: "",
 						items: e.app.groups,
@@ -9682,9 +9942,11 @@
 							e.$set(t, "selNum", Math.max(o, 0))
 						}
 					}
-				}), o("v-select", {
+				}), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
 						label: "Selected from Rows",
 						filled: "",
 						items: e.app.rows,
@@ -9766,9 +10028,11 @@
                                 return e.deleteEvent(i, e.score.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "gid" == t.type ? o("span", [o("v-autocomplete", {
 						attrs: {
 							"hide-details": "",
+							"small-chips": "",
+							"deletable-chips": "",
 							label: "Global Requirement",
 							filled: "",
 							items: e.app.globalRequirements,
@@ -10084,6 +10348,7 @@
             he = Object(w["a"])(ue, ce, de, !1, null, null, null),
             ge = he.exports;
         x()(he, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
 			VCheckbox: ae["a"],
@@ -10121,9 +10386,11 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Move Choice In This Row "), o("v-select", {
+                }, [e._v(" Move Choice In This Row "), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
+						"small-chips": "",
+						"deletable-chips": "",
                         items: e.tRow.objects,
                         "item-text": "id",
                         "item-value": "id",
@@ -10173,7 +10440,7 @@
                             return e.moveObjectAfter()
                         }
                     }
-                }, [e._v("Move after")])], 1)], 1), e._v(" Copy Choice Into Another Row "), o("v-select", {
+                }, [e._v("Move after")])], 1)], 1), e._v(" Copy Choice Into Another Row "), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
                         items: e.rows,
@@ -10456,7 +10723,32 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: "12"
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appMultiChoice"
+                                    }
+                                }
+                            }, i), [e._v("Manage Multi Choice Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the size and font of "), o("br"), e._v(" the choices that can be selected multiple times. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -13306,6 +13598,299 @@
             VRow: S["a"],
             VSelect: K["a"],
             VSwitch: L["a"],
+            VTextField: R["a"]
+        });
+		var Bo = function() {
+                var e = this,
+                    t = e.$createElement,
+                    o = e._self._c || t;
+                return o("v-dialog", {
+                    attrs: {
+                        "max-width": "1000px"
+                    },
+                    on: {
+                        "click:outside": e.cleanCurrentComponent
+                    },
+                    model: {
+                        value: e.dialog,
+                        callback: function(t) {
+                            e.dialog = t
+                        },
+                        expression: "dialog"
+                    }
+                }, [o("v-card", {
+					ref: "dialog"
+				}, [o("v-card-title", {
+                    staticClass: "headline"
+                }, [o("v-checkbox", {
+                    staticClass: "auto shrink mr-2 mt-0",
+                    attrs: {
+                        "hide-details": ""
+                    },
+                    model: {
+                        value: e.row.privateMultiChoiceIsOn,
+                        callback: function(t) {
+                            e.$set(e.row, "privateMultiChoiceIsOn", t);
+							if (t) {
+								Object.keys(e.multiChoiceStyling).forEach(key => {
+									e.$set(e.styling, key, e.multiChoiceStyling[key]);
+								});
+							} else {
+								Object.keys(e.styling).forEach(key => {
+									if ((key in e.multiChoiceStyling)) {
+										e.$delete(e.styling, key);
+									}
+								});
+							}
+                        },
+                        expression: "row.privateMultiChoiceIsOn"
+                    }
+                }), e._v("Multi Choice Design")]), o("v-card-text", {
+					staticClass: !e.row.privateMultiChoiceIsOn ? "v-card--disabled" : ""
+				}, [o("v-container", [o("v-row", [o("v-col", {
+                    staticClass: "col-md-12"
+                }, [e._v(" Tier number "), o("v-row", [o("v-col", {
+					staticClass: "pb-0",
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-checkbox", {
+					staticClass: "mr-2 mt-1 mb-n6",
+					attrs: {
+						label: "Use Custom Font?"
+					},
+					model: {
+						value: e.styling.customMultiTextFont,
+						callback: function(t) {
+							e.$set(e.styling, "customMultiTextFont", t)
+						},
+						expression: "styling.customMultiTextFont"
+					}
+				})], 1), o("v-col", {
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
+                }, [e.styling.customMultiTextFont ? o("v-text-field", {
+					attrs: {
+						"hide-details": "",
+						label: "Text Font",
+						filled: ""
+					},
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                }) : o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.textFonts,
+                        filled: "",
+                        label: "Text Font"
+                    },
+                    model: {
+                        value: e.styling.multiChoiceTextFont,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextFont", t)
+                        },
+                        expression: "styling.multiChoiceTextFont"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        type: "number",
+                        label: "Text Size",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.multiChoiceTextSize,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceTextSize", t)
+                        },
+                        expression: "styling.multiChoiceTextSize"
+                    }
+                }, [e._v("%")])], 1), o("v-col", {
+                    staticClass: "col-12"
+                }, [e._v(" Counter "), o("v-row", [o("v-col", {
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
+                }, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.counterPositions,
+                        filled: "",
+                        label: "Counter's Position"
+                    },
+                    model: {
+                        value: e.styling.multiChoiceCounterPosition,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceCounterPosition", t);
+                        },
+                        expression: "styling.multiChoiceCounterPosition"
+                    }
+                })], 1), o("v-col", {
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
+                }, [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        type: "number",
+                        label: "Counter Size",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.styling.multiChoiceCounterSize,
+                        callback: function(t) {
+                            e.$set(e.styling, "multiChoiceCounterSize", t)
+                        },
+                        expression: "styling.multiChoiceCounterSize"
+                    }
+                }, [e._v("%")])], 1)], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
+                    attrs: {
+                        color: "green darken-1",
+                        text: ""
+                    },
+                    on: {
+                        click: e.cleanCurrentComponent
+                    }
+                }, [e._v("Close")])], 1)], 1)], 1)
+            },
+            So = [],
+            Oo = {
+                props: {
+                    from: String,
+                    row: Object,
+                    isAdvanced: Boolean
+                },
+                data: function() {
+                    return {
+                        dialog: !0,
+                        textFonts: [{
+                            text: "Times New Roman",
+                            value: "Times New Roman"
+                        }, {
+                            text: "Arial",
+                            value: "Arial"
+                        }, {
+                            text: "Roboto",
+                            value: "Roboto"
+                        }, {
+                            text: "Courier New",
+                            value: "Courier New"
+                        }, {
+                            text: "Courier",
+                            value: "Courier"
+                        }, {
+                            text: "Verdana",
+                            value: "Verdana"
+                        }, {
+                            text: "Georgia",
+                            value: "Georgia"
+                        }, {
+                            text: "Comic Sans MS(NO!)",
+                            value: "Comic Sans MS"
+                        }, {
+                            text: "Candara",
+                            value: "Candara"
+                        }, {
+                            text: "Arial Black",
+                            value: "Arial Black"
+                        }, {
+                            text: "Impact",
+                            value: "Impact"
+                        }, {
+                            text: "Helvetica",
+                            value: "Helvetica"
+                        }, {
+                            text: "Calibri",
+                            value: "Calibri"
+                        }, {
+                            text: "Cambria",
+                            value: "Cambria"
+                        }, {
+                            text: "Trebuchet MS",
+                            value: "Trebuchet MS"
+                        }, {
+                            text: "Tahoma",
+                            value: "Tahoma"
+                        }],
+						counterPositions: [{
+							text: "Bottom of Choice Title",
+							value: 0
+						}, {
+							text: "Bottom of Choice Scores",
+							value: 1
+						}, {
+							text: "Bottom of Choice Requirements",
+							value: 2
+						}, {
+							text: "Bottom of Choice Text",
+							value: 3
+						}, {
+							text: "Bottom of Choice Addons",
+							value: 4
+						}],
+						window: {
+							width: 0,
+							height: 0
+						}
+                    }
+                },
+                computed: {
+                    styling: function() {
+                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
+                    },
+					multiChoiceStyling: function() {
+						return this.$store.state.multiChoiceStyling
+					}
+                },
+				mounted: function() {
+					this.resizeObserver = new ResizeObserver((e) => {
+						for (var t of e) {
+							this.window.width = t.contentRect.width;
+							this.window.hegiht = t.contentRect.height;
+						}
+					});
+					if ("undefined" !== typeof this.$refs.dialog) this.resizeObserver.observe(this.$refs.dialog.$el);
+                },
+                destroyed: function() {
+                    if (this.resizeObserver) {
+						this.resizeObserver.disconnect();
+					}
+                },
+                methods: {
+                    cleanCurrentComponent: function() {
+                        this.$emit("cleanCurrentComponent", "")
+                    }
+                }
+            },
+            Ro = Oo,
+            Fo = Object(w["a"])(Ro, Bo, So, !1, null, null, null),
+            _o = Fo.exports;
+        x()(Fo, {
+            VBtn: C["a"],
+            VCard: T["a"],
+            VCardActions: j["a"],
+            VCardText: j["b"],
+            VCardTitle: j["c"],
+			VCheckbox: ae["a"],
+            VCol: I["a"],
+            VContainer: k["a"],
+            VDialog: B["a"],
+            VRow: S["a"],
+            VSelect: K["a"],
             VTextField: R["a"]
         });
 		var aRe = function() {
@@ -17086,7 +17671,8 @@
                     appPointBar: pt,
                     appRowImage: Le,
 					appAddonImage: a$e,
-					appAddonDesign: aQe
+					appAddonDesign: aQe,
+					appMultiChoice: _o
                 },
                 computed: {
                     styling: function() {
@@ -17121,6 +17707,9 @@
 					},
 					addonStyling: function() {
 						return this.$store.state.addonStyling
+					},
+					multiChoiceStyling: function() {
+						return this.$store.state.multiChoiceStyling
 					},
 					tRow: function() {
 						if ("undefined" !== typeof this.app.comp[this.row.id]) {
@@ -17256,6 +17845,12 @@
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
+							Object.keys(e.multiChoiceStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateMultiChoiceIsOn) e.$set(e.row, "privateMultiChoiceIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
                         }, t.readAsText(this.files[0]);
                     },
 					exportDesign: function() {
@@ -17274,6 +17869,7 @@
             gt = Object(w["a"])(ht, be, ve, !1, null, null, null),
             bt = gt.exports;
         x()(gt, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -17763,6 +18359,45 @@
 						}
 						return this.$store.state.app.styling;
 					},
+					multiChoiceStyling: function() {
+						if (this.object.privateMultiChoiceIsOn) return this.object.styling;
+						if (this.row.privateMultiChoiceIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
@@ -17771,7 +18406,7 @@
                         return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;"
                     },
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
@@ -18091,9 +18726,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -18103,15 +18740,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -18120,10 +18758,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -18133,15 +18803,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -18149,38 +18820,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -18200,13 +18913,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -19817,6 +20530,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
+													e.$set(e.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -20203,6 +20917,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
+												e.$set(e.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -20616,6 +21331,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
+												e.$set(e.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -21504,6 +22220,7 @@
             jt = Object(w["a"])(mt, p, u, !1, null, "b79ff9c2", null),
             It = jt.exports;
         x()(jt, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCheckbox: ae["a"],
@@ -21581,7 +22298,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Copy Choices Into Another Row "), o("v-select", {
+                }, [e._v(" Copy Choices Into Another Row "), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
                         items: e.rows,
@@ -21633,7 +22350,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Group Membership "), o("v-select", {
+                }, [e._v(" Group Membership "), o("br"), e._v(" - This is for displaying in the Result Row. "), o("br"), e._v(" - For group-related functions, use Manage Groups feature. "), o("v-autocomplete", {
                     attrs: {
                         "hide-details": "",
                         "deletable-chips": "",
@@ -21869,7 +22586,7 @@
                             }, i), [e._v("Manage Choices Image Design")])], 1)]
                         }
                     }], null, !1, 1468014515)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on objects. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -21919,7 +22636,7 @@
                             }, i), [e._v("Manage Row Image Design")])], 1)]
                         }
                     }], null, !1, 3359790558)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -21980,7 +22697,32 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: "12"
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appMultiChoice"
+                                    }
+                                }
+                            }, i), [e._v("Manage Multi Choice Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the size and font of "), o("br"), e._v(" the choices that can be selected multiple times. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22093,7 +22835,8 @@
                     appPointBar: pt,
                     appRowImage: Le,
 					appAddonImage: a$e,
-					appAddonDesign: aQe
+					appAddonDesign: aQe,
+					appMultiChoice: _o
                 },
                 computed: {
                     styling: function() {
@@ -22134,6 +22877,9 @@
 					},
 					addonStyling: function() {
 						return this.$store.state.addonStyling
+					},
+					multiChoiceStyling: function() {
+						return this.$store.state.multiChoiceStyling
 					}
                 },
 				mounted: function() {
@@ -22304,6 +23050,12 @@
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
+							Object.keys(e.multiChoiceStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateMultiChoiceIsOn) e.$set(e.row, "privateMultiChoiceIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
                         }, t.readAsText(this.files[0]);
                     },
 					exportDesign: function() {
@@ -22322,6 +23074,7 @@
             Rt = Object(w["a"])(Ot, kt, Bt, !1, null, null, null),
             Ft = Rt.exports;
         x()(Rt, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -22437,7 +23190,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22462,7 +23215,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22487,7 +23240,32 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choice Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22501,7 +23279,7 @@
                             }, i), [e._v("Manage Choices Image Design")])], 1)]
                         }
                     }], null, !1, 1468014515)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on objects. ")])]), o("v-tooltip", {
                     attrs: {
                         right: "",
                         "open-delay": "300"
@@ -22512,57 +23290,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
-								}
-							}, [o("v-btn", e._g({
-                                staticStyle: {
-                                    color: e.$vuetify.theme.isDark ? "white" : "black"
-                                },
-                                on: {
-                                    click: function(t) {
-                                        e.currentComponent = "appRowImage"
-                                    }
-                                }
-                            }, i), [e._v("Manage Row Image Design")])], 1)]
-                        }
-                    }], null, !1, 3359790558)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
-                    attrs: {
-                        right: "",
-                        "open-delay": "300"
-                    },
-                    scopedSlots: e._u([{
-                        key: "activator",
-                        fn: function(t) {
-                            var i = t.on;
-                            return [o("v-col", {
-								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
-								}
-							}, [o("v-btn", e._g({
-                                staticStyle: {
-                                    color: e.$vuetify.theme.isDark ? "white" : "black"
-                                },
-                                on: {
-                                    click: function(t) {
-                                        e.currentComponent = "appBackground"
-                                    }
-                                }
-                            }, i), [e._v("Manage Background Design")])], 1)]
-                        }
-                    }], null, !1, 187463358)
-                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
-                    attrs: {
-                        right: "",
-                        "open-delay": "300"
-                    },
-                    scopedSlots: e._u([{
-                        key: "activator",
-                        fn: function(t) {
-                            var i = t.on;
-                            return [o("v-col", {
-								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22587,7 +23315,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: "12"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22595,13 +23323,113 @@
                                 },
                                 on: {
                                     click: function(t) {
-                                        e.currentComponent = "appObjectDesign"
+                                        e.currentComponent = "appRowImage"
                                     }
                                 }
-                            }, i), [e._v("Manage Choice Design")])], 1)]
+                            }, i), [e._v("Manage Row Image Design")])], 1)]
+                        }
+                    }], null, !1, 3359790558)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Design")])], 1)]
                         }
                     }], null, !1, 2942481490)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1)], 1)], 1), o(e.currentComponent, {
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on addons. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Image Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on addons. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appMultiChoice"
+                                    }
+                                }
+                            }, i), [e._v("Manage Multi Choice Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the size and font of "), o("br"), e._v(" the choices that can be selected multiple times. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appBackground"
+                                    }
+                                }
+                            }, i), [e._v("Manage Background Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])])], 1)], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         from: "private",
@@ -22646,7 +23474,10 @@
                     appObjectDesign: Qe,
                     appRowDesign: rt,
                     appPointBar: pt,
-                    appRowImage: Le
+                    appRowImage: Le,
+					appAddonImage: a$e,
+					appAddonDesign: aQe,
+					appMultiChoice: _o
                 },
                 computed: {
                     styling: function() {
@@ -22681,6 +23512,15 @@
 					},
 					rowStyling: function() {
 						return this.$store.state.rowStyling
+					},
+					addonStyling: function() {
+						return this.$store.state.addonStyling
+					},
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					},
+					multiChoiceStyling: function() {
+						return this.$store.state.multiChoiceStyling
 					}
                 },
 				mounted: function() {
@@ -22760,6 +23600,12 @@
 							Object.keys(e.addonStyling).forEach(key => {
 								if (o.styling.hasOwnProperty(key)) {
 									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.multiChoiceStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateMultiChoiceIsOn) e.$set(e.row, "privateMultiChoiceIsOn", !0);
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
@@ -22896,7 +23742,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22921,7 +23767,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -22946,57 +23792,7 @@
                             var i = t.on;
                             return [o("v-col", {
 								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
-								}
-							}, [o("v-btn", e._g({
-                                staticStyle: {
-                                    color: e.$vuetify.theme.isDark ? "white" : "black"
-                                },
-                                on: {
-                                    click: function(t) {
-                                        e.currentComponent = "appObjectImage"
-                                    }
-                                }
-                            }, i), [e._v("Manage Choices Image Design")])], 1)]
-                        }
-                    }], null, !1, 1468014515)
-                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on rows and objects. ")])]), o("v-tooltip", {
-                    attrs: {
-                        bottom: "",
-                        "open-delay": "300"
-                    },
-                    scopedSlots: e._u([{
-                        key: "activator",
-                        fn: function(t) {
-                            var i = t.on;
-                            return [o("v-col", {
-								attrs: {
-									cols: e.window.width < 500 ? "12" : "6"
-								}
-							}, [o("v-btn", e._g({
-                                staticStyle: {
-                                    color: e.$vuetify.theme.isDark ? "white" : "black"
-                                },
-                                on: {
-                                    click: function(t) {
-                                        e.currentComponent = "appBackground"
-                                    }
-                                }
-                            }, i), [e._v("Manage Background Design")])], 1)]
-                        }
-                    }], null, !1, 187463358)
-                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])]), o("v-tooltip", {
-                    attrs: {
-                        bottom: "",
-                        "open-delay": "300"
-                    },
-                    scopedSlots: e._u([{
-                        key: "activator",
-                        fn: function(t) {
-                            var i = t.on;
-                            return [o("v-col", {
-								attrs: {
-									cols: "12"
+									cols: e.window.width > 500 ? "6" : "12"
 								}
 							}, [o("v-btn", e._g({
                                 staticStyle: {
@@ -23010,7 +23806,132 @@
                             }, i), [e._v("Manage Choice Design")])], 1)]
                         }
                     }], null, !1, 2942481490)
-                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])])], 1)], 1)], 1), o(e.currentComponent, {
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on choices. ")])]), o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appObjectImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Choices Image Design")])], 1)]
+                        }
+                    }], null, !1, 1468014515)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on objects. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonDesign"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin, "), o("br"), e._v("padding, borders, and drop-shadow on addons. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appAddonImage"
+                                    }
+                                }
+                            }, i), [e._v("Manage Addon Image Design")])], 1)]
+                        }
+                    }], null, !1, 2942481490)
+                }, [o("span", [e._v(" Here you can change the margin and padding "), o("br"), e._v("of images on addons. ")])]), o("v-tooltip", {
+                    attrs: {
+                        right: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appMultiChoice"
+                                    }
+                                }
+                            }, i), [e._v("Manage Multi Choice Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the size and font of "), o("br"), e._v(" the choices that can be selected multiple times. ")])]), o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-col", {
+								attrs: {
+									cols: e.window.width > 500 ? "6" : "12"
+								}
+							}, [o("v-btn", e._g({
+                                staticStyle: {
+                                    color: e.$vuetify.theme.isDark ? "white" : "black"
+                                },
+                                on: {
+                                    click: function(t) {
+                                        e.currentComponent = "appBackground"
+                                    }
+                                }
+                            }, i), [e._v("Manage Background Design")])], 1)]
+                        }
+                    }], null, !1, 187463358)
+                }, [o("span", [e._v(" Here you can change the color and place images in "), o("br"), e._v("the background of rows, choices and the whole project. ")])])], 1)], 1)], 1), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         from: "private",
@@ -23055,7 +23976,10 @@
                     appObjectDesign: Qe,
                     appRowDesign: rt,
                     appPointBar: pt,
-                    appRowImage: Le
+                    appRowImage: Le,
+					appAddonImage: a$e,
+					appAddonDesign: aQe,
+					appMultiChoice: _o
                 },
                 computed: {
                     styling: function() {
@@ -23084,6 +24008,15 @@
 					},
 					objectStyling: function() {
 						return this.$store.state.objectStyling
+					},
+					addonStyling: function() {
+						return this.$store.state.addonStyling
+					},
+					addonImageStyling: function() {
+						return this.$store.state.addonImageStyling
+					},
+					multiChoiceStyling: function() {
+						return this.$store.state.multiChoiceStyling
 					}
                 },
 				mounted: function() {
@@ -23151,6 +24084,12 @@
 							Object.keys(e.addonStyling).forEach(key => {
 								if (o.styling.hasOwnProperty(key)) {
 									if (!e.row.privateAddonIsOn) e.$set(e.row, "privateAddonIsOn", !0);
+									e.$set(e.row.styling, key, o.styling[key]);
+								}
+							});
+							Object.keys(e.multiChoiceStyling).forEach(key => {
+								if (o.styling.hasOwnProperty(key)) {
+									if (!e.row.privateMultiChoiceIsOn) e.$set(e.row, "privateMultiChoiceIsOn", !0);
 									e.$set(e.row.styling, key, o.styling[key]);
 								}
 							});
@@ -23247,7 +24186,7 @@
                         color: "blue",
                         value: "choiceselect"
                     }
-                })], 1), e.row.buttonRandom ? e._e() : o("v-select", {
+                })], 1), e.row.buttonRandom ? e._e() : o("v-autocomplete", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
@@ -23326,7 +24265,7 @@
                         },
                         expression: "row.btnPointAddon"
                     }
-                }), e.row.btnPointAddon ? o("v-select", {
+                }), e.row.btnPointAddon ? o("v-autocomplete", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
@@ -23683,6 +24622,7 @@
             Pt = Object(w["a"])($t, _t, qt, !1, null, null, null),
             Dt = Pt.exports;
         x()(Pt, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -24393,9 +25333,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -24405,15 +25347,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -24422,10 +25365,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -24435,15 +25410,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -24451,38 +25427,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -24502,13 +25520,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -26119,6 +27137,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
+													e.$set(e.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -26505,6 +27524,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
+												e.$set(e.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -26918,6 +27938,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
+												e.$set(e.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -27766,6 +28787,7 @@
             Zt = (o("a1b2"), Object(w["a"])(Kt, c, d, !1, null, "7ecb809e", null)),
             Qt = Zt.exports;
         x()(Zt, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCol: I["a"],
@@ -28151,6 +29173,8 @@
 						if ("undefined" === typeof e.app.objectIdLength) e.$set(e.app, "objectIdLength", 4);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
+						if ("undefined" === typeof e.app.styling.multiChoiceTextFont) e.$set(e.app.styling, "multiChoiceTextFont", "Times New Roman");
+						if ("undefined" === typeof e.app.styling.multiChoiceTextSize) e.$set(e.app.styling, "multiChoiceTextSize", 100);
 						if ("undefined" === typeof e.app.globalRequirements) e.$set(e.app, "globalRequirements", []);
 						if ("undefined" === typeof e.app.orderOrReqText) e.$set(e.app, "orderOrReqText", "0");
 						if ("undefined" === typeof e.app.defaultOrReq) e.$set(e.app, "defaultOrReq", "of");
@@ -28162,8 +29186,18 @@
 						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, "tmpRequired", []);
 						if ("undefined" === typeof e.app.isFadingOut) e.$set(e.app, "isFadingOut", !1);
 						if ("undefined" === typeof e.app.bgmFadeInterval) e.$set(e.app, "bgmFadeInterval", 0);
+						if ("undefined" === typeof e.app.bgmTitleInterval) e.$set(e.app, "bgmTitleInterval", 0);
+						if ("undefined" === typeof e.app.bgmPlayInterval) e.$set(e.app, "bgmPlayInterval", 0);
 						if ("undefined" === typeof e.app.bgmFadeTimer) e.$set(e.app, "bgmFadeTimer", 0);
 						if ("undefined" === typeof e.app.lastFadeTime) e.$set(e.app, "lastFadeTime", 0);
+						if ("undefined" === typeof e.app.showMusicPlayer) e.$set(e.app, "showMusicPlayer", !1);
+						if ("undefined" === typeof e.app.curVolume) e.$set(e.app, "curVolume", 100);
+						if ("undefined" === typeof e.app.isMute) e.$set(e.app, "isMute", !1);
+						e.$set(e.app, "bgmTitle", "No Audio Title");
+						e.$set(e.app, "bgmIsPlaying", !1);
+						e.$set(e.app, "curBgmTime", 0);
+						e.$set(e.app, "curBgmLength", 0);
+						e.$set(e.app, "isSeeking", !1);
 						for (var a = 0; a < e.app.pointTypes.length; a++) {
 							if ("undefined" === typeof e.app.pointTypes[a].initValue) e.app.pointTypes[a].initValue = e.app.pointTypes[a].startingSum;
 							if ("" != e.app.pointTypes[a].activatedId && "undefined" === typeof e.app.pointTypes[a].isNotShownPointBar) e.app.pointTypes[a].isNotShownPointBar = !0;
@@ -29027,189 +30061,6 @@
             VDialog: B["a"],
             VTextField: R["a"]
         });
-        var Bo = function() {
-                var e = this,
-                    t = e.$createElement,
-                    o = e._self._c || t;
-                return o("v-dialog", {
-                    attrs: {
-                        "max-width": "1000px"
-                    },
-                    on: {
-                        "click:outside": e.cleanCurrentComponent
-                    },
-                    model: {
-                        value: e.dialog,
-                        callback: function(t) {
-                            e.dialog = t
-                        },
-                        expression: "dialog"
-                    }
-                }, [o("v-card", [o("v-card-title", {
-                    staticClass: "headline"
-                }, [e._v("Multi Choice Design")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
-                    staticClass: "col-md-6"
-                }, [e._v(" Tier number "), o("v-row", [o("v-col", {
-					staticClass: "pb-0",
-					attrs: {
-						cols: "12"
-					}
-				}, [o("v-checkbox", {
-					staticClass: "mr-2 mt-1 mb-n6",
-					attrs: {
-						label: "Use Custom Font?"
-					},
-					model: {
-						value: e.styling.customMultiTextFont,
-						callback: function(t) {
-							e.$set(e.styling, "customMultiTextFont", t)
-						},
-						expression: "styling.customMultiTextFont"
-					}
-				})], 1), o("v-col", {
-                    staticClass: "px-1"
-                }, [e.styling.customMultiTextFont ? o("v-text-field", {
-					attrs: {
-						"hide-details": "",
-						label: "Text Font",
-						filled: ""
-					},
-                    model: {
-                        value: e.styling.multiChoiceTextFont,
-                        callback: function(t) {
-                            e.$set(e.styling, "multiChoiceTextFont", t)
-                        },
-                        expression: "styling.multiChoiceTextFont"
-                    }
-                }) : o("v-select", {
-                    attrs: {
-                        "hide-details": "",
-                        items: e.textFonts,
-                        filled: "",
-                        label: "Text Font"
-                    },
-                    model: {
-                        value: e.styling.multiChoiceTextFont,
-                        callback: function(t) {
-                            e.$set(e.styling, "multiChoiceTextFont", t)
-                        },
-                        expression: "styling.multiChoiceTextFont"
-                    }
-                })], 1), o("v-col", {
-                    staticClass: "px-1"
-                }, [o("v-text-field", {
-                    attrs: {
-                        "hide-details": "",
-                        type: "number",
-                        label: "Text Size",
-                        filled: ""
-                    },
-                    model: {
-                        value: e.styling.multiChoiceTextSize,
-                        callback: function(t) {
-                            e.$set(e.styling, "multiChoiceTextSize", t)
-                        },
-                        expression: "styling.multiChoiceTextSize"
-                    }
-                }, [e._v("%")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-card-actions", [o("v-btn", {
-                    attrs: {
-                        color: "green darken-1",
-                        text: ""
-                    },
-                    on: {
-                        click: e.cleanCurrentComponent
-                    }
-                }, [e._v("Close")])], 1)], 1)], 1)
-            },
-            So = [],
-            Oo = {
-                props: {
-                    from: String,
-                    row: Object,
-                    isAdvanced: Boolean
-                },
-                data: function() {
-                    return {
-                        dialog: !0,
-                        textFonts: [{
-                            text: "Times New Roman",
-                            value: "Times New Roman"
-                        }, {
-                            text: "Arial",
-                            value: "Arial"
-                        }, {
-                            text: "Roboto",
-                            value: "Roboto"
-                        }, {
-                            text: "Courier New",
-                            value: "Courier New"
-                        }, {
-                            text: "Courier",
-                            value: "Courier"
-                        }, {
-                            text: "Verdana",
-                            value: "Verdana"
-                        }, {
-                            text: "Georgia",
-                            value: "Georgia"
-                        }, {
-                            text: "Comic Sans MS(NO!)",
-                            value: "Comic Sans MS"
-                        }, {
-                            text: "Candara",
-                            value: "Candara"
-                        }, {
-                            text: "Arial Black",
-                            value: "Arial Black"
-                        }, {
-                            text: "Impact",
-                            value: "Impact"
-                        }, {
-                            text: "Helvetica",
-                            value: "Helvetica"
-                        }, {
-                            text: "Calibri",
-                            value: "Calibri"
-                        }, {
-                            text: "Cambria",
-                            value: "Cambria"
-                        }, {
-                            text: "Trebuchet MS",
-                            value: "Trebuchet MS"
-                        }, {
-                            text: "Tahoma",
-                            value: "Tahoma"
-                        }]
-                    }
-                },
-                computed: {
-                    styling: function() {
-                        return "private" === this.from ? this.row.styling : this.$store.state.app.styling
-                    }
-                },
-                methods: {
-                    cleanCurrentComponent: function() {
-                        this.$emit("cleanCurrentComponent", "")
-                    }
-                }
-            },
-            Ro = Oo,
-            Fo = Object(w["a"])(Ro, Bo, So, !1, null, null, null),
-            _o = Fo.exports;
-        x()(Fo, {
-            VBtn: C["a"],
-            VCard: T["a"],
-            VCardActions: j["a"],
-            VCardText: j["b"],
-            VCardTitle: j["c"],
-			VCheckbox: ae["a"],
-            VCol: I["a"],
-            VContainer: k["a"],
-            VDialog: B["a"],
-            VRow: S["a"],
-            VSelect: K["a"],
-            VTextField: R["a"]
-        });
         var qo = {
                 data: function() {
                     return {
@@ -29222,7 +30073,7 @@
                         }, {
                             component: "appObjectImage",
                             text: "Manage Choices Image Design",
-                            tooltip: "Here you can change the margin and padding <br />of images on rows and objects."
+                            tooltip: "Here you can change the margin and padding <br />of images on objects."
                         }, {
                             component: "appRowDesign",
                             text: "Manage Row Design",
@@ -29230,7 +30081,7 @@
                         }, {
                             component: "appRowImage",
                             text: "Manage Row Image Design",
-                            tooltip: "Here you can change the margin and padding <br />of images on rows and objects."
+                            tooltip: "Here you can change the margin and padding <br />of images on rows."
                         }, {
                             component: "appAddonDesign",
                             text: "Manage Addon Design",
@@ -30772,11 +31623,13 @@
                             },
                             expression: "group.name"
                         }
-                    })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                    })], 1)], 1), o("v-row", [o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "Row Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
@@ -30870,11 +31723,13 @@
                                 },
                                 expression: "rowElements.id"
                             }
-                        })], 1), o("v-col", [o("v-select", {
+                        })], 1), o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "Object Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
@@ -31075,6 +31930,7 @@
             ci = Object(w["a"])(ni, si, ri, !1, null, null, null),
             di = ci.exports;
         x()(ci, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -34184,11 +35040,13 @@
                             },
                             expression: "group.activatedId"
                         }
-                    })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                    })], 1)], 1), o("v-row", [o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "App Row Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.rows,
 								"item-text": "id",
 								"item-value": "id",
@@ -34259,11 +35117,13 @@
 								},
                                 expression: "elements.id"
                             }
-                        })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "Backpack Row Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.backpack,
 								"item-text": "id",
 								"item-value": "id",
@@ -34490,11 +35350,13 @@
                             },
                             expression: "group.activatedId"
                         }
-                    })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                    })], 1)], 1), o("v-row", [o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "App Object Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.rows.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
@@ -34567,11 +35429,13 @@
                                 },
                                 expression: "elements.id"
                             }
-                        })], 1)], 1), o("v-row", [o("v-col", [o("v-select", {
+                        })], 1)], 1), o("v-row", [o("v-col", [o("v-autocomplete", {
                             attrs: {
                                 "hide-details": "",
                                 label: "Backpack Object Id",
                                 filled: "",
+								"small-chips": "",
+								"deletable-chips": "",
 								items: e.app.backpack.flatMap(row => row.objects),
 								"item-text": "id",
 								"item-value": "id",
@@ -34921,6 +35785,7 @@
             Gci = Object(w["a"])(Gni, Gsi, Gri, !1, null, null, null),
             Gdi = Gci.exports;
         x()(Gci, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
@@ -35359,6 +36224,60 @@
 							e.$set(e.app, "hideChoiceDT", o);
 						},
 						expression: "app.hideChoiceDT"
+					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Show Music Player."
+					},
+					model: {
+						value: e.app.showMusicPlayer,
+						callback: function(o) {
+							e.$set(e.app, "showMusicPlayer", o);
+							if (e.app.showMusicPlayer) {
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmTitleInterval !== 0) clearInterval(e.app.bgmTitleInterval), e.app.bgmTitleInterval = 0;
+									e.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && "undefined" !== typeof e.app.bgmObjectId) {
+											var co = e.app.comp[e.app.bgmObjectId],
+												coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+												coO = coR.objects[co.objects];
+											if (bgmPlayer.playerInfo.videoData.video_id == coO.bgmId && bgmPlayer.playerInfo.videoData.title !== "") {
+												e.$set(e.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												e.$set(e.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(e.app.bgmTitleInterval);
+												e.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+									e.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !e.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== e.app.curBgmTime) {
+												if (k !== curTime) {
+													e.$set(e.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > e.app.curBgmLength) o = 1;
+													e.$set(e.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												e.$set(e.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
+							} else {
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmTitleInterval !== 0) clearInterval(e.app.bgmTitleInterval), e.app.bgmTitleInterval = 0;
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								}
+							}
+						},
+						expression: "app.showMusicPlayer"
 					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
@@ -35854,9 +36773,11 @@
                 methods: {
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -35866,15 +36787,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -35883,10 +36805,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -35896,15 +36850,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -35912,38 +36867,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -35963,13 +36960,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -36802,6 +37799,7 @@
 							}
 							if (coO.muteBgm && "undefined" !== typeof bgmPlayer) {
 								if ("undefined" !== typeof bgmPlayer.mute) {
+									e.$set(e.app, "isMute", !0);
 									bgmPlayer.mute();
 								}
 							}
@@ -37671,7 +38669,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37692,7 +38690,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -37722,7 +38720,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37743,7 +38741,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -37780,7 +38778,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37801,7 +38799,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
@@ -37825,7 +38823,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37846,7 +38844,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -37915,7 +38913,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37936,7 +38934,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 5 == e.object.template ? o("span", {
                     staticClass: "ma-0",
@@ -37970,7 +38968,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -37991,7 +38989,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -38021,7 +39019,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38042,7 +39040,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -38079,7 +39077,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38100,7 +39098,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.imageSourceTooltip && "undefined" !== typeof e.object.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
@@ -38162,7 +39160,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38183,7 +39181,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -38214,7 +39212,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38235,7 +39233,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
                     staticClass: "ma-0",
@@ -38307,7 +39305,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38328,7 +39326,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("v-col", {
@@ -38358,7 +39356,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38379,7 +39377,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -38416,7 +39414,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38437,7 +39435,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticClass: "my-0",
@@ -38461,7 +39459,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38482,7 +39480,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -38513,7 +39511,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38534,7 +39532,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -38607,7 +39605,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38628,7 +39626,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("div", {
@@ -38657,7 +39655,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38678,7 +39676,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -38715,7 +39713,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38736,7 +39734,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text ? o("p", {
                     staticStyle: {
@@ -38759,7 +39757,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38780,7 +39778,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
                     return o("v-col", {
@@ -38814,7 +39812,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38835,7 +39833,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -38865,7 +39863,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38886,7 +39884,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
                     return o("div", {
@@ -38915,7 +39913,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38936,7 +39934,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
                     return o("v-col", {
@@ -38973,7 +39971,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -38994,7 +39992,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), "" !== e.object.text && !e.row.objectTextRemoved ? o("p", {
                     staticStyle: {
@@ -39017,7 +40015,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -39038,7 +40036,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
                     staticClass: "pa-0 mb-0",
@@ -39115,7 +40113,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
                     staticClass: "pa-0",
@@ -39136,7 +40134,7 @@
                 }, [o("v-icon", {
                     style: e.multiChoiceButton,
                     attrs: {
-                        size: e.app.styling.multiChoiceCounterSize + "%"
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
@@ -40362,6 +41360,45 @@
 						}
 						return !1;
 					},
+					multiChoiceStyling: function() {
+						if (this.object.privateMultiChoiceIsOn) return this.object.styling;
+						if (this.row.privateMultiChoiceIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
@@ -40370,7 +41407,7 @@
                         return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;"
                     },
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
@@ -40615,9 +41652,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -40627,15 +41666,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -40644,10 +41684,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -40657,15 +41729,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -40673,38 +41746,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -40724,13 +41839,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -42341,6 +43456,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
+													e.$set(e.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -42727,6 +43843,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
+												e.$set(e.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -43140,6 +44257,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
+												e.$set(e.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -44546,9 +45664,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -44558,15 +45678,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -44575,10 +45696,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -44588,15 +45741,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -44604,38 +45758,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -44655,13 +45851,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -46272,6 +47468,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
+													e.$set(e.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -46658,6 +47855,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
+												e.$set(e.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -47071,6 +48269,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
+												e.$set(e.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -50372,7 +51571,10 @@
 						expression: "styling.customMultiTextFont"
 					}
 				})], 1), o("v-col", {
-                    staticClass: "px-1"
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
                 }, [e.styling.customMultiTextFont ? o("v-text-field", {
 					attrs: {
 						"hide-details": "",
@@ -50401,7 +51603,10 @@
                         expression: "styling.multiChoiceTextFont"
                     }
                 })], 1), o("v-col", {
-                    staticClass: "px-1"
+                    staticClass: "px-1",
+					attrs: {
+						cols: e.window.width > 540 ? !1 : "12"
+					}
                 }, [o("v-text-field", {
                     attrs: {
                         "hide-details": "",
@@ -55548,7 +56753,8 @@
                             height: 0
                         },
                         drawer: !0,
-                        mini: !0
+                        mini: !0,
+						mute: !1
                     }
                 },
                 components: {
@@ -55605,11 +56811,28 @@
                     currentDesignComponent: function() {
                         return this.$store.state.currentDesignComponent
                     },
+					bgmTitle: function() {
+						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+							return bgmPlayer.playerInfo.videoData.title != "" ? bgmPlayer.playerInfo.videoData.title : "No Audio Title"
+						}
+						return "No Audio Title"
+					},
+					bgmTime: function() {
+						return this.calTime(this.app.curBgmTime) + "|" + this.calTime(this.app.curBgmLength)
+					},
 					globalVariables: function() {
 						return this.$store.state.globalVariables
 					}
                 },
                 methods: {
+					calTime: function(e) {
+						const h = parseInt(Math.floor(e / 3600));
+						const m = parseInt(Math.floor((e % 3600) / 60));
+						const s = parseInt(e % 60);
+						const rm = String(m).padStart(2, "0");
+						const rs = String(s).padStart(2, "0");
+						return h > 0 ? (h + ":") : (rm + ":" + rs)
+					},
                     cloneRow: function(e) {
                         this.app.rows.splice(this.app.rows.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
                         for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.rowIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
@@ -55808,6 +57031,7 @@
             Xr = o("34c3"),
             Kr = o("f6c4"),
             Zr = o("f774"),
+			Sd = o("ba0d"),
             Qr = Object(w["a"])(Gr, a, n, !1, null, null, null),
             ea = Qr.exports;
         x()(Qr, {
@@ -55826,6 +57050,7 @@
             VMain: Kr["a"],
             VNavigationDrawer: Zr["a"],
             VRow: S["a"],
+			VSlider: Sd["a"], 
             VSpacer: O["a"],
 			VSnackbar: Ct["a"],
             VToolbar: Tt["a"],
@@ -55838,10 +57063,12 @@
                     o = e._self._c || t;
                 return o("div", {
                     ref: "printThiss",
-                    staticClass: "pb-12",
+                    staticClass: "ab-0",
                     staticStyle: {
                         "text-align": "center",
-						"font-size": e.app.useVW ? "0.835vw" : "16px"
+						"font-size": e.app.useVW ? "0.835vw" : "16px",
+						"padding-top": e.paddingNavigation && e.isTop ? (e.app.showMusicPlayer ? "88px" : "56px") : (e.app.showMusicPlayer ? "32px" : ""),
+						"padding-bottom": e.paddingNavigation && !e.isTop ? "56px" : ""
                     },
                     style: e.background
                 }, [o("v-navigation-drawer", {
@@ -55884,7 +57111,55 @@
                     on: {
                         click: e.cleanActivated
                     }
-                }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-select-off")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v("Clean Selected Choices ")])], 1)], 1), e.app.importedChoicesIsOpen ? o("v-list-item", e._g({
+                }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-select-off")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v("Clean Selected Choices ")])], 1)], 1), o("v-list-item", e._g({
+                    on: {
+                        click: function(t) {
+							e.$set(e.app, "showMusicPlayer", !e.app.showMusicPlayer);
+							if (e.app.showMusicPlayer) {
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmTitleInterval !== 0) clearInterval(e.app.bgmTitleInterval), e.app.bgmTitleInterval = 0;
+									e.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && "undefined" !== typeof e.app.bgmObjectId) {
+											var co = e.app.comp[e.app.bgmObjectId],
+												coR = co.type == "app" ? e.app.rows[co.rows] : e.app.backpack[co.rows],
+												coO = coR.objects[co.objects];
+											if (bgmPlayer.playerInfo.videoData.video_id == coO.bgmId && bgmPlayer.playerInfo.videoData.title !== "") {
+												e.$set(e.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												e.$set(e.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(e.app.bgmTitleInterval);
+												e.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+									e.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !e.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== e.app.curBgmTime) {
+												if (k !== curTime) {
+													e.$set(e.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > e.app.curBgmLength) o = 1;
+													e.$set(e.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												e.$set(e.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
+							} else {
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmTitleInterval !== 0) clearInterval(e.app.bgmTitleInterval), e.app.bgmTitleInterval = 0;
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								}
+							}
+						}
+                    }
+                }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-music")])], 1), o("v-list-item-content", [o("v-list-item-title", [e.app.showMusicPlayer ? e._v("Hide Music Player ") : e._v("Show Music Player ")])], 1)], 1), e.app.importedChoicesIsOpen ? o("v-list-item", e._g({
                     on: {
                         click: e.openBuildForm
                     }
@@ -56020,7 +57295,6 @@
                         }
                     }
                 }, [o("v-icon", [e._v("mdi-content-save")]), o("span", [e._v("Load Project")])], 1)], 1)], 1)], 1), e.app.pointTypes.length > 0 || e.app.backpack.length > 0 || e.app.importedChoicesIsOpen ? o("v-bottom-navigation", {
-					staticClass: e.isTop ? "v-bottom-navigation--top" : "",
                     style: e.pointBar,
                     attrs: {
                         "data-html2canvas-ignore": "",
@@ -56097,7 +57371,173 @@
                             e.currentComponent = "appBackpackPreview"
                         }
                     }
-                }, [o("v-icon", [e._v("mdi-checkbox-marked-circle-outline")])], 1)], 1)], 2) : e._e(), o(e.currentComponent, {
+                }, [o("v-icon", [e._v("mdi-checkbox-marked-circle-outline")])], 1)], 1)], 2) : e._e(), e.app.showMusicPlayer ? o("v-bottom-navigation", {
+					staticClass: "v-bottom-navigation--top",
+					staticStyle: {
+						overflow: "hidden",
+						height: "32px"
+					},
+					attrs: {
+                        "data-html2canvas-ignore": "",
+                        fixed: ""
+                    }
+				}, [o("v-row", [o("v-toolbar", {
+					staticClass: "px-4 " + (e.$vuetify.theme.isDark ? "grey darken-2" : "grey lighten-5"),
+					attrs: {
+						height: "32"
+					}
+				}, [o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.curBgmLength !== 0) {
+								e.app.bgmIsPlaying ? bgmPlayer.pauseVideo() : bgmPlayer.playVideo();
+								e.$set(e.app, "bgmIsPlaying", !e.app.bgmIsPlaying);
+								if (e.app.bgmIsPlaying) {
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+									let k = 0,
+										o = 0;
+									e.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !e.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== e.app.curBgmTime) {
+												if (k !== curTime) {
+													e.$set(e.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > e.app.curBgmLength) o = 1;
+													e.$set(e.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												e.$set(e.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								} else {
+									if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								}
+							}
+                        }
+                    }
+                }, [o("v-icon", [e.app.bgmIsPlaying ? e._v("mdi-pause") : e._v("mdi-play")])], 1), o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.curBgmLength !== 0) {
+								bgmPlayer.stopVideo();
+								e.$set(e.app, "bgmIsPlaying", !1);
+								if (e.app.bgmPlayInterval !== 0) clearInterval(e.app.bgmPlayInterval), e.app.bgmPlayInterval = 0;
+								e.$set(e.app, "curBgmTime", 0);
+							}
+                        }
+                    }
+                }, [o("v-icon", [e._v("mdi-stop")])], 1), o("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: e.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(t) {
+							if ("undefined" !== typeof bgmPlayer) {
+								if (!e.app.isMute && "undefined" !== typeof bgmPlayer.mute) {
+									e.$set(e.app, "isMute", !0);
+									bgmPlayer.mute();
+								} else if (e.app.isMute && "undefined" !== typeof bgmPlayer.unMute) {
+									e.$set(e.app, "isMute", !1);
+									bgmPlayer.unMute();
+								}
+							}
+                        }
+                    }
+                }, [o("v-icon", [e.app.isMute ? e._v("mdi-volume-off") : e._v("mdi-volume-high")])], 1), o("v-slider", {
+					staticStyle: {
+						"max-width": "104px",
+						"padding-right": "4px"
+					},
+					attrs: {
+						"hide-details": "",
+						max: 100,
+						min: 0,
+						color: e.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: e.app.isMute || e.app.isFadingOut
+					},
+					model: {
+						value: e.app.curVolume,
+						expression: "app.curVolume"
+					},
+					on: {
+						change: function(t) {
+							e.$set(e.app, "curVolume", t);
+							if ("undefined" !== typeof bgmPlayer.setVolume) {
+								if (!e.app.isFadingOut) bgmPlayer.setVolume(t);
+							}
+						}
+					}
+				}), e.window.width > 600 ? e._e() : o("v-spacer"), o("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px",
+						overflow: "hidden"
+					}
+				}, [o("span", {
+					staticClass: "scrolling-text"
+				}, [e._v(e._s(e.app.bgmTitle))])], 1), e.window.width > 600 ? [o("v-slider", {
+					attrs: {
+						"hide-details": "",
+						max: e.app.curBgmLength,
+						min: 0,
+						color: e.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
+					},
+					model: {
+						value: e.app.curBgmTime,
+						expression: "app.curBgmTime"
+					},
+					on: {
+						change: function(t) {
+							e.$set(e.app, "curBgmTime", t);
+							bgmPlayer.seekTo(t, true);
+						},
+						mousedown: function(t) {
+							e.$set(e.app, "isSeeking", !0);
+						},
+						mouseup: function(t) {
+							setTimeout(() => {
+								e.$set(e.app, "isSeeking", !1);
+							}, 100);
+						},
+					},
+				}), o("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px"
+					}
+				}, [o("span", [e._v(e._s(e.bgmTime))])], 1)] : e._e()], 1)], 1)], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         "data-html2canvas-ignore": ""
@@ -56164,7 +57604,8 @@
 						newActivated: "",
 						newActivatedList: [],
 						snackbar : !1,
-						text: ""
+						text: "",
+						mute: !1
                     }
                 },
                 components: {
@@ -56178,7 +57619,7 @@
                         return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundRepeat ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
-                        return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
+                        return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;" + (this.isTop ? (this.app.showMusicPlayer ? "top: 32px" : "top: 0px") : "")
                     },
                     pointBarText: function() {
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
@@ -56192,6 +57633,18 @@
                     activated: function() {
                         return this.$store.state.app.activated
                     },
+					paddingNavigation: function() {
+						return (this.app.pointTypes.length > 0 || this.app.backpack.length > 0 || this.app.importedChoicesIsOpen)
+					},
+					bgmTitle: function() {
+						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+							return bgmPlayer.playerInfo.videoData.title != "" ? bgmPlayer.playerInfo.videoData.title : "No Audio Title"
+						}
+						return "No Audio Title"
+					},
+					bgmTime: function() {
+						return this.calTime(this.app.curBgmTime) + "|" + this.calTime(this.app.curBgmLength)
+					},
 					generateBuild: function() {
 						for (var e = [], t = 0; t < this.app.activated.length; t++) {
 							if ("undefined" !== typeof this.app.comp[this.app.activated[t].split("/ON#")[0]]) {
@@ -56243,6 +57696,14 @@
                     handleResize: function() {
                         this.window.width = window.innerWidth, this.window.height = window.innerHeight
                     },
+					calTime: function(e) {
+						const h = parseInt(Math.floor(e / 3600));
+						const m = parseInt(Math.floor((e % 3600) / 60));
+						const s = parseInt(e % 60);
+						const rm = String(m).padStart(2, "0");
+						const rs = String(s).padStart(2, "0");
+						return h > 0 ? (h + ":") : (rm + ":" + rs)
+					},
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
                     },
@@ -56420,9 +57881,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -56432,15 +57895,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -56449,10 +57913,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -56462,15 +57958,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -56478,38 +57975,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -56529,13 +58068,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -57575,6 +59114,7 @@
 							}
 							if (coO.muteBgm && "undefined" !== typeof bgmPlayer) {
 								if ("undefined" !== typeof bgmPlayer.mute) {
+									e.$set(e.app, "isMute", !0);
 									bgmPlayer.mute();
 								}
 							}
@@ -58324,6 +59864,7 @@
             VListItemTitle: Ut["c"],
             VNavigationDrawer: Zr["a"],
             VRow: S["a"],
+			VSlider: Sd["a"],
 			VSnackbar: Ct["a"],
 			VSpacer: O["a"],
 			VTextField: R["a"],
@@ -58368,7 +59909,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("08.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("28.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 28.12.2024")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to set Addon Design/Addon Image Design. "), o("br"), o("br"), e._v(" Added a feature to allow uploading .avif format images. "), o("br"), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Points. "), o("br"), o("br"), e._v(" Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Design Groups. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where the display of discounted scores was not refreshing. "), o("br"), o("br"), e._v(" Fixed an issue where the choice with the discount function could not be deselected. "), o("br"), o("br"), e._v(" Fixed an issue where discounted scores were displayed incorrectly. "), o("br"), o("br"), e._v(" Fixed an issue where the border-radius was not applied to the Addon Image. ")])], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("08.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -59557,7 +61138,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.14.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.15.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -59792,7 +61373,21 @@
                     appImageCyoaViewer: aa,
                     appInformation: ua
                 },
-                computed: {},
+                computed: {
+					app: function() {
+                        return this.$store.state.app
+                    }
+				},
+				beforeCreate: function() {
+					window.addEventListener("unload", () => {
+						clearInterval(this.app.bgmPlayInterval);
+						clearInterval(this.app.bgmTitleInterval);
+						clearInterval(this.app.bgmFadeInterval);
+						clearInterval(this.app.bgmFadeTimer);
+						clearInterval(this.app.autoSaveInterval);
+						if (bgmPlayer) bgmPlayer.destroy();
+					});
+				},
 				mounted: function() {
 					this.$store.state.handleKeydown = this.handleKeydown;
 					window.addEventListener("keydown", this.$store.state.handleKeydown);
@@ -59833,9 +61428,18 @@
                         isViewerVersion: !1,
 						isFadingOut: !1,
                         backpack: [],
+						bgmPlayInterval: 0,
+						bgmTitleInterval: 0,
 						bgmFadeInterval: 0,
 						bgmFadeTimer: 0,
+						bgmTitle: "No Audio Title",
+						curBgmTime: 0,
+						curBgmLength: 0,
+						curVolume: 100,
+						isSeeking: !1,
+						isMute: !1,
 						lastFadeTime: 0,
+						showMusicPlayer: !1,
 						comp: {},
 						compR: {},
 						compG: {},
@@ -60094,7 +61698,9 @@
 							rowImageBoxWidth: 50,
                             backPackWidth: 1200,
 							multiChoiceCounterPosition: 0,
-							multiChoiceCounterSize: 170
+							multiChoiceCounterSize: 170,
+                            multiChoiceTextFont: "Times New Roman",
+							multiChoiceTextSize: 100
                         }
                     },
                     objectWidths: [{
@@ -60462,6 +62068,12 @@
 						addonBgColorIsOn: !1,
 						addonBgColor: "#FFFFFFFF",
 						addonTitlePaddingIsOn: !1
+					},
+					multiChoiceStyling: {
+						multiChoiceCounterPosition: 0,
+						multiChoiceCounterSize: 170,
+						multiChoiceTextFont: "Times New Roman",
+						multiChoiceTextSize: 100
 					},
 					globalVariables: {
 						text: "",
@@ -60887,8 +62499,17 @@
 									}
 								}
 								if (t.setBgmIsOn){
-									if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
-										 bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+									if ("undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
+										bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+										clearInterval(e.app.bgmFadeInterval);
+										e.app.bgmFadeInterval = 0;
+										e.app.lastFadeTime = 0;
+										e.app.isFadingOut = !1;
+										clearInterval(e.app.bgmPlayInterval);
+										e.app.bgmPlayInterval = 0;
+										e.app.bgmTitle = "No Audio Title";
+										e.app.curBgmTime = 0;
+										e.app.curBgmLength = 0;
 									}
 								}
 								if (t.isContentHidden) {

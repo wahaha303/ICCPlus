@@ -17676,6 +17676,7 @@
                 URL: Ot
             })
         },
+		"2bfd": function(t, e, i) {},
         "2c64": function(t, e, n) {},
         "2ca0": function(t, e, n) {
             "use strict";
@@ -34649,7 +34650,7 @@
                     },
                     render: function() {
 						var t = [];
-						if (this.enableSelectAll) t.push(this.genSelectAll()), t.push(this.$createElement(Di["a"], {
+						if (this.enableSelectAll && !this.searchInput && this.items.length > 1) t.push(this.genSelectAll()), t.push(this.$createElement(Di["a"], {
 							staticClass: "mt-1 mb-0"
 						}));
                         for (e = this.items.length, n = 0; n < e; n++) {
@@ -35208,6 +35209,429 @@
                     isAppendInner: function(t) {
                         var e = this.$refs["append-inner"];
                         return e && (e === t || e.contains(t))
+                    }
+                }
+            })
+        },
+		ba0d: function(t, e, i) {
+            "use strict";
+            i("9e29");
+            var s = i("c37a"),
+                r = i("0789"),
+                o = i("58df"),
+                a = i("297c"),
+                l = i("a293"),
+                c = i("80d2"),
+                p = i("d9bd");
+            e.a = Object(o.a)(s.a, a.a).extend({
+                name: "v-slider",
+                directives: {
+                    ClickOutside: l.a
+                },
+                mixins: [a.a],
+                props: {
+                    disabled: Boolean,
+                    inverseLabel: Boolean,
+                    max: {
+                        type: [Number, String],
+                        default: 100
+                    },
+                    min: {
+                        type: [Number, String],
+                        default: 0
+                    },
+                    step: {
+                        type: [Number, String],
+                        default: 1
+                    },
+                    thumbColor: String,
+                    thumbLabel: {
+                        type: [Boolean, String],
+                        default: void 0,
+                        validator: t => "boolean" == typeof t || "always" === t
+                    },
+                    thumbSize: {
+                        type: [Number, String],
+                        default: 32
+                    },
+                    tickLabels: {
+                        type: Array,
+                        default: () => []
+                    },
+                    ticks: {
+                        type: [Boolean, String],
+                        default: !1,
+                        validator: t => "boolean" == typeof t || "always" === t
+                    },
+                    tickSize: {
+                        type: [Number, String],
+                        default: 2
+                    },
+                    trackColor: String,
+                    trackFillColor: String,
+                    value: [Number, String],
+                    vertical: Boolean
+                },
+                data: () => ({
+                    app: null,
+                    oldValue: null,
+                    thumbPressed: !1,
+                    mouseTimeout: -1,
+                    isFocused: !1,
+                    isActive: !1,
+                    noClick: !1,
+                    startOffset: 0
+                }),
+                computed: {
+                    classes() {
+                        return {
+                            ...s.a.options.computed.classes.call(this),
+                            "v-input__slider": !0,
+                            "v-input__slider--vertical": this.vertical,
+                            "v-input__slider--inverse-label": this.inverseLabel
+                        }
+                    },
+                    internalValue: {
+                        get() {
+                            return this.lazyValue
+                        },
+                        set(t) {
+                            t = isNaN(t) ? this.minValue : t;
+                            const e = this.roundValue(Math.min(Math.max(t, this.minValue), this.maxValue));
+                            e !== this.lazyValue && (this.lazyValue = e, this.$emit("input", e))
+                        }
+                    },
+                    trackTransition() {
+                        return this.thumbPressed ? this.showTicks || this.stepNumeric ? "0.1s cubic-bezier(0.25, 0.8, 0.5, 1)" : "none" : ""
+                    },
+                    minValue() {
+                        return parseFloat(this.min)
+                    },
+                    maxValue() {
+                        return parseFloat(this.max)
+                    },
+                    stepNumeric() {
+                        return this.step > 0 ? parseFloat(this.step) : 0
+                    },
+                    inputWidth() {
+                        const t = (this.roundValue(this.internalValue) - this.minValue) / (this.maxValue - this.minValue) * 100;
+                        return isNaN(t) ? 0 : t
+                    },
+                    trackFillStyles() {
+                        const t = this.vertical ? "bottom" : "left",
+                            e = this.vertical ? "top" : "right",
+                            i = this.vertical ? "height" : "width",
+                            s = this.$vuetify.rtl ? "auto" : "0",
+                            r = this.$vuetify.rtl ? "0" : "auto",
+                            o = this.isDisabled ? `calc(${this.inputWidth}% - 10px)` : this.inputWidth + "%";
+                        return {
+                            transition: this.trackTransition,
+                            [t]: s,
+                            [e]: r,
+                            [i]: o
+                        }
+                    },
+                    trackStyles() {
+                        const t = this.vertical ? this.$vuetify.rtl ? "bottom" : "top" : this.$vuetify.rtl ? "left" : "right",
+                            e = this.vertical ? "height" : "width",
+                            i = this.isDisabled ? `calc(${100-this.inputWidth}% - 10px)` : `calc(${100-this.inputWidth}%)`;
+                        return {
+                            transition: this.trackTransition,
+                            [t]: "0px",
+                            [e]: i
+                        }
+                    },
+                    showTicks() {
+                        return this.tickLabels.length > 0 || !(this.isDisabled || !this.stepNumeric || !this.ticks)
+                    },
+                    numTicks() {
+                        return Math.ceil((this.maxValue - this.minValue) / this.stepNumeric)
+                    },
+                    showThumbLabel() {
+                        return !(this.isDisabled || !this.thumbLabel && !this.$scopedSlots["thumb-label"])
+                    },
+                    computedTrackColor() {
+                        if (!this.isDisabled) return this.trackColor ? this.trackColor : this.isDark ? this.validationState : this.validationState || "primary lighten-3"
+                    },
+                    computedTrackFillColor() {
+                        if (!this.isDisabled) return this.trackFillColor ? this.trackFillColor : this.validationState || this.computedColor
+                    },
+                    computedThumbColor() {
+                        return this.thumbColor ? this.thumbColor : this.validationState || this.computedColor
+                    }
+                },
+                watch: {
+                    min(t) {
+                        const e = parseFloat(t);
+                        e > this.internalValue && this.$emit("input", e)
+                    },
+                    max(t) {
+                        const e = parseFloat(t);
+                        e < this.internalValue && this.$emit("input", e)
+                    },
+                    value: {
+                        handler(t) {
+                            this.internalValue = t
+                        }
+                    }
+                },
+                beforeMount() {
+                    this.internalValue = this.value
+                },
+                mounted() {
+                    this.app = document.querySelector("[data-app]") || Object(p.c)("Missing v-app or a non-body wrapping element with the [data-app] attribute", this)
+                },
+                methods: {
+                    genDefaultSlot() {
+                        const t = [this.genLabel()],
+                            e = this.genSlider();
+                        return this.inverseLabel ? t.unshift(e) : t.push(e), t.push(this.genProgress()), t
+                    },
+                    genSlider() {
+                        return this.$createElement("div", {
+                            class: {
+                                "v-slider": !0,
+                                "v-slider--horizontal": !this.vertical,
+                                "v-slider--vertical": this.vertical,
+                                "v-slider--focused": this.isFocused,
+                                "v-slider--active": this.isActive,
+                                "v-slider--disabled": this.isDisabled,
+                                "v-slider--readonly": this.isReadonly,
+                                ...this.themeClasses
+                            },
+                            directives: [{
+                                name: "click-outside",
+                                value: this.onBlur
+                            }],
+                            on: {
+                                click: this.onSliderClick,
+                                mousedown: this.onSliderMouseDown,
+                                touchstart: this.onSliderMouseDown
+                            }
+                        }, this.genChildren())
+                    },
+                    genChildren() {
+                        return [this.genInput(), this.genTrackContainer(), this.genSteps(), this.genThumbContainer(this.internalValue, this.inputWidth, this.isActive, this.isFocused, this.onFocus, this.onBlur)]
+                    },
+                    genInput() {
+                        return this.$createElement("input", {
+                            attrs: {
+                                value: this.internalValue,
+                                id: this.computedId,
+                                disabled: !0,
+                                readonly: !0,
+                                tabindex: -1,
+                                ...this.$attrs
+                            }
+                        })
+                    },
+                    genTrackContainer() {
+                        const t = [this.$createElement("div", this.setBackgroundColor(this.computedTrackColor, {
+                            staticClass: "v-slider__track-background",
+                            style: this.trackStyles
+                        })), this.$createElement("div", this.setBackgroundColor(this.computedTrackFillColor, {
+                            staticClass: "v-slider__track-fill",
+                            style: this.trackFillStyles
+                        }))];
+                        return this.$createElement("div", {
+                            staticClass: "v-slider__track-container",
+                            ref: "track"
+                        }, t)
+                    },
+                    genSteps() {
+                        if (!this.step || !this.showTicks) return null;
+                        const t = parseFloat(this.tickSize),
+                            e = Object(c.f)(this.numTicks + 1),
+                            i = this.vertical ? "bottom" : this.$vuetify.rtl ? "right" : "left",
+                            s = this.vertical ? this.$vuetify.rtl ? "left" : "right" : "top";
+                        this.vertical && e.reverse();
+                        const r = e.map(e => {
+                            const r = [];
+                            this.tickLabels[e] && r.push(this.$createElement("div", {
+                                staticClass: "v-slider__tick-label"
+                            }, this.tickLabels[e]));
+                            const o = e * (100 / this.numTicks),
+                                a = this.$vuetify.rtl ? 100 - this.inputWidth < o : o < this.inputWidth;
+                            return this.$createElement("span", {
+                                key: e,
+                                staticClass: "v-slider__tick",
+                                class: {
+                                    "v-slider__tick--filled": a
+                                },
+                                style: {
+                                    width: t + "px",
+                                    height: t + "px",
+                                    [i]: `calc(${o}% - ${t/2}px)`,
+                                    [s]: `calc(50% - ${t/2}px)`
+                                }
+                            }, r)
+                        });
+                        return this.$createElement("div", {
+                            staticClass: "v-slider__ticks-container",
+                            class: {
+                                "v-slider__ticks-container--always-show": "always" === this.ticks || this.tickLabels.length > 0
+                            }
+                        }, r)
+                    },
+                    genThumbContainer(t, e, i, s, r, o, a = "thumb") {
+                        const l = [this.genThumb()],
+                            c = this.genThumbLabelContent(t);
+                        return this.showThumbLabel && l.push(this.genThumbLabel(c)), this.$createElement("div", this.setTextColor(this.computedThumbColor, {
+                            ref: a,
+                            key: a,
+                            staticClass: "v-slider__thumb-container",
+                            class: {
+                                "v-slider__thumb-container--active": i,
+                                "v-slider__thumb-container--focused": s,
+                                "v-slider__thumb-container--show-label": this.showThumbLabel
+                            },
+                            style: this.getThumbContainerStyles(e),
+                            attrs: {
+                                role: "slider",
+                                tabindex: this.isDisabled ? -1 : this.$attrs.tabindex ? this.$attrs.tabindex : 0,
+                                "aria-label": this.$attrs["aria-label"] || this.label,
+                                "aria-valuemin": this.min,
+                                "aria-valuemax": this.max,
+                                "aria-valuenow": this.internalValue,
+                                "aria-readonly": String(this.isReadonly),
+                                "aria-orientation": this.vertical ? "vertical" : "horizontal"
+                            },
+                            on: {
+                                focus: r,
+                                blur: o,
+                                keydown: this.onKeyDown
+                            }
+                        }), l)
+                    },
+                    genThumbLabelContent(t) {
+                        return this.$scopedSlots["thumb-label"] ? this.$scopedSlots["thumb-label"]({
+                            value: t
+                        }) : [this.$createElement("span", [String(t)])]
+                    },
+                    genThumbLabel(t) {
+                        const e = Object(c.f)(this.thumbSize),
+                            i = this.vertical ? `translateY(20%) translateY(${Number(this.thumbSize)/3-1}px) translateX(55%) rotate(135deg)` : "translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg)";
+                        return this.$createElement(r.d, {
+                            props: {
+                                origin: "bottom center"
+                            }
+                        }, [this.$createElement("div", {
+                            staticClass: "v-slider__thumb-label-container",
+                            directives: [{
+                                name: "show",
+                                value: this.isFocused || this.isActive || "always" === this.thumbLabel
+                            }]
+                        }, [this.$createElement("div", this.setBackgroundColor(this.computedThumbColor, {
+                            staticClass: "v-slider__thumb-label",
+                            style: {
+                                height: e,
+                                width: e,
+                                transform: i
+                            }
+                        }), [this.$createElement("div", t)])])])
+                    },
+                    genThumb() {
+                        return this.$createElement("div", this.setBackgroundColor(this.computedThumbColor, {
+                            staticClass: "v-slider__thumb"
+                        }))
+                    },
+                    getThumbContainerStyles(t) {
+                        const e = this.vertical ? "top" : "left";
+                        let i = this.$vuetify.rtl ? 100 - t : t;
+                        return i = this.vertical ? 100 - i : i, {
+                            transition: this.trackTransition,
+                            [e]: i + "%"
+                        }
+                    },
+                    onSliderMouseDown(t) {
+                        var e;
+                        if (t.preventDefault(), this.oldValue = this.internalValue, this.isActive = !0, null != (e = t.target) && e.matches(".v-slider__thumb-container, .v-slider__thumb-container *")) {
+                            this.thumbPressed = !0;
+                            const e = t.target.getBoundingClientRect(),
+                                i = "touches" in t ? t.touches[0] : t;
+                            this.startOffset = this.vertical ? i.clientY - (e.top + e.height / 2) : i.clientX - (e.left + e.width / 2)
+                        } else this.startOffset = 0, window.clearTimeout(this.mouseTimeout), this.mouseTimeout = window.setTimeout(() => {
+                            this.thumbPressed = !0
+                        }, 300);
+                        const i = !c.x || {
+                                passive: !0,
+                                capture: !0
+                            },
+                            s = !!c.x && {
+                                passive: !0
+                            },
+                            r = "touches" in t;
+                        this.onMouseMove(t), this.app.addEventListener(r ? "touchmove" : "mousemove", this.onMouseMove, s), Object(c.a)(this.app, r ? "touchend" : "mouseup", this.onSliderMouseUp, i), this.$emit("start", this.internalValue)
+                    },
+                    onSliderMouseUp(t) {
+                        t.stopPropagation(), window.clearTimeout(this.mouseTimeout), this.thumbPressed = !1;
+                        const e = !!c.x && {
+                            passive: !0
+                        };
+                        this.app.removeEventListener("touchmove", this.onMouseMove, e), this.app.removeEventListener("mousemove", this.onMouseMove, e), this.$emit("mouseup", t), this.$emit("end", this.internalValue), Object(c.i)(this.oldValue, this.internalValue) || (this.$emit("change", this.internalValue), this.noClick = !0), this.isActive = !1
+                    },
+                    onMouseMove(t) {
+                        "mousemove" === t.type && (this.thumbPressed = !0), this.internalValue = this.parseMouseMove(t)
+                    },
+                    onKeyDown(t) {
+                        if (!this.isInteractive) return;
+                        const e = this.parseKeyDown(t, this.internalValue);
+                        null == e || e < this.minValue || e > this.maxValue || (this.internalValue = e, this.$emit("change", e))
+                    },
+                    onSliderClick(t) {
+                        if (this.noClick) return void(this.noClick = !1);
+                        this.$refs.thumb.focus(), this.onMouseMove(t), this.$emit("change", this.internalValue)
+                    },
+                    onBlur(t) {
+                        this.isFocused = !1, this.$emit("blur", t)
+                    },
+                    onFocus(t) {
+                        this.isFocused = !0, this.$emit("focus", t)
+                    },
+                    parseMouseMove(t) {
+                        const e = this.vertical ? "top" : "left",
+                            i = this.vertical ? "height" : "width",
+                            s = this.vertical ? "clientY" : "clientX",
+                            {
+                                [e]: r,
+                                [i]: o
+                            } = this.$refs.track.getBoundingClientRect(),
+                            a = "touches" in t ? t.touches[0][s] : t[s];
+                        let l = Math.min(Math.max((a - r - this.startOffset) / o, 0), 1) || 0;
+                        return this.vertical && (l = 1 - l), this.$vuetify.rtl && (l = 1 - l), parseFloat(this.min) + l * (this.maxValue - this.minValue)
+                    },
+                    parseKeyDown(t, e) {
+                        if (!this.isInteractive) return;
+                        const {
+                            pageup: i,
+                            pagedown: s,
+                            end: r,
+                            home: o,
+                            left: a,
+                            right: l,
+                            down: p,
+                            up: f
+                        } = c.t;
+                        if (![i, s, r, o, a, l, p, f].includes(t.keyCode)) return;
+                        t.preventDefault();
+                        const v = this.stepNumeric || 1,
+                            m = (this.maxValue - this.minValue) / v;
+                        if ([a, l, p, f].includes(t.keyCode)) {
+                            e += ((this.$vuetify.rtl ? [a, f] : [l, f]).includes(t.keyCode) ? 1 : -1) * v * (t.shiftKey ? 3 : t.ctrlKey ? 2 : 1)
+                        } else if (t.keyCode === o) e = this.minValue;
+                        else if (t.keyCode === r) e = this.maxValue;
+                        else {
+                            e -= (t.keyCode === s ? 1 : -1) * v * (m > 100 ? m / 10 : 10)
+                        }
+                        return e
+                    },
+                    roundValue(t) {
+                        if (!this.stepNumeric) return t;
+                        const e = this.step.toString().trim(),
+                            i = e.indexOf(".") > -1 ? e.length - e.indexOf(".") - 1 : 0,
+                            s = this.minValue % this.stepNumeric,
+                            r = Math.round((t - s) / this.stepNumeric) * this.stepNumeric + s;
+                        return parseFloat(Math.min(r, this.maxValue).toFixed(i))
                     }
                 }
             })
@@ -43512,6 +43936,234 @@
                     genWindowItem: function() {
                         var t = u.options.methods.genWindowItem.call(this);
                         return t.data.domProps = t.data.domProps || {}, t.data.domProps.id = this.id || this.value, t
+                    }
+                }
+            })
+        },
+		c6a6: function(t, e, i) {
+            "use strict";
+            i("2bfd");
+            var s = i("b974"),
+                r = i("8654"),
+                o = i("d9f7"),
+                a = i("80d2");
+            const l = {
+                ...s["c"],
+                offsetY: !0,
+                offsetOverflow: !0,
+                transition: !1
+            };
+            e["a"] = s["a"].extend({
+                name: "v-autocomplete",
+                props: {
+                    allowOverflow: {
+                        type: Boolean,
+                        default: !0
+                    },
+                    autoSelectFirst: {
+                        type: Boolean,
+                        default: !1
+                    },
+                    filter: {
+                        type: Function,
+                        default: (t, e, i) => i.toLocaleLowerCase().indexOf(e.toLocaleLowerCase()) > -1
+                    },
+                    hideNoData: Boolean,
+                    menuProps: {
+                        type: s["a"].options.props.menuProps.type,
+                        default: () => l
+                    },
+                    noFilter: Boolean,
+                    searchInput: {
+                        type: String
+                    }
+                },
+                data() {
+                    return {
+                        lazySearch: this.searchInput
+                    }
+                },
+                computed: {
+                    classes() {
+                        return {
+                            ...s["a"].options.computed.classes.call(this),
+                            "v-autocomplete": !0,
+                            "v-autocomplete--is-selecting-index": this.selectedIndex > -1
+                        }
+                    },
+                    computedItems() {
+                        return this.filteredItems
+                    },
+                    selectedValues() {
+                        return this.selectedItems.map(t => this.getValue(t))
+                    },
+                    hasDisplayedItems() {
+                        return this.hideSelected ? this.filteredItems.some(t => !this.hasItem(t)) : this.filteredItems.length > 0
+                    },
+                    currentRange() {
+                        return null == this.selectedItem ? 0 : String(this.getText(this.selectedItem)).length
+                    },
+                    filteredItems() {
+                        return !this.isSearching || this.noFilter || null == this.internalSearch ? this.allItems : this.allItems.filter(t => {
+                            const e = Object(a.m)(t, this.itemText),
+                                i = null != e ? String(e) : "";
+                            return this.filter(t, String(this.internalSearch), i)
+                        })
+                    },
+                    internalSearch: {
+                        get() {
+                            return this.lazySearch
+                        },
+                        set(t) {
+                            this.lazySearch !== t && (this.lazySearch = t, this.$emit("update:search-input", t))
+                        }
+                    },
+                    isAnyValueAllowed: () => !1,
+                    isDirty() {
+                        return this.searchIsDirty || this.selectedItems.length > 0
+                    },
+                    isSearching() {
+                        return this.multiple && this.searchIsDirty || this.searchIsDirty && this.internalSearch !== this.getText(this.selectedItem)
+                    },
+                    menuCanShow() {
+                        return !!this.isFocused && (this.hasDisplayedItems || !this.hideNoData)
+                    },
+                    $_menuProps() {
+                        const t = s["a"].options.computed.$_menuProps.call(this);
+                        return t.contentClass = ("v-autocomplete__content " + (t.contentClass || "")).trim(), {
+                            ...l,
+                            ...t
+                        }
+                    },
+                    searchIsDirty() {
+                        return null != this.internalSearch && "" !== this.internalSearch
+                    },
+                    selectedItem() {
+                        return this.multiple ? null : this.selectedItems.find(t => this.valueComparator(this.getValue(t), this.getValue(this.internalValue)))
+                    },
+                    listData() {
+                        const t = s["a"].options.computed.listData.call(this);
+                        return t.props = {
+                            ...t.props,
+                            items: this.virtualizedItems,
+                            noFilter: this.noFilter || !this.isSearching || !this.filteredItems.length,
+                            searchInput: this.internalSearch
+                        }, t
+                    }
+                },
+                watch: {
+                    filteredItems: "onFilteredItemsChanged",
+                    internalValue: "setSearch",
+                    isFocused(t) {
+                        t ? (document.addEventListener("copy", this.onCopy), this.$refs.input && this.$refs.input.select()) : (document.removeEventListener("copy", this.onCopy), this.blur(), this.updateSelf())
+                    },
+                    isMenuActive(t) {
+                        !t && this.hasSlot && (this.lazySearch = null)
+                    },
+                    items(t, e) {
+                        e && e.length || !this.hideNoData || !this.isFocused || this.isMenuActive || !t.length || this.activateMenu()
+                    },
+                    searchInput(t) {
+                        this.lazySearch = t
+                    },
+                    internalSearch: "onInternalSearchChanged",
+                    itemText: "updateSelf"
+                },
+                created() {
+                    this.setSearch()
+                },
+                destroyed() {
+                    document.removeEventListener("copy", this.onCopy)
+                },
+                methods: {
+                    onFilteredItemsChanged(t, e) {
+                        t !== e && (this.setMenuIndex(-1), this.$nextTick(() => {
+                            this.internalSearch && (1 === t.length || this.autoSelectFirst) && (this.$refs.menu.getTiles(), this.setMenuIndex(0))
+                        }))
+                    },
+                    onInternalSearchChanged() {
+                        this.updateMenuDimensions()
+                    },
+                    updateMenuDimensions() {
+                        this.isMenuActive && this.$refs.menu && this.$refs.menu.updateDimensions()
+                    },
+                    changeSelectedIndex(t) {
+                        this.searchIsDirty || (this.multiple && t === a["t"].left ? -1 === this.selectedIndex ? this.selectedIndex = this.selectedItems.length - 1 : this.selectedIndex-- : this.multiple && t === a["t"].right ? this.selectedIndex >= this.selectedItems.length - 1 ? this.selectedIndex = -1 : this.selectedIndex++ : t !== a["t"].backspace && t !== a["t"].delete || this.deleteCurrentItem())
+                    },
+                    deleteCurrentItem() {
+                        const t = this.selectedIndex,
+                            e = this.selectedItems[t];
+                        if (!this.isInteractive || this.getDisabled(e)) return;
+                        const i = this.selectedItems.length - 1;
+                        if (-1 === this.selectedIndex && 0 !== i) return void(this.selectedIndex = i);
+                        const s = t !== this.selectedItems.length - 1 ? t : t - 1;
+                        this.selectedItems[s] ? this.selectItem(e) : this.setValue(this.multiple ? [] : null), this.selectedIndex = s
+                    },
+                    clearableCallback() {
+                        this.internalSearch = null, s["a"].options.methods.clearableCallback.call(this)
+                    },
+                    genInput() {
+                        const t = r["a"].options.methods.genInput.call(this);
+                        return t.data = Object(o["a"])(t.data, {
+                            attrs: {
+                                "aria-activedescendant": Object(a["m"])(this.$refs.menu, "activeTile.id"),
+                                autocomplete: Object(a["m"])(t.data, "attrs.autocomplete", "off")
+                            },
+                            domProps: {
+                                value: this.internalSearch
+                            }
+                        }), t
+                    },
+                    genInputSlot() {
+                        const t = s["a"].options.methods.genInputSlot.call(this);
+                        return t.data.attrs.role = "combobox", t
+                    },
+                    genSelections() {
+                        return this.hasSlot || this.multiple ? s["a"].options.methods.genSelections.call(this) : []
+                    },
+                    onClick(t) {
+                        this.isInteractive && (this.selectedIndex > -1 ? this.selectedIndex = -1 : this.onFocus(), this.isAppendInner(t.target) || this.activateMenu())
+                    },
+                    onInput(t) {
+                        if (this.selectedIndex > -1 || !t.target) return;
+                        const e = t.target,
+                            i = e.value;
+                        e.value && this.activateMenu(), this.internalSearch = i, this.badInput = e.validity && e.validity.badInput
+                    },
+                    onKeyDown(t) {
+                        const e = t.keyCode;
+                        !t.ctrlKey && [a.r.home, a.r.end].includes(e) || s["a"].options.methods.onKeyDown.call(this, t), this.changeSelectedIndex(e)
+                    },
+                    onSpaceDown(t) {},
+                    onTabDown(t) {
+                        s["a"].options.methods.onTabDown.call(this, t), this.updateSelf()
+                    },
+                    onUpDown(t) {
+                        t.preventDefault(), this.activateMenu()
+                    },
+                    selectItem(t) {
+                        s["a"].options.methods.selectItem.call(this, t), this.setSearch()
+                    },
+                    setSelectedItems() {
+                        s["a"].options.methods.setSelectedItems.call(this), this.isFocused || this.setSearch()
+                    },
+                    setSearch() {
+                        this.$nextTick(() => {
+                            this.multiple && this.internalSearch && this.isMenuActive || (this.internalSearch = !this.selectedItems.length || this.multiple || this.hasSlot ? null : this.getText(this.selectedItem))
+                        })
+                    },
+                    updateSelf() {
+                        (this.searchIsDirty || this.internalValue) && (this.multiple || this.valueComparator(this.internalSearch, this.getValue(this.internalValue)) || this.setSearch())
+                    },
+                    hasItem(t) {
+                        return this.selectedValues.indexOf(this.getValue(t)) > -1
+                    },
+                    onCopy(t) {
+                        var e, i;
+                        if (-1 === this.selectedIndex) return;
+                        const s = this.selectedItems[this.selectedIndex],
+                            r = this.getText(s);
+                        null == (e = t.clipboardData) || e.setData("text/plain", r), null == (i = t.clipboardData) || i.setData("text/vnd.vuetify.autocomplete.item+plain", r), t.preventDefault()
                     }
                 }
             })

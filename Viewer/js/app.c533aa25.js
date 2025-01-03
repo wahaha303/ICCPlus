@@ -166,10 +166,12 @@
                     e = t.$createElement,
                     i = t._self._c || e;
                 return i("div", {
-                    staticClass: "pb-12",
+                    staticClass: "ab-0",
                     staticStyle: {
                         "text-align": "center",
-						"font-size": t.app.useVW ? "0.835vw" : "16px"
+						"font-size": t.app.useVW ? "0.835vw" : "16px",
+						"padding-top": t.paddingNavigation && t.isTop ? (t.app.showMusicPlayer ? "88px" : "56px") : (t.app.showMusicPlayer ? "32px" : ""),
+						"padding-bottom": t.paddingNavigation && !t.isTop ? "56px" : ""
                     },
                     style: t.background
                 }, [i("v-navigation-drawer", {
@@ -212,7 +214,55 @@
                     on: {
                         click: t.cleanActivated
                     }
-                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-select-off")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Clean Selected Choices ")])], 1)], 1), t.app.importedChoicesIsOpen ? i("v-list-item", t._g({
+                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-select-off")])], 1), i("v-list-item-content", [i("v-list-item-title", [t._v("Clean Selected Choices ")])], 1)], 1), i("v-list-item", t._g({
+                    on: {
+                        click: function(o) {
+							t.$set(t.app, "showMusicPlayer", !t.app.showMusicPlayer)
+							if (t.app.showMusicPlayer) {
+								if (t.app.bgmIsPlaying) {
+									if (t.app.bgmTitleInterval !== 0) clearInterval(t.app.bgmTitleInterval), t.app.bgmTitleInterval = 0;
+									t.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && "undefined" !== typeof t.app.bgmObjectId) {
+											var co = t.app.comp[t.app.bgmObjectId],
+												coR = co.type == "app" ? t.app.rows[co.rows] : t.app.backpack[co.rows],
+												coO = coR.objects[co.objects];
+											if (bgmPlayer.playerInfo.videoData.video_id == coO.bgmId && bgmPlayer.playerInfo.videoData.title !== "") {
+												t.$set(t.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												t.$set(t.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(t.app.bgmTitleInterval);
+												t.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (t.app.bgmPlayInterval !== 0) clearInterval(t.app.bgmPlayInterval), t.app.bgmPlayInterval = 0;
+									t.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !t.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== t.app.curBgmTime) {
+												if (k !== curTime) {
+													t.$set(t.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > t.app.curBgmLength) o = 1;
+													t.$set(t.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												t.$set(t.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
+							} else {
+								if (t.app.bgmIsPlaying) {
+									if (t.app.bgmTitleInterval !== 0) clearInterval(t.app.bgmTitleInterval), t.app.bgmTitleInterval = 0;
+									if (t.app.bgmPlayInterval !== 0) clearInterval(t.app.bgmPlayInterval), t.app.bgmPlayInterval = 0;
+								}
+							}
+						}
+                    }
+                }, t.on), [i("v-list-item-icon", [i("v-icon", [t._v("mdi-music")])], 1), i("v-list-item-content", [i("v-list-item-title", [t.app.showMusicPlayer ? t._v("Hide Music Player ") : t._v("Show Music Player ")])], 1)], 1), t.app.importedChoicesIsOpen ? i("v-list-item", t._g({
                     on: {
                         click: t.openBuildForm
                     }
@@ -281,7 +331,6 @@
                     }
                 }, [i("v-icon", [t._v("mdi-minus-circle-outline")])], 1)], 1)
                 })) : t._e()], 2)], 1)], 1), t.app.pointTypes.length > 0 || t.app.backpack.length > 0 || t.app.importedChoicesIsOpen ? i("v-bottom-navigation", {
-					staticClass: t.isTop ? "v-bottom-navigation--top" : "",
                     style: t.pointBar,
                     attrs: {
                         "data-html2canvas-ignore": "",
@@ -358,7 +407,173 @@
                             t.currentComponent = "appBackpackPreview"
                         }
                     }
-                }, [i("v-icon", [t._v("mdi-checkbox-marked-circle-outline")])], 1)], 1)], 2) : t._e(), i(t.currentComponent, {
+                }, [i("v-icon", [t._v("mdi-checkbox-marked-circle-outline")])], 1)], 1)], 2) : t._e(), t.app.showMusicPlayer ? i("v-bottom-navigation", {
+					staticClass: "v-bottom-navigation--top",
+					staticStyle: {
+						overflow: "hidden",
+						height: "32px"
+					},
+					attrs: {
+                        "data-html2canvas-ignore": "",
+                        fixed: ""
+                    }
+				}, [i("v-row", [i("v-toolbar", {
+					staticClass: "px-4 " + (t.$vuetify.theme.isDark ? "grey darken-2" : "grey lighten-5"),
+					attrs: {
+						height: "32"
+					}
+				}, [i("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: t.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(e) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && t.app.curBgmLength !== 0) {
+								t.app.bgmIsPlaying ? bgmPlayer.pauseVideo() : bgmPlayer.playVideo();
+								t.$set(t.app, "bgmIsPlaying", !t.app.bgmIsPlaying);
+								if (t.app.bgmIsPlaying) {
+									if (t.app.bgmPlayInterval !== 0) clearInterval(t.app.bgmPlayInterval), t.app.bgmPlayInterval = 0;
+									let k = 0,
+										o = 0;
+									t.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !t.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== t.app.curBgmTime) {
+												if (k !== curTime) {
+													t.$set(t.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > t.app.curBgmLength) o = 1;
+													t.$set(t.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												t.$set(t.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								} else {
+									if (t.app.bgmPlayInterval !== 0) clearInterval(t.app.bgmPlayInterval), t.app.bgmPlayInterval = 0;
+								}
+							}
+                        }
+                    }
+                }, [i("v-icon", [t.app.bgmIsPlaying ? t._v("mdi-pause") : t._v("mdi-play")])], 1), i("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: t.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(e) {
+							if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && t.app.curBgmLength !== 0) {
+								bgmPlayer.stopVideo();
+								t.$set(t.app, "bgmIsPlaying", !1);
+								if (t.app.bgmPlayInterval !== 0) clearInterval(t.app.bgmPlayInterval), t.app.bgmPlayInterval = 0;
+								t.$set(t.app, "curBgmTime", 0);
+							}
+                        }
+                    }
+                }, [i("v-icon", [t._v("mdi-stop")])], 1), i("v-btn", {
+					staticStyle: {
+						"min-width": "32px",
+						"border-radius": "50%",
+						color: t.$vuetify.theme.isDark ? "white" : "black"
+					},
+                    attrs: {
+                        icon: "",
+						small: ""
+                    },
+                    on: {
+                        click: function(e) {
+							if ("undefined" !== typeof bgmPlayer) {
+								if (!t.app.isMute && "undefined" !== typeof bgmPlayer.mute) {
+									t.$set(t.app, "isMute", !0);
+									bgmPlayer.mute();
+								} else if (t.app.isMute && "undefined" !== typeof bgmPlayer.unMute) {
+									t.$set(t.app, "isMute", !1);
+									bgmPlayer.unMute();
+								}
+							}
+                        }
+                    }
+                }, [i("v-icon", [t.app.isMute ? t._v("mdi-volume-off") : t._v("mdi-volume-high")])], 1), i("v-slider", {
+					staticStyle: {
+						"max-width": "104px",
+						"padding-right": "4px"
+					},
+					attrs: {
+						"hide-details": "",
+						max: 100,
+						min: 0,
+						color: t.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: t.app.isMute || t.app.isFadingOut
+					},
+					model: {
+						value: t.app.curVolume,
+						expression: "app.curVolume"
+					},
+					on: {
+						change: function(e) {
+							t.$set(t.app, "curVolume", e);
+							if ("undefined" !== typeof bgmPlayer.setVolume) {
+								if (!t.app.isFadingOut) bgmPlayer.setVolume(e);
+							}
+						}
+					}
+				}), t.window.width > 600 ? t._e() : i("v-spacer"), i("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px",
+						overflow: "hidden"
+					}
+				}, [i("span", {
+					staticClass: "scrolling-text"
+				}, [t._v(t._s(t.app.bgmTitle))])], 1), t.window.width > 600 ? [i("v-slider", {
+					attrs: {
+						"hide-details": "",
+						max: t.app.curBgmLength,
+						min: 0,
+						color: t.$vuetify.theme.isDark ? "white" : "black",
+						"track-color": "gray",
+						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || t.app.curBgmLength === 0 || !t.app.bgmIsPlaying
+					},
+					model: {
+						value: t.app.curBgmTime,
+						expression: "app.curBgmTime"
+					},
+					on: {
+						change: function(e) {
+							t.$set(t.app, "curBgmTime", e);
+							bgmPlayer.seekTo(e, true);
+						},
+						mousedown: function(e) {
+							t.$set(t.app, "isSeeking", !0);
+						},
+						mouseup: function(e) {
+							setTimeout(() => {
+								t.$set(t.app, "isSeeking", !1);
+							}, 100);
+						},
+					},
+				}), i("v-col", {
+					staticClass: "pa-0",
+					staticStyle: {
+						"max-width": "150px"
+					}
+				}, [i("span", [t._v(t._s(t.bgmTime))])], 1)] : t._e()], 1)], 1)], 1) : t._e(), i(t.currentComponent, {
                     tag: "component",
                     attrs: {
                         "data-html2canvas-ignore": ""
@@ -797,7 +1012,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -818,7 +1033,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -848,7 +1063,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -869,7 +1084,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -906,7 +1121,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -927,7 +1142,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticClass: "my-0",
@@ -951,7 +1166,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -972,7 +1187,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
                     attrs: {
@@ -1041,7 +1256,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1062,7 +1277,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 5 == t.object.template ? i("span", {
                     staticClass: "ma-0",
@@ -1096,7 +1311,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1117,7 +1332,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -1147,7 +1362,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1168,7 +1383,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1205,7 +1420,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1226,7 +1441,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.imageSourceTooltip && "undefined" !== typeof t.object.imageSourceTooltip ? i("v-tooltip", {
                     attrs: {
@@ -1288,7 +1503,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1309,7 +1524,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1340,7 +1555,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1361,7 +1576,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
                     staticClass: "ma-0",
@@ -1433,7 +1648,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1454,7 +1669,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("v-col", {
@@ -1484,7 +1699,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1505,7 +1720,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1542,7 +1757,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1563,7 +1778,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticClass: "my-0",
@@ -1587,7 +1802,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1608,7 +1823,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1639,7 +1854,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1660,7 +1875,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 2 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -1733,7 +1948,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1754,7 +1969,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("div", {
@@ -1783,7 +1998,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1804,7 +2019,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -1841,7 +2056,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1862,7 +2077,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticStyle: {
@@ -1885,7 +2100,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1906,7 +2121,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), t._l(t.object.addons, (function(e) {
                     return i("v-col", {
@@ -1940,7 +2155,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -1961,7 +2176,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : 3 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
@@ -1991,7 +2206,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2012,7 +2227,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
                     return i("div", {
@@ -2041,7 +2256,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2062,7 +2277,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
                     return i("v-col", {
@@ -2099,7 +2314,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2120,7 +2335,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), "" !== t.object.text && !t.row.objectTextRemoved ? i("p", {
                     staticStyle: {
@@ -2143,7 +2358,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2164,7 +2379,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
                     staticClass: "pa-0 mb-0",
@@ -2241,7 +2456,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
                     staticClass: "pa-0",
@@ -2262,7 +2477,7 @@
                 }, [i("v-icon", {
                     style: t.multiChoiceButton,
                     attrs: {
-                        size: t.app.styling.multiChoiceCounterSize + "%"
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : t._e()], 1) : t._e(), i(t.currentComponent, {
                     tag: "component",
@@ -3875,6 +4090,45 @@
 						}
 						return !1;
 					},
+					multiChoiceStyling: function() {
+						if (this.object.privateMultiChoiceIsOn) return this.object.styling;
+						if (this.row.privateMultiChoiceIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateMultiChoiceIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
                     objectWidths: function() {
                         return this.$store.state.objectWidths
                     },
@@ -3883,7 +4137,7 @@
                         return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.styling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.styling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;"
                     },
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
@@ -4127,9 +4381,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -4139,15 +4395,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -4156,10 +4413,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -4169,15 +4458,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -4185,38 +4475,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -4236,13 +4568,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -8010,9 +8342,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -8022,15 +8356,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -8039,10 +8374,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -8052,15 +8419,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -8068,38 +8436,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -8119,13 +8529,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -11933,9 +12343,11 @@
                 methods: {
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -11945,15 +12357,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -11962,10 +12375,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -11975,15 +12420,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -11991,38 +12437,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -12042,13 +12530,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -13955,7 +14443,7 @@
                         return this.app.styling.backgroundImage ? 'background-image: url("' + this.app.styling.backgroundImage + '");background-color: ' + this.app.styling.backgroundColor + (this.app.styling.isBackgroundRepeat ? ";background-repeat: repeat;" : (this.app.styling.isBackgroundFitIn ? ";background-size: 100% 100%;" : ";background-size: cover;")) : 'background-color: ' + this.app.styling.backgroundColor + ';'
                     },
                     pointBar: function() {
-                        return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;"
+                        return "background-color: " + this.app.styling.barBackgroundColor + "; margin: " + this.app.styling.barMargin + "px; padding: " + this.app.styling.barPadding + "px;" + (this.isTop ? (this.app.showMusicPlayer ? "top: 32px" : "top: 0px") : "")
                     },
                     pointBarText: function() {
                         return "color: " + this.app.styling.barTextColor + "; margin: " + this.app.styling.barTextMargin + "px; padding: " + this.app.styling.barTextPadding + 'px;font-family: "' + this.app.styling.barTextFont + '";font-size: ' + this.app.styling.barTextSize + "px;"
@@ -13969,6 +14457,18 @@
                     activated: function() {
                         return this.$store.state.app.activated
                     },
+					paddingNavigation: function() {
+						return (this.app.pointTypes.length > 0 || this.app.backpack.length > 0 || this.app.importedChoicesIsOpen)
+					},
+					bgmTitle: function() {
+						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+							return bgmPlayer.playerInfo.videoData.title != "" ? bgmPlayer.playerInfo.videoData.title : "No Audio Title"
+						}
+						return "No Audio Title"
+					},
+					bgmTime: function() {
+						return this.calTime(this.app.curBgmTime) + "|" + this.calTime(this.app.curBgmLength)
+					},
 					generateBuild: function() {
 						for (var e = [], t = 0; t < this.app.activated.length; t++) {
 							if ("undefined" !== typeof this.app.comp[this.app.activated[t].split("/ON#")[0]]) {
@@ -14124,6 +14624,13 @@
 						});
 						e.open("GET", "project.json", true), e.send();
 					}
+					window.addEventListener("unload", () => {
+						clearInterval(this.app.bgmPlayInterval);
+						clearInterval(this.app.bgmTitleInterval);
+						clearInterval(this.app.bgmFadeInterval);
+						clearInterval(this.app.bgmFadeTimer);
+						if (bgmPlayer) bgmPlayer.destroy();
+					});
 				},
                 created: function() {
                     window.addEventListener("resize", this.handleResize), this.handleResize(), this.initializeBuildDB()
@@ -14135,6 +14642,14 @@
                     handleResize: function() {
                         this.window.width = window.innerWidth, this.window.height = window.innerHeight
                     },
+					calTime: function(e) {
+						const h = parseInt(Math.floor(e / 3600));
+						const m = parseInt(Math.floor((e % 3600) / 60));
+						const s = parseInt(e % 60);
+						const rm = String(m).padStart(2, "0");
+						const rs = String(s).padStart(2, "0");
+						return h > 0 ? (h + ":") : (rm + ":" + rs)
+					},
                     checkRequireds: function(t) {
                         return this.$store.getters.checkRequireds(t)
                     },
@@ -14202,8 +14717,18 @@
 						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, "tmpRequired", []);
 						if ("undefined" === typeof e.app.isFadingOut) e.$set(e.app, "isFadingOut", !1);
 						if ("undefined" === typeof e.app.bgmFadeInterval) e.$set(e.app, "bgmFadeInterval", 0);
+						if ("undefined" === typeof e.app.bgmTitleInterval) e.$set(e.app, "bgmTitleInterval", 0);
+						if ("undefined" === typeof e.app.bgmPlayInterval) e.$set(e.app, "bgmPlayInterval", 0);
 						if ("undefined" === typeof e.app.bgmFadeTimer) e.$set(e.app, "bgmFadeTimer", 0);
 						if ("undefined" === typeof e.app.lastFadeTime) e.$set(e.app, "lastFadeTime", 0);
+						if ("undefined" === typeof e.app.showMusicPlayer) e.$set(e.app, "showMusicPlayer", !1);
+						if ("undefined" === typeof e.app.curVolume) e.$set(e.app, "curVolume", 100);
+						if ("undefined" === typeof e.app.isMute) e.$set(e.app, "isMute", !1);
+						e.$set(e.app, "bgmTitle", "No Audio Title");
+						e.$set(e.app, "bgmIsPlaying", !1);
+						e.$set(e.app, "curBgmTime", 0);
+						e.$set(e.app, "curBgmLength", 0);
+						e.$set(e.app, "isSeeking", !1);
 						e.$set(e.app, "comp", {});
 						e.$set(e.app, "compR", {});
 						e.$set(e.app, "compG", {});
@@ -14215,6 +14740,8 @@
 						if ("undefined" !== typeof e.app.rows) e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterPosition) e.$set(e.app.styling, "multiChoiceCounterPosition", 0);
 						if ("undefined" === typeof e.app.styling.multiChoiceCounterSize) e.$set(e.app.styling, "multiChoiceCounterSize", 170);
+						if ("undefined" === typeof e.app.styling.multiChoiceTextFont) e.$set(e.app.styling, "multiChoiceTextFont", "Times New Roman");
+						if ("undefined" === typeof e.app.styling.multiChoiceTextSize) e.$set(e.app.styling, "multiChoiceTextSize", 100);
 						if ("undefined" === typeof e.app.cancelForcedActivated) e.$set(e.app, "cancelForcedActivated", []);
 						if ("undefined" === typeof e.app.globalRequirements) e.$set(e.app, "globalRequirements", []);
 						if ("undefined" === typeof e.app.orderOrReqText) e.$set(e.app, "orderOrReqText", "0");
@@ -14400,9 +14927,11 @@
                     },
 					playBgm: function(e, t, i) {
 						function bgmFadeIn(th, f) {
+							let v = 0,
+								k = 0,
+								o = 0;
 							if (th.app.isFadingOut) {
 								const lastTime = parseInt(th.app.lastFadeTime);
-								let v = 0;
 								if (th.app.bgmFadeTimer !== 0) clearTimeout(th.app.bgmFadeTimer), th.app.bgmFadeTimer = 0;
 								th.app.bgmFadeTimer = setTimeout(() => {
 									if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -14412,15 +14941,16 @@
 										bgmPlayer.setVolume(0);
 										bgmPlayer.playVideo();
 										if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 										if (th.app.isFadingOut) th.app.isFadingOut = !1;
 										th.app.bgmFadeInterval = setInterval(() => {
 											if (bgmPlayer.playerInfo.playerState === 1) {
-												if (v < 100) {
+												if (v < th.app.curVolume) {
 													v += 5;
 													bgmPlayer.setVolume(v);
 													th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 												} else {
-													bgmPlayer.setVolume(100);
+													bgmPlayer.setVolume(th.app.curVolume);
 													clearInterval(th.app.bgmFadeInterval);
 													th.app.bgmFadeInterval = 0;
 													th.app.lastFadeTime = 0;
@@ -14429,10 +14959,42 @@
 										}, iTime);
 									} else {
 										if (th.app.isFadingOut) th.app.isFadingOut = !1, clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
-										bgmPlayer.setVolume(100);
 										bgmPlayer.playVideo();
+										bgmPlayer.setVolume(th.app.curVolume);
 									}
 									th.$set(th.app, "bgmObjectId", e.id);
+									if (th.app.showMusicPlayer) {
+										if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+										th.app.bgmTitleInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+												if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+													th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+													th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+													clearInterval(th.app.bgmTitleInterval);
+													th.app.bgmTitleInterval = 0;
+												}
+											}
+										}, 1000);
+										if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+										th.app.bgmPlayInterval = setInterval(() => {
+											if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+												const curTime = parseInt(bgmPlayer.getCurrentTime());
+												if (curTime !== th.app.curBgmTime) {
+													if (k !== curTime) {
+														th.$set(th.app, "curBgmTime", curTime);
+													} else {
+														o++;
+														if (o > th.app.curBgmLength) o = 1;
+														th.$set(th.app, "curBgmTime", o);
+													}
+												} else {
+													k = curTime;
+													o = curTime + 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											}
+										}, 1000);
+									}
 								}, lastTime);
 							} else {
 								if (f) e.bgmNoLoop ? (bgmPlayer.loadVideoById(t), bgmPlayer.setLoop(!1)) : (bgmPlayer.loadVideoById(t), bgmPlayer.loadPlaylist(t), bgmPlayer.setLoop(!0));
@@ -14442,15 +15004,16 @@
 									bgmPlayer.setVolume(0);
 									bgmPlayer.playVideo();
 									if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
 									if (th.app.isFadingOut) th.app.isFadingOut = !1;
 									th.app.bgmFadeInterval = setInterval(() => {
 										if (bgmPlayer.playerInfo.playerState === 1) {
-											if (v < 100) {
+											if (v < th.app.curVolume) {
 												v += 5;
 												bgmPlayer.setVolume(v);
 												th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 											} else {
-												bgmPlayer.setVolume(100);
+												bgmPlayer.setVolume(th.app.curVolume);
 												clearInterval(th.app.bgmFadeInterval);
 												th.app.bgmFadeInterval = 0;
 												th.app.lastFadeTime = 0;
@@ -14458,38 +15021,80 @@
 										}
 									}, iTime);
 								} else {
-									bgmPlayer.setVolume(100);
 									bgmPlayer.playVideo();
+									bgmPlayer.setVolume(th.app.curVolume);
 								}
 								th.$set(th.app, "bgmObjectId", e.id);
+								if (th.app.showMusicPlayer) {
+									if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+									th.app.bgmTitleInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
+											if (bgmPlayer.playerInfo.videoData.video_id == t && bgmPlayer.playerInfo.videoData.title !== "") {
+												th.$set(th.app, "bgmTitle", bgmPlayer.playerInfo.videoData.title);
+												th.$set(th.app, "curBgmLength", bgmPlayer.getDuration());
+												clearInterval(th.app.bgmTitleInterval);
+												th.app.bgmTitleInterval = 0;
+											}
+										}
+									}, 1000);
+									if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+									th.app.bgmPlayInterval = setInterval(() => {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && !th.app.isSeeking && bgmPlayer.getPlayerState() == 1) {
+											const curTime = parseInt(bgmPlayer.getCurrentTime());
+											if (curTime !== th.app.curBgmTime) {
+												if (k !== curTime) {
+													th.$set(th.app, "curBgmTime", curTime)
+												} else {
+													o++;
+													if (o > th.app.curBgmLength) o = 1;
+													th.$set(th.app, "curBgmTime", o);
+												}
+											} else {
+												k = curTime;
+												o = curTime + 1;
+												th.$set(th.app, "curBgmTime", o);
+											}
+										}
+									}, 1000);
+								}
 							}
 						}
 						function bgmFadeOut(th) {
-							if (e.bgmFadeOut && e.bgmFadeOutSec > 0) {
-								const steps = bgmPlayer.getVolume() / 5;
+							const steps = th.app.curVolume / 5;
+							if (e.bgmFadeOut && e.bgmFadeOutSec > 0 && steps > 0) {
 								const iTime = e.bgmFadeOutSec / steps;
-								let v = bgmPlayer.getVolume();
+								let v = th.app.curVolume;
 								th.app.lastFadeTime = e.bgmFadeOutSec;
 								th.app.isFadingOut = !0;
 								if (th.app.bgmFadeInterval !== 0) clearInterval(th.app.bgmFadeInterval), th.app.bgmFadeInterval = 0;
 								th.app.bgmFadeInterval = setInterval(() => {
-									if (v > 0) {
+									if (v > 0 && "undefined" !== typeof bgmPlayer.setVolume) {
 										v -= 5;
 										bgmPlayer.setVolume(v);
 										th.app.lastFadeTime = th.app.lastFadeTime - iTime;
 									} else {
 										if (th.app.isFadingOut) {
-											bgmPlayer.setVolume(0);
+											bgmPlayer.pauseVideo();
+											bgmPlayer.setVolume(th.app.curVolume);
 											clearInterval(th.app.bgmFadeInterval);
 											th.app.bgmFadeInterval = 0;
 											th.app.lastFadeTime = 0;
 											th.app.isFadingOut = !1;
-											bgmPlayer.pauseVideo();
+											if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+											if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+											th.$set(th.app, "bgmTitle", "No Audio Title");
+											th.$set(th.app, "curBgmTime", 0);
+											th.$set(th.app, "curBgmLength", 0);
 										}
 									}
 								}, iTime);
 							} else {
 								bgmPlayer.pauseVideo();
+								if (th.app.bgmTitleInterval !== 0) clearInterval(th.app.bgmTitleInterval), th.app.bgmTitleInterval = 0;
+								if (th.app.bgmPlayInterval !== 0) clearInterval(th.app.bgmPlayInterval), th.app.bgmPlayInterval = 0;
+								th.$set(th.app, "bgmTitle", "No Audio Title");
+								th.$set(th.app, "curBgmTime", 0);
+								th.$set(th.app, "curBgmLength", 0);
 							}
 						}
 						if ("undefined" !== typeof bgmPlayer.playerInfo.videoData) {
@@ -14509,13 +15114,13 @@
 											bgmFadeIn(this, f);
 										}
 									} else {
-										if (o !== 2) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								} else {
 									if (p) {
 										bgmPlayer.stopVideo(), bgmFadeIn(this, f);
 									} else {
-										if (o === 1) bgmFadeOut(this);
+										bgmFadeOut(this);
 									}
 								}
 							} else {
@@ -16299,6 +16904,7 @@
 			Ui = i("5d23"),
 			Xr = i("34c3"),
 			Zr = i("f774"),
+			Sd = i("ba0d"),
             Dt = Object(b["a"])(Ut, a, n, !1, null, null, null),
             Gt = Dt.exports;
         v()(Dt, {
@@ -16315,8 +16921,10 @@
             VListItemTitle: Ui["c"],
             VNavigationDrawer: Zr["a"],
             VRow: k["a"],
+			VSlider: Sd["a"],
 			VSnackbar: tt["a"],
-			VTextField: J["a"]
+			VTextField: J["a"],
+			VToolbar: Tb["a"]
         });
         var Jt = {
                 data: function() {
@@ -16354,9 +16962,18 @@
                         isViewerVersion: !1,
 						isFadingOut: !1,
                         backpack: [],
+						bgmPlayInterval: 0,
+						bgmTitleInterval: 0,
 						bgmFadeInterval: 0,
 						bgmFadeTimer: 0,
+						bgmTitle: "No Audio Title",
+						curBgmTime: 0,
+						curBgmLength: 0,
+						curVolume: 100,
+						isSeeking: !1,
+						isMute: !1,
 						lastFadeTime: 0,
+						showMusicPlayer: !1,
 						comp: {},
 						compR: {},
 						compG: {},
@@ -17065,8 +17682,17 @@
 									}
 								}
 								if (t.setBgmIsOn){
-									if (e.app.bgmIsPlaying && "undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
-										 bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+									if ("undefined" !== typeof bgmPlayer && e.app.bgmObjectId == t.id) {
+										bgmPlayer.stopVideo(), e.app.bgmObjectId = "", e.app.bgmIsPlaying = !1;
+										clearInterval(e.app.bgmFadeInterval);
+										e.app.bgmFadeInterval = 0;
+										e.app.lastFadeTime = 0;
+										e.app.isFadingOut = !1;
+										clearInterval(e.app.bgmPlayInterval);
+										e.app.bgmPlayInterval = 0;
+										e.app.bgmTitle = "No Audio Title";
+										e.app.curBgmTime = 0;
+										e.app.curBgmLength = 0;
 									}
 								}
 								if (t.isContentHidden) {

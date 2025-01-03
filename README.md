@@ -120,6 +120,9 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to allow uploading .avif format images.
  - Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Points.
  - Added a feature to allow setting the Global Requirement for the 'Id Needed To Show' of Design Groups.
+ - Added an option in Global Settings to enable Music Player.
+ - Added a feature to enable Music Player in Viewer.
+ - Added a feature to search items in the dropdown menu.
 
 ## Fixed
 
@@ -212,3 +215,6 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where the display of discounted scores was not refreshing.
  - Fixed an issue where the choice with the discount function could not be deselected.
  - Fixed an issue where the border-radius was not applied to the Addon Image.
+ - Fixed an issue where the default value of the Multi Choice Design was not being set automatically.
+ - Fixed an issue where Multi Choice Design could not be set in the Private Styling/Design Group.
+ - Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group.
