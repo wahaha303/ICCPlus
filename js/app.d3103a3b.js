@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.15.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.15.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -5963,18 +5963,24 @@
                         fn: function(t) {
                             var i = t.on;
                             return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
-                                style: e.objectImage,
-                                attrs: {
-                                    src: e.addon.image
-                                }
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"	
+                                }],
+                                style: e.objectImage
                             }, i)) : e._e()]
                         }
                     }], null, !1, 4164976176)
                 }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
-                    style: e.objectImage,
-                    attrs: {
-                        src: e.addon.image
-                    }
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
                 }) : e._e()], 1) : 5 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
                     staticStyle: {
@@ -5995,19 +6001,25 @@
                         fn: function(t) {
                             var i = t.on;
                             return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
-                                style: e.objectImage,
-                                attrs: {
-                                    src: e.addon.image
-                                }
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
                             }, i)) : e._e()]
                         }
                     }], null, !1, 4164976176)
                 }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
-                    style: e.objectImage,
-                    attrs: {
-                        src: e.addon.image
-                    }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+				}) : e._e(), !e.row.addonTextRemoved ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6030,18 +6042,24 @@
                         fn: function(t) {
                             var i = t.on;
                             return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
-                                style: e.objectImage,
-                                attrs: {
-                                    src: e.addon.image
-                                }
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
                             }, i)) : e._e()]
                         }
                     }], null, !1, 4164976176)
                 }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
-                    style: e.objectImage,
-                    attrs: {
-                        src: e.addon.image
-                    }
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
                 }) : e._e(), o("span", ["" !== e.addon.title && !e.row.addonTitleRemoved ? o("h4", {
                     style: e.addonTitle,
                     domProps: {
@@ -6075,18 +6093,24 @@
                         fn: function(t) {
                             var i = t.on;
                             return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
-                                style: e.objectImage,
-                                attrs: {
-                                    src: e.addon.image
-                                }
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
                             }, i)) : e._e()]
                         }
                     }], null, !1, 4164976176)
                 }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
-                    style: e.objectImage,
-                    attrs: {
-                        src: e.addon.image
-                    }
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
                 }) : e._e()], 1), o("v-col", {
 					staticClass: "pa-1",
 					staticStyle: {
@@ -6143,18 +6167,24 @@
                         fn: function(t) {
                             var i = t.on;
                             return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
-                                style: e.objectImage,
-                                attrs: {
-                                    src: e.addon.image
-                                }
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
                             }, i)) : e._e()]
                         }
                     }], null, !1, 4164976176)
                 }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
-                    style: e.objectImage,
-                    attrs: {
-                        src: e.addon.image
-                    }
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
                 }) : e._e()], 1)], 2) : e._e()]) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
@@ -25005,7 +25035,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -25026,7 +25056,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -29553,6 +29583,12 @@
 							if (ext == "json") {
 								const d = new TextDecoder('utf-8');
 								const txt = d.decode(t.result);
+								if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.bgmIsPlaying) bgmPlayer.stopVideo();
+								clearInterval(e.app.bgmPlayInterval);
+								clearInterval(e.app.bgmTitleInterval);
+								clearInterval(e.app.bgmFadeInterval);
+								clearInterval(e.app.bgmFadeTimer);
+								clearInterval(e.app.autoSaveInterval);
 								e.$store.commit("loadApp", JSON.parse(txt));
 								e.initializeApp(e);
 							} else if (ext == "zip" || ext == "rar" || ext == "7z") {
@@ -29581,6 +29617,12 @@
 									Promise.all(p).then(function() {
 										if (jFile) {
 											jFile.async("string").then(function(f) {
+												if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.bgmIsPlaying) bgmPlayer.stopVideo();
+												clearInterval(e.app.bgmPlayInterval);
+												clearInterval(e.app.bgmTitleInterval);
+												clearInterval(e.app.bgmFadeInterval);
+												clearInterval(e.app.bgmFadeTimer);
+												clearInterval(e.app.autoSaveInterval);
 												e.$store.commit("loadApp", JSON.parse(f));
 												e.initializeApp(e);
 												e.replaceImages(e);
@@ -29616,6 +29658,12 @@
 									const s = tr.objectStore('autoSave');
 									var sv = JSON.parse(o);
 									s.put(sv, '1');
+									if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.bgmIsPlaying) bgmPlayer.stopVideo();
+									clearInterval(e.app.bgmPlayInterval);
+									clearInterval(e.app.bgmTitleInterval);
+									clearInterval(e.app.bgmFadeInterval);
+									clearInterval(e.app.bgmFadeTimer);
+									clearInterval(e.app.autoSaveInterval);
 									e.$store.commit("loadApp", sv);
 									e.initializeApp(e);
 								} else {
@@ -29626,6 +29674,12 @@
 								getRequest.onsuccess = function(o) {
 									const i = o.target.result;
 									if (i) {
+										if ("undefined" !== typeof bgmPlayer.playerInfo.videoData && e.app.bgmIsPlaying) bgmPlayer.stopVideo(); 
+										clearInterval(e.app.bgmPlayInterval);
+										clearInterval(e.app.bgmTitleInterval);
+										clearInterval(e.app.bgmFadeInterval);
+										clearInterval(e.app.bgmFadeTimer);
+										clearInterval(e.app.autoSaveInterval);
 										e.$store.commit("loadApp", i);
 										e.initializeApp(e);
 									} else {
@@ -30045,6 +30099,10 @@
 						}
 						this.$delete(this.app.compG, this.groups[e].id);
                         this.groups.splice(e, 1);
+						for (var a = e; a < this.groups.length; a++) {
+							var t = this.groups[a].id;
+							this.app.compG[t].groups = a;
+						}
                     }
                 }
             },
@@ -31923,6 +31981,10 @@
 						}
 						this.$delete(this.app.compG, this.groups[e].id);
                         this.groups.splice(e, 1);
+						for (var a = e; a < this.groups.length; a++) {
+							var t = this.groups[a].id;
+							this.app.compG[t].groups = a;
+						}
                     }
                 }
             },
@@ -35761,6 +35823,10 @@
 						}
 						this.$delete(this.app.compRDG, this.rowDesignGroups[e].id);
                         this.app.rowDesignGroups.splice(e, 1);
+						for (var a = e; a < this.rowDesignGroups.length; a++) {
+							var t = this.rowDesignGroups[a].id;
+							this.app.compRDG[t].designGroups = a;
+						}
                     },
 					deleteObjectDesignGroup: function(e) {
 						for (var a = 0; a < this.objectDesignGroups[e].elements.length; a++) {
@@ -35778,6 +35844,10 @@
 						}
 						this.$delete(this.app.compODG, this.objectDesignGroups[e].id);
                         this.app.objectDesignGroups.splice(e, 1);
+						for (var a = e; a < this.objectDesignGroups.length; a++) {
+							var t = this.objectDesignGroups[a].id;
+							this.app.compODG[t].designGroups = a;
+						}
                     }
                 }
             },
@@ -40203,20 +40273,36 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
+                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", e._g({
                                 style: e.objectImage,
                                 attrs: {
                                     src: e.addon.image
                                 }
-                            }, i)) : e._e()]
+                            }, i)) : o("img", e._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", {
                     style: e.objectImage,
                     attrs: {
                         src: e.addon.image
                     }
-                }) : e._e()], 1) : 5 == e.addon.template ? o("span", {
+                }) : o("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+                })] : e._e()], 1) : 5 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -40235,20 +40321,36 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
+                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? (e.app.printThis ? o("img", e._g({
                                 style: e.objectImage,
                                 attrs: {
                                     src: e.addon.image
                                 }
-                            }, i)) : e._e()]
+                            }, i)) : o("img", e._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
+                            }, i))) : e._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? (e.app.printThis ? o("img", {
                     style: e.objectImage,
                     attrs: {
                         src: e.addon.image
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : o("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+                })) : e._e(), !e.row.addonTextRemoved ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -40270,20 +40372,36 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
+                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", e._g({
                                 style: e.objectImage,
                                 attrs: {
                                     src: e.addon.image
                                 }
-                            }, i)) : e._e()]
+                            }, i)) : o("img", e._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", {
                     style: e.objectImage,
                     attrs: {
                         src: e.addon.image
                     }
-                }) : e._e(), o("span", ["" !== e.addon.title && !e.row.addonTitleRemoved ? o("h4", {
+                }) : o("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+                })] : e._e(), o("span", ["" !== e.addon.title && !e.row.addonTitleRemoved ? o("h4", {
                     style: e.addonTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
@@ -40315,20 +40433,36 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
+                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", e._g({
                                 style: e.objectImage,
                                 attrs: {
                                     src: e.addon.image
                                 }
-                            }, i)) : e._e()]
+                            }, i)) : o("img", e._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", {
                     style: e.objectImage,
                     attrs: {
                         src: e.addon.image
                     }
-                }) : e._e()], 1), o("v-col", {
+                }) : o("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+                })] : e._e()], 1), o("v-col", {
 					staticClass: "pa-1",
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
@@ -40383,20 +40517,36 @@
                         key: "activator",
                         fn: function(t) {
                             var i = t.on;
-                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", e._g({
+                            return [e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", e._g({
                                 style: e.objectImage,
                                 attrs: {
                                     src: e.addon.image
                                 }
-                            }, i)) : e._e()]
+                            }, i)) : o("img", e._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: e.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: e.objectImage
+                            }, i))] : e._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? o("img", {
+                }, [o("span", [e._v(e._s(e.addon.imageSourceTooltip))])]) : e.addon.image.length > 0 && !e.row.addonImageRemoved ? [e.app.printThis ? o("img", {
                     style: e.objectImage,
                     attrs: {
                         src: e.addon.image
                     }
-                }) : e._e()], 1)], 2) : e._e()]) : e._e()])
+                }) : o("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: e.addon.image,
+						expression: "addon.image"
+					}],
+                    style: e.objectImage
+                })] : e._e()], 1)], 2) : e._e()]) : e._e()])
             },
             hs = [],
             gs = {
@@ -41325,7 +41475,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -41346,7 +41496,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -45375,7 +45525,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -45396,7 +45546,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -61138,7 +61288,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.15.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.15.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -62507,6 +62657,8 @@
 										e.app.isFadingOut = !1;
 										clearInterval(e.app.bgmPlayInterval);
 										e.app.bgmPlayInterval = 0;
+										clearInterval(e.app.bgmTitleInterval);
+										e.app.bgmTitleInterval = 0;
 										e.app.bgmTitle = "No Audio Title";
 										e.app.curBgmTime = 0;
 										e.app.curBgmLength = 0;

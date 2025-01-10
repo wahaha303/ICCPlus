@@ -2546,20 +2546,36 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", t._g({
                                 style: t.objectImage,
                                 attrs: {
                                     src: t.addon.image
                                 }
-                            }, s)) : t._e()]
+                            }, s)) : i("img", t._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: t.objectImage
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", {
                     style: t.objectImage,
                     attrs: {
                         src: t.addon.image
                     }
-                }) : t._e()], 1) : 5 == t.addon.template ? i("span", {
+                }) : i("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: t.addon.image,
+						expression: "addon.image"
+					}],
+                    style: t.objectImage
+                })] : t._e()], 1) : 5 == t.addon.template ? i("span", {
                     staticClass: "ma-0",
                     staticStyle: {
                         width: "100%"
@@ -2578,20 +2594,36 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? (t.app.printThis ? i("img", t._g({
                                 style: t.objectImage,
                                 attrs: {
                                     src: t.addon.image
                                 }
-                            }, s)) : t._e()]
+                            }, s)) : i("img", t._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: t.objectImage
+                            }, s))) : t._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? (t.app.printThis ? i("img", {
                     style: t.objectImage,
                     attrs: {
                         src: t.addon.image
                     }
-                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                }) : i("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: t.addon.image,
+						expression: "addon.image"
+					}],
+                    style: t.objectImage
+                })) : t._e(), !t.row.addonTextRemoved ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -2613,20 +2645,36 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", t._g({
                                 style: t.objectImage,
                                 attrs: {
                                     src: t.addon.image
                                 }
-                            }, s)) : t._e()]
+                            }, s)) : i("img", t._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: t.objectImage
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", {
                     style: t.objectImage,
                     attrs: {
                         src: t.addon.image
                     }
-                }) : t._e(), i("span", ["" !== t.addon.title && !t.row.addonTitleRemoved ? i("h4", {
+                }) : i("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: t.addon.image,
+						expression: "addon.image"
+					}],
+                    style: t.objectImage
+                })] : t._e(), i("span", ["" !== t.addon.title && !t.row.addonTitleRemoved ? i("h4", {
                     style: t.addonTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
@@ -2658,20 +2706,36 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", t._g({
                                 style: t.objectImage,
                                 attrs: {
                                     src: t.addon.image
                                 }
-                            }, i)) : t._e()]
+                            }, s)) : i("img", t._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: t.objectImage
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", {
                     style: t.objectImage,
                     attrs: {
                         src: t.addon.image
                     }
-                }) : t._e()], 1), i("v-col", {
+                }) : i("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: t.addon.image,
+						expression: "addon.image"
+					}],
+                    style: t.objectImage
+                })] : t._e()], 1), i("v-col", {
 					staticClass: "pa-1",
 					staticStyle: {
 						"max-width": (100 - t.objectImageStyling.objectImageBoxWidth) + "%"
@@ -2726,20 +2790,36 @@
                         key: "activator",
                         fn: function(e) {
                             var s = e.on;
-                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", t._g({
+                            return [t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", t._g({
                                 style: t.objectImage,
                                 attrs: {
                                     src: t.addon.image
                                 }
-                            }, i)) : t._e()]
+                            }, s)) : i("img", t._g({
+								directives: [{
+                                    name: "lazy",
+                                    rawName: "v-lazy",
+                                    value: t.addon.image,
+                                    expression: "addon.image"
+                                }],
+                                style: t.objectImage
+                            }, s))] : t._e()]
                         }
                     }], null, !1, 4164976176)
-                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? i("img", {
+                }, [i("span", [t._v(t._s(t.addon.imageSourceTooltip))])]) : t.addon.image.length > 0 && !t.row.addonImageRemoved ? [t.app.printThis ? i("img", {
                     style: t.objectImage,
                     attrs: {
                         src: t.addon.image
                     }
-                }) : t._e()], 1)], 2) : t._e()]) : t._e()])
+                }) : i("img", {
+					directives: [{
+						name: "lazy",
+						rawName: "v-lazy",
+						value: t.addon.image,
+						expression: "addon.image"
+					}],
+                    style: t.objectImage
+                })] : t._e()], 1)], 2) : t._e()]) : t._e()])
             }),
             g = [],
             w = {
@@ -4055,7 +4135,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -4076,7 +4156,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -8061,7 +8141,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.bgColorIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -8082,7 +8162,7 @@
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
-									if (coD.privateBackgroundIsOn) {
+									if (coD.privateBackgroundIsOn && coD.styling.backgroundImage) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -17690,6 +17770,8 @@
 										e.app.isFadingOut = !1;
 										clearInterval(e.app.bgmPlayInterval);
 										e.app.bgmPlayInterval = 0;
+										clearInterval(e.app.bgmTitleInterval);
+										e.app.bgmTitleInterval = 0;
 										e.app.bgmTitle = "No Audio Title";
 										e.app.curBgmTime = 0;
 										e.app.curBgmLength = 0;
