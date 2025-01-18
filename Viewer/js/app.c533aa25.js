@@ -981,7 +981,7 @@
                         }
                     }
                 }, [4 == t.object.template ? i("span", {
-                    staticClass: "ma-0",
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -993,20 +993,24 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
                     }
-                })], 1) : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                })], 1) : t._e(), !t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1027,7 +1031,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1036,7 +1040,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "py-0"
                     }, [e.showScore && t.checkRequireds(e) && !t.row.objectScoreRemoved ? i("ObjectScore", {
@@ -1050,14 +1054,18 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1078,7 +1086,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1087,7 +1095,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "pa-0"
                     }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
@@ -1108,14 +1116,18 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1136,7 +1148,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1153,14 +1165,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1181,7 +1197,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1227,11 +1243,14 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                })] : t._e(), t._l(t.object.addons, (function(e) {
-                    return i("v-col", {
+                })] : t._e(), i("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : t.object.addonJustify
+					}
+				}, [t._l(t.object.addons, (function(e) {
+                    return i("ObjectAddon", {
                         key: e.index,
-                        staticClass: "pa-0"
-                    }, [i("ObjectAddon", {
                         attrs: {
                             isEditModeOn: t.isEditModeOn,
                             addon: e,
@@ -1242,15 +1261,19 @@
                                 e = t
                             }
                         }
-                    })], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    })
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1271,7 +1294,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1279,8 +1302,8 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 5 == t.object.template ? i("span", {
-                    staticClass: "ma-0",
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 1) : 5 == t.object.template ? i("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -1292,20 +1315,24 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
                     }
-                })], 1) : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                })], 1) : t._e(), !t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1326,7 +1353,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1335,7 +1362,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "py-0"
                     }, [e.showScore && t.checkRequireds(e) && !t.row.objectScoreRemoved ? i("ObjectScore", {
@@ -1349,14 +1376,18 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1377,7 +1408,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1386,7 +1417,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "pa-0"
                     }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
@@ -1407,14 +1438,18 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1435,7 +1470,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1490,14 +1525,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1518,7 +1557,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1526,11 +1565,14 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
-                    return i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : t.object.addonJustify
+					}
+				}, [t._l(t.object.addons, (function(e) {
+                    return i("ObjectAddon", {
                         key: e.index,
-                        staticClass: "pa-0"
-                    }, [i("ObjectAddon", {
                         attrs: {
                             isEditModeOn: t.isEditModeOn,
                             addon: e,
@@ -1541,15 +1583,19 @@
                                 e = t
                             }
                         }
-                    })], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    })
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1570,7 +1616,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1578,8 +1624,8 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
-                    staticClass: "ma-0",
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 1) : 1 == t.object.template || t.window.width < 1e3 || t.row.choicesShareTemplate ? i("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -1629,20 +1675,24 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                })] : t._e(), i("span", [!t.row.objectTitleRemoved ? i("h3", {
+                })] : t._e(), !t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1663,7 +1713,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1672,7 +1722,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.scores, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "py-0"
                     }, [e.showScore && t.checkRequireds(e) && !t.row.objectScoreRemoved ? i("ObjectScore", {
@@ -1686,14 +1736,18 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1714,7 +1768,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1723,7 +1777,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "pa-0"
                     }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
@@ -1744,14 +1798,18 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1772,7 +1830,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1789,14 +1847,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1817,7 +1879,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1825,11 +1887,14 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.addons, (function(e) {
-                    return i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : t.object.addonJustify
+					}
+				}, [t._l(t.object.addons, (function(e) {
+                    return i("ObjectAddon", {
                         key: e.index,
-                        staticClass: "pa-0"
-                    }, [i("ObjectAddon", {
                         attrs: {
                             isEditModeOn: t.isEditModeOn,
                             addon: e,
@@ -1840,15 +1905,19 @@
                                 e = t
                             }
                         }
-                    })], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    })
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1869,7 +1938,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1877,7 +1946,7 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 1) : 2 == t.object.template && t.window.width > 1e3 ? i("v-row", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 1) : 2 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
@@ -1926,7 +1995,7 @@
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
                 })] : t._e()], 1), i("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - t.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -1935,14 +2004,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1963,7 +2036,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -1985,14 +2058,18 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2013,7 +2090,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2022,7 +2099,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "pa-0"
                     }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
@@ -2043,14 +2120,18 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2071,7 +2152,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2087,14 +2168,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2115,7 +2200,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2123,14 +2208,14 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), t._l(t.object.addons, (function(e) {
-                    return i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : t.object.addonJustify
+					}
+				}, [t._l(t.object.addons, (function(e) {
+                    return i("ObjectAddon", {
                         key: e.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [i("ObjectAddon", {
                         attrs: {
                             isEditModeOn: t.isEditModeOn,
                             addon: e,
@@ -2141,15 +2226,19 @@
                                 e = t
                             }
                         }
-                    })], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                    })
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2170,7 +2259,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2178,13 +2267,13 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : 3 == t.object.template && t.window.width > 1e3 ? i("v-row", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2)], 2) : 3 == t.object.template && t.window.width > 1e3 ? i("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
                     }
                 }, [i("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - t.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -2193,14 +2282,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2221,7 +2314,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2243,14 +2336,18 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2271,7 +2368,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2280,7 +2377,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), t._l(t.object.requireds, (function(e) {
-                    return i("v-col", {
+                    return i("div", {
                         key: e.index,
                         staticClass: "pa-0"
                     }, [e.showRequired && !t.row.objectRequirementRemoved ? [e.type == "gid" && "undefined" !== typeof t.app.compGR[e.reqId] ? t._l(t.app.globalRequirements[t.app.compGR[e.reqId].globalRequirements].requireds, (function(k) {
@@ -2301,14 +2398,18 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2329,7 +2430,7 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2345,14 +2446,18 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", [i("v-spacer"), i("v-btn", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
                         disabled: !t.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2373,7 +2478,66 @@
                     },
                     on: {
                         click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
+                        }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : t.object.addonJustify
+					}
+				}, [t._l(t.object.addons, (function(e) {
+                    return i("ObjectAddon", {
+                        key: e.index,
+                        attrs: {
+                            isEditModeOn: t.isEditModeOn,
+                            addon: e,
+                            row: t.row
+                        },
+                        on: {
+                            addonWasChanged: function(t) {
+                                e = t
+                            }
+                        }
+                    })
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneLess(t.object, t.row)
+                        }
+                    }
+                }, [i("v-icon", {
+                    style: t.multiChoiceButton,
+                    attrs: {
+                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
+                    staticClass: "pa-0",
+                    style: t.multiChoiceText,
+                    domProps: {
+                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
+                    }
+                }), i("v-spacer"), i("v-btn", {
+                    attrs: {
+                        disabled: !t.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(e) {
+                            return t.row.isInfoRow || t.object.isNotSelectable ? 0 : t.selectedOneMore(t.object, t.row)
                         }
                     }
                 }, [i("v-icon", {
@@ -2424,62 +2588,7 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                })] : t._e()], 1), t._l(t.object.addons, (function(e) {
-                    return i("v-col", {
-                        key: e.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [i("ObjectAddon", {
-                        attrs: {
-                            isEditModeOn: t.isEditModeOn,
-                            addon: e,
-                            row: t.row
-                        },
-                        on: {
-                            addonWasChanged: function(t) {
-                                e = t
-                            }
-                        }
-                    })], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", [i("v-spacer"), i("v-btn", {
-                    attrs: {
-                        disabled: !t.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneLess(t.object, t.row)
-                        }
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [t._v("mdi-minus")])], 1), i("v-spacer"), i("v-col", {
-                    staticClass: "pa-0",
-                    style: t.multiChoiceText,
-                    domProps: {
-                        innerHTML: t._s(t.object.selectedThisManyTimesProp)
-                    }
-                }), i("v-spacer"), i("v-btn", {
-                    attrs: {
-                        disabled: !t.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(e) {
-                            return t.row.isInfoRow ? 0 : t.selectedOneMore(t.object, t.row)
-                        }
-                    }
-                }, [i("v-icon", {
-                    style: t.multiChoiceButton,
-                    attrs: {
-                        size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2) : t._e()], 1) : t._e(), i(t.currentComponent, {
+                })] : t._e()], 1)], 2) : t._e()], 1) : t._e(), i(t.currentComponent, {
                     tag: "component",
                     attrs: {
                         row: t.object
@@ -2529,7 +2638,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
                     }
-                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                }) : t._e(), !t.row.addonTextRemoved && t.addon.text ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -2623,7 +2732,7 @@
 						expression: "addon.image"
 					}],
                     style: t.objectImage
-                })) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                })) : t._e(), !t.row.addonTextRemoved && t.addon.text ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -2679,7 +2788,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
                     }
-                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                }) : t._e(), !t.row.addonTextRemoved && t.addon.text ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -2745,7 +2854,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
                     }
-                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                }) : t._e(), !t.row.addonTextRemoved && t.addon.text ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -2768,7 +2877,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceAddonTitle, t.sanitizeArg))
                     }
-                }) : t._e(), !t.row.addonTextRemoved ? i("p", {
+                }) : t._e(), !t.row.addonTextRemoved && t.addon.text ? i("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -4255,7 +4364,8 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						return e += ";", e
+						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						return e
                     },
                     objectImage: function() {
                         var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
@@ -14828,6 +14938,16 @@
 						if ("undefined" === typeof e.app.defaultOrReq) e.$set(e.app, "defaultOrReq", "of");
 						if ("undefined" === typeof e.app.orderSelReqText) e.$set(e.app, "orderSelReqText", "0");
 						if ("undefined" === typeof e.app.defaultSelReq) e.$set(e.app, "defaultSelReq", "choice from");
+						if ("undefined" === typeof e.app.googleFonts) e.$set(e.app, "googleFonts", []);
+						for (var a = 0; a < e.app.googleFonts.length; a++) {
+							var fontId = e.app.googleFonts[a].replaceAll(" ", "+"),
+								url = "https://fonts.googleapis.com/css2?family=" + fontId + "&display=swap";
+							const l = document.createElement("link");
+							l.rel = "stylesheet";
+							l.href = url;
+							l.crossOrigin = "anonymous";
+							document.head.appendChild(l);
+						}
 						for (var b = 0; b < e.app.rows.length; b++) {
 							var coR = e.app.rows[b],
 								g = coR.id;

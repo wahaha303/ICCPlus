@@ -17676,6 +17676,131 @@
                 URL: Ot
             })
         },
+		"2b5d": function(t, e, i) {
+            "use strict";
+            i("2bfd");
+            var s = i("b974"),
+                r = i("c6a6"),
+                o = i("80d2");
+            e.a = r.a.extend({
+                name: "v-combobox",
+                props: {
+                    delimiters: {
+                        type: Array,
+                        default: () => []
+                    },
+                    returnObject: {
+                        type: Boolean,
+                        default: !0
+                    }
+                },
+                data: () => ({
+                    editingIndex: -1
+                }),
+                computed: {
+                    computedCounterValue() {
+                        return this.multiple ? this.selectedItems.length : (this.internalSearch || "").toString().length
+                    },
+                    hasSlot() {
+                        return s.a.options.computed.hasSlot.call(this) || this.multiple
+                    },
+                    isAnyValueAllowed: () => !0,
+                    menuCanShow() {
+                        return !!this.isFocused && (this.hasDisplayedItems || !!this.$slots["no-data"] && !this.hideNoData)
+                    },
+                    searchIsDirty() {
+                        return null != this.internalSearch
+                    }
+                },
+                methods: {
+                    onInternalSearchChanged(t) {
+                        if (t && this.multiple && this.delimiters.length) {
+                            const e = this.delimiters.find(e => t.endsWith(e));
+                            null != e && (this.internalSearch = t.slice(0, t.length - e.length), this.updateTags())
+                        }
+                        this.updateMenuDimensions()
+                    },
+                    genInput() {
+                        const t = r.a.options.methods.genInput.call(this);
+                        return delete t.data.attrs.name, t.data.on.paste = this.onPaste, t
+                    },
+                    genChipSelection(t, e) {
+                        const i = s.a.options.methods.genChipSelection.call(this, t, e);
+                        return this.multiple && (i.componentOptions.listeners = {
+                            ...i.componentOptions.listeners,
+                            dblclick: () => {
+                                this.editingIndex = e, this.internalSearch = this.getText(t), this.selectedIndex = -1
+                            }
+                        }), i
+                    },
+                    onChipInput(t) {
+                        s.a.options.methods.onChipInput.call(this, t), this.editingIndex = -1
+                    },
+                    onEnterDown(t) {
+                        t.preventDefault(), this.getMenuIndex() > -1 || this.$nextTick(this.updateSelf)
+                    },
+                    onFilteredItemsChanged(t, e) {
+                        this.autoSelectFirst && r.a.options.methods.onFilteredItemsChanged.call(this, t, e)
+                    },
+                    onKeyDown(t) {
+                        const e = t.keyCode;
+                        !t.ctrlKey && [o.t.home, o.t.end].includes(e) || s.a.options.methods.onKeyDown.call(this, t), this.multiple && e === o.t.left && 0 === this.$refs.input.selectionStart ? this.updateSelf() : e === o.t.enter && this.onEnterDown(t), this.changeSelectedIndex(e)
+                    },
+                    onTabDown(t) {
+                        if (this.multiple && this.internalSearch && -1 === this.getMenuIndex()) return t.preventDefault(), t.stopPropagation(), this.updateTags();
+                        r.a.options.methods.onTabDown.call(this, t)
+                    },
+                    selectItem(t) {
+                        this.editingIndex > -1 ? this.updateEditing() : (r.a.options.methods.selectItem.call(this, t), this.internalSearch && this.multiple && this.getText(t).toLocaleLowerCase().includes(this.internalSearch.toLocaleLowerCase()) && (this.internalSearch = null))
+                    },
+                    setSelectedItems() {
+                        null == this.internalValue || "" === this.internalValue ? this.selectedItems = [] : this.selectedItems = this.multiple ? this.internalValue : [this.internalValue]
+                    },
+                    setValue(t) {
+                        s.a.options.methods.setValue.call(this, null != t ? t : this.internalSearch)
+                    },
+                    updateEditing() {
+                        const t = this.internalValue.slice(),
+                            e = this.selectedItems.findIndex(t => this.getText(t) === this.internalSearch);
+                        if (e > -1) {
+                            const i = "object" == typeof t[e] ? Object.assign({}, t[e]) : t[e];
+                            t.splice(e, 1), t.push(i)
+                        } else t[this.editingIndex] = this.internalSearch;
+                        this.setValue(t), this.editingIndex = -1, this.internalSearch = null
+                    },
+                    updateCombobox() {
+                        if (!this.searchIsDirty) return;
+                        this.internalSearch !== this.getText(this.internalValue) && this.setValue();
+                        (Boolean(this.$scopedSlots.selection) || this.hasChips) && (this.internalSearch = null)
+                    },
+                    updateSelf() {
+                        this.multiple ? this.updateTags() : this.updateCombobox()
+                    },
+                    updateTags() {
+                        const t = this.getMenuIndex();
+                        if (t < 0 && !this.searchIsDirty || !this.internalSearch) return;
+                        if (this.editingIndex > -1) return this.updateEditing();
+                        const e = this.selectedItems.findIndex(t => this.internalSearch === this.getText(t)),
+                            i = e > -1 && "object" == typeof this.selectedItems[e] ? Object.assign({}, this.selectedItems[e]) : this.internalSearch;
+                        if (e > -1) {
+                            const t = this.internalValue.slice();
+                            t.splice(e, 1), this.setValue(t)
+                        }
+                        if (t > -1) return this.internalSearch = null;
+                        this.selectItem(i), this.internalSearch = null
+                    },
+                    onPaste(t) {
+                        var e;
+                        if (!this.multiple || this.searchIsDirty) return;
+                        const i = null == (e = t.clipboardData) ? void 0 : e.getData("text/vnd.vuetify.autocomplete.item+plain");
+                        i && -1 === this.findExistingIndex(i) && (t.preventDefault(), s.a.options.methods.selectItem.call(this, i))
+                    },
+                    clearableCallback() {
+                        this.editingIndex = -1, r.a.options.methods.clearableCallback.call(this)
+                    }
+                }
+            })
+        },
 		"2bfd": function(t, e, i) {},
         "2c64": function(t, e, n) {},
         "2ca0": function(t, e, n) {

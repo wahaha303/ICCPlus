@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.15.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.16.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 03.01.2025")]), o("v-col", {
+                }, [e._v("Update: 18.01.2025")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added an option in Global Settings to enable Music Player. "), o("br"), e._v(" Added a feature to enable Music Player in Viewer. "), o("br"), e._v(" Added a feature to search items in the dropdown menu. ")]), o("v-col", {
+                }, [e._v(" Added a feature to prevent the generation of duplicate IDs when creating Row or Choice. "), o("br"), e._v(" Added a feature to apply justify to the addons. "), o("br"), e._v(" Added a feature to set tooltip in External URL Image. "), o("br"), e._v(" Added an option in Global Settings to import custom fonts from Google Fonts. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where the default value of the Multi Choice Design was not being set automatically. "), o("br"), e._v(" Fixed an issue where Multi Choice Design could not be set in the Private Styling/Design Group. "), o("br"), e._v(" Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where lazy load was not applied to the addon image. "), o("br"), e._v(" Fixed an issue where the multi-choice with the 'Select Impossible' function enabled could still be selected. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -2198,7 +2198,28 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize("Addons: " + e.object.addons.length, e.sanitizeArg))
                     }
-                }), o("v-expansion-panel-content", e._l(e.object.addons, (function(t, i) {
+                }), o("v-expansion-panel-content", [o("v-col", {
+					staticClass: "pa-0",
+					attrs: {
+						cols: "12"
+					}
+				}, [o("v-select", {
+                    attrs: {
+                        "hide-details": "",
+                        items: e.justify,
+                        "item-text": "value",
+                        "item-value": "value",
+                        filled: "",
+                        label: "Addons Justify"
+                    },
+                    model: {
+                        value: e.object.addonJustify,
+                        callback: function(t) {
+                            e.$set(e.object, "addonJustify", t)
+                        },
+                        expression: "object.addonJustify"
+                    }
+                })], 1), e._l(e.object.addons, (function(t, i) {
                     return o("v-col", {
                         key: t.index,
                         staticClass: "pa-0",
@@ -2226,7 +2247,7 @@
                             }
                         }
                     }, [e._v("Delete")])], 1)
-                })), 1)], 1) : e._e(), e.object.requireds.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
+                }))], 1)], 1) : e._e(), e.object.requireds.length > 0 ? o("v-expansion-panel", [o("v-expansion-panel-header", {
                     domProps: {
                         innerHTML: e._s(e.$sanitize("Requirements: " + e.object.requireds.length, e.sanitizeArg))
                     }
@@ -3675,7 +3696,7 @@
                         }
                     }
                 }, [4 == e.object.template ? o("span", {
-                    staticClass: "ma-0",
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -3687,20 +3708,24 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
 					on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3721,7 +3746,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3730,7 +3755,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -3744,14 +3769,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3772,7 +3801,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3781,7 +3810,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -3802,14 +3831,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3830,7 +3863,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3865,14 +3898,18 @@
                         },
                         expression: "object.randomWeight"
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3893,7 +3930,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3939,11 +3976,14 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
-                        key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
+                })] : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
+						key: t.index,
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -3954,15 +3994,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3983,7 +4027,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -3991,8 +4035,8 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 5 == e.object.template ? o("span", {
-                    staticClass: "ma-0",
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 5 == e.object.template ? o("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -4004,20 +4048,24 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4038,7 +4086,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4047,7 +4095,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -4061,14 +4109,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4089,7 +4141,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4098,7 +4150,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -4119,14 +4171,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4147,7 +4203,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4220,14 +4276,18 @@
                         },
                         expression: "object.randomWeight"
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4248,7 +4308,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4256,11 +4316,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
-                        key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
+						key: t.index,
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -4271,15 +4334,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4300,7 +4367,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4308,8 +4375,8 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
-                    staticClass: "ma-0",
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -4359,20 +4426,24 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4393,7 +4464,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4402,7 +4473,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -4416,14 +4487,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4444,7 +4519,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4453,7 +4528,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -4474,14 +4549,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4502,7 +4581,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4537,14 +4616,18 @@
                         },
                         expression: "object.randomWeight"
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4565,7 +4648,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4573,11 +4656,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
-                        key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
+						key: t.index,
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -4588,15 +4674,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4617,7 +4707,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4625,7 +4715,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
@@ -4674,7 +4764,7 @@
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
                 })] : e._e()], 1), o("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -4683,14 +4773,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4711,7 +4805,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4733,14 +4827,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4761,7 +4859,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4770,7 +4868,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -4791,14 +4889,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4819,7 +4921,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4835,14 +4937,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4863,7 +4969,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4871,14 +4977,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
                         key: t.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [o("ObjectAddon", {
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -4889,15 +4995,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4918,7 +5028,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4926,13 +5036,13 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
                     }
                 }, [o("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -4941,14 +5051,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4969,7 +5083,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -4991,14 +5105,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5019,7 +5137,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5028,7 +5146,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -5049,14 +5167,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5077,7 +5199,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5093,14 +5215,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5121,7 +5247,66 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
+                        key: t.index,
+                        attrs: {
+                            isEditModeOn: e.isEditModeOn,
+                            addon: t,
+                            row: e.row
+                        },
+                        on: {
+                            addonWasChanged: function(e) {
+                                t = e
+                            }
+                        }
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -5172,62 +5357,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e()], 1), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
-                        key: t.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [o("ObjectAddon", {
-                        attrs: {
-                            isEditModeOn: e.isEditModeOn,
-                            addon: t,
-                            row: e.row
-                        },
-                        on: {
-                            addonWasChanged: function(e) {
-                                t = e
-                            }
-                        }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
-                    attrs: {
-                        disabled: !e.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
-                        }
-                    }
-                }, [o("v-icon", {
-                    style: e.multiChoiceButton,
-                    attrs: {
-                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
-                    staticClass: "pa-0",
-                    style: e.multiChoiceText,
-                    domProps: {
-                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
-                    }
-                }), o("v-spacer"), o("v-btn", {
-                    attrs: {
-                        disabled: !e.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
-                        }
-                    }
-                }, [o("v-icon", {
-                    style: e.multiChoiceButton,
-                    attrs: {
-                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
+                })] : e._e()], 1)], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         row: e.object
@@ -5945,7 +6075,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6019,7 +6149,7 @@
 						expression: "addon.image"
 					}],
                     style: e.objectImage
-				}) : e._e(), !e.row.addonTextRemoved ? o("p", {
+				}) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6065,7 +6195,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6121,7 +6251,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6144,7 +6274,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6847,11 +6977,24 @@
                         src: e.row.image
                     }
                 }, e.on))]), o("v-btn", {
-					staticClass: "mt-3",
+					staticClass: "my-3",
                     on: {
                         click: e.onImageRemoval
                     }
-                }, [e._v("Remove Photo")])] : e._e()], 1) : o("v-col", {
+                }, [e._v("Remove Photo")]), o("v-text-field", {
+                    attrs: {
+						"hide-details": "",
+                        filled: "",
+                        label: "Tooltip That Shows When Hovering over it"
+                    },
+                    model: {
+                        value: e.row.imageSourceTooltip,
+                        callback: function(t) {
+                            e.$set(e.row, "imageSourceTooltip", t)
+                        },
+                        expression: "row.imageSourceTooltip"
+                    }
+                })] : e._e()], 1) : o("v-col", {
                     staticClass: "col-lg-8"
                 }, [o("v-tabs", {
                     attrs: {
@@ -12220,7 +12363,7 @@
                 }, [e._v(" Row Title "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customRowTitle,
@@ -12295,7 +12438,7 @@
                 }, [e._v(" Row Text "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customRowText,
@@ -12370,7 +12513,7 @@
                 }, [e._v(" Choice Title "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customObjectTitle,
@@ -12445,7 +12588,7 @@
                 }, [e._v(" Choice Text "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customObjectText,
@@ -12520,7 +12663,7 @@
                 }, [e._v(" Addon Title "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customAddonTitle,
@@ -12595,7 +12738,7 @@
                 }, [e._v(" Addon Text "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customAddonText,
@@ -12670,7 +12813,7 @@
                 }, [e._v(" Score and Requirement Text "), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customScoreText,
@@ -12836,7 +12979,15 @@
 						return this.$store.state.app
 					}
                 },
+				mounted: function() {
+					this.fontImport()
+				},
                 methods: {
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     }
@@ -13687,7 +13838,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customMultiTextFont,
@@ -13879,6 +14030,9 @@
                     }
                 },
                 computed: {
+					app: function() {
+						return this.$store.state.app
+					},
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
                     },
@@ -13894,6 +14048,7 @@
 						}
 					});
 					if ("undefined" !== typeof this.$refs.dialog) this.resizeObserver.observe(this.$refs.dialog.$el);
+					this.fontImport();
                 },
                 destroyed: function() {
                     if (this.resizeObserver) {
@@ -13901,6 +14056,11 @@
 					}
                 },
                 methods: {
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     }
@@ -14840,7 +15000,7 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
-                        label: "Remove the space between addons"
+                        label: "Remove the space below the addon text"
                     },
                     model: {
                         value: e.styling.addonRemoveSpaceAddonIsOn,
@@ -16151,7 +16311,7 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
-                        label: "Remove the space between addons"
+                        label: "Remove the space below the addon text"
                     },
                     model: {
                         value: e.styling.removeSpaceAddonIsOn,
@@ -17463,7 +17623,7 @@
                 }), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customBarTextFont,
@@ -17633,11 +17793,22 @@
                     }
                 },
                 computed: {
+					app: function() {
+						return this.$store.state.app
+					},
                     styling: function() {
                         return this.$store.state.app.styling
                     }
                 },
+				mounted: function() {
+					this.fontImport()
+				},
                 methods: {
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     }
@@ -17773,11 +17944,25 @@
                 },
                 methods: {
                     mergeObject: function() {
+						var t = "",
+							o = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var s = "";
+							for (var r = 0; r < th.app.objectIdLength; r++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}						
 						if ("undefined" !== typeof this.app.compR[this.newRow]) {
 							var co = this.app.compR[this.newRow],
 								coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
 							coR.objects.push(JSON.parse(JSON.stringify(this.row)));
-                            for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.objectIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+                            t = generateObjectId();
 							coR.objects[coR.objects.length - 1].id = t;
 							this.app.comp[t] = {rows: co.rows, objects: coR.objects.length - 1, type: co.type};
 						}
@@ -18163,6 +18348,17 @@
 							text: "Toggle",
 							value: "3"
 						}],
+						justify: [{
+                            value: "start"
+                        }, {
+                            value: "center"
+                        }, {
+                            value: "end"
+                        }, {
+                            value: "space-around"
+                        }, {
+                            value: "space-between"
+                        }],
                         currentComponent: "",
                         sanitizeArg: {
                             allowedTags: ["address", "article", "aside", "footer", "header", "h1", "h2", "h3", "h4", "h5", "h6", "hgroup", "main", "nav", "section", "blockquote", "dd", "div", "dl", "dt", "figcaption", "figure", "hr", "li", "main", "ol", "p", "pre", "ul", "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn", "em", "i", "kbd", "mark", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr", "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "font", "iframe", "img"],
@@ -18463,7 +18659,8 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						return e += ";", e
+						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						return e
                     },
                     findRowTitle: function() {
 						var e = "";
@@ -18655,7 +18852,7 @@
                             image: "",
                             requireds: [],
 							parentId: this.object.id
-                        }), console.log(this.object.addons)
+                        })
                     },
                     createNewScore: function() {
                         this.object.scores.push({
@@ -22060,8 +22257,22 @@
 						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     cloneObject: function() {
+						var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var s = "";
+							for (var o = 0; o < th.app.objectIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
                         this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        e = generateObjectId();
                         this.row.objects[this.row.objects.indexOf(this.object) + 1].id = e;
 						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1, type: "app"};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
@@ -22928,12 +23139,26 @@
                 },
                 methods: {
                     mergeRow: function() {
+						var i = "",
+							s = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var m = "";
+							for (var f = 0; f < th.app.objectIdLength; f++) {
+								m += s.charAt(Math.floor(Math.random() * s.length));
+							}
+							if ("undefined" !== typeof th.app.comp[m]) {
+								return generateObjectId()
+							} else {
+								return m
+							}
+						}
                         if ("undefined" !== this.app.compR[this.newRow]) {
 							var co = this.app.compR[this.newRow],
 								coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
 								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < this.app.objectIdLength; r++) i += s.charAt(Math.floor(Math.random() * s.length));
+								i = generateObjectId();
 								coR.objects[coR.objects.length - 1].id = i;
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1, type: co.type};
 								for (var c = 0; c < coR.objects[coR.objects.length - 1].groups.length; c++) {
@@ -24551,12 +24776,26 @@
                 },
                 methods: {
                     mergeRow: function() {
+						var i = "",
+							s = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var m = "";
+							for (var f = 0; f < th.app.objectIdLength; f++) {
+								m += s.charAt(Math.floor(Math.random() * s.length));
+							}
+							if ("undefined" !== typeof th.app.comp[m]) {
+								return generateObjectId()
+							} else {
+								return m
+							}
+						}
                         if ("undefined" !== this.app.compR[this.newRow]) {
 							var co = this.app.compR[this.newRow],
 								coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows];
 							for (var t = this.row.objects.length, o = 0; o < t; o++) {
 								coR.objects.push(JSON.parse(JSON.stringify(this.row.objects[o])));
-								for (var i = "", s = "abcdefghijklmnopqrstuvwxyz0123456789", r = 0; r < this.app.objectIdLength; r++) i += s.charAt(Math.floor(Math.random() * s.length));
+								i = generateObjectId();
 								coR.objects[coR.objects.length - 1].id = i;
 								this.app.comp[i] = {rows: co.rows, objects: coR.objects.length - 1, type: co.type};
 								for (var c = 0; c < coR.objects[coR.objects.length - 1].groups.length; c++) {
@@ -25234,7 +25473,21 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var s = "";
+							for (var o = 0; o < th.app.objectIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
+						e = generateObjectId();
                         this.row.objects.push({
                             id: e,
                             title: this.app.defaultChoiceTitle,
@@ -25264,12 +25517,25 @@
 						}
                     },
 					createNewObjectMultiple: function() {
-						var n = this;
+						var n = this,
+							e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789";
+						function generateObjectId() {
+							var s = "";
+							for (var o = 0; o < n.app.objectIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof n.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
 						this.$refs.confirm.open("Create New Objects", "", {cObjects: !0})
 						.then(({result, numObjects}) => {
 							if (result) {
 								for (var a = 0; a < numObjects; a++) {
-									for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < n.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+									e = generateObjectId();
 									n.row.objects.push({
 										id: e,
 										title: n.app.defaultChoiceTitle,
@@ -29244,6 +29510,16 @@
 						if ("undefined" !== typeof e.app.rows) e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
 						window.removeEventListener("keydown", e.$store.state.handleKeydown);
 						if (e.app.enableShortcut) window.addEventListener("keydown", e.$store.state.handleKeydown);
+						if ("undefined" === typeof e.app.googleFonts) e.$set(e.app, "googleFonts", []);
+						for (var a = 0; a < e.app.googleFonts.length; a++) {
+							var fontId = e.app.googleFonts[a].replaceAll(" ", "+"),
+								url = "https://fonts.googleapis.com/css2?family=" + fontId + "&display=swap";
+							const l = document.createElement("link");
+							l.rel = "stylesheet";
+							l.href = url;
+							l.crossOrigin = "anonymous";
+							document.head.appendChild(l);
+						}
 						for (var b = 0; b < e.app.rows.length; b++) {
 							var coR = e.app.rows[b],
 								g = coR.id;
@@ -30072,7 +30348,21 @@
                         })
                     },
                     createNewGroup: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateGroupId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compG[s]) {
+								return generateGroupId()
+							} else {
+								return s
+							}
+						}
+						e = generateGroupId();
                         this.$store.commit({
                             type: "addNewGroup",
                             id: e,
@@ -31067,7 +31357,22 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewPointType: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generatePointTypeId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.pointTypeMap[s]) {
+								console.log(s);
+								return generatePointTypeId()
+							} else {
+								return s
+							}
+						}
+						e = generatePointTypeId();
                         this.$store.commit({
                             type: "addNewPointType",
                             id: e,
@@ -31954,7 +32259,21 @@
                         })
                     },
                     createNewGroup: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateGroupId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compG[s]) {
+								return generateGroupId()
+							} else {
+								return s
+							}
+						}
+						e = generateGroupId();
                         this.$store.commit({
                             type: "addNewGroup",
                             id: e,
@@ -34031,15 +34350,61 @@
                     },
                     cloneRow: function(e) {
                         this.backpack.splice(this.backpack.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.rowIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+						var t = "",
+							o = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateBackpackRowId() {
+							var s = "";
+							for (var f = 0; f < th.app.rowIdLength; f++) {
+								s += o.charAt(Math.floor(Math.random() * o.length));
+							}
+							if ("undefined" !== typeof th.app.compR[s]) {
+								return generateBackpackRowId()
+							} else {
+								return s
+							}
+						}
+						function generateBackpackObjectId() {
+							var s = "";
+							for (var f = 0; f < th.app.objectIdLength; f++) {
+								s += o.charAt(Math.floor(Math.random() * o.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateBackpackObjectId()
+							} else {
+								return s
+							}
+						}
+						t = generateBackpackRowId();
                         this.backpack[this.backpack.indexOf(e) + 1].id = t;
 						this.app.compR[t] = {rows: this.backpack.indexOf(e) + 1, type: "backpack"};
-                        for (var s = 0; s < this.backpack[this.backpack.indexOf(e) + 1].objects.length; s++) {
-                            t = "";
-                            for (var r = 0; r < this.app.objectIdLength; r++) t += o.charAt(Math.floor(Math.random() * o.length));
-                            this.backpack[this.backpack.indexOf(e) + 1].objects[s].id = t;
-							this.app.comp[t] = {rows: this.backpack.indexOf(e) + 1, objects: s, type: "backpack"};
+						if ("undefined" !== typeof this.backpack[this.backpack.indexOf(e) + 1].rowDesignGroups) {
+							for (var f = 0; f < this.backpack[this.backpack.indexOf(e) + 1].rowDesignGroups.length; f++) {
+								var co = this.app.compRDG[this.backpack[this.backpack.indexOf(e) + 1].rowDesignGroups[f].id],
+									coD = this.app.rowDesignGroups[co.designGroups];
+								coD.backpackElements.push({id: t});
+							}
+						}
+                        for (var r = 0; r < this.backpack[this.backpack.indexOf(e) + 1].objects.length; r++) {
+                            t = generateBackpackObjectId();
+                            this.backpack[this.backpack.indexOf(e) + 1].objects[r].id = t;
+							this.app.comp[t] = {rows: this.backpack.indexOf(e) + 1, objects: r, type: "backpack"};
+							if ("undefined" !== typeof this.backpack[this.backpack.indexOf(e) + 1].objects[r].objectDesignGroups) {
+								for (var d = 0; d < this.backpack[this.backpack.indexOf(e) + 1].objects[r].objectDesignGroups.length; d++) {
+									if ("undefined" !== typeof this.app.compODG[this.backpack[this.backpack.indexOf(e) + 1].objects[r].objectDesignGroups[d].id]) {
+										var co = this.app.compODG[this.backpack[this.backpack.indexOf(e) + 1].objects[r].objectDesignGroups[d].id],
+											coD = this.app.objectDesignGroups[co.designGroups];
+										coD.backpackElements.push({id: t});
+									}
+								}
+							}
                         }
+						for (var b = this.backpack.indexOf(e) + 2; b < this.backpack.length; b++) {
+							this.app.compR[this.backpack[b].id] = {rows: b, type: "backpack"};
+							for (var c = 0; c < this.backpack[b].objects.length; c++) {
+								this.app.comp[this.backpack[b].objects[c].id] = {rows: b, objects: c, type: "backpack"};
+							}
+						}
                     },
                     moveRowDown: function(e) {
                         var t = this.backpack.indexOf(e);
@@ -34060,7 +34425,21 @@
                         this.$emit("cleanCurrentComponent", "")
                     },
                     createNewBackpackRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.rowIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateBackpackRowId() {
+							var s = "";
+							for (var o = 0; o < th.app.rowIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compR[s]) {
+								return generateBackpackRowId()
+							} else {
+								return s
+							}
+						}
+						e = generateBackpackRowId();
                         this.backpack.push({
                             id: e,
                             title: "The Row",
@@ -34799,7 +35178,21 @@
                     },
                     createNewWord: function() {
                         "undefined" === typeof this.$store.state.app.words && (this.$store.state.app.words = []);
-                        for (var e = "#", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateWordId() {
+							var s = "#";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.wordMap[s]) {
+								return generateWordId()
+							} else {
+								return s
+							}
+						}
+						e = generateWordId();
                         this.$store.commit({
                             type: "addNewWord",
                             id: e,
@@ -35749,12 +36142,27 @@
                     },
                     createNewRowDesignGroup: function() {
 						if ("undefined" === typeof this.app.rowDesignGroups) this.$set(this.app, "rowDesignGroups", {});
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateRowDesignGroupId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compRDG[s]) {
+								return generateRowDesignGroupId()
+							} else {
+								return s
+							}
+						}
+						e = generateRowDesignGroupId();
                         this.$store.commit({
                             type: "addNewRowDesignGroup",
                             id: e,
                             name: "Design Group " + (this.rowDesignGroups.length + 1),
 							elements: [],
+							backpackElements: [],
 							activatedId: "",
 							styling: {}
                         });
@@ -35762,12 +36170,27 @@
                     },
 					createNewObjectDesignGroup: function() {
 						if ("undefined" === typeof this.app.objectDesignGroups) this.$set(this.app, "objectDesignGroups", {});
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 2; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectDesignGroupId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compODG[s]) {
+								return generateObjectDesignGroupId()
+							} else {
+								return s
+							}
+						}
+						e = generateObjectDesignGroupId();
                         this.$store.commit({
                             type: "addNewObjectDesignGroup",
                             id: e,
                             name: "Design Group " + (this.objectDesignGroups.length + 1),
 							elements: [],
+							backpackElements: [],
 							activatedId: "",
 							styling: {}
                         });
@@ -36078,7 +36501,21 @@
                     },
                     createNewGlobalRequirement: function() {
 						if ("undefined" === typeof this.app.globalRequirements) this.$set(this.app, "globalRequirements", []);
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < 4; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateGlobalRequirementId() {
+							var s = "";
+							for (var o = 0; o < 3; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compGR[s]) {
+								return generateGlobalRequirementId()
+							} else {
+								return s
+							}
+						}
+						e = generateGlobalRequirementId();
                         this.$store.commit({
                             type: "addNewGlobalRequirement",
                             id: e,
@@ -36137,7 +36574,42 @@
                     }
                 }, [o("v-card", [o("v-card-title", {
                     staticClass: "headline"
-                }, [e._v("Configure Global Settings")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", [o("v-switch", {
+                }, [e._v("Configure Global Settings")]), o("v-card-text", [o("v-container", [o("v-row", [o("v-col", {
+					staticClass: "pr-0",
+					attrs: {
+						cols: "8"
+					}
+				}, [o("v-combobox", {
+					ref: "combobox",
+                    attrs: {
+						dense: "",
+                        items: e.app.googleFonts,
+                        "item-text": "id",
+                        "item-value": "id",
+                        filled: "",
+                        label: "Imported Fonts",
+                        placeholder: "Insert Font Name",
+						hint: "Can import custom fonts from Google Fonts",
+						"persistent-hint": ""
+                    },
+                    model: {
+                        value: e.importFontName,
+                        callback: function(t) {
+							e.$set(e, "importFontName", t)
+                        },
+                        expression: "importFontName"
+                    }
+                })], 1), o("v-col", {
+					staticClass: "pl-0",
+					attrs: {
+						cols: "4"
+					}
+				}, [o("v-btn", {
+					staticClass: "pa-0 v-size--x-large",
+                    on: {
+                        click: e.importGoogleFont
+                    }
+                }, [e._v("Import")])], 1)], 1), o("v-row", [o("v-col", [o("v-switch", {
 					staticClass: "mt-n2 ms-3",
 					attrs: {
 						label: "Saved automatically every 10 minutes."
@@ -36357,12 +36829,12 @@
                         filled: "",
                         "hide-details": "",
                         type: "number",
-						min: 2
+						min: 4
                     },
                     model: {
                         value: e.app.rowIdLength,
                         callback: function(t) {
-							e.$set(e.app, "rowIdLength", Math.max(t, 2))
+							e.$set(e.app, "rowIdLength", Math.max(t, 4))
                         },
                         expression: "styling.rowIdLength"
                     }
@@ -36374,12 +36846,12 @@
                         filled: "",
                         "hide-details": "",
                         type: "number",
-						min: 2
+						min: 4
                     },
                     model: {
                         value: e.app.objectIdLength,
                         callback: function(t) {
-							e.$set(e.app, "objectIdLength", Math.max(t, 2))
+							e.$set(e.app, "objectIdLength", Math.max(t, 4))
                         },
                         expression: "styling.objectIdLength"
                     }
@@ -36397,7 +36869,8 @@
             SPi = {
                 data: function() {
                     return {
-                        dialog: !0
+                        dialog: !0,
+						importFontName: ""
                     }
                 },
 				components: {
@@ -36411,11 +36884,42 @@
                     },
 					vuetify: function() {
 						return this.$vuetify
+					},
+					globalVariables: function() {
+						return this.$store.state.globalVariables
 					}
                 },
                 methods: {
 					saveAutomatically: function(e) {
 						this.$store.commit("saveAutomatically", e)
+					},
+					importGoogleFont: function() {
+						this.$refs.combobox.blur();
+						this.$nextTick(() => {
+							var e = this,
+								t = e.importFontName.replaceAll(" ", "+"),
+								url = "https://fonts.googleapis.com/css2?family=" + t + "&display=swap";
+							if (e.app.googleFonts.includes(e.importFontName)) {
+								e.globalVariables.text = "Font: " + e.importFontName + " is already imported.", e.globalVariables.snackbar = !0;
+							} else {
+								fetch(url, {method: "head"}).then(o => {
+									if(o.ok) {
+										const l = document.createElement("link");
+										l.rel = "stylesheet";
+										l.href = url;
+										l.crossOrigin = "anonymous";
+										document.head.appendChild(l);
+										e.globalVariables.text = "Successfully Imported Font: " + e.importFontName, e.globalVariables.snackbar = !0;
+										e.app.googleFonts.push(e.importFontName);
+									} else {
+										e.globalVariables.text = "Failed to Import Font: " + e.importFontName, e.globalVariables.snackbar = !0;
+									}
+								}).catch(err => {
+									e.globalVariables.text = "Failed to Import Font: " + e.importFontName, e.globalVariables.snackbar = !0;
+									console.error(err);
+								});
+							}
+						})
 					},
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
@@ -36423,15 +36927,18 @@
                 }
             },
             SDi = SPi,
+			Cb = o("2b5d"),
             Szi = Object(w["a"])(SDi, SMi, SVi, !1, null, null, null),
             SLi = Szi.exports;
         x()(Szi, {
+			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
             VCardActions: j["a"],
             VCardText: j["b"],
             VCardTitle: j["c"],
             VCol: I["a"],
+			VCombobox: Cb["a"],
             VContainer: k["a"],
             VDialog: B["a"],
             VRow: S["a"],
@@ -38708,7 +39215,7 @@
                         }
                     }
                 }, [4 == e.object.template ? o("span", {
-                    staticClass: "ma-0",
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -38720,20 +39227,24 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },					
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38754,7 +39265,7 @@
                     },					
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38763,7 +39274,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -38777,14 +39288,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38805,7 +39320,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38814,7 +39329,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -38835,14 +39350,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38863,7 +39382,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38880,14 +39399,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38908,7 +39431,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38954,11 +39477,14 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
+                })] : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
                         key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -38969,15 +39495,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -38998,7 +39528,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39006,8 +39536,8 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 5 == e.object.template ? o("span", {
-                    staticClass: "ma-0",
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 5 == e.object.template ? o("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -39019,20 +39549,24 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39053,7 +39587,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39062,7 +39596,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -39076,14 +39610,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39104,7 +39642,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39113,7 +39651,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -39134,14 +39672,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39162,7 +39704,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39217,14 +39759,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39245,7 +39791,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39253,11 +39799,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
                         key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -39268,15 +39817,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39297,7 +39850,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39305,8 +39858,8 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
-                    staticClass: "ma-0",
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 1 == e.object.template || e.window.width < 1e3 || e.row.choicesShareTemplate ? o("span", {
+                    staticClass: "ma-0 d-flex flex-column align-center",
                     staticStyle: {
                         width: "100%"
                     }
@@ -39356,20 +39909,24 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), o("span", [!e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), !e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39390,7 +39947,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39399,7 +39956,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.scores, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "py-0"
                     }, [t.showScore && e.checkRequireds(t) && !e.row.objectScoreRemoved ? o("ObjectScore", {
@@ -39413,14 +39970,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39441,7 +40002,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39450,7 +40011,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -39471,14 +40032,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39499,7 +40064,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39516,14 +40081,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39544,7 +40113,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39552,11 +40121,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
                         key: t.index,
-                        staticClass: "pa-0"
-                    }, [o("ObjectAddon", {
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -39567,15 +40139,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39596,7 +40172,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39604,7 +40180,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 1) : 2 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
@@ -39653,7 +40229,7 @@
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
                 })] : e._e()], 1), o("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -39662,14 +40238,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39690,7 +40270,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39712,14 +40292,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39740,7 +40324,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39749,7 +40333,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -39770,14 +40354,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39798,7 +40386,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39814,14 +40402,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39842,7 +40434,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39850,14 +40442,14 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
                         key: t.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [o("ObjectAddon", {
                         attrs: {
                             isEditModeOn: e.isEditModeOn,
                             addon: t,
@@ -39868,15 +40460,19 @@
                                 t = e
                             }
                         }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39897,7 +40493,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39905,13 +40501,13 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2)], 2) : 3 == e.object.template && e.window.width > 1e3 ? o("v-row", {
                     staticClass: "ma-0 pa-0",
                     staticStyle: {
                         width: "100%"
                     }
                 }, [o("v-col", {
-                    staticClass: "pa-1",
+                    staticClass: "pa-1 d-flex flex-column align-center",
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
@@ -39920,14 +40516,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39948,7 +40548,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39970,14 +40570,18 @@
                             }
                         }
                     }) : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 1 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -39998,7 +40602,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -40007,7 +40611,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), e._l(e.object.requireds, (function(t) {
-                    return o("v-col", {
+                    return o("div", {
                         key: t.index,
                         staticClass: "pa-0"
                     }, [t.showRequired && !e.row.objectRequirementRemoved ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
@@ -40028,14 +40632,18 @@
                             innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
                         }
                     })] : e._e()], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 2 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -40056,7 +40664,7 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -40072,14 +40680,18 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectText, e.sanitizeArg))
                     }
-                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", [o("v-spacer"), o("v-btn", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 3 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
                     attrs: {
                         disabled: !e.checkRequireds(this.object),
                         icon: ""
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -40100,7 +40712,66 @@
                     },
                     on: {
                         click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
+                        }
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticStyle: {
+						"justify-content" : e.object.addonJustify
+					}
+				}, [e._l(e.object.addons, (function(t) {
+                    return o("ObjectAddon", {
+                        key: t.index,
+                        attrs: {
+                            isEditModeOn: e.isEditModeOn,
+                            addon: t,
+                            row: e.row
+                        },
+                        on: {
+                            addonWasChanged: function(e) {
+                                t = e
+                            }
+                        }
+                    })
+                }))], 1), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 4 ? o("v-row", {
+					staticStyle: {
+						"flex-grow": 0
+					}
+				}, [o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneLess(e.object, e.row)
+                        }
+                    }
+                }, [o("v-icon", {
+                    style: e.multiChoiceButton,
+                    attrs: {
+                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
+                    }
+                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
+                    staticClass: "pa-0",
+                    style: e.multiChoiceText,
+                    domProps: {
+                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
+                    }
+                }), o("v-spacer"), o("v-btn", {
+                    attrs: {
+                        disabled: !e.checkRequireds(this.object),
+                        icon: ""
+                    },
+                    on: {
+                        click: function(t) {
+                            return e.row.isInfoRow || e.object.isNotSelectable ? 0 : e.selectedOneMore(e.object, e.row)
                         }
                     }
                 }, [o("v-icon", {
@@ -40151,62 +40822,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e()], 1), e._l(e.object.addons, (function(t) {
-                    return o("v-col", {
-                        key: t.index,
-                        staticClass: "pa-0",
-                        attrs: {
-                            cols: "12"
-                        }
-                    }, [o("ObjectAddon", {
-                        attrs: {
-                            isEditModeOn: e.isEditModeOn,
-                            addon: t,
-                            row: e.row
-                        },
-                        on: {
-                            addonWasChanged: function(e) {
-                                t = e
-                            }
-                        }
-                    })], 1)
-                })), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", [o("v-spacer"), o("v-btn", {
-                    attrs: {
-                        disabled: !e.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneLess(e.object, e.row)
-                        }
-                    }
-                }, [o("v-icon", {
-                    style: e.multiChoiceButton,
-                    attrs: {
-                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [e._v("mdi-minus")])], 1), o("v-spacer"), o("v-col", {
-                    staticClass: "pa-0",
-                    style: e.multiChoiceText,
-                    domProps: {
-                        innerHTML: e._s(e.object.selectedThisManyTimesProp)
-                    }
-                }), o("v-spacer"), o("v-btn", {
-                    attrs: {
-                        disabled: !e.checkRequireds(this.object),
-                        icon: ""
-                    },
-                    on: {
-                        click: function(t) {
-                            return e.row.isInfoRow ? 0 : e.selectedOneMore(e.object, e.row)
-                        }
-                    }
-                }, [o("v-icon", {
-                    style: e.multiChoiceButton,
-                    attrs: {
-                        size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
-                    }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
+                })] : e._e()], 1)], 2) : e._e()], 1) : e._e(), o(e.currentComponent, {
                     tag: "component",
                     attrs: {
                         row: e.object
@@ -40256,7 +40872,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -40350,7 +40966,7 @@
 						expression: "addon.image"
 					}],
                     style: e.objectImage
-                })) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                })) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -40406,7 +41022,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -40472,7 +41088,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -40495,7 +41111,7 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -41165,7 +41781,13 @@
                         }, {
                             text: "Image right",
                             value: 3
-                        }],
+                        }, {
+							text: "Image bottom",
+							value: 4
+						}, {
+							text: "Image center",
+							value: 5
+						}],
                         pointReqOperators: [{
                             text: "+ More than",
                             value: "1"
@@ -41599,7 +42221,8 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						return e += ";", e
+						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						return e
                     },
                     objectImage: function() {
                         var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
@@ -45106,9 +45729,24 @@
 						if (this.linkedObjects.indexOf(e.id) == 0) this.$set(this, "linkedObjects", []);
                     },
                     cloneObject: function() {
-						var co = this.app.compR[this.row.id];
+						var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this,
+							co = this.app.compR[this.row.id];
+						function generateObjectId() {
+							var s = "";
+							for (var o = 0; o < th.app.objectIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
+                        this.row.objects.splice(this.row.objects.indexOf(this.object) + 1, 0, JSON.parse(JSON.stringify(this.object)));
                         this.row.objects.push(JSON.parse(JSON.stringify(this.object)));
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        e = generateObjectId();
                         this.row.objects[this.row.objects.length - 1].id = e;
 						this.app.comp[e] = {rows: this.app.rows.indexOf(this.row), objects: this.row.objects.indexOf(this.object) + 1, type: co.type};
 						for (var b = this.row.objects.indexOf(this.object) + 2; b < this.row.objects.length; b++) {
@@ -45724,7 +46362,21 @@
                             for (var s = 0; s < e.children.length; s++) this.findAllActiveObjects(e.children[s], t)
                     },
                     createNewObject: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.objectIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+                        var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateObjectId() {
+							var s = "";
+							for (var o = 0; o < th.app.objectIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
+						e = generateObjectId();
                         this.row.objects.push({
                             id: e,
                             title: this.app.defaultChoiceTitle,
@@ -51711,7 +52363,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customMultiTextFont,
@@ -51903,12 +52555,15 @@
                     }
                 },
                 computed: {
+					app: function() {
+						return this.$store.state.app
+					},
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
                     }
                 },
 				mounted: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize()
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), this.fontImport()
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -51917,6 +52572,11 @@
 					handleResize: function() {
 						this.window.width = window.innerWidth, this.window.height = window.innerHeight;
                     },
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentDesignComponent: function() {
                         this.$emit("cleanCurrentDesignComponent", "")
                     }
@@ -52406,7 +53066,7 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
-                        label: "Remove the space between addons"
+                        label: "Remove the space below the addon text"
                     },
                     model: {
                         value: e.styling.removeSpaceAddonIsOn,
@@ -53625,7 +54285,7 @@
                     staticClass: "auto shrink mr-2 mt-0",
                     attrs: {
                         "hide-details": "",
-                        label: "Remove the space between addons",
+                        label: "Remove the space below the addon text",
 						disabled: !e.styling.useAddonDesign
                     },
                     model: {
@@ -54544,7 +55204,7 @@
                 }), o("v-checkbox", {
 					staticClass: "shrink mr-2 mt-1 mb-n4",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customBarTextFont,
@@ -54754,11 +55414,22 @@
                     }
                 },
                 computed: {
+					app: function() {
+						return this.$store.state.app
+					},
                     styling: function() {
                         return this.$store.state.app.styling
                     }
                 },
+				mounted: function() {
+					this.fontImport()
+				},
                 methods: {
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentDesignComponent: function() {
                         this.$emit("cleanCurrentDesignComponent", "")
                     }
@@ -56048,7 +56719,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customRowTitle,
@@ -56149,7 +56820,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customRowText,
@@ -56250,7 +56921,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customObjectTitle,
@@ -56351,7 +57022,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customObjectText,
@@ -56452,7 +57123,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customAddonTitle,
@@ -56553,7 +57224,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customAddonText,
@@ -56654,7 +57325,7 @@
 				}, [o("v-checkbox", {
 					staticClass: "mr-2 mt-1 mb-n6",
 					attrs: {
-						label: "Use Custom Font?"
+						label: "Use Local Custom Font?"
 					},
 					model: {
 						value: e.styling.customScoreText,
@@ -56836,12 +57507,15 @@
                     }
                 },
                 computed: {
+					app: function() {
+						return this.$store.state.app
+					},
                     styling: function() {
                         return "private" === this.from ? this.row.styling : this.$store.state.app.styling
                     }
                 },
 				mounted: function() {
-                    window.addEventListener("resize", this.handleResize), this.handleResize()
+                    window.addEventListener("resize", this.handleResize), this.handleResize(), this.fontImport()
                 },
                 destroyed: function() {
                     window.removeEventListener("resize", this.handleResize)
@@ -56850,6 +57524,11 @@
 					handleResize: function() {
 						this.window.width = window.innerWidth, this.window.height = window.innerHeight;
                     },
+					fontImport: function() {
+						for (var a = 0; a < this.app.googleFonts.length; a++) {
+							this.textFonts.push({text: this.app.googleFonts[a], value: this.app.googleFonts[a]});
+						}
+					},
                     cleanCurrentDesignComponent: function() {
                         this.$emit("cleanCurrentDesignComponent", "")
                     }
@@ -56984,8 +57663,33 @@
 						return h > 0 ? (h + ":") : (rm + ":" + rs)
 					},
                     cloneRow: function(e) {
+						var t = "",
+							o = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
                         this.app.rows.splice(this.app.rows.indexOf(e) + 1, 0, JSON.parse(JSON.stringify(e)));
-                        for (var t = "", o = "abcdefghijklmnopqrstuvwxyz0123456789", i = 0; i < this.app.rowIdLength; i++) t += o.charAt(Math.floor(Math.random() * o.length));
+						function generateRowId() {
+							var s = "";
+							for (var f = 0; f < th.app.rowIdLength; f++) {
+								s += o.charAt(Math.floor(Math.random() * o.length));
+							}
+							if ("undefined" !== typeof th.app.compR[s]) {
+								return generateRowId()
+							} else {
+								return s
+							}
+						}
+						function generateObjectId() {
+							var s = "";
+							for (var f = 0; f < th.app.objectIdLength; f++) {
+								s += o.charAt(Math.floor(Math.random() * o.length));
+							}
+							if ("undefined" !== typeof th.app.comp[s]) {
+								return generateObjectId()
+							} else {
+								return s
+							}
+						}
+						t = generateRowId();
                         this.app.rows[this.app.rows.indexOf(e) + 1].id = t;
 						this.app.compR[t] = {rows: (this.app.rows.indexOf(e) + 1), type: "app"};
 						if ("undefined" !== typeof this.app.rows[this.app.rows.indexOf(e) + 1].rowDesignGroups) {
@@ -56995,22 +57699,21 @@
 								coD.elements.push({id: t});
 							}
 						}
-                        for (var s = 0; s < this.app.rows[this.app.rows.indexOf(e) + 1].objects.length; s++) {
-                            t = "";
-                            for (var r = 0; r < this.app.objectIdLength; r++) t += o.charAt(Math.floor(Math.random() * o.length));
-                            this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].id = t;
-							this.app.comp[t] = {rows: this.app.rows.indexOf(e) + 1, objects: s, type: "app"};
-							for (var c = 0; c < this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups.length; c++) {
-								if ("undefined" !== typeof this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups[c].id]) {
-									var co = this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].groups[c].id],
+                        for (var r = 0; r < this.app.rows[this.app.rows.indexOf(e) + 1].objects.length; r++) {
+                            t = generateObjectId();
+                            this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].id = t;
+							this.app.comp[t] = {rows: this.app.rows.indexOf(e) + 1, objects: r, type: "app"};
+							for (var c = 0; c < this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].groups.length; c++) {
+								if ("undefined" !== typeof this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].groups[c].id]) {
+									var co = this.app.compG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].groups[c].id],
 										coG = this.app.groups[co.groups];
 									coG.elements.push({id: t});
 								}
 							}
-							if ("undefined" !== typeof this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups) {
-								for (var d = 0; d < this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups.length; d++) {
-									if ("undefined" !== typeof this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups[d].id]) {
-										var co = this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[s].objectDesignGroups[d].id],
+							if ("undefined" !== typeof this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].objectDesignGroups) {
+								for (var d = 0; d < this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].objectDesignGroups.length; d++) {
+									if ("undefined" !== typeof this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].objectDesignGroups[d].id]) {
+										var co = this.app.compODG[this.app.rows[this.app.rows.indexOf(e) + 1].objects[r].objectDesignGroups[d].id],
 											coD = this.app.objectDesignGroups[co.designGroups];
 										coD.elements.push({id: t});
 									}
@@ -57033,7 +57736,21 @@
                         })
                     },
                     createNewRow: function() {
-                        for (var e = "", t = "abcdefghijklmnopqrstuvwxyz0123456789", o = 0; o < this.app.rowIdLength; o++) e += t.charAt(Math.floor(Math.random() * t.length));
+						var e = "",
+							t = "abcdefghijklmnopqrstuvwxyz0123456789",
+							th = this;
+						function generateRowId() {
+							var s = "";
+							for (var o = 0; o < th.app.rowIdLength; o++) {
+								s += t.charAt(Math.floor(Math.random() * t.length));
+							}
+							if ("undefined" !== typeof th.app.compR[s]) {
+								return generateRowId()
+							} else {
+								return s
+							}
+						}
+						e = generateRowId();
                         var i = JSON.parse(JSON.stringify(this.app.styling));
                         i.backgroundImage = "", i.rowBackgroundImage = "", i.objectBackgroundImage = "", this.app.rows.push({
                             id: e,
@@ -57750,6 +58467,7 @@
 						db: "",
 						drawer: !1,
 						exceptedScores: [],
+						extension: "png",
 						isTop: !1,
 						newActivated: "",
 						newActivatedList: [],
@@ -57946,7 +58664,8 @@
                         return !0
                     },
                     print: function() {
-						var e = this;
+						var e = this,
+							bSuccess = !1;
 						htmlToImage.toBlob(e.$refs.printThiss, {
 							backgroundColor: e.app.styling.backgroundColor,
 							type: "image/" + e.extension,
@@ -57962,70 +58681,124 @@
 							s.dataset.downloadurl = ["image/" + e.extension, s.download, s.href].join(":");
 							i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
 							s.dispatchEvent(i);
+							bSuccess = !0;
 						}).catch(function(error) {
-							console.log('Fail to generate image, Segmenting and recreating the image...', error);
-							var maxLength = 6e6;
-							var container = e.$refs.printThiss.cloneNode(true);
-
-							function splitNodes(node, maxLength) {
-								var parts = [];
-								var currentPart = document.createElement("div");
-								currentPart.style.cssText = node.style.cssText;
-								var currentLength = 0;
-
-								function addNodeToCurrentPart(node) {
-									var clone = node.cloneNode(true);
-									currentPart.appendChild(clone);
-									currentLength += (new XMLSerializer().serializeToString(node)).length;
-								}
-
-								Array.from(node.childNodes).forEach(function(child) {
-									var childLength = (new XMLSerializer().serializeToString(child)).length;
-									if (currentLength + childLength > maxLength) {
-										parts.push(currentPart.innerHTML);
-										currentPart = document.createElement("div");
+							if (!bSuccess) {
+								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
+								setTimeout(() => {
+									var maxLength = 6e6;
+									var container = e.$refs.printThiss.cloneNode(true);
+									function splitNodes(node, maxLength) {
+										var parts = [];
+										var currentPart = document.createElement("div");
 										currentPart.style.cssText = node.style.cssText;
-										currentLength = 0;
-									}
-									addNodeToCurrentPart(child);
-								});
-
-								if (currentPart.innerHTML) {
-									parts.push(currentPart.innerHTML);
-								}
-
-								return parts;
-							}
-
-							var parts = splitNodes(container, maxLength);
-
-							if (parts.length > 1) {
-								parts.forEach(function(part, index) {
-									var tempDiv = document.createElement("div");
-									tempDiv.innerHTML = part;
-									e.$refs.printThiss.appendChild(tempDiv);
-									htmlToImage.toBlob(tempDiv, {
-										backgroundColor: e.app.styling.backgroundColor,
-										type: "image/" + e.extension,
-										quality: 0.9,
-										filter: (node) => {
-											return node.nodeType !== Node.ELEMENT_NODE || !node.hasAttribute('data-html2canvas-ignore');
+										var currentLength = 0;
+										
+										function getBlobSize(node) {
+											const s = new XMLSerializer();
+											const str = s.serializeToString(node);
+											const blob = new Blob([str], {type: "image/" + e.extension});
+											return blob.size;
 										}
-									}).then(function(t) {
-										var i = document.createEvent("MouseEvents"),
-											s = document.createElement("a");
-										s.download = "Finalized_Build_Part_" + (index + 1) + "." + e.extension;
-										s.href = window.URL.createObjectURL(t);
-										s.dataset.downloadurl = ["image/" + e.extension, s.download, s.href].join(":");
-										i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-										s.dispatchEvent(i);
-										e.$refs.printThiss.removeChild(tempDiv);
-									}).catch(function(error) {
-										console.log('Fail to generate image', error);
-										e.$refs.printThiss.removeChild(tempDiv);
-										alert('Failed to download the image.\nPlease try again with a different browser.');
+										
+										function addNodeToCurrentPart(node) {
+											var clone = node.cloneNode(true);
+											currentPart.appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function addNodeToCurrentPartChild(node) {
+											var clone = node.cloneNode(true);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].childNodes[1].appendChild(clone);
+											currentLength += getBlobSize(node);
+										}
+										
+										function initNode(node) {
+											var c1 = node.cloneNode(false),
+												c2 = node.childNodes[0].cloneNode(false),
+												c3 = node.childNodes[0].childNodes[0].cloneNode(false),
+												c4 = node.childNodes[0].childNodes[0].childNodes[0].cloneNode(true),
+												c5 = node.childNodes[0].childNodes[0].childNodes[1].cloneNode(false);
+											currentPart.appendChild(c1);
+											currentPart.childNodes[0].appendChild(c2);
+											currentPart.childNodes[0].childNodes[0].appendChild(c3);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c4);
+											currentPart.childNodes[0].childNodes[0].childNodes[0].appendChild(c5);
+											currentLength += getBlobSize(c1);
+											currentLength += getBlobSize(c2);
+											currentLength += getBlobSize(c3);
+											currentLength += getBlobSize(c4);
+											currentLength += getBlobSize(c5);
+										}
+
+										Array.from(node.childNodes).forEach(function(child) {
+											var childLength = (new XMLSerializer().serializeToString(child)).length;
+											if (childLength > maxLength) {
+												var cParent = child.childNodes[0].childNodes[0],
+													cRow = cParent.childNodes[0];
+												if (currentLength > 0) parts.push(currentPart.innerHTML);
+												currentPart = document.createElement("div");
+												currentPart.style.cssText = node.style.cssText;
+												currentLength = 0;
+												initNode(child);
+												Array.from(cParent.childNodes[1].childNodes).forEach(function(c) {
+													var cLength = (new XMLSerializer().serializeToString(c)).length;
+													if (currentLength + cLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+														initNode(child);
+													}
+													addNodeToCurrentPartChild(c);
+												});
+											} else {
+												if (currentLength + childLength > maxLength) {
+														parts.push(currentPart.innerHTML);
+														currentPart = document.createElement("div");
+														currentPart.style.cssText = node.style.cssText;
+														currentLength = 0;
+												}
+												addNodeToCurrentPart(child);
+											}
+										});
+
+										if (currentPart.innerHTML) {
+											parts.push(currentPart.innerHTML);
+										}
+
+										return parts;
+									}
+
+									var parts = splitNodes(container, maxLength),
+										bS = !0;
+									var promises = parts.map(function(part, index) {
+										return new Promise(function(resolve) {
+											var tempDiv = document.createElement("div");
+											tempDiv.innerHTML = part;
+											htmlToImage.toBlob(tempDiv, {
+												backgroundColor: e.app.styling.backgroundColor,
+												type: "image/" + e.extension,
+												quality: 0.9,
+												filter: (node) => {
+													return node.nodeType !== Node.ELEMENT_NODE || !node.hasAttribute('data-html2canvas-ignore');
+												}
+											}).then(function(t) {
+												var i = document.createEvent("MouseEvents"),
+													s = document.createElement("a");
+												s.download = "Finalized_Build_Part_" + (index + 1) + "." +  + e.extension;
+												s.href = window.URL.createObjectURL(t);
+												s.dataset.downloadurl = ["image/" + e.extension, s.download, s.href].join(":");
+												i.initEvent("click", !0, !1, window, 0, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
+												s.dispatchEvent(i);
+											}).catch(function(err) {
+												e.text = "Failed to download the image. Please try again with a different browser.", e.snackbar = !0;
+											}).finally(function() {
+												resolve();
+											});
+										});
 									});
-								});
+								}, 1000);
 							}
 						});
                     },
@@ -60059,7 +60832,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("28.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("03.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 03.01.2025")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added an option in Global Settings to enable Music Player. "), o("br"), o("br"), e._v(" Added a feature to enable Music Player in Viewer. "), o("br"), o("br"), e._v(" Added a feature to search items in the dropdown menu. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where the default value of the Multi Choice Design was not being set automatically. "), o("br"), o("br"), e._v(" Fixed an issue where Multi Choice Design could not be set in the Private Styling/Design Group. "), o("br"), o("br"), e._v(" Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("28.12.2024")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -61288,7 +62101,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.15.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.16.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -61608,6 +62421,7 @@
 						rowDesignGroups: [],
 						objectDesignGroups: [],
 						globalRequirements: [],
+						googleFonts: [],
                         chapters: [],
                         activated: [],
                         rows: [],

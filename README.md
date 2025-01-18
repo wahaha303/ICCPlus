@@ -123,6 +123,10 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added an option in Global Settings to enable Music Player.
  - Added a feature to enable Music Player in Viewer.
  - Added a feature to search items in the dropdown menu.
+ - Added a feature to prevent the generation of duplicate IDs when creating Row or Choice.
+ - Added a feature to apply justify to the addons.
+ - Added a feature to set tooltip in External URL Image.
+ - Added an option in Global Settings to import custom fonts from Google Fonts.
 
 ## Fixed
 
@@ -218,3 +222,5 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where the default value of the Multi Choice Design was not being set automatically.
  - Fixed an issue where Multi Choice Design could not be set in the Private Styling/Design Group.
  - Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group.
+ - Fixed an issue where lazy load was not applied to the addon image.
+ - Fixed an issue where the multi-choice with the 'Select Impossible' function enabled could still be selected.
