@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.16.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.16.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to prevent the generation of duplicate IDs when creating Row or Choice. "), o("br"), e._v(" Added a feature to apply justify to the addons. "), o("br"), e._v(" Added a feature to set tooltip in External URL Image. "), o("br"), e._v(" Added an option in Global Settings to import custom fonts from Google Fonts. ")]), o("v-col", {
+                }, [e._v(" Added a feature to prevent the generation of duplicate IDs when creating Row or Choice. "), o("br"), e._v(" Added a feature to apply justify to the addons. "), o("br"), e._v(" Added a feature to set tooltip in External URL Image. "), o("br"), e._v(" Added an option in Global Settings to import custom fonts from Google Fonts. "), o("br"), e._v(" Added an option in Global Settings to change the cursor type when hovering over choices. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -3708,7 +3708,11 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -3976,7 +3980,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), o("v-col", {
+                })] : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -4048,7 +4052,11 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -4316,7 +4324,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -4426,7 +4434,11 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -4656,7 +4668,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -4768,7 +4780,11 @@
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [!e.row.objectTitleRemoved ? o("h3", {
+                }, [o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
@@ -4977,7 +4993,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -5046,7 +5062,11 @@
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [!e.row.objectTitleRemoved ? o("h3", {
+                }, [o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
@@ -5255,7 +5275,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -10243,7 +10263,9 @@
                             e.currentComponent = t
                         }
                     }
-                })], 1) : e.pointType.iconIsOn && !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                })], 1) : e.pointType.iconIsOn && !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
@@ -10270,7 +10292,9 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : ""), e.sanitizeArg))
                     }
-                })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", [o("p", {
@@ -10297,7 +10321,9 @@
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()])])], 1) : e.score.showScore && !e.pointType.iconIsOn && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                }) : e._e()])])], 1) : e.score.showScore && !e.pointType.iconIsOn && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", [o("p", {
@@ -10426,7 +10452,7 @@
                         return this.$store.state.app.styling
                     },
                     scoreText: function() {
-                        var e = 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";display: flex; align-items: center; justify-content:center;";
+                        var e = 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";display: flex; align-items: " + this.styling.scoreTextAlign + "; justify-content:" + this.styling.scoreTextAlign + ";";
                         return "undefined" !== typeof this.pointType && (this.pointType.pointColorsIsOn ? this.posOrNeg ? e += "color: " + this.pointType.positiveColor.hex + ";" : e += "color: " + this.pointType.negativeColor.hex + ";" : e += "color: " + this.styling.scoreTextColor + ";"), e
                     },
                     scoreValue: function() {
@@ -18659,7 +18685,7 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						e += (o && this.app.isPointerCursor && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";");
 						return e
                     },
                     findRowTitle: function() {
@@ -36821,6 +36847,18 @@
 						},
 						expression: "app.showMusicPlayer"
 					}
+				}), o("v-switch", {
+					staticClass: "mt-n2 ms-3",
+					attrs: {
+						label: "Change the cursor to pointer when hovering over choices."
+					},
+					model: {
+						value: e.app.isPointerCursor,
+						callback: function(o) {
+							e.$set(e.app, "isPointerCursor", o);
+						},
+						expression: "app.isPointerCursor"
+					}
 				}), o("v-text-field", {
 					staticClass: "pb-2",
                     attrs: {
@@ -39227,7 +39265,11 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -39477,7 +39519,7 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), o("v-col", {
+                })] : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -39549,7 +39591,11 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.findRowTitle, e.sanitizeArg))
                     }
-                })], 1) : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })], 1) : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -39799,7 +39845,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -39909,7 +39955,11 @@
                         expression: "object.image"
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
-                })] : e._e(), !e.row.objectTitleRemoved ? o("h3", {
+                })] : e._e(), o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     staticClass: "mb-0",
                     style: e.objectTitle,
                     domProps: {
@@ -40121,7 +40171,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -40233,12 +40283,16 @@
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [o("h3", {
+                }, [o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
                     }
-                }), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
+                }) : e._e(), e.object.isSelectableMultiple && e.multiChoiceCounter && e.app.styling.multiChoiceCounterPosition === 0 ? o("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -40442,7 +40496,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -40511,7 +40565,11 @@
 					staticStyle: {
 						"max-width": (100 - e.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [!e.row.objectTitleRemoved ? o("h3", {
+                }, [o("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!e.row.objectTitleRemoved ? o("h3", {
                     style: e.objectTitle,
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceObjectTitleText, e.sanitizeArg))
@@ -40720,7 +40778,7 @@
                     attrs: {
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e(), o("v-col", {
+                }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
@@ -41531,7 +41589,9 @@
                     o = e._self._c || t;
                 return o("v-col", {
                     staticClass: "pa-0"
-                }, [e.pointType.iconIsOn && !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                }, [e.pointType.iconIsOn && !e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", {
@@ -41558,7 +41618,9 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize((e.score.hideValue ? "" : (e.score.isRandom && !e.score.setValue ? (e.score.maxValue < 0 ? (e.scoreMaxValue + " ~ " + e.scoreMinValue) : (e.scoreMinValue + " ~ " + e.scoreMaxValue)) : (e.score.discountIsOn && e.score.discountShow ? e.score.discountScore : e.scoreValue))) + " " + e.score.afterText + (e.score.discountIsOn && e.score.discountShow ? e.score.discountAfterText : ""), e.sanitizeArg))
                     }
-                })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                })])])], 1) : e.pointType.iconIsOn && e.pointType.imageSidePlacement && e.score.showScore && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", [o("p", {
@@ -41585,7 +41647,9 @@
                     attrs: {
                         src: e.pointType.image
                     }
-                }) : e._e()])])], 1) : e.score.showScore && !e.pointType.iconIsOn && e.isPointtypeActivated ? o("v-row", [o("v-col", {
+                }) : e._e()])])], 1) : e.score.showScore && !e.pointType.iconIsOn && e.isPointtypeActivated ? o("v-row", {
+					staticClass: "ma-0"
+				}, [o("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: e.scoreText
                 }, [o("div", [o("p", {
@@ -42221,7 +42285,7 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						e += (o && this.app.isPointerCursor && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";");
 						return e
                     },
                     objectImage: function() {
@@ -62101,7 +62165,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.16.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.16.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"
@@ -62390,6 +62454,7 @@
                         isDesignOpen: !1,
                         isViewerVersion: !1,
 						isFadingOut: !1,
+						isPointerCursor: !1,
                         backpack: [],
 						bgmPlayInterval: 0,
 						bgmTitleInterval: 0,

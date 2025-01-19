@@ -127,6 +127,7 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to apply justify to the addons.
  - Added a feature to set tooltip in External URL Image.
  - Added an option in Global Settings to import custom fonts from Google Fonts.
+ - Added an option in Global Settings to change the cursor type when hovering over choices.
 
 ## Fixed
 

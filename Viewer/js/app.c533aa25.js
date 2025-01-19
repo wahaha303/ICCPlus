@@ -993,7 +993,11 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
                     }
-                })], 1) : t._e(), !t.row.objectTitleRemoved ? i("h3", {
+                })], 1) : t._e(), i("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
@@ -1243,7 +1247,7 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                })] : t._e(), i("v-col", {
+                })] : t._e()], 2), i("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
@@ -1315,7 +1319,11 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.findRowTitle, t.sanitizeArg))
                     }
-                })], 1) : t._e(), !t.row.objectTitleRemoved ? i("h3", {
+                })], 1) : t._e(), i("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
@@ -1565,7 +1573,7 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
@@ -1675,7 +1683,11 @@
                         expression: "object.image"
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
-                })] : t._e(), !t.row.objectTitleRemoved ? i("h3", {
+                })] : t._e(), i("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!t.row.objectTitleRemoved ? i("h3", {
                     staticClass: "mb-0",
                     style: t.objectTitle,
                     domProps: {
@@ -1887,7 +1899,7 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
@@ -1999,7 +2011,11 @@
 					staticStyle: {
 						"max-width": (100 - t.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [!t.row.objectTitleRemoved ? i("h3", {
+                }, [i("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!t.row.objectTitleRemoved ? i("h3", {
                     style: t.objectTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
@@ -2208,7 +2224,7 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
@@ -2277,7 +2293,11 @@
 					staticStyle: {
 						"max-width": (100 - t.objectImageStyling.objectImageBoxWidth) + "%"
 					}
-                }, [!t.row.objectTitleRemoved ? i("h3", {
+                }, [i("span", {
+					staticStyle: {
+						width: "100%"
+					}
+				}, [!t.row.objectTitleRemoved ? i("h3", {
                     style: t.objectTitle,
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
@@ -2486,7 +2506,7 @@
                     attrs: {
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
-                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e(), i("v-col", {
+                }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
 					staticClass: "d-flex flex-column flex-sm-fill pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
@@ -3303,7 +3323,9 @@
                     i = t._self._c || e;
                 return i("v-col", {
                     staticClass: "pa-0"
-                }, [t.pointType.iconIsOn && !t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
+                }, [t.pointType.iconIsOn && !t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", {
+					staticClass: "ma-0"
+				}, [i("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: t.scoreText
                 }, [i("div", {
@@ -3330,7 +3352,9 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize((t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : (t.score.discountIsOn && t.score.discountShow ? t.score.discountScore : t.scoreValue))) + " " + t.score.afterText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountAfterText : ""), t.sanitizeArg))
                     }
-                })])])], 1) : t.pointType.iconIsOn && t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", [i("v-col", {
+                })])])], 1) : t.pointType.iconIsOn && t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", {
+					staticClass: "ma-0"
+				}, [i("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: t.scoreText
                 }, [i("div", [i("p", {
@@ -3357,7 +3381,9 @@
                     attrs: {
                         src: t.pointType.image
                     }
-                }) : t._e()])])], 1) : t.score.showScore && !t.pointType.iconIsOn && t.isPointtypeActivated ? i("v-row", [i("v-col", {
+                }) : t._e()])])], 1) : t.score.showScore && !t.pointType.iconIsOn && t.isPointtypeActivated ? i("v-row", {
+					staticClass: "ma-0"
+				}, [i("v-col", {
                     staticClass: "pa-0 ma-0",
                     style: t.scoreText
                 }, [i("div", [i("p", {
@@ -3420,7 +3446,7 @@
                         return this.$store.state.app.styling
                     },
                     scoreText: function() {
-                        var t = 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";display: flex; align-items: center; justify-content:center;";
+                        var t = 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";display: flex; align-items: " + this.styling.scoreTextAlign + "; justify-content:" + this.styling.scoreTextAlign + ";";
                         return "undefined" !== typeof this.pointType && (this.pointType.pointColorsIsOn ? this.posOrNeg ? t += "color: " + this.pointType.positiveColor.hex + ";" : t += "color: " + this.pointType.negativeColor.hex + ";" : t += "color: " + this.styling.scoreTextColor + ";"), t
                     },
                     scoreValue: function() {
@@ -4364,7 +4390,7 @@
 							if (this.backgroundStyling.objectBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
 							e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.objectStyling.objectGradientIsOn && (e += ";background-image: linear-gradient(" + this.objectStyling.objectGradientOnReq + ")");
 						}
-						e += (o && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";cursor: default;");
+						e += (o && this.app.isPointerCursor && !this.object.isNotSelectable && !this.object.isSelectableMultiple ? ";cursor: pointer;" : ";");
 						return e
                     },
                     objectImage: function() {
@@ -17161,6 +17187,7 @@
                         isDesignOpen: !1,
                         isViewerVersion: !1,
 						isFadingOut: !1,
+						isPointerCursor: !1,
                         backpack: [],
 						bgmPlayInterval: 0,
 						bgmTitleInterval: 0,
@@ -17191,6 +17218,7 @@
 						rowDesignGroups: [],
 						objectDesignGroups: [],
 						globalRequirements: [],
+						googleFonts: [],
                         chapters: [],
                         activated: [],
                         rows: [],
