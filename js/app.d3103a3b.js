@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.16.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.16.2 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -361,6 +361,10 @@
                         }
                     }
                 }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-clipboard-list")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v(" See ID/Title List ")])], 1)], 1), o("v-list-item", e._g({
+                    on: {
+                        click: e.resetState
+                    }
+                }, e.on), [o("v-list-item-icon", [o("v-icon", [e._v("mdi-reload")])], 1), o("v-list-item-content", [o("v-list-item-title", [e._v("Break the Freeze")])], 1)], 1), o("v-list-item", e._g({
                     on: {
                         click: function(t) {
 							if (!e.app.disableAlterMenu) e.drawer = !e.drawer
@@ -3981,7 +3985,7 @@
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
                 })] : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -4325,7 +4329,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -4669,7 +4673,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -4994,7 +4998,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -5276,7 +5280,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -39520,7 +39524,7 @@
                     }],
                     style: "" != e.object.image ? e.objectImage : ""
                 })] : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -39846,7 +39850,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -40172,7 +40176,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -40497,7 +40501,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -40779,7 +40783,7 @@
                         size: e.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [e._v("mdi-plus")])], 1), o("v-spacer")], 1) : e._e()], 2), o("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : e.object.addonJustify
 					}
@@ -57936,6 +57940,57 @@
                     cleanCurrentComponent: function() {
                         this.$emit("cleanCurrentComponent", "")
                     },
+					resetState: function() {
+						var e = this;
+						e.$set(e.app, "comp", {});
+						e.$set(e.app, "compR", {});
+						e.$set(e.app, "compG", {});
+						e.$set(e.app, "compODG", {});
+						e.$set(e.app, "compRDG", {});
+						e.$set(e.app, "compGR", {});
+						if ("undefined" !== typeof e.app.pointTypes) e.app.pointTypes.forEach(pt => {e.$set(e.app.pointTypeMap, pt.id, pt.startingSum)});
+						if ("undefined" !== typeof e.app.words) e.app.words.forEach(w => {e.$set(e.app.wordMap, w.id, w.replaceText)});
+						if ("undefined" !== typeof e.app.rows) e.app.rows.forEach(row => {row.objects.filter(object => object.isMultipleUseVariable).forEach(o => {e.$set(e.app.objectMap, o.id, o.multipleUseVariable)})});
+						for (var b = 0; b < e.app.rows.length; b++) {
+							var coR = e.app.rows[b],
+								g = coR.id;
+							e.app.compR[g] = {rows: b, type: "app"};
+							if ("undefined" === typeof coR.debugTitle) e.$set(coR, "debugTitle", "");
+							for (var c = 0; c < coR.objects.length; c++) {
+								var coO = coR.objects[c],
+									d = coO.id;
+								e.app.comp[d] = {rows: b, objects: c, type: "app"};
+							}
+						}
+						for (var b = 0; b < e.app.backpack.length; b++) {
+							var coR = e.app.backpack[b],
+								g = coR.id;
+							e.app.compR[g] = {rows: b, type: "backpack"};
+							for (var c = 0; c < coR.objects.length; c++) {
+								var coO = coR.objects[c],
+									d = coO.id;
+								e.app.comp[d] = {rows: b, objects: c, type: "backpack"};
+							}
+						}
+						for (var f = 0; f < e.app.groups.length; f++) {
+							var r = e.app.groups[f].id;
+							e.app.compG[r] = {groups: f};
+						}
+						for (var h = 0; h < e.app.objectDesignGroups.length; h++) {
+							var oDG = e.app.objectDesignGroups[h],
+								i = oDG.id;
+							e.app.compODG[i] = {designGroups: h};
+						}
+						for (var h = 0; h < e.app.rowDesignGroups.length; h++) {
+							var rDG = e.app.rowDesignGroups[h],
+								i = rDG.id;
+							e.app.compRDG[i] = {designGroups: h};
+						}
+						for (var h = 0; h < e.app.globalRequirements.length; h++) {
+							var i = e.app.globalRequirements[h].id;
+							e.app.compGR[i] = {globalRequirements: h};
+						}
+					},
 					isPointtypeActivated: function(e) {
 						if ("" != e.activatedId) {
 							if ("undefined" !== typeof this.app.compGR[e.activatedId]) {
@@ -62165,7 +62220,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.16.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
+                }, [e._v("New Viewer 1.16.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest "), o("br")]), o("p", [o("a", {
                     attrs: {
                         href: "https://mega.nz/file/mjoxVbpT#idyHx8JAxxAepfvmOj95Of7E-KfA89yT3RCLVOo4POM",
 						target: "_blank"

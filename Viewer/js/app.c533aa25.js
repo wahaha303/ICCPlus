@@ -1248,7 +1248,7 @@
                     }],
                     style: "" != t.object.image ? t.objectImage : ""
                 })] : t._e()], 2), i("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
 					}
@@ -1574,7 +1574,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
 					}
@@ -1900,7 +1900,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
 					}
@@ -2225,7 +2225,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
 					}
@@ -2507,7 +2507,7 @@
                         size: t.multiChoiceStyling.multiChoiceCounterSize + "%"
                     }
                 }, [t._v("mdi-plus")])], 1), i("v-spacer")], 1) : t._e()], 2), i("v-col", {
-					staticClass: "d-flex flex-column flex-sm-fill pa-0",
+					staticClass: "d-flex flex-column flex pa-0",
 					staticStyle: {
 						"justify-content" : t.object.addonJustify
 					}
