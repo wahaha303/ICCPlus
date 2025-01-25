@@ -6017,7 +6017,7 @@
 							coO = coR.objects[co.objects];
 						if (coO.isActive) {
 							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
-							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
 								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
 							}
 							if (coO.isSelectableMultiple) {
@@ -6069,6 +6069,70 @@
 								if (coO.isActive && !e.isNotDeactivate) {
 									if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
 									this.activateObject(coO, coR);
+								}
+							}
+						}
+					},
+					forceDeactivateMul: function(e, t, o) {
+						var co = this.app.comp[t],
+							coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+							coO = coR.objects[co.objects];
+						if (coO.isActive) {
+							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+							}
+							if (coO.isSelectableMultiple) {
+								if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == t)) {
+									for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
+										var cFA = e.cancelForcedActivated[AC].split("/ON#");
+										if (cFA[0] == t) {
+											EE = parseInt(o) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
+											break
+										}
+									}
+									if (EE > 0) {
+										for (var n = 0; n < EE; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (EE < 0) {
+										for (var pp = 0; pp < -1 * EE; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								} else {
+									if (ee = o, ee > 0) {
+										for (var n = 0; n < ee; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (ee < 0) {
+										for (var pp = 0; pp < -1 * ee; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								}
+							} else {
+								if (e.selectedThisManyTimesProp == 0) {
+									if (coO.isActive && !e.isNotDeactivate) {
+										if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+										this.activateObject(coO, coR);
+									}
 								}
 							}
 						}
@@ -6197,6 +6261,68 @@
 							}
 						}
 					},
+					forceRandomDeactivateMul: function(e, t, o) {
+						var co = this.app.comp[t],
+							coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+							coO = coR.objects[co.objects];
+						if (coO.isActive) {
+							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+							}
+							if (coO.isSelectableMultiple) {
+								if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == t)) {
+									for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
+										var cFA = e.cancelForcedActivated[AC].split("/ON#");
+										if (cFA[0] == t) {
+											EE = parseInt(o) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
+											break
+										}
+									}
+									if (EE > 0) {
+										for (var n = 0; n < EE; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (EE < 0) {
+										for (var pp = 0; pp < -1 * EE; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								} else {
+									if (ee = o, ee > 0) {
+										for (var n = 0; n < ee; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (ee < 0) {
+										for (var pp = 0; pp < -1 * ee; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								}
+							} else {
+								if (coO.isActive && !e.isNotDeactivate) {
+									if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+									this.activateObject(coO, coR);
+								}
+							}
+						}
+					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
@@ -6266,7 +6392,7 @@
 														} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
 															var coG = this.app.compG[pv[0]],
 																coGE = this.app.groups[coG.groups].elements;
-															for (var h = 0; h < coGE.length; h++) {
+															for (var h = coGE.length - 1; h >= 0; h--) {
 																if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
 																	this.forceDeactivate(e, coGE[h].id, pnV);
 																}
@@ -6901,7 +7027,7 @@
 													} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
 														var coG = this.app.compG[pv[0]],
 															coGE = this.app.groups[coG.groups].elements;
-														for (var h = 0; h < coGE.length; h++) {
+														for (var h = coGE.length - 1; h >= 0; h--) {
 															if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
 																this.forceDeactivate(e, coGE[h].id, pnV);
 															}
@@ -7575,134 +7701,25 @@
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 												for (var v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-													var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+													var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#"),
+														anRM = aRM.length > 1 ? aRM[1] : 1;
 													if ("undefined" !== typeof this.app.comp[aRM[0]]) {
-														var co = this.app.comp[aRM[0]],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														if (coO.isActive) {
-															if (!e.isAllowDeselect) coO.forcedActivated = !1;
-															if (coO.isSelectableMultiple) {
-																if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
-																	for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
-																		var cFA = e.cancelForcedActivated[AC].split("/ON#");
-																		if (cFA[0] == aRM[0]) {
-																			EE = parseInt(aRM[1]) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
-																			break
-																		}
-																	}
-																	if (EE > 0) {
-																		for (var n = 0; n < EE; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (EE < 0) {
-																		for (var pp = 0; pp < -1 * EE; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																} else {
-																	var ee = aRM[1];
-																	if (ee > 0) {
-																		for (var n = 0; n < ee; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (ee < 0) {
-																		for (var pp = 0; pp < -1 * ee; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																}
-															} else {
-																if (coO.isActive && !e.isNotDeactivate) {
-																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																	this.activateObject(coO, coR);
-																}
-															}
-														}
+														this.forceRandomDeactivateMul(e, aRM[0], anRM);
 													}
 												}
 												e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 											} else {
 												for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-													var pv = p[v].split("/ON#");
+													var pv = p[v].split("/ON#"),
+														pnV = pv.length > 1 ? pv[1] : 1;
 													if ("undefined" !== this.app.comp[pv[0]]) {
-														var co = this.app.comp[pv[0]],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
-															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-														}
-														if (coO.isActive) {
-															if (e.selectedThisManyTimesProp == 0 && !e.isAllowDeselect) coO.forcedActivated = !1;
-															if (coO.isSelectableMultiple) {
-																if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
-																	for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
-																		var cFA = e.cancelForcedActivated[AC].split("/ON#");
-																		if (cFA[0] == pv[0]) {
-																			EE = parseInt(pv[1]) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
-																			break
-																		}
-																	}
-																	if (EE > 0) {
-																		for (var n = 0; n < EE; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (EE < 0) {
-																		for (var pp = 0; pp < -1 * EE; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coR.numMultipleTimesMinus++;
-																		}
-																	}
-																} else {
-																	var ee = pv[1];
-																	if (ee > 0) {
-																		for (var n = 0; n < ee; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (ee < 0) {
-																		for (var pp = 0; pp < -1 * ee; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																}
-															} else {
-																if (e.selectedThisManyTimesProp == 0) {
-																	if (coO.isActive && !e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.activateObject(coO, coR);
-																	}
-																}
+														this.forceDeactivateMul(e, pv[0], pnV);
+													} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
+														var coG = this.app.compG[pv[0]],
+															coGE = this.app.groups[coG.groups].elements;
+														for (var h = coGE.length - 1; h >= 0; h--) {
+															if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
+																this.forceDeactivateMul(e, coGE[h].id, pnV);
 															}
 														}
 													}
@@ -9879,7 +9896,7 @@
 							coO = coR.objects[co.objects];
 						if (coO.isActive) {
 							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
-							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").includes(e.id)) {
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
 								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
 							}
 							if (coO.isSelectableMultiple) {
@@ -9931,6 +9948,70 @@
 								if (coO.isActive && !e.isNotDeactivate) {
 									if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
 									this.activateObject(coO, coR);
+								}
+							}
+						}
+					},
+					forceDeactivateMul: function(e, t, o) {
+						var co = this.app.comp[t],
+							coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+							coO = coR.objects[co.objects];
+						if (coO.isActive) {
+							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+							}
+							if (coO.isSelectableMultiple) {
+								if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == t)) {
+									for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
+										var cFA = e.cancelForcedActivated[AC].split("/ON#");
+										if (cFA[0] == t) {
+											EE = parseInt(o) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
+											break
+										}
+									}
+									if (EE > 0) {
+										for (var n = 0; n < EE; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (EE < 0) {
+										for (var pp = 0; pp < -1 * EE; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								} else {
+									if (ee = o, ee > 0) {
+										for (var n = 0; n < ee; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (ee < 0) {
+										for (var pp = 0; pp < -1 * ee; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								}
+							} else {
+								if (e.selectedThisManyTimesProp == 0) {
+									if (coO.isActive && !e.isNotDeactivate) {
+										if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+										this.activateObject(coO, coR);
+									}
 								}
 							}
 						}
@@ -10059,6 +10140,68 @@
 							}
 						}
 					},
+					forceRandomDeactivateMul: function(e, t, o) {
+						var co = this.app.comp[t],
+							coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+							coO = coR.objects[co.objects];
+						if (coO.isActive) {
+							if (!e.isAllowDeselect) this.$set(coO, "forcedActivated", !1);
+							if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
+								if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
+							}
+							if (coO.isSelectableMultiple) {
+								if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == t)) {
+									for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
+										var cFA = e.cancelForcedActivated[AC].split("/ON#");
+										if (cFA[0] == t) {
+											EE = parseInt(o) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
+											break
+										}
+									}
+									if (EE > 0) {
+										for (var n = 0; n < EE; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (EE < 0) {
+										for (var pp = 0; pp < -1 * EE; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								} else {
+									if (ee = o, ee > 0) {
+										for (var n = 0; n < ee; n++) {
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus - 1);
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneLess(coO, coR);
+											}
+										}
+									} else if (ee < 0) {
+										for (var pp = 0; pp < -1 * ee; pp++) {
+											if (!e.isNotDeactivate) {
+												if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+												this.selectedOneMore(coO, coR);
+											}
+											if (!e.isAllowDeselect) this.$set(coO, "numMultipleTimesMinus", coO.numMultipleTimesMinus + 1);
+										}
+									}
+								}
+							} else {
+								if (coO.isActive && !e.isNotDeactivate) {
+									if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
+									this.activateObject(coO, coR);
+								}
+							}
+						}
+					},
                     activateObject: function(e, t) {
 						var rowType = this.app.compR[t.id].type;
 						var eid = e.isMultipleUseVariable ? e.id + "/ON#" + e.multipleUseVariable : e.id;
@@ -10128,7 +10271,7 @@
 														} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
 															var coG = this.app.compG[pv[0]],
 																coGE = this.app.groups[coG.groups].elements;
-															for (var h = 0; h < coGE.length; h++) {
+															for (var h = coGE.length - 1; h >= 0; h--) {
 																if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
 																	this.forceDeactivate(e, coGE[h].id, pnV);
 																}
@@ -10763,7 +10906,7 @@
 													} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
 														var coG = this.app.compG[pv[0]],
 															coGE = this.app.groups[coG.groups].elements;
-														for (var h = 0; h < coGE.length; h++) {
+														for (var h = coGE.length - 1; h >= 0; h--) {
 															if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
 																this.forceDeactivate(e, coGE[h].id, pnV);
 															}
@@ -11437,134 +11580,25 @@
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandomMul && e.activatedRandomMul.length > 0) {
 												for (var v = e.activatedRandomMul[e.selectedThisManyTimesProp].length - 1; v >= 0; v--) {
-													var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#");
+													var aRM = e.activatedRandomMul[e.selectedThisManyTimesProp][v].split("/ON#"),
+														anRM = aRM.length > 1 ? aRM[1] : 1;
 													if ("undefined" !== typeof this.app.comp[aRM[0]]) {
-														var co = this.app.comp[aRM[0]],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														if (coO.isActive) {
-															if (!e.isAllowDeselect) coO.forcedActivated = !1;
-															if (coO.isSelectableMultiple) {
-																if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == aRM[0])) {
-																	for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
-																		var cFA = e.cancelForcedActivated[AC].split("/ON#");
-																		if (cFA[0] == aRM[0]) {
-																			EE = parseInt(aRM[1]) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
-																			break
-																		}
-																	}
-																	if (EE > 0) {
-																		for (var n = 0; n < EE; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (EE < 0) {
-																		for (var pp = 0; pp < -1 * EE; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																} else {
-																	var ee = aRM[1];
-																	if (ee > 0) {
-																		for (var n = 0; n < ee; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (ee < 0) {
-																		for (var pp = 0; pp < -1 * ee; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																}
-															} else {
-																if (coO.isActive && !e.isNotDeactivate) {
-																	if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																	this.activateObject(coO, coR);
-																}
-															}
-														}
+														this.forceRandomDeactivateMul(e, aRM[0], anRM);
 													}
 												}
 												e.activatedRandomMul.splice(e.selectedThisManyTimesProp, 1);
 											} else {
 												for (var p = e.activateThisChoice.split(","), v = p.length - 1; v >= 0; v--) {
-													var pv = p[v].split("/ON#");
+													var pv = p[v].split("/ON#"),
+														pnV = pv.length > 1 ? pv[1] : 1;
 													if ("undefined" !== this.app.comp[pv[0]]) {
-														var co = this.app.comp[pv[0]],
-															coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-															coO = coR.objects[co.objects];
-														if (coO.activateOtherChoice && "undefined" !== typeof coO.activateThisChoice && coO.activateThisChoice.split(",").some(item => item.split("/ON#")[0] == e.id)) {
-															if (!this.linkedObjects.includes(e.id)) this.linkedObjects.push(e.id);
-														}
-														if (coO.isActive) {
-															if (e.selectedThisManyTimesProp == 0 && !e.isAllowDeselect) coO.forcedActivated = !1;
-															if (coO.isSelectableMultiple) {
-																if ("undefined" !== typeof e.cancelForcedActivated && e.cancelForcedActivated.some(item => item.split("/ON#")[0] == p[v].split("/ON#")[0])) {
-																	for (var AC = 0, EE = 0; AC < e.cancelForcedActivated.length; AC++) {
-																		var cFA = e.cancelForcedActivated[AC].split("/ON#");
-																		if (cFA[0] == pv[0]) {
-																			EE = parseInt(pv[1]) - parseInt(cFA[1]), e.cancelForcedActivated.splice(AC, 1);
-																			break
-																		}
-																	}
-																	if (EE > 0) {
-																		for (var n = 0; n < EE; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (EE < 0) {
-																		for (var pp = 0; pp < -1 * EE; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coR.numMultipleTimesMinus++;
-																		}
-																	}
-																} else {
-																	var ee = pv[1];
-																	if (ee > 0) {
-																		for (var n = 0; n < ee; n++) {
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus--;
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneLess(coO, coR);
-																			}
-																		}
-																	} else if (ee < 0) {
-																		for (var pp = 0; pp < -1 * ee; pp++) {
-																			if (!e.isNotDeactivate) {
-																				if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																				this.selectedOneMore(coO, coR);
-																			}
-																			if (!e.isAllowDeselect) coO.numMultipleTimesMinus++;
-																		}
-																	}
-																}
-															} else {
-																if (e.selectedThisManyTimesProp == 0) {
-																	if (coO.isActive && !e.isNotDeactivate) {
-																		if (!this.exceptedObjects.includes(coO.id)) this.exceptedObjects.push(coO.id);
-																		this.activateObject(coO, coR);
-																	}
-																}
+														this.forceDeactivateMul(e, pv[0], pnV);
+													} else if ("undefined" !== typeof this.app.compG[pv[0]]) {
+														var coG = this.app.compG[pv[0]],
+															coGE = this.app.groups[coG.groups].elements;
+														for (var h = coGE.length - 1; h >= 0; h--) {
+															if ("undefined" !== typeof this.app.comp[coGE[h].id]) {
+																this.forceDeactivateMul(e, coGE[h].id, pnV);
 															}
 														}
 													}
