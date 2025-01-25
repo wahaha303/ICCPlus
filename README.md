@@ -128,6 +128,9 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to set tooltip in External URL Image.
  - Added an option in Global Settings to import custom fonts from Google Fonts.
  - Added an option in Global Settings to change the cursor type when hovering over choices.
+ - Added a feature to use group IDs to the 'Forces Active' function.
+ - Added a feature to scroll to the corresponding item in the Open Row List.
+ - Added a feature to set the Choice ID instead of Row ID in the scroll function.
 
 ## Fixed
 
@@ -225,3 +228,5 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where Addon Design/Addon Image Design could not be set in the Design Group.
  - Fixed an issue where lazy load was not applied to the addon image.
  - Fixed an issue where the multi-choice with the 'Select Impossible' function enabled could still be selected.
+ - Fixed an issue where the feature to save a project with separate images was not working properly.
+ - Fixed an issue where Styling data was being inserted into each row even when Private Styling wasn't used.
