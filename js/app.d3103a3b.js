@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.1 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.17.2 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -1715,7 +1715,7 @@
                         }],
                         key: t.index,
                         staticClass: "nopadding",
-                        class: e.window.width > 500 ? (e.window.width > 1000 ? (t.objectWidth || e.row.objectWidth) : (t.objectWidth || (e.row.objectWidth === "col-12" ? e.row.objectWidth : "col-6"))) : "col-12"
+                        class: e.objectWidthClass(t)
                     }, [o("AppObject", {
                         class: e.objectHeight,
                         attrs: {
@@ -10722,8 +10722,9 @@
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
+							e.$set(e.row, "isPrivateStyling", t);
+							e.$set(e.row, "styling", {});
 							if (t) {
-								e.$set(e.row, "isPrivateStyling", t);
 								e.$set(e.row, "privateFilterIsOn", !1);
 								e.$set(e.row, "privateTextIsOn", !1);
 								e.$set(e.row, "privateObjectImageIsOn", !1);
@@ -10731,17 +10732,14 @@
 								e.$set(e.row, "privateAddonImageIsOn", !1);
 								e.$set(e.row, "privateAddonIsOn", !1);
 								e.$set(e.row, "privateBackgroundIsOn", !1);
-								e.$set(e.row, "styling", {});
 							} else {
-								e.$delete(e.row, "isPrivateStyling");
-								e.$delete(e.row, "privateFilterIsOn");
-								e.$delete(e.row, "privateTextIsOn");
-								e.$delete(e.row, "privateObjectImageIsOn");
-								e.$delete(e.row, "privateObjectIsOn");
-								e.$delete(e.row, "privateAddonImageIsOn");
-								e.$delete(e.row, "privateAddonIsOn");
-								e.$delete(e.row, "privateBackgroundIsOn");
-								e.$delete(e.row, "styling");
+								e.$set(e.row, "privateFilterIsOn", !0);
+								e.$set(e.row, "privateTextIsOn", !0);
+								e.$set(e.row, "privateObjectImageIsOn", !0);
+								e.$set(e.row, "privateObjectIsOn", !0);
+								e.$set(e.row, "privateAddonImageIsOn", !0);
+								e.$set(e.row, "privateAddonIsOn", !0);
+								e.$set(e.row, "privateBackgroundIsOn", !0);
 							}
                         },
                         expression: "row.isPrivateStyling"
@@ -22723,8 +22721,8 @@
                     model: {
                         value: e.row.isPrivateStyling,
                         callback: function(t) {
+							e.$set(e.row, "isPrivateStyling", t);
 							if (t) {
-								e.$set(e.row, "isPrivateStyling", t);
 								e.$set(e.row, "privateFilterIsOn", !1);
 								e.$set(e.row, "privateTextIsOn", !1);
 								e.$set(e.row, "privateObjectImageIsOn", !1);
@@ -22734,20 +22732,18 @@
 								e.$set(e.row, "privateAddonImageIsOn", !1);
 								e.$set(e.row, "privateAddonIsOn", !1);
 								e.$set(e.row, "privateBackgroundIsOn", !1);
-								e.$set(e.row, "styling", {});
 							} else {
-								e.$delete(e.row, "isPrivateStyling");
-								e.$delete(e.row, "privateFilterIsOn");
-								e.$delete(e.row, "privateTextIsOn");
-								e.$delete(e.row, "privateObjectImageIsOn");
-								e.$delete(e.row, "privateObjectIsOn");
-								e.$delete(e.row, "privateRowImageIsOn");
-								e.$delete(e.row, "privateRowIsOn");
-								e.$delete(e.row, "privateAddonImageIsOn");
-								e.$delete(e.row, "privateAddonIsOn");
-								e.$delete(e.row, "privateBackgroundIsOn");
-								e.$delete(e.row, "styling");
+								e.$set(e.row, "privateFilterIsOn", !0);
+								e.$set(e.row, "privateTextIsOn", !0);
+								e.$set(e.row, "privateObjectImageIsOn", !0);
+								e.$set(e.row, "privateObjectIsOn", !0);
+								e.$set(e.row, "privateRowImageIsOn", !0);
+								e.$set(e.row, "privateRowIsOn", !0);
+								e.$set(e.row, "privateAddonImageIsOn", !0);
+								e.$set(e.row, "privateAddonIsOn", !0);
+								e.$set(e.row, "privateBackgroundIsOn", !0);
 							}
+							e.$set(e.row, "styling", {});
                         },
                         expression: "row.isPrivateStyling"
                     }
@@ -25515,6 +25511,50 @@
                     }
                 },
                 methods: {
+					objectWidthToNum: function(e) {
+						switch(e) {
+							case "col-sm-5":
+							case "col-sm-6": return 2
+							case "col-md-4": return 3
+							case "col-md-3": return 4
+							case "w-20": return 5
+							case "col-lg-2": return 6
+							case "w-14": return 7
+							case "w-12": return 8
+							case "w-11": return 9
+							case "w-10": return 10
+							case "w-9": return 11
+							case "col-xl-1": return 12
+							case "": return 0
+							default: return 1
+						}
+					},
+					objectWidthClass: function(e) {
+						var t = (e.objectWidth || this.row.objectWidth),
+							o = this.objectWidthToNum(t);
+						if (this.window.width > 1280) {
+							return t
+						} else if (this.window.width > 960) {
+							switch(o) {
+								case 2: return "col-6"
+								case 3:
+								case 6:
+								case 9: return "col-4"
+								case 4:
+								case 5:
+								case 7:
+								case 8:
+								case 10:
+								case 11:
+								case 12: return "col-3"
+								default: return "col-12"
+							}
+						} else if (this.window.width > 480) {
+							return o === 1 ? "col-12" : "col-6"
+						} else {
+							return "col-12"
+						}
+					},
 					filterStyling: function(e, t) {
 						if (t.privateFilterIsOn) return t.styling.reqFilterVisibleIsOn;
 						if (e.privateFilterIsOn) return e.styling.reqFilterVisibleIsOn;
@@ -30012,9 +30052,9 @@
                     },
                     saveFileFinished: function(e) {
 						this.$set(this.state, "saveWait", !0);
-						setTimeout(() => {
+						this.$nextTick(() => {
 							this.processImages(e);
-						}, 1000);
+						});
                     },
 					processImages: function(e) {
 						var exceptedList = ["comp", "compR", "compG", "compODG", "compRDG", "compGR", "backpackDialog"],
@@ -39032,7 +39072,7 @@
                     return o("v-col", {
                         key: t.index,
                         staticClass: "nopadding",
-                        class: "" == t.objectWidth || e.row.choicesShareTemplate ? e.row.objectWidth : t.objectWidth
+                        class: e.objectWidthClass(t)
                     }, [o("AppObject", {
                         class: e.objectHeight,
                         attrs: {
@@ -39063,7 +39103,7 @@
                         }],
                         key: t.index,
                         staticClass: "nopadding",
-                        class: e.window.width > 500 ? (e.window.width > 1000 ? (t.objectWidth || e.row.objectWidth) : (t.objectWidth || (e.row.objectWidth === "col-12" ? e.row.objectWidth : "col-6"))) : "col-12"
+                        class: e.objectWidthClass(t)
                     }, [o("AppObject", {
                         class: e.objectHeight,
                         attrs: {
@@ -46149,6 +46189,49 @@
                     }
                 },
                 methods: {
+					objectWidthToNum: function(e) {
+						switch(e) {
+							case "col-sm-5":
+							case "col-sm-6": return 2
+							case "col-md-4": return 3
+							case "col-md-3": return 4
+							case "w-20": return 5
+							case "col-lg-2": return 6
+							case "w-14": return 7
+							case "w-12": return 8
+							case "w-11": return 9
+							case "w-10": return 10
+							case "w-9": return 11
+							case "col-xl-1": return 12
+							default: return 1
+						}
+					},
+					objectWidthClass: function(e) {
+						var t = (e.objectWidth || this.row.objectWidth),
+							o = this.objectWidthToNum(t);
+						if (this.window.width > 1280) {
+							return t
+						} else if (this.window.width > 960) {
+							switch(o) {
+								case 2: return "col-6"
+								case 3:
+								case 6:
+								case 9: return "col-4"
+								case 4:
+								case 5:
+								case 7:
+								case 8:
+								case 10:
+								case 11:
+								case 12: return "col-3"
+								default: return "col-12"
+							}
+						} else if (this.window.width > 480) {
+							return o === 1 ? "col-12" : "col-6"
+						} else {
+							return "col-12"
+						}
+					},
 					filterStyling: function(e, t) {
 						if (t.privateFilterIsOn) return t.styling.reqFilterVisibleIsOn;
 						if (e.privateFilterIsOn) return e.styling.reqFilterVisibleIsOn;
@@ -50129,8 +50212,8 @@
 						}).catch(function(error) {
 							if (!bSuccess) {
 								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
-								setTimeout(() => {
-									var maxLength = 6e6;
+								e.$nextTick(() => {
+									var maxLength = 5e6;
 									var container = e.$refs.printThis.cloneNode(true);
 
 									function splitNodes(node, maxLength) {
@@ -50254,7 +50337,7 @@
 									Promise.all(promises).then(function() {
 										e.$refs.printThis.removeAttribute('style');
 									});
-								}, 1000);
+								});
 							}
 						});
 					}
@@ -58484,8 +58567,8 @@
 						}).catch(function(error) {
 							if (!bSuccess) {
 								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
-								setTimeout(() => {
-									var maxLength = 6e6;
+								e.$nextTick(() => {
+									var maxLength = 5e6;
 									var container = e.$refs.printThiss.cloneNode(true);
 									function splitNodes(node, maxLength) {
 										var parts = [];
@@ -58597,7 +58680,7 @@
 											});
 										});
 									});
-								}, 1000);
+								});
 							}
 						});
                     },
@@ -61940,7 +62023,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.17.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"

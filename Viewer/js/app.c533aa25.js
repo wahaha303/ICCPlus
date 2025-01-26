@@ -903,7 +903,7 @@
                     return i("v-col", {
                         key: e.index,
                         staticClass: "nopadding",
-                        class: "" == e.objectWidth || t.row.choicesShareTemplate ? t.row.objectWidth : e.objectWidth
+                        class: t.objectWidthClass(e)
                     }, [i("AppObject", {
                         class: t.objectHeight,
                         attrs: {
@@ -934,7 +934,7 @@
                         }],
                         key: e.index,
                         staticClass: "nopadding",
-                        class: t.window.width > 500 ? (t.window.width > 1000 ? (e.objectWidth || t.row.objectWidth) : (e.objectWidth || (t.row.objectWidth === "col-12" ? t.row.objectWidth : "col-6"))) : "col-12"
+                        class: t.objectWidthClass(e)
                     }, [i("AppObject", {
                         class: t.objectHeight,
                         attrs: {
@@ -8345,6 +8345,49 @@
                     }
                 },
                 methods: {
+					objectWidthToNum: function(e) {
+						switch(e) {
+							case "col-sm-5":
+							case "col-sm-6": return 2
+							case "col-md-4": return 3
+							case "col-md-3": return 4
+							case "w-20": return 5
+							case "col-lg-2": return 6
+							case "w-14": return 7
+							case "w-12": return 8
+							case "w-11": return 9
+							case "w-10": return 10
+							case "w-9": return 11
+							case "col-xl-1": return 12
+							default: return 1
+						}
+					},
+					objectWidthClass: function(e) {
+						var t = (e.objectWidth || this.row.objectWidth),
+							o = this.objectWidthToNum(t);
+						if (this.window.width > 1280) {
+							return t
+						} else if (this.window.width > 960) {
+							switch(o) {
+								case 2: return "col-6"
+								case 3:
+								case 6:
+								case 9: return "col-4"
+								case 4:
+								case 5:
+								case 7:
+								case 8:
+								case 10:
+								case 11:
+								case 12: return "col-3"
+								default: return "col-12"
+							}
+						} else if (this.window.width > 480) {
+							return o === 1 ? "col-12" : "col-6"
+						} else {
+							return "col-12"
+						}
+					},
 					filterStyling: function(e, t) {
 						if (t.privateFilterIsOn) return t.styling.reqFilterVisibleIsOn;
 						if (e.privateFilterIsOn) return e.styling.reqFilterVisibleIsOn;
@@ -14308,8 +14351,8 @@
 						}).catch(function(error) {
 							if (!bSuccess) {
 								e.text = "Failed to generate image, Segmenting and regenerating the image...", e.snackbar = !0;
-								setTimeout(() => {
-									var maxLength = 6e6;
+								e.$nextTick(() => {
+									var maxLength = 5e6;
 									var container = e.$refs.printThis.cloneNode(true);
 
 									function splitNodes(node, maxLength) {
@@ -14433,7 +14476,7 @@
 									Promise.all(promises).then(function() {
 										e.$refs.printThis.removeAttribute('style');
 									});
-								}, 1000);
+								});
 							}
 						});
 					}
