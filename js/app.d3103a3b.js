@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.17.3 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -25513,8 +25513,8 @@
                 methods: {
 					objectWidthToNum: function(e) {
 						switch(e) {
-							case "col-sm-5":
-							case "col-sm-6": return 2
+							case "col-sm-6":
+							case "col-sm-5": return 2
 							case "col-md-4": return 3
 							case "col-md-3": return 4
 							case "w-20": return 5
@@ -25525,7 +25525,6 @@
 							case "w-10": return 10
 							case "w-9": return 11
 							case "col-xl-1": return 12
-							case "": return 0
 							default: return 1
 						}
 					},
@@ -25536,18 +25535,9 @@
 							return t
 						} else if (this.window.width > 960) {
 							switch(o) {
+								case 1: return "col-12"
 								case 2: return "col-6"
-								case 3:
-								case 6:
-								case 9: return "col-4"
-								case 4:
-								case 5:
-								case 7:
-								case 8:
-								case 10:
-								case 11:
-								case 12: return "col-3"
-								default: return "col-12"
+								default: return this.app.objectsPerRow
 							}
 						} else if (this.window.width > 480) {
 							return o === 1 ? "col-12" : "col-6"
@@ -29524,6 +29514,7 @@
 						if ("undefined" === typeof e.app.wordMap) e.$set(e.app, "wordMap", {});
 						if ("undefined" === typeof e.app.objectMap) e.$set(e.app, "objectMap", {});
 						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, "tmpRequired", []);
+						if ("undefined" === typeof e.app.objectsPerRow) e.$set(e.app, "objectsPerRow", "col-6");
 						if ("undefined" === typeof e.app.isFadingOut) e.$set(e.app, "isFadingOut", !1);
 						if ("undefined" === typeof e.app.bgmFadeInterval) e.$set(e.app, "bgmFadeInterval", 0);
 						if ("undefined" === typeof e.app.bgmTitleInterval) e.$set(e.app, "bgmTitleInterval", 0);
@@ -36713,7 +36704,22 @@
 						},
 						expression: "app.isPointerCursor"
 					}
-				}), o("v-text-field", {
+				}), o("v-select", {
+					staticClass: "pb-2",
+                    attrs: {
+                        "hide-details": "",
+                        items: e.objectsPerRow,
+                        filled: "",
+                        label: "Objects Per Row in the range of 960px to 1280px screens."
+                    },
+                    model: {
+                        value: e.app.objectsPerRow,
+                        callback: function(t) {
+                            e.$set(e.app, "objectsPerRow", t);
+                        },
+                        expression: "app.objectsPerRow"
+                    }
+                }), o("v-text-field", {
 					staticClass: "pb-2",
                     attrs: {
                         dense: "",
@@ -36762,7 +36768,17 @@
                 data: function() {
                     return {
                         dialog: !0,
-						importFontName: ""
+						importFontName: "",
+						objectsPerRow: [{
+							text: "2 Per Row",
+							value: "col-6"
+						}, {
+							text: "3 Per Row",
+							value: "col-4"
+						}, {
+							text: "4 Per Row",
+							value: "col-3"
+						}],
                     }
                 },
 				components: {
@@ -36835,6 +36851,7 @@
             VDialog: B["a"],
             VRow: S["a"],
 			VSwitch: L["a"],
+			VSelect: K["a"],
 			VTextField: R["a"]
         });
         var Wi = {
@@ -46191,8 +46208,8 @@
                 methods: {
 					objectWidthToNum: function(e) {
 						switch(e) {
-							case "col-sm-5":
-							case "col-sm-6": return 2
+							case "col-sm-6":
+							case "col-sm-5": return 2
 							case "col-md-4": return 3
 							case "col-md-3": return 4
 							case "w-20": return 5
@@ -46213,18 +46230,9 @@
 							return t
 						} else if (this.window.width > 960) {
 							switch(o) {
+								case 1: return "col-12"
 								case 2: return "col-6"
-								case 3:
-								case 6:
-								case 9: return "col-4"
-								case 4:
-								case 5:
-								case 7:
-								case 8:
-								case 10:
-								case 11:
-								case 12: return "col-3"
-								default: return "col-12"
+								default: return this.app.objectsPerRow
 							}
 						} else if (this.window.width > 480) {
 							return o === 1 ? "col-12" : "col-6"
@@ -62023,7 +62031,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.17.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -62303,6 +62311,7 @@
                         groups: [],
 						rowDesignGroups: [],
 						objectDesignGroups: [],
+						objectsPerRow: "col-6",
 						globalRequirements: [],
 						googleFonts: [],
                         chapters: [],

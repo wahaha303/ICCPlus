@@ -8347,8 +8347,8 @@
                 methods: {
 					objectWidthToNum: function(e) {
 						switch(e) {
-							case "col-sm-5":
-							case "col-sm-6": return 2
+							case "col-sm-6":
+							case "col-sm-5": return 2
 							case "col-md-4": return 3
 							case "col-md-3": return 4
 							case "w-20": return 5
@@ -8369,18 +8369,9 @@
 							return t
 						} else if (this.window.width > 960) {
 							switch(o) {
+								case 1: return "col-12"
 								case 2: return "col-6"
-								case 3:
-								case 6:
-								case 9: return "col-4"
-								case 4:
-								case 5:
-								case 7:
-								case 8:
-								case 10:
-								case 11:
-								case 12: return "col-3"
-								default: return "col-12"
+								default: return this.app.objectsPerRow
 							}
 						} else if (this.window.width > 480) {
 							return o === 1 ? "col-12" : "col-6"
@@ -14813,6 +14804,7 @@
 						if ("undefined" === typeof e.app.wordMap) e.$set(e.app, "wordMap", {});
 						if ("undefined" === typeof e.app.objectMap) e.$set(e.app, "objectMap", {});
 						if (!Array.isArray(e.app.tmpRequired)) e.$set(e.app, "tmpRequired", []);
+						if ("undefined" === typeof e.app.objectsPerRow) e.$set(e.app, "objectsPerRow", "col-6");
 						if ("undefined" === typeof e.app.isFadingOut) e.$set(e.app, "isFadingOut", !1);
 						if ("undefined" === typeof e.app.bgmFadeInterval) e.$set(e.app, "bgmFadeInterval", 0);
 						if ("undefined" === typeof e.app.bgmTitleInterval) e.$set(e.app, "bgmTitleInterval", 0);
