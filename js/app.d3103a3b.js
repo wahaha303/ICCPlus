@@ -36710,7 +36710,7 @@
                         "hide-details": "",
                         items: e.objectsPerRow,
                         filled: "",
-                        label: "Objects Per Row in the range of 960px to 1280px screens."
+                        label: "Objects Per Row for screens in the range of 960px to 1280px."
                     },
                     model: {
                         value: e.app.objectsPerRow,
