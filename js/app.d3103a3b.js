@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.5 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.17.6 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -7815,7 +7815,7 @@
                     replaceAddonTitle: function() {
                         var e = this.addon.title;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -7832,7 +7832,7 @@
                     replaceAddonText: function() {
                         var e = this.addon.text;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -18826,7 +18826,7 @@
                     replaceObjectText: function() {
                         var e = this.object.text;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -18843,7 +18843,7 @@
                     replaceObjectTitleText: function() {
                         var e = this.object.title;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -25443,7 +25443,7 @@
                     replaceRowTitle: function() {
                         var e = this.row.title;
 						if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -25460,7 +25460,7 @@
                     replaceRowText: function() {
                         var e = this.row.titleText;
 						if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -41788,7 +41788,7 @@
                     replaceAddonTitle: function() {
                         var e = this.addon.title;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -41805,7 +41805,7 @@
                     replaceAddonText: function() {
                         var e = this.addon.text;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -42557,7 +42557,7 @@
                     replaceObjectText: function() {
                         var e = this.object.text;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -42574,7 +42574,7 @@
                     replaceObjectTitleText: function() {
                         var e = this.object.title;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -46510,7 +46510,7 @@
                     replaceRowTitle: function() {
                         var e = this.row.title;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -46527,7 +46527,7 @@
                     replaceRowText: function() {
                         var e = this.row.titleText;
                         if ("undefined" !== typeof this.app.words) {
-							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].join("|"), "g");
+							const combinedRegex = new RegExp([...Object.keys(this.app.wordMap)].map(key => key.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&")).join("|"), "g");
 							e = e.replace(combinedRegex, (match) => {
 								if (this.app.pointTypeMap.hasOwnProperty(match)) {
 									return this.app.pointTypeMap[match]
@@ -62371,7 +62371,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.5")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.17.6")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
