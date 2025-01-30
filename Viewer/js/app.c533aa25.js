@@ -14955,7 +14955,7 @@
 											e.$set(coR, "privateBackgroundIsOn", !0);
 											return;
 										} else {
-											e.$set(coR, "privateRowIsOn", !1);
+											e.$set(coR, "privateBackgroundIsOn", !1);
 										}
 									});
 								}

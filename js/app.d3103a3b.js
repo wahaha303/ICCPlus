@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.4 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.17.5 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -29630,7 +29630,7 @@
 											e.$set(coR, "privateBackgroundIsOn", !0);
 											return;
 										} else {
-											e.$set(coR, "privateRowIsOn", !1);
+											e.$set(coR, "privateBackgroundIsOn", !1);
 										}
 									});
 								}
@@ -62371,7 +62371,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.4")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.17.5")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
