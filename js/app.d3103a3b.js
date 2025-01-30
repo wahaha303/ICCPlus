@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.3 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.17.4 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -12358,7 +12358,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateFilterIsOn");
 					}
                 },
                 methods: {
@@ -13063,7 +13062,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateTextIsOn");
 					}
 				},
                 methods: {
@@ -13486,7 +13484,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateObjectImageIsOn");
 					}
                 },
                 methods: {
@@ -13853,7 +13850,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateRowImageIsOn");
 					}
                 },
                 methods: {
@@ -14160,7 +14156,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateMultiChoiceIsOn");
 					}
                 },
                 methods: {
@@ -14580,7 +14575,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateAddonImageIsOn");
 					}
                 },
                 methods: {
@@ -15521,7 +15515,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateAddonIsOn");
 					}
                 },
                 methods: {
@@ -15887,7 +15880,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateBackgroundIsOn");
 					}
 				},
                 methods: {
@@ -16750,7 +16742,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateObjectIsOn");
 					}
                 },
                 methods: {
@@ -17677,7 +17668,6 @@
 								this.$delete(this.styling, key);
 							}
 						});
-						this.$delete(this.row, "privateRowIsOn");
 					}
                 },
                 methods: {
@@ -29537,13 +29527,114 @@
 							var coR = e.app.rows[b],
 								g = coR.id;
 							e.app.compR[g] = {rows: b, type: "app"};
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) e.$set(coR, "privateFilterIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) e.$set(coR, "privateTextIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) e.$set(coR, "privateObjectImageIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) e.$set(coR, "privateObjectIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) e.$set(coR, "privateRowImageIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) e.$set(coR, "privateRowIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) e.$set(coR, "privateBackgroundIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.filterStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateFilterIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateFilterIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.textStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateTextIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateTextIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.backgroundStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateBackgroundIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
 							if (coR.textIsRemoved) {
 								if ("undefined" === typeof coR.objectTextRemoved) e.$set(coR, "objectTextRemoved", !0);
 								if ("undefined" === typeof coR.addonTextRemoved) e.$set(coR, "addonTextRemoved", !0);
@@ -29575,11 +29666,90 @@
 									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "app"};
 								if (!coO.isSelectableMultiple && coO.isMultipleUseVariable) e.$set(coO, "isMultipleUseVariable", !1);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) e.$set(coO, "privateFilterIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) e.$set(coO, "privateTextIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) e.$set(coO, "privateObjectImageIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) e.$set(coO, "privateObjectIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) e.$set(coO, "privateBackgroundIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.filterStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateFilterIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateFilterIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.textStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateTextIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateTextIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.backgroundStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateBackgroundIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateBackgroundIsOn", !1);
+											}
+										});
+									}
+								}
 								if (coO.isPrivateStyling && "undefined" !== typeof coO.styling && coO.privateFilterIsOn) {
 									if ("undefined" === typeof coO.styling.unselFilterBlurIsOn) e.$set(coO.styling, "unselFilterBlurIsOn", !1);
 									if ("undefined" === typeof coO.styling.unselFilterBlur) e.$set(coO.styling, "unselFilterBlur", 0);
@@ -29642,6 +29812,114 @@
 								if ("undefined" === typeof coR.objectTextRemoved) e.$set(coR, "objectTextRemoved", !0);
 								if ("undefined" === typeof coR.addonTextRemoved) e.$set(coR, "addonTextRemoved", !0);
 							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.filterStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateFilterIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateFilterIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.textStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateTextIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateTextIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.backgroundStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateBackgroundIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateBackgroundIsOn", !1);
+										}
+									});
+								}
+							}
 							if (coR.isPrivateStyling && "undefined" !== typeof coR.styling && coR.privateFilterIsOn) {
 								if ("undefined" === typeof coR.styling.unselFilterBlurIsOn) e.$set(coR.styling, "unselFilterBlurIsOn", !1);
 								if ("undefined" === typeof coR.styling.unselFilterBlur) e.$set(coR.styling, "unselFilterBlur", 0);
@@ -29668,6 +29946,90 @@
 								var coO = coR.objects[c],
 									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "backpack"};
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.filterStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateFilterIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateFilterIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.textStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateTextIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateTextIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.backgroundStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateBackgroundIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateBackgroundIsOn", !1);
+											}
+										});
+									}
+								}
 								if (coO.isPrivateStyling && "undefined" !== typeof coO.styling && coO.privateFilterIsOn) {
 									if ("undefined" === typeof coO.styling.unselFilterBlurIsOn) e.$set(coO.styling, "unselFilterBlurIsOn", !1);
 									if ("undefined" === typeof coO.styling.unselFilterBlur) e.$set(coO.styling, "unselFilterBlur", 0);
@@ -62009,7 +62371,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.17.4")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"

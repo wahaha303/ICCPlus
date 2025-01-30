@@ -14852,13 +14852,114 @@
 							var coR = e.app.rows[b],
 								g = coR.id;
 							e.app.compR[g] = {rows: b, type: "app"};
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) e.$set(coR, "privateFilterIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) e.$set(coR, "privateTextIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) e.$set(coR, "privateObjectImageIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) e.$set(coR, "privateObjectIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) e.$set(coR, "privateRowImageIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) e.$set(coR, "privateRowIsOn", !0);
-							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) e.$set(coR, "privateBackgroundIsOn", !0);
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.filterStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateFilterIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateFilterIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.textStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateTextIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateTextIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.backgroundStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateBackgroundIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
 							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
 							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
 							if (coR.textIsRemoved) {
@@ -14871,11 +14972,90 @@
 									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "app"};
 								if (!coO.isSelectableMultiple && coO.isMultipleUseVariable) e.$set(coO, "isMultipleUseVariable", !1);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) e.$set(coO, "privateFilterIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) e.$set(coO, "privateTextIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) e.$set(coO, "privateObjectImageIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) e.$set(coO, "privateObjectIsOn", !0);
-								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) e.$set(coO, "privateBackgroundIsOn", !0);
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.filterStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateFilterIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateFilterIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.textStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateTextIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateTextIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.backgroundStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateBackgroundIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateBackgroundIsOn", !1);
+											}
+										});
+									}
+								}
 								if (coO.isPrivateStyling && "undefined" === typeof coO.styling) {
 									e.$set(coO, "styling", {});
 									e.$set(coO, "privateFilterIsOn", !1);
@@ -14909,11 +15089,223 @@
 								if ("undefined" === typeof coR.objectTextRemoved) e.$set(coR, "objectTextRemoved", !0);
 								if ("undefined" === typeof coR.addonTextRemoved) e.$set(coR, "addonTextRemoved", !0);
 							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateFilterIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.filterStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateFilterIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateFilterIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateTextIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.textStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateTextIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateTextIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateObjectIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.objectStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateObjectIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateObjectIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateRowIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.rowStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateRowIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateRowIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonImageIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonImageStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonImageIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonImageIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateAddonIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.addonStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateAddonIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateAddonIsOn", !1);
+										}
+									});
+								}
+							}
+							if (coR.isPrivateStyling && "undefined" === typeof coR.privateBackgroundIsOn) {
+								if ("undefined" !== coR.styling) {
+									Object.keys(e.state.backgroundStyling).forEach(key => {
+										if (coR.styling.hasOwnProperty(key)) {
+											e.$set(coR, "privateBackgroundIsOn", !0);
+											return;
+										} else {
+											e.$set(coR, "privateBackgroundIsOn", !1);
+										}
+									});
+								}
+							}
 							if ("undefined" !== typeof coR.image && coR.image.length > 0 && !this.isDataURL(coR.image)) this.externalImages.add(coR.image);
 							for (var c = 0; c < coR.objects.length; c++) {
 								var coO = coR.objects[c],
 									d = coO.id;
 								e.app.comp[d] = {rows: b, objects: c, type: "backpack"};
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateFilterIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.filterStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateFilterIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateFilterIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateTextIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.textStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateTextIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateTextIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateObjectIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.objectStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateObjectIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateObjectIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonImageIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonImageStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonImageIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonImageIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateAddonIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.addonStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateAddonIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateAddonIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" === typeof coO.privateBackgroundIsOn) {
+									if ("undefined" !== coO.styling) {
+										Object.keys(e.state.backgroundStyling).forEach(key => {
+											if (coO.styling.hasOwnProperty(key)) {
+												e.$set(coO, "privateBackgroundIsOn", !0);
+												return;
+											} else {
+												e.$set(coO, "privateBackgroundIsOn", !1);
+											}
+										});
+									}
+								}
+								if (coO.isPrivateStyling && "undefined" !== typeof coO.styling && coO.privateFilterIsOn) {
+									if ("undefined" === typeof coO.styling.unselFilterBlurIsOn) e.$set(coO.styling, "unselFilterBlurIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterBlur) e.$set(coO.styling, "unselFilterBlur", 0);
+									if ("undefined" === typeof coO.styling.unselFilterBrightIsOn) e.$set(coO.styling, "unselFilterBrightIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterBright) e.$set(coO.styling, "unselFilterBright", 100);
+									if ("undefined" === typeof coO.styling.unselFilterContIsOn) e.$set(coO.styling, "unselFilterContIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterCont) e.$set(coO.styling, "unselFilterCont", 100);
+									if ("undefined" === typeof coO.styling.unselFilterGrayIsOn) e.$set(coO.styling, "unselFilterGrayIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterGray) e.$set(coO.styling, "unselFilterGray", 0);
+									if ("undefined" === typeof coO.styling.unselFilterHueIsOn) e.$set(coO.styling, "unselFilterHueIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterHue) e.$set(coO.styling, "unselFilterHue", 0);
+									if ("undefined" === typeof coO.styling.unselFilterInvertIsOn) e.$set(coO.styling, "unselFilterInvertIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterInvert) e.$set(coO.styling, "unselFilterInvert", 0);
+									if ("undefined" === typeof coO.styling.unselFilterOpacIsOn) e.$set(coO.styling, "unselFilterOpacIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterOpac) e.$set(coO.styling, "unselFilterOpac", 100);
+									if ("undefined" === typeof coO.styling.unselFilterSaturIsOn) e.$set(coO.styling, "unselFilterSaturIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterSatur) e.$set(coO.styling, "unselFilterSatur", 0);
+									if ("undefined" === typeof coO.styling.unselFilterSepiaIsOn) e.$set(coO.styling, "unselFilterSepiaIsOn", !1);
+									if ("undefined" === typeof coO.styling.unselFilterSepia) e.$set(coO.styling, "unselFilterSepia", 0);
+								}
 								if (coO.multiplyPointtypeIsOn && "string" === typeof coO.pointTypeToMultiply) e.$set(coO, "pointTypeToMultiply", [coO.pointTypeToMultiply]);
 								if (coO.dividePointtypeIsOn && "string" === typeof coO.pointTypeToDivide) e.$set(coO, "pointTypeToDivide", [coO.pointTypeToDivide]);
 								if (coO.multiplyPointtypeIsOn && "number" === typeof coO.startingSumAtMultiply) e.$set(coO, "startingSumAtMultiply", [coO.startingSumAtMultiply]);
