@@ -2970,12 +2970,12 @@
                     objectImage: function() {
 						if (this.addonImageStyling.useAddonImage) {
 							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
-							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.styling.addonImgObjectFillHeight + "px;");
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
 						} else {
 							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
 						}
@@ -4395,7 +4395,7 @@
                     },
                     objectImage: function() {
                         var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.styling.objectImgObjectFillHeight + "px;");
+                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
                         var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
                         return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
@@ -8364,13 +8364,16 @@
 					},
 					objectWidthClass: function(e) {
 						var t = (e.objectWidth || this.row.objectWidth),
-							o = this.objectWidthToNum(t);
+							o = this.objectWidthToNum(t),
+							s = this.app.objectsPerRow === "col-6" ? 2 : this.app.objectsPerRow === "col-4" ? 3 : 4;
 						if (this.window.width > 1280) {
 							return t
 						} else if (this.window.width > 960) {
 							switch(o) {
 								case 1: return "col-12"
 								case 2: return "col-6"
+								case 3: return s > 2 ? "col-4" : this.app.objectsPerRow
+								case 4: return s > 3 ? "col-3" : this.app.objectsPerRow
 								default: return this.app.objectsPerRow
 							}
 						} else if (this.window.width > 480) {
