@@ -131,6 +131,11 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Added a feature to use group IDs to the 'Forces Active' function.
  - Added a feature to scroll to the corresponding item in the Open Row List.
  - Added a feature to set the Choice ID instead of Row ID in the scroll function.
+ - The build load feature and backpack will be automatically enabled when creating a new project.
+ - Added a feature to set a custom requirement description.
+ - Added a feature to display the addon's requirements.
+ - Added a feature to display the addon even if the requirements are not met.
+ - Added a feature to fade transition in the choice function.
 
 ## Fixed
 
@@ -230,3 +235,6 @@ Link to [ICC Plus Early Access](https://hikawasisters.neocities.org/ICCPlus_Earl
  - Fixed an issue where the multi-choice with the 'Select Impossible' function enabled could still be selected.
  - Fixed an issue where the feature to save a project with separate images was not working properly.
  - Fixed an issue where Styling data was being inserted into each row even when Private Styling wasn't used.
+ - Fixed an issue where the random select feature of the row button was not working properly.
+ - Fixed an issue where the BGM mute feature was not working properly.
+ - Fixed an issue where the number in the multi-select choice was not vertically centered.

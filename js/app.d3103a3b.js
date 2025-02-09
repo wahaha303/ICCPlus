@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.17.7 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.18.0 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -236,7 +236,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v("Update: 25.01.2025")]), o("v-col", {
+                }, [e._v("Update: 09.02.2025")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "blue"
@@ -250,7 +250,7 @@
                         cols: "10",
 						margin: "0 auto"
                     }
-                }, [e._v(" Added a feature to use group IDs to the 'Forces Active' function. "), o("br"), e._v(" Added a feature to scroll to the corresponding item in the Open Row List. "), o("br"), e._v(" Added a feature to set the Choice ID instead of Row ID in the scroll function. ")]), o("v-col", {
+                }, [e._v(" The build load feature and backpack will be automatically enabled when creating a new project. "), o("br"), e._v(" Added a feature to set a custom requirement description. "), o("br"), e._v(" Added a feature to display the addon's requirements. "), o("br"), e._v(" Added a feature to display the addon even if the requirements are not met. "), o("br"), e._v(" Added a feature to fade transition in the choice function. ")]), o("v-col", {
                     staticClass: "pt-0 pb-0",
 					staticStyle: {
 						color: "red"
@@ -263,7 +263,7 @@
                     attrs: {
                         cols: "10"
                     }
-                }, [e._v(" Fixed an issue where the feature to save a project with separate images was not working properly. "), o("br"), e._v(" Fixed an issue where Styling data was being inserted into each row even when Private Styling wasn't used. ")]), o("v-col", {
+                }, [e._v(" Fixed an issue where the random select feature of the row button was not working properly. "), o("br"), e._v(" Fixed an issue where the BGM mute feature was not working properly. "), o("br"), e._v(" Fixed an issue where the number in the multi-select choice was not vertically centered. ")]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -295,7 +295,10 @@
 						"padding-bottom": (e.app.pointTypes.length > 0 || e.app.backpack.length > 0 || e.app.importedChoicesIsOpen) ? "56px" : ""
                     },
                     style: e.background
-                }, [o("v-navigation-drawer", {
+                }, [o("div", {
+					class: "fadeOverlay",
+					style: e.fadeOverlay
+				}, 1), o("v-navigation-drawer", {
 					staticStyle: {
 						top: e.app.showMusicPlayer ? "32px" : "0px",
 						"max-height": e.app.showMusicPlayer ? "calc(100% - 32px)" : "calc(100% - 0px)"
@@ -881,7 +884,8 @@
                     staticStyle: {
                         "text-align": "center"
                     },
-                    style: e.rowBody
+                    style: e.rowBody,
+					staticClass: "row-" + e.row.id + "-bg"
                 }, [o("v-card", {
 					ref: "panels",
                     staticClass: "my-n2"
@@ -3547,6 +3551,57 @@
                 }), o("v-divider")] : e._e(), o("v-checkbox", {
                     attrs: {
                         "hide-details": "",
+                        label: "Selecting this choice will trigger the fade transition."
+                    },
+                    model: {
+						value: e.object.isFadeTransition,
+                        callback: function(t) {
+							if (t) {
+								e.$set(e.object, "isFadeTransition", t);
+								e.$set(e.object, "fadeTransitionColor", "#000000FF");
+								e.$set(e.object, "fadeTransitionTime", 250);
+							} else {
+								e.$delete(e.object, "isFadeTransition");
+								e.$delete(e.object, "fadeTransitionColor");
+								e.$delete(e.object, "fadeTransitionTime");
+							}
+                        },
+                        expression: "object.isFadeTransition"
+                    }
+                }), e.object.isFadeTransition ? [o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+                        label: "Fade Overlay Color (8 digits Hex Color Code)",
+						placeholder: "#000000FF",
+                        filled: ""
+                    },
+                    model: {
+                        value: e.object.fadeTransitionColor,
+                        callback: function(t) {
+                            e.$set(e.object, "fadeTransitionColor", t)
+                        },
+                        expression: "object.fadeTransitionColor"
+                    }
+                }), o("v-text-field", {
+                    attrs: {
+                        "hide-details": "",
+						type: "number",
+                        label: "Fade-In/Out Time (1s = 1000ms)",
+						suffix: "ms",
+						placeholder: "250",
+                        filled: "",
+						min: 0
+                    },
+                    model: {
+                        value: e.object.fadeTransitionTime,
+                        callback: function(t) {
+                            e.$set(e.object, "fadeTransitionTime", parseInt(t))
+                        },
+                        expression: "object.fadeTransitionTime"
+                    }
+                }), o("v-divider")] : e._e(), o("v-checkbox", {
+                    attrs: {
+                        "hide-details": "",
                         label: "Word will be changed to something else at select."
                     },
                     model: {
@@ -5509,7 +5564,20 @@
                             return e.moveAddonDown()
                         }
                     }
-                }, [o("v-icon", [e._v("mdi-chevron-down")])], 1)], 1), o("v-col", {
+                }, [o("v-icon", [e._v("mdi-chevron-down")])], 1)], 1), o("span", [o("v-checkbox", {
+					staticClass: "pt-0 mt-0",
+					attrs: {
+						"hide-details": "",
+						label: "Always show this addon"
+					},
+					model: {
+						value: e.addon.showAddon,
+						callback: function(t) {
+							e.$set(e.addon, "showAddon", t)
+						},
+						expression: "required.showAddon"
+					}
+				})], 1), o("v-col", {
                     staticClass: "pt-0 px-12",
                     attrs: {
                         cols: "12"
@@ -5586,11 +5654,86 @@
                         attrs: {
                             cols: e.window.width > 301 ? "6" : "12"
                         }
-                    }, [o("v-card", ["id" == t.type ? o("span", [o("v-text-field", {
+                    }, [o("v-card", {
+						attrs: {
+							flat: ""
+						}
+					}, ["id" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: t.showRequired,
+                            value: t.showRequired && !t.customTextIsOn,
                             expression: "required.showRequired"
                         }],
                         attrs: {
@@ -5609,7 +5752,7 @@
                         directives: [{
                             name: "show",
                             rawName: "v-show",
-                            value: t.showRequired,
+                            value: t.showRequired && !t.customTextIsOn,
                             expression: "required.showRequired"
                         }],
                         attrs: {
@@ -5647,7 +5790,116 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "points" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "points" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text Before"
+                        },
+                        model: {
+                            value: t.beforeText,
+                            callback: function(o) {
+                                e.$set(t, "beforeText", o)
+                            },
+                            expression: "required.beforeText"
+                        }
+                    }), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text After"
+                        },
+                        model: {
+                            value: t.afterText,
+                            callback: function(o) {
+                                e.$set(t, "afterText", o)
+                            },
+                            expression: "required.afterText"
+                        }
+                    }), o("v-select", {
                         attrs: {
                             "hide-details": "",
                             items: e.pointReqOperators,
@@ -5838,7 +6090,116 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-row", {
+                    }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text Before"
+                        },
+                        model: {
+                            value: t.beforeText,
+                            callback: function(o) {
+                                e.$set(t, "beforeText", o)
+                            },
+                            expression: "required.beforeText"
+                        }
+                    }), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text After"
+                        },
+                        model: {
+                            value: t.afterText,
+                            callback: function(o) {
+                                e.$set(t, "afterText", o)
+                            },
+                            expression: "required.afterText"
+                        }
+                    }), o("v-row", {
 					staticClass: "ma-0 pa-0"
 				}, [o("v-btn", {
                     attrs: {
@@ -5902,7 +6263,116 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 2) : "selFromGroups" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 2) : "selFromGroups" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text Before"
+                        },
+                        model: {
+                            value: t.beforeText,
+                            callback: function(o) {
+                                e.$set(t, "beforeText", o)
+                            },
+                            expression: "required.beforeText"
+                        }
+                    }), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text After"
+                        },
+                        model: {
+                            value: t.afterText,
+                            callback: function(o) {
+                                e.$set(t, "afterText", o)
+                            },
+                            expression: "required.afterText"
+                        }
+                    }), o("v-select", {
                     attrs: {
                         "hide-details": "",
 						label: "Operator",
@@ -5979,7 +6449,116 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "selFromRows" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "selFromRows" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text Before"
+                        },
+                        model: {
+                            value: t.beforeText,
+                            callback: function(o) {
+                                e.$set(t, "beforeText", o)
+                            },
+                            expression: "required.beforeText"
+                        }
+                    }), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text After"
+                        },
+                        model: {
+                            value: t.afterText,
+                            callback: function(o) {
+                                e.$set(t, "afterText", o)
+                            },
+                            expression: "required.afterText"
+                        }
+                    }), o("v-select", {
                     attrs: {
                         "hide-details": "",
 						label: "Operator",
@@ -6056,7 +6635,116 @@
                                 return e.deleteEvent(i, e.addon.requireds)
                             }
                         }
-                    }, [e._v("Delete")])], 1) : "selFromWhole" == t.type ? o("span", [o("v-select", {
+                    }, [e._v("Delete")])], 1) : "selFromWhole" == t.type ? o("span", [o("v-checkbox", {
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Show Requirement"
+						},
+						model: {
+							value: t.showRequired,
+							callback: function(o) {
+								e.$set(t, "showRequired", o);
+								if (!o) e.$set(t, "hideRequired", o);
+							},
+							expression: "required.showRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Hide when requirement is met"
+						},
+						model: {
+							value: t.hideRequired,
+							callback: function(o) {
+								e.$set(t, "hideRequired", o)
+							},
+							expression: "required.hideRequired"
+						}
+					}), o("v-checkbox", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired,
+							expression: "required.showRequired"
+						}],
+						staticClass: "pt-0 mt-0",
+						attrs: {
+							"hide-details": "",
+							label: "Use custom requirement text"
+						},
+						model: {
+							value: t.customTextIsOn,
+							callback: function(o) {
+								e.$set(t, "customTextIsOn", o)
+							},
+							expression: "required.customTextIsOn"
+						}
+					}), o("v-text-field", {
+						directives: [{
+							name: "show",
+							rawName: "v-show",
+							value: t.showRequired && t.customTextIsOn,
+							expression: "required.showRequired"
+						}],
+						attrs: {
+							"hide-details": "",
+							filled: "",
+							label: "Custom Text"
+						},
+						model: {
+							value: t.customText,
+							callback: function(o) {
+								e.$set(t, "customText", o)
+							},
+							expression: "required.customText"
+						}
+					}), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text Before"
+                        },
+                        model: {
+                            value: t.beforeText,
+                            callback: function(o) {
+                                e.$set(t, "beforeText", o)
+                            },
+                            expression: "required.beforeText"
+                        }
+                    }), o("v-text-field", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: t.showRequired && !t.customTextIsOn,
+                            expression: "required.showRequired"
+                        }],
+                        attrs: {
+                            "hide-details": "",
+                            filled: "",
+                            label: "Text After"
+                        },
+                        model: {
+                            value: t.afterText,
+                            callback: function(o) {
+                                e.$set(t, "afterText", o)
+                            },
+                            expression: "required.afterText"
+                        }
+                    }), o("v-select", {
                     attrs: {
                         "hide-details": "",
 						label: "Operator",
@@ -6123,7 +6811,7 @@
                             }
                         }
                     }, [e._v("Delete")])], 1) : e._e()])], 1)
-                })), 1)], 1) : e.checkRequireds(e.addon) ? o("div", {
+                })), 1)], 1) : e.addon.showAddon || e.checkRequireds(e.addon) ? o("div", {
 					style: e.addonBackground
 				}, [4 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
@@ -6135,7 +6823,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6181,7 +6891,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), "" !== e.addon.imageSourceTooltip && "undefined" !== typeof e.addon.imageSourceTooltip ? o("v-tooltip", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), "" !== e.addon.imageSourceTooltip && "undefined" !== typeof e.addon.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
                         top: "",
                         "open-delay": "1500"
@@ -6255,7 +6987,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6311,7 +7065,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6334,7 +7110,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -6420,24 +7218,65 @@
                     staticClass: "headline"
                 }, [e._v("Create Requirement")]), o("v-card-text", [o("v-container", [o("v-row", [o("p", [e._v("Requirements are conditions that will decide if the player can select the choice or not, these use the ID of choices and variables, and the design of the filter placed on non-selectable choices can be changed in filter design.")]), o("v-col", {
                     attrs: {
-                        cols: "undefined" !== typeof e.row.type && e.row.type == "gRequire" ? "12" : e.window.width > 900 ? "6" : "12"
+                        cols: e.window.width > 900 ? "6" : "12"
                     }
-                }, [o("v-btn", {
-                    staticClass: "pa-0 btn",
-                    staticStyle: {
-                        color: e.$vuetify.theme.isDark ? "white" : "black"
-                    },
+                }, [o("v-tooltip", {
                     attrs: {
-                        type: "button"
+                        bottom: "",
+                        "open-delay": "300"
                     },
-                    on: {
-                        click: function(t) {
-                            return e.pasteRequired(e.row, e.row.requireds)
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-btn", e._g({
+                                staticClass: "pa-0 btn",
+								staticStyle: {
+									color: e.$vuetify.theme.isDark ? "white" : "black"
+								},
+								attrs: {
+									type: "button"
+								},
+								on: {
+									click: function(t) {
+										return e.pasteRequired(e.row, e.row.requireds)
+									}
+								}
+                            }, i), [e._v("Paste the copied requirement (Ref)")])]
                         }
-                    }
-                }, [e._v("Paste the copied requirement")])], 1), "undefined" === typeof e.row.type || e.row.type != "gRequire" ? o("v-col", {
+                    }], null, !1, 971814284)
+                }, [o("span", [e._v("Modifying a requirement will update all connected requirements.")])])], 1), o("v-col", {
                     attrs: {
                         cols: e.window.width > 900 ? "6" : "12"
+                    }
+                }, [o("v-tooltip", {
+                    attrs: {
+                        bottom: "",
+                        "open-delay": "300"
+                    },
+                    scopedSlots: e._u([{
+                        key: "activator",
+                        fn: function(t) {
+                            var i = t.on;
+                            return [o("v-btn", e._g({
+                                staticClass: "pa-0 btn",
+								staticStyle: {
+									color: e.$vuetify.theme.isDark ? "white" : "black"
+								},
+								attrs: {
+									type: "button"
+								},
+								on: {
+									click: function(t) {
+										return e.pasteRequiredCopy(e.row, e.row.requireds)
+									}
+								}
+                            }, i), [e._v("Paste the copied requirement (Copy)")])]
+                        }
+                    }], null, !1, 971814284)
+                }, [o("span", [e._v("Modifying a requirement will not affect other requirements.")])])], 1), "undefined" === typeof e.row.type || e.row.type != "gRequire" ? o("v-col", {
+                    attrs: {
+                        cols: "12"
                     }
                 }, [o("v-btn", {
                     staticClass: "pa-0 btn",
@@ -6897,6 +7736,25 @@
 								}
 							}
 						}
+					},
+					pasteRequiredCopy: function(e, t) {
+						if ("undefined" === typeof this.app.tmpRequired || this.app.tmpRequired.length === 0) {
+							this.globalVariables.text = "The clipboard is empty.", this.globalVariables.snackbar = !0;
+						} else {
+							var tmpRequired = JSON.parse(JSON.stringify(this.app.tmpRequired));
+							if (tmpRequired.length > 1) {
+								for (var a = 0; a < Object.keys(tmpRequired).length; a++) {
+									t.push(tmpRequired[a]);
+								}
+							} else {
+								if ("undefined" === typeof e.text) {
+									const o = Object.assign({}, tmpRequired, {requireds: []});
+									t.push(o[0]);
+								} else {
+									t.push(tmpRequired[0]);
+								}
+							}
+						}
 					}
                 }
             },
@@ -6917,6 +7775,7 @@
 			vo = o("23a7"),
 			Ac = o("c6a6"),
 			Ct = o("2db4"),
+			Q = o("3a2f"),
             F = Object(w["a"])(f, b, v, !1, null, null, null),
             _ = F.exports;
         x()(F, {
@@ -6928,6 +7787,7 @@
             VCol: I["a"],
             VContainer: k["a"],
             VDialog: B["a"],
+			VTooltip: Q["a"],
             VRow: S["a"],
             VSpacer: O["a"],
 			VSnackbar: Ct["a"],
@@ -7620,6 +8480,45 @@
 						}
 						return this.$store.state.app.styling;
 					},
+					backgroundStyling: function() {
+						if (this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
 					objectStyling: function() {
 						if (this.object.privateObjectIsOn) return this.object.styling;
 						if (this.row.privateObjectIsOn) return this.row.styling;
@@ -7777,21 +8676,24 @@
 						return this.$store.state.app.styling;
 					},
 					addonBackground: function() {
-						if (this.addonStyling.useAddonDesign) {
-							var e = (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;",
+						var e = "",
 							t = this.addonStyling.addonBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
+						if (this.addonStyling.useAddonDesign) {
+							e += (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;";
+							console.log(e);
+							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn && ((this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn))) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
 							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
 							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
-							else if (!o) {
-								var rm = 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : ""));
-								if (this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
-								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
-							}
-							return e += ";", e
 						}
-						return "";
+						if (this.addon.showAddon) {
+							if (!this.checkRequireds(this.addon) && o) {
+								if (e === "") e = "filter: ";
+								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
+								e += (this.addonStyling.useAddonDesign && this.addonStyling.addonBgColorIsOn ? "; background-color: " + this.addonStyling.addonBgColor : (this.backgroundStyling.objectBgColorIsOn ? "; background-color: " + this.backgroundStyling.objectBgColor : ""));
+							}
+						}
+						return e += ";", e
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
@@ -7848,7 +8750,10 @@
                     },
 					globalVariables: function() {
 						return this.$store.state.globalVariables
-					}
+					},
+					scoreText: function() {
+                        return 'font-family: "' + this.textStyling.scoreText + '";font-size: ' + this.textStyling.scoreTextSize + "%;text-align: " + this.textStyling.scoreTextAlign + ";color: " + this.textStyling.scoreTextColor + ";"
+                    }
                 },
 				watch: {
 					isEditModeOn: function(e) {
@@ -7890,6 +8795,83 @@
                     deleteEvent: function(e, t) {
                         t.splice(e, 1)
                     },
+					getChoiceTitle: function(e) {
+                        var t, o, g = !0;
+						if (e.hideRequired) {
+							g = !this.checkRequireds(this.addon);
+						}
+                        if (e.showRequired && g)
+							if (e.customTextIsOn) {
+								return "undefined" !== typeof e.customText ? e.customText : ""
+							} else {
+								if ("id" == e.type) {
+									var rId = e.reqId.split("/ON#");
+									if ("undefined" !== typeof this.app.comp[rId[0]]) {
+										var	co = this.app.comp[rId[0]],
+											coR = this.app.rows[co.rows],
+											coO = coR.objects[co.objects];
+										return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
+									}
+								} else if ("points" == e.type) {
+									for (t = 0; t < this.app.pointTypes.length; t++)
+										if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
+								} else if ("or" == e.type) {
+									var i = [];
+									for (var s = 0; s < e.orRequired.length; s++) {
+										var rId = e.orRequired[s].req.split("/ON#");
+										if ("undefined" !== typeof this.app.comp[rId[0]]) {
+											var	co = this.app.comp[rId[0]],
+												coR = this.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											o = rId.length > 1 ? rId[1] + " " : "";
+											i.push((o + coO.title));
+										}
+									}
+									if (this.app.orderOrReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+									} else {
+										return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
+									}
+								} else if ("selFromGroups" == e.type && "undefined" !== typeof e.selGroups) {
+									var i = [];
+									for (var s = 0; s < e.selGroups.length; s++) {
+										if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
+											var co = this.app.compG[e.selGroups[s]],
+												coG = this.app.groups[co.groups];
+											i.push(coG.name);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromRows" == e.type && "undefined" !== typeof e.selRows) {
+									var i = [];
+									for (var s = 0; s < e.selRows.length; s++) {
+										if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
+											var co = this.app.compR[e.selRows[s]],
+												coR = this.app.rows[co.rows];
+											i.push(coR.title);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromWhole" == e.type) {
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+									}
+								}
+							}
+                        return ""
+                    },
 					moveAddonUp: function() {
 						var e = this.addons.indexOf(this.addon);
                         if (e > 0) {
@@ -7911,13 +8893,14 @@
             X = o("adda"),
             K = o("b974"),
             Z = o("a844"),
-            Q = o("3a2f"),
+			ae = (o("c16f"), o("ac7c")),
             ee = Object(w["a"])(Y, h, g, !1, null, "8bccda0e", null),
             te = ee.exports;
         x()(ee, {
 			VAutocomplete: Ac["a"],
             VBtn: C["a"],
             VCard: T["a"],
+			VCheckbox: ae["a"],
             VCol: I["a"],
             VIcon: J["a"],
             VImg: X["a"],
@@ -8019,11 +9002,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8042,7 +9063,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8103,11 +9124,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8126,7 +9185,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8347,11 +9406,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8370,7 +9467,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8473,11 +9570,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8496,7 +9631,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8612,11 +9747,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8635,7 +9808,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8751,11 +9924,49 @@
                         },
                         expression: "required.hideRequired"
                     }
+                }), o("v-checkbox", {
+					directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired,
+                        expression: "required.showRequired"
+                    }],
+                    staticClass: "pt-0 mt-0",
+                    attrs: {
+                        "hide-details": "",
+                        label: "Use custom requirement text"
+                    },
+                    model: {
+                        value: e.required.customTextIsOn,
+                        callback: function(t) {
+                            e.$set(e.required, "customTextIsOn", t)
+                        },
+                        expression: "required.customTextIsOn"
+                    }
                 }), o("v-text-field", {
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && e.required.customTextIsOn,
+                        expression: "required.showRequired"
+                    }],
+                    attrs: {
+                        "hide-details": "",
+                        filled: "",
+                        label: "Custom Text"
+                    },
+                    model: {
+                        value: e.required.customText,
+                        callback: function(t) {
+                            e.$set(e.required, "customText", t)
+                        },
+                        expression: "required.customText"
+                    }
+                }), o("v-text-field", {
+                    directives: [{
+                        name: "show",
+                        rawName: "v-show",
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -8774,7 +9985,7 @@
                     directives: [{
                         name: "show",
                         rawName: "v-show",
-                        value: e.required.showRequired,
+                        value: e.required.showRequired && !e.required.customTextIsOn,
                         expression: "required.showRequired"
                     }],
                     attrs: {
@@ -9489,7 +10700,6 @@
                 }
             },
             re = se,
-            ae = (o("c16f"), o("ac7c")),
             ne = Object(w["a"])(re, oe, ie, !1, null, "9ac8589a", null),
             le = ne.exports;
         x()(ne, {
@@ -10001,7 +11211,7 @@
                         },
                         on: {
                             click: function(t) {
-                                return e.deleteEvent(i, e.required.requireds)
+                                return e.deleteEvent(i, e.score.requireds)
                             }
                         }
                     }, [e._v("Delete")])], 2) : "or" == t.type ? o("span", [o("v-row", {
@@ -18772,7 +19982,7 @@
                         return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;align-content: center;"
                     },
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
@@ -18916,69 +20126,73 @@
 							g = !this.checkRequireds(this.object);
 						}
                         if (e.showRequired && g)
-                            if ("id" == e.type) {
-								var rId = e.reqId.split("/ON#");
-								if ("undefined" !== typeof this.app.comp[rId[0]]) {
-									var	co = this.app.comp[rId[0]],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
-								}
-                            } else if ("points" == e.type) {
-								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
-							} else if ("or" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.orRequired.length; s++) {
-									var rId = e.orRequired[s].req.split("/ON#");
+							if (e.customTextIsOn) {
+								return "undefined" !== typeof e.customText ? e.customText : ""
+							} else {
+								if ("id" == e.type) {
+									var rId = e.reqId.split("/ON#");
 									if ("undefined" !== typeof this.app.comp[rId[0]]) {
 										var	co = this.app.comp[rId[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										o = rId.length > 1 ? rId[1] + " " : "";
-										i.push((o + coO.title));
+										return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
 									}
-								}
-								if (this.app.orderOrReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
-								} else {
-									return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
-								}
-							} else if ("selFromGroups" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.selGroups.length; s++) {
-									if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
-										var co = this.app.compG[e.selGroups[s]],
-											coG = this.app.groups[co.groups];
-										i.push(coG.name);
+								} else if ("points" == e.type) {
+									for (t = 0; t < this.app.pointTypes.length; t++)
+										if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
+								} else if ("or" == e.type) {
+									var i = [];
+									for (var s = 0; s < e.orRequired.length; s++) {
+										var rId = e.orRequired[s].req.split("/ON#");
+										if ("undefined" !== typeof this.app.comp[rId[0]]) {
+											var	co = this.app.comp[rId[0]],
+												coR = this.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											o = rId.length > 1 ? rId[1] + " " : "";
+											i.push((o + coO.title));
+										}
 									}
-								}
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
-								}
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
-							} else if ("selFromRows" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.selRows.length; s++) {
-									if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
-										var co = this.app.compR[e.selRows[s]],
-											coR = this.app.rows[co.rows];
-										i.push(coR.title);
+									if (this.app.orderOrReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+									} else {
+										return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
 									}
-								}
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
-								}
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
-							} else if ("selFromWhole" == e.type) {
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+								} else if ("selFromGroups" == e.type && "undefined" !== typeof e.selGroups) {
+									var i = [];
+									for (var s = 0; s < e.selGroups.length; s++) {
+										if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
+											var co = this.app.compG[e.selGroups[s]],
+												coG = this.app.groups[co.groups];
+											i.push(coG.name);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromRows" == e.type && "undefined" !== typeof e.selRows) {
+									var i = [];
+									for (var s = 0; s < e.selRows.length; s++) {
+										if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
+											var co = this.app.compR[e.selRows[s]],
+												coR = this.app.rows[co.rows];
+											i.push(coR.title);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromWhole" == e.type) {
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+									}
 								}
 							}
                         return ""
@@ -21146,7 +22360,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
-													e.$set(e.app, "isMute", !1);
+													this.$set(this.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -21474,7 +22688,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
-												e.$set(e.app, "isMute", !0);
+												this.$set(this.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -21496,6 +22710,16 @@
 													}
 												}
 											}
+										}
+										if (e.isFadeTransition) {
+											"undefined" === typeof e.fadeTransitionColor || "" === e.fadeTransitionColor ? this.$set(this.app, "fadeTransitionColor", "000000FF") : this.$set(this.app, "fadeTransitionColor", e.fadeTransitionColor);
+											"undefined" === typeof e.fadeTransitionTime || "" === e.fadeTransitionTime ? this.$set(this.app, "fadeTransitionTime", 0.25) : this.$set(this.app, "fadeTransitionTime", (e.fadeTransitionTime / 1000));
+											this.$set(this.app, "fadeTransitionIsOn", !0);
+											this.$nextTick(() => {
+												setTimeout(() => {
+													this.$set(this.app, "fadeTransitionIsOn", !1);
+												}, this.app.fadeTransitionTime * 1000);
+											});
 										}
 										e.isActive = !e.isActive, this.updateActivated();
 										if (e.cleanACtivatedOnSelect) this.cleanActivated();
@@ -21781,7 +23005,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
-												e.$set(e.app, "isMute", !1);
+												this.$set(this.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -25660,35 +26884,43 @@
                         if (this.row.btnPointAddon && "sumaddon" == this.row.buttonTypeRadio)
                             for (var e = Math.floor(Math.random() * (this.row.randomMax - this.row.randomMin) + this.row.randomMin), t = 0; t < this.app.pointTypes.length; t++) this.app.pointTypes[t].id == this.row.pointTypeRandom && (this.app.pointTypes[t].startingSum += e);
                         else if (this.row.buttonRandom) {
-                            var o, i = [];
+                            var o, i = [], k = [];
                             if (this.row.isWeightedRandom && "undefined" != typeof this.row.isWeightedRandom) {
                                 var s = 0,
                                     r = 0;
-                                for (o = 0; o < this.row.objects.length; o++) "undefined" == typeof this.row.objects[o].randomWeight || "" == this.row.objects[o].randomWeight ? s += 100 : s += parseInt(this.row.objects[o].randomWeight);
+                                for (o = 0; o < this.row.objects.length; o++) {
+									if (this.checkRequireds(this.row.objects[o]) && !this.row.objects[o].isNotSelectable) {
+										k.push(this.row.objects[o]);
+										"undefined" === typeof this.row.objects[o].randomWeight || "" == this.row.objects[o].randomWeight ? s += 100 : s += parseInt(this.row.objects[o].randomWeight);
+									}
+								}
                                 for (var a = 0; a < this.row.buttonRandomNumber; a++) {
                                     var n = Math.floor(Math.random() * s);
-                                    for (o = 0; o < this.row.objects.length; o++)
-                                        if ("undefined" == typeof this.row.objects[o].randomWeight || "" == this.row.objects[o].randomWeight ? r += 100 : r += parseInt(this.row.objects[o].randomWeight), n < r) {
-                                            this.activateObject(this.row.objects[o], this.row);
+                                    for (o = 0; o < k.length; o++)
+                                        if ("undefined" === typeof k[o].randomWeight || "" == k[o].randomWeight ? r += 100 : r += parseInt(k[o].randomWeight), n < r) {
+                                            this.activateObject(k[o], this.row);
                                             break
                                         }
                                 }
                             } else
                                 for (o = 0; o < this.row.buttonRandomNumber; o++) {
-                                    var l = Math.floor(Math.random() * this.row.objects.length),
-                                        c = this.row.objects[l],
+									for (var a = 0; a < this.row.objects.length; a++)
+										if (this.checkRequireds(this.row.objects[a]) && !this.row.objects[a].isNotSelectable) k.push(this.row.objects[a]);
+                                    var l = Math.floor(Math.random() * k.length),
+                                        c = k[l],
                                         d = 100,
                                         p = 0,
                                         u = !0;
+									if ("undefined" === typeof c) break
                                     if (this.row.onlyUnselectedChoices) {
-                                        while (i.includes(l) || this.activated.includes(c.id) || !this.checkRequireds(c) || c.isNotSelectable)
-                                            if (p++, l = Math.floor(Math.random() * this.row.objects.length), c = this.row.objects[l], this.row.objects.length <= o || d <= p) {
+                                        while (i.includes(l) || this.activated.includes(c.id))
+                                            if (p++, l = Math.floor(Math.random() * k.length), c = k[l], k.length <= o || d <= p) {
                                                 u = !1;
                                                 break
                                             }
                                     } else
-                                        while (i.includes(l) || !this.checkRequireds(c) || c.isNotSelectable)
-                                            if (p++, l = Math.floor(Math.random() * this.row.objects.length), c = this.row.objects[l], this.row.objects.length <= o || d <= p) break;
+                                        while (i.includes(l))
+                                            if (p++, l = Math.floor(Math.random() * k.length), c = k[l], k.length <= o || d <= p) break;
                                     u && (i.push(l), this.activateObject(c, this.row))
                                 }
                         } else this.row.buttonRandom || (this.row.buttonType && this.activated.includes(this.row.buttonId) ? this.activated.splice(this.activated.indexOf(this.row.buttonId), 1) : this.activated.push(this.row.buttonId))
@@ -27772,7 +29004,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
-													e.$set(e.app, "isMute", !1);
+													this.$set(this.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -28100,7 +29332,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
-												e.$set(e.app, "isMute", !0);
+												this.$set(this.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -28122,6 +29354,16 @@
 													}
 												}
 											}
+										}
+										if (e.isFadeTransition) {
+											"undefined" === typeof e.fadeTransitionColor || "" === e.fadeTransitionColor ? this.$set(this.app, "fadeTransitionColor", "000000FF") : this.$set(this.app, "fadeTransitionColor", e.fadeTransitionColor);
+											"undefined" === typeof e.fadeTransitionTime || "" === e.fadeTransitionTime ? this.$set(this.app, "fadeTransitionTime", 0.25) : this.$set(this.app, "fadeTransitionTime", (e.fadeTransitionTime / 1000));
+											this.$set(this.app, "fadeTransitionIsOn", !0);
+											this.$nextTick(() => {
+												setTimeout(() => {
+													this.$set(this.app, "fadeTransitionIsOn", !1);
+												}, this.app.fadeTransitionTime * 1000);
+											});
 										}
 										e.isActive = !e.isActive, this.updateActivated();
 										if (e.cleanACtivatedOnSelect) this.cleanActivated();
@@ -28407,7 +29649,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
-												e.$set(e.app, "isMute", !1);
+												this.$set(this.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -29525,7 +30767,9 @@
 							l.href = url;
 							l.crossOrigin = "anonymous";
 							document.head.appendChild(l);
-						}
+						}						
+						if ("undefined" === typeof e.app.fadeTransitionColor) e.$set(e.app, "fadeTransitionColor", "#000000FF");
+						if ("undefined" === typeof e.app.fadeTransitionTime) e.$set(e.app, "isMute", 0.25);
 						for (var b = 0; b < e.app.rows.length; b++) {
 							var coR = e.app.rows[b],
 								g = coR.id;
@@ -29662,7 +30906,10 @@
 								if ("undefined" === typeof coR.styling.unselFilterSepiaIsOn) e.$set(coR.styling, "unselFilterSepiaIsOn", !1);
 								if ("undefined" === typeof coR.styling.unselFilterSepia) e.$set(coR.styling, "unselFilterSepia", 0);
 							}
-							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) e.$delete(coR, "styling");
+							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) {
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								e.$delete(coR, "styling");
+							}
 							if ("undefined" !== typeof coR.debugTitle && coR.debugTitle === "") e.$delete(coR, "debugTitle");
 							for (var c = 0; c < coR.objects.length; c++) {
 								var coO = coR.objects[c],
@@ -29943,7 +31190,10 @@
 								if ("undefined" === typeof coR.styling.unselFilterSepiaIsOn) e.$set(coR.styling, "unselFilterSepiaIsOn", !1);
 								if ("undefined" === typeof coR.styling.unselFilterSepia) e.$set(coR.styling, "unselFilterSepia", 0);
 							}
-							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) e.$delete(coR, "styling");
+							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) {
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								e.$delete(coR, "styling");
+							}
 							if ("undefined" !== typeof coR.debugTitle && coR.debugTitle === "") e.$delete(coR, "debugTitle");
 							for (var c = 0; c < coR.objects.length; c++) {
 								var coO = coR.objects[c],
@@ -38670,7 +39920,7 @@
 							}
 							if (coO.muteBgm && "undefined" !== typeof bgmPlayer) {
 								if ("undefined" !== typeof bgmPlayer.mute) {
-									e.$set(e.app, "isMute", !0);
+									this.$set(this.app, "isMute", !0);
 									bgmPlayer.mute();
 								}
 							}
@@ -39162,7 +40412,8 @@
                     staticStyle: {
                         "text-align": "center"
                     },
-                    style: e.rowBody
+                    style: e.rowBody,
+					staticClass: "row-" + e.row.id + "-bg"
                 }, [e.checkIfDeselect(e.row) ? o("span", [o("div", {
                     style: "" != e.row.title && "" != e.row.text ? e.rowBackground : ""
                 }, [4 == e.row.template ? o("div", {
@@ -41175,7 +42426,7 @@
                 var e = this,
                     t = e.$createElement,
                     o = e._self._c || t;
-                return o("span", [e.checkRequireds(e.addon) ? o("div", {
+                return o("span", [e.addon.showAddon || e.checkRequireds(e.addon) ? o("div", {
 					style: e.addonBackground
 				}, [4 == e.addon.template ? o("span", {
                     staticClass: "ma-0",
@@ -41187,7 +42438,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -41243,7 +42516,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), "" !== e.addon.imageSourceTooltip && "undefined" !== typeof e.addon.imageSourceTooltip ? o("v-tooltip", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), "" !== e.addon.imageSourceTooltip && "undefined" !== typeof e.addon.imageSourceTooltip ? o("v-tooltip", {
                     attrs: {
                         top: "",
                         "open-delay": "1500"
@@ -41337,7 +42632,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -41403,7 +42720,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -41426,7 +42765,29 @@
                     domProps: {
                         innerHTML: e._s(e.$sanitize(e.replaceAddonTitle, e.sanitizeArg))
                     }
-                }) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
+                }) : e._e(), !e.row.addonTextRemoved ? o("div", e._l(e.addon.requireds, (function(t) {
+                    return o("div", {
+                        key: t.index,
+                        staticClass: "pa-0"
+                    }, [t.showRequired ? [t.type == "gid" && "undefined" !== typeof e.app.compGR[t.reqId] ? e._l(e.app.globalRequirements[e.app.compGR[t.reqId].globalRequirements].requireds, (function(k) {
+							return o("v-col", {
+								key: k.index,
+								staticClass: "pa-0"
+							}, [k.showRequired ? o("v-col", {
+							staticClass: "pa-0",
+							style: e.scoreText,
+							domProps: {
+								innerHTML: e._s(e.$sanitize(e.getChoiceTitle(k), e.sanitizeArg))
+							}
+						}) : e._e()], 1)
+					})) : o("v-col", {
+                        staticClass: "pa-0",
+                        style: e.scoreText,
+                        domProps: {
+                            innerHTML: e._s(e.$sanitize(e.getChoiceTitle(t), e.sanitizeArg))
+                        }
+                    })] : e._e()], 1)
+                })), 1) : e._e(), !e.row.addonTextRemoved && e.addon.text ? o("p", {
                     staticStyle: {
                         "white-space": "pre-line"
                     },
@@ -41583,6 +42944,45 @@
 									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
 										coD = this.app.rowDesignGroups[co.designGroups];
 									if (coD.privateAddonImageIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						return this.$store.state.app.styling;
+					},
+					backgroundStyling: function() {
+						if (this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if ("undefined" !== typeof this.object.objectDesignGroups) {
+							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
+									var co = this.app.compODG[this.object.objectDesignGroups[a].id],
+										coD = this.app.objectDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) {
+										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
+											return coD.styling;
+										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
+											var coT = this.app.compGR[coD.activatedId],
+												cGR = this.app.globalRequirements[coT.globalRequirements];
+											if (this.checkRequireds(cGR)) return coD.styling;
+										}
+									}
+								}
+							}
+						}
+						if ("undefined" !== typeof this.row.rowDesignGroups) {
+							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
+								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
+									var co = this.app.compRDG[this.row.rowDesignGroups[a].id],
+										coD = this.app.rowDesignGroups[co.designGroups];
+									if (coD.privateBackgroundIsOn) {
 										if ("" == coD.activatedId || this.activated.includes(coD.activatedId)) {
 											return coD.styling;
 										} else if ("undefined" !== typeof this.app.compGR[coD.activatedId]) {
@@ -41753,21 +43153,24 @@
 						return this.$store.state.app.styling;
 					},
                     addonBackground: function() {
-						if (this.addonStyling.useAddonDesign) {
-							var e = (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;",
+						var e = "",
 							t = this.addonStyling.addonBorderRadiusIsPixels ? "px" : "%",
 							o = this.checkRequireds(this.object);
-							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn || (this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn)) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
+						if (this.addonStyling.useAddonDesign) {
+							e += (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;";
+							console.log(e);
+							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn && ((this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn))) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
 							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
 							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
-							else if (!o) {
-								var rm = 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : ""));
-								if (this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && this.filterStyling.reqBgColorIsOn && !this.filterStyling.reqOverlayOnImage) e = e.replace(rm, "");
-								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
-							}
-							return e += ";", e
 						}
-						return "";
+						if (this.addon.showAddon) {
+							if (!this.checkRequireds(this.addon) && o) {
+								if (e === "") e = "filter: ";
+								e += this.filterStyling.reqFilterBlurIsOn ? "blur(" + this.filterStyling.reqFilterBlur + "px)" : "", e += this.filterStyling.reqFilterBrightIsOn ? "brightness(" + this.filterStyling.reqFilterBright + "%)" : "", e += this.filterStyling.reqFilterContIsOn ? "contrast(" + this.filterStyling.reqFilterCont + "%)" : "", e += this.filterStyling.reqFilterGrayIsOn ? "grayscale(" + this.filterStyling.reqFilterGray + "%)" : "", e += this.filterStyling.reqFilterHueIsOn ? "hue-rotate(" + this.filterStyling.reqFilterHue + "deg)" : "", e += this.filterStyling.reqFilterInvertIsOn ? "invert(" + this.filterStyling.reqFilterInvert + "%)" : "", e += this.filterStyling.reqFilterOpacIsOn ? "opacity(" + this.filterStyling.reqFilterOpac + "%)" : "", e += this.filterStyling.reqFilterSaturIsOn ? "saturate(" + this.filterStyling.reqFilterSatur + ")" : "", e += this.filterStyling.reqFilterSepiaIsOn ? "sepia(" + this.filterStyling.reqFilterSepia + "%)" : "", e += (this.filterStyling.reqBgColorIsOn ? ";background-color: " + this.filterStyling.reqFilterBgColor : ""), this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnReq + ")");
+								e += (this.addonStyling.useAddonDesign && this.addonStyling.addonBgColorIsOn ? "; background-color: " + this.addonStyling.addonBgColor : (this.backgroundStyling.objectBgColorIsOn ? "; background-color: " + this.backgroundStyling.objectBgColor : ""));
+							}
+						}
+						return e += ";", e
 					},
                     addonTitle: function() {
 						var e = this.checkRequireds(this.object);
@@ -41821,11 +43224,91 @@
 							});
 						}
 						return e
+                    },
+					scoreText: function() {
+                        return 'font-family: "' + this.textStyling.scoreText + '";font-size: ' + this.textStyling.scoreTextSize + "%;text-align: " + this.textStyling.scoreTextAlign + ";color: " + this.textStyling.scoreTextColor + ";"
                     }
                 },
                 methods: {
                     checkRequireds: function(e) {
                         return this.$store.getters.checkRequireds(e)
+                    },
+					getChoiceTitle: function(e) {
+                        var t, o, g = !0;
+						if (e.hideRequired) {
+							g = !this.checkRequireds(this.addon);
+						}
+                        if (e.showRequired && g)
+							if (e.customTextIsOn) {
+								return "undefined" !== typeof e.customText ? e.customText : ""
+							} else {
+								if ("id" == e.type) {
+									var rId = e.reqId.split("/ON#");
+									if ("undefined" !== typeof this.app.comp[rId[0]]) {
+										var	co = this.app.comp[rId[0]],
+											coR = this.app.rows[co.rows],
+											coO = coR.objects[co.objects];
+										return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
+									}
+								} else if ("points" == e.type) {
+									for (t = 0; t < this.app.pointTypes.length; t++)
+										if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
+								} else if ("or" == e.type) {
+									var i = [];
+									for (var s = 0; s < e.orRequired.length; s++) {
+										var rId = e.orRequired[s].req.split("/ON#");
+										if ("undefined" !== typeof this.app.comp[rId[0]]) {
+											var	co = this.app.comp[rId[0]],
+												coR = this.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											o = rId.length > 1 ? rId[1] + " " : "";
+											i.push((o + coO.title));
+										}
+									}
+									if (this.app.orderOrReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+									} else {
+										return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
+									}
+								} else if ("selFromGroups" == e.type && "undefined" !== typeof e.selGroups) {
+									var i = [];
+									for (var s = 0; s < e.selGroups.length; s++) {
+										if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
+											var co = this.app.compG[e.selGroups[s]],
+												coG = this.app.groups[co.groups];
+											i.push(coG.name);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromRows" == e.type && "undefined" !== typeof e.selRows) {
+									var i = [];
+									for (var s = 0; s < e.selRows.length; s++) {
+										if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
+											var co = this.app.compR[e.selRows[s]],
+												coR = this.app.rows[co.rows];
+											i.push(coR.title);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromWhole" == e.type) {
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+									}
+								}
+							}
+                        return ""
                     },
                     deleteEvent: function(e, t) {
                         t.splice(e, 1)
@@ -42500,7 +43983,7 @@
                         return 'font-family: "' + this.textStyling.objectTitle + '";font-size: ' + this.textStyling.objectTitleTextSize + "%;text-align: " + this.textStyling.objectTitleAlign + ";color: " + (!e && this.filterStyling.reqCTitleColorIsOn ? this.filterStyling.reqFilterCTitleColor : (this.object.isActive && this.filterStyling.selCTitleColorIsOn ? this.filterStyling.selFilterCTitleColor : this.textStyling.objectTitleColor)) + ";" + (this.objectStyling.titlePaddingIsOn ? ("padding: " + this.objectStyling.objectTextPadding + "px;") : "")
                     },
                     multiChoiceText: function() {
-                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;"
+                        return 'font-family: "' + this.multiChoiceStyling.multiChoiceTextFont + '";color: ' + this.textStyling.scoreTextColor + ";font-size: " + this.multiChoiceStyling.multiChoiceTextSize + "%;align-content: center;"
                     },
                     multiChoiceButton: function() {
                         return "color: " + this.textStyling.scoreTextColor + ";"
@@ -42618,69 +44101,73 @@
 							g = !this.checkRequireds(this.object);
 						}
                         if (e.showRequired && g)
-                            if ("id" == e.type) {
-								var rId = e.reqId.split("/ON#");
-								if ("undefined" !== typeof this.app.comp[rId[0]]) {
-									var	co = this.app.comp[rId[0]],
-										coR = this.app.rows[co.rows],
-										coO = coR.objects[co.objects];
-									return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
-								}
-                            } else if ("points" == e.type) {
-								for (t = 0; t < this.app.pointTypes.length; t++)
-									if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
-							} else if ("or" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.orRequired.length; s++) {
-									var rId = e.orRequired[s].req.split("/ON#");
+							if (e.customTextIsOn) {
+								return "undefined" !== typeof e.customText ? e.customText : ""
+							} else {
+								if ("id" == e.type) {
+									var rId = e.reqId.split("/ON#");
 									if ("undefined" !== typeof this.app.comp[rId[0]]) {
 										var	co = this.app.comp[rId[0]],
 											coR = this.app.rows[co.rows],
 											coO = coR.objects[co.objects];
-										o = rId.length > 1 ? rId[1] + " " : "";
-										i.push((o + coO.title));
+										return e.beforeText + " " + (rId.length > 1 ? rId[1] + " " : "") + coO.title + " " + e.afterText
 									}
-								}
-								if (this.app.orderOrReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
-								} else {
-									return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
-								}
-							} else if ("selFromGroups" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.selGroups.length; s++) {
-									if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
-										var co = this.app.compG[e.selGroups[s]],
-											coG = this.app.groups[co.groups];
-										i.push(coG.name);
+								} else if ("points" == e.type) {
+									for (t = 0; t < this.app.pointTypes.length; t++)
+										if (e.reqId == this.app.pointTypes[t].id) return e.beforeText + " " + e.reqPoints + " " + this.app.pointTypes[t].name + " " + e.afterText
+								} else if ("or" == e.type) {
+									var i = [];
+									for (var s = 0; s < e.orRequired.length; s++) {
+										var rId = e.orRequired[s].req.split("/ON#");
+										if ("undefined" !== typeof this.app.comp[rId[0]]) {
+											var	co = this.app.comp[rId[0]],
+												coR = this.app.rows[co.rows],
+												coO = coR.objects[co.objects];
+											o = rId.length > 1 ? rId[1] + " " : "";
+											i.push((o + coO.title));
+										}
 									}
-								}
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
-								}
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
-							} else if ("selFromRows" == e.type) {
-								var i = [];
-								for (var s = 0; s < e.selRows.length; s++) {
-									if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
-										var co = this.app.compR[e.selRows[s]],
-											coR = this.app.rows[co.rows];
-										i.push(coR.title);
+									if (this.app.orderOrReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + ("undefined" !== typeof e.orNum ? this.app.defaultOrReq + " " + e.orNum : this.app.defaultOrReq + " 1") + " " + e.afterText
+									} else {
+										return e.beforeText + " " + ("undefined" !== typeof e.orNum ? e.orNum + " " + this.app.defaultOrReq : "1 " + this.app.defaultOrReq) + " "  + i.join(", ") + " "+ e.afterText
 									}
-								}
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
-								}
-								return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
-							} else if ("selFromWhole" == e.type) {
-								if (this.app.orderSelReqText == "1") {
-									return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
-								} else {
-									return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+								} else if ("selFromGroups" == e.type && "undefined" !== typeof e.selGroups) {
+									var i = [];
+									for (var s = 0; s < e.selGroups.length; s++) {
+										if ("undefined" !== typeof this.app.compG[e.selGroups[s]]) {
+											var co = this.app.compG[e.selGroups[s]],
+												coG = this.app.groups[co.groups];
+											i.push(coG.name);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromRows" == e.type && "undefined" !== typeof e.selRows) {
+									var i = [];
+									for (var s = 0; s < e.selRows.length; s++) {
+										if ("undefined" !== typeof this.app.compR[e.selRows[s]]) {
+											var co = this.app.compR[e.selRows[s]],
+												coR = this.app.rows[co.rows];
+											i.push(coR.title);
+										}
+									}
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + i.join(", ") + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + i.join(", ") + " " + e.afterText
+									}
+									return e.beforeText + " " + e.selNum + (e.selNum > 1 ? " choices " : " choice ") + " from " + i.join(", ") + " " + e.afterText
+								} else if ("selFromWhole" == e.type) {
+									if (this.app.orderSelReqText == "1") {
+										return e.beforeText + " " + this.app.defaultSelReq + " " + e.selNum + " " + e.afterText
+									} else {
+										return e.beforeText + " " + e.selNum + " " + this.app.defaultSelReq + " " + e.afterText
+									}
 								}
 							}
                         return ""
@@ -44799,7 +46286,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
-													e.$set(e.app, "isMute", !1);
+													this.$set(this.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -45127,7 +46614,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
-												e.$set(e.app, "isMute", !0);
+												this.$set(this.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -45149,6 +46636,16 @@
 													}
 												}
 											}
+										}
+										if (e.isFadeTransition) {
+											"undefined" === typeof e.fadeTransitionColor || "" === e.fadeTransitionColor ? this.$set(this.app, "fadeTransitionColor", "000000FF") : this.$set(this.app, "fadeTransitionColor", e.fadeTransitionColor);
+											"undefined" === typeof e.fadeTransitionTime || "" === e.fadeTransitionTime ? this.$set(this.app, "fadeTransitionTime", 0.25) : this.$set(this.app, "fadeTransitionTime", (e.fadeTransitionTime / 1000));
+											this.$set(this.app, "fadeTransitionIsOn", !0);
+											this.$nextTick(() => {
+												setTimeout(() => {
+													this.$set(this.app, "fadeTransitionIsOn", !1);
+												}, this.app.fadeTransitionTime * 1000);
+											});
 										}
 										e.isActive = !e.isActive, this.updateActivated();
 										if (e.cleanACtivatedOnSelect) this.cleanActivated();
@@ -45434,7 +46931,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
-												e.$set(e.app, "isMute", !1);
+												this.$set(this.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -46678,39 +48175,49 @@
 						}
                     },
                     buttonActivate: function() {
-                        if (this.row.buttonRandom) {
-                            var e, t = [];
+                        if (this.row.btnPointAddon && "sumaddon" == this.row.buttonTypeRadio)
+                            for (var e = Math.floor(Math.random() * (this.row.randomMax - this.row.randomMin) + this.row.randomMin), t = 0; t < this.app.pointTypes.length; t++) this.app.pointTypes[t].id == this.row.pointTypeRandom && (this.app.pointTypes[t].startingSum += e);
+                        else if (this.row.buttonRandom) {
+                            var o, i = [], k = [];
                             if (this.row.isWeightedRandom && "undefined" != typeof this.row.isWeightedRandom) {
-                                var o = 0,
-                                    i = 0;
-                                for (e = 0; e < this.row.objects.length; e++) "undefined" == typeof this.row.objects[e].randomWeight || "" == this.row.objects[e].randomWeight ? o += 100 : o += parseInt(this.row.objects[e].randomWeight);
-                                for (var s = 0; s < this.row.buttonRandomNumber; s++) {
-                                    var r = Math.floor(Math.random() * o);
-                                    for (e = 0; e < this.row.objects.length; e++)
-                                        if ("undefined" == typeof this.row.objects[e].randomWeight || "" == this.row.objects[e].randomWeight ? i += 100 : i += parseInt(this.row.objects[e].randomWeight), r < i) {
-                                            this.activateObject(this.row.objects[e], this.row);
+                                var s = 0,
+                                    r = 0;
+                                for (o = 0; o < this.row.objects.length; o++) {
+									if (this.checkRequireds(this.row.objects[o]) && !this.row.objects[o].isNotSelectable) {
+										k.push(this.row.objects[o]);
+										"undefined" === typeof this.row.objects[o].randomWeight || "" == this.row.objects[o].randomWeight ? s += 100 : s += parseInt(this.row.objects[o].randomWeight);
+									}
+								}
+                                for (var a = 0; a < this.row.buttonRandomNumber; a++) {
+                                    var n = Math.floor(Math.random() * s);
+                                    for (o = 0; o < k.length; o++)
+                                        if ("undefined" === typeof k[o].randomWeight || "" == k[o].randomWeight ? r += 100 : r += parseInt(k[o].randomWeight), n < r) {
+                                            this.activateObject(k[o], this.row);
                                             break
                                         }
                                 }
                             } else
-                                for (e = 0; e < this.row.buttonRandomNumber; e++) {
-                                    var a = Math.floor(Math.random() * this.row.objects.length),
-                                        n = this.row.objects[a],
-                                        l = 100,
-                                        c = 0,
-                                        d = !0;
+                                for (o = 0; o < this.row.buttonRandomNumber; o++) {
+									for (var a = 0; a < this.row.objects.length; a++)
+										if (this.checkRequireds(this.row.objects[a]) && !this.row.objects[a].isNotSelectable) k.push(this.row.objects[a]);
+                                    var l = Math.floor(Math.random() * k.length),
+                                        c = k[l],
+                                        d = 100,
+                                        p = 0,
+                                        u = !0;
+									if ("undefined" === typeof c) break
                                     if (this.row.onlyUnselectedChoices) {
-                                        while (t.includes(a) || this.activated.includes(n.id) || !this.checkRequireds(n) || n.isNotSelectable)
-                                            if (c++, a = Math.floor(Math.random() * this.row.objects.length), n = this.row.objects[a], this.row.objects.length <= e || l <= c) {
-                                                d = !1;
+                                        while (i.includes(l) || this.activated.includes(c.id))
+                                            if (p++, l = Math.floor(Math.random() * k.length), c = k[l], k.length <= o || d <= p) {
+                                                u = !1;
                                                 break
                                             }
                                     } else
-                                        while (t.includes(a) || !this.checkRequireds(n) || n.isNotSelectable)
-                                            if (c++, a = Math.floor(Math.random() * this.row.objects.length), n = this.row.objects[a], this.row.objects.length <= e || l <= c) break;
-                                    d && (t.push(a), this.activateObject(n, this.row))
+                                        while (i.includes(l))
+                                            if (p++, l = Math.floor(Math.random() * k.length), c = k[l], k.length <= o || d <= p) break;
+                                    u && (i.push(l), this.activateObject(c, this.row))
                                 }
-                        } else this.row.buttonType && this.activated.includes(this.row.buttonId) ? this.activated.splice(this.activated.indexOf(this.row.buttonId), 1) : this.activated.push(this.row.buttonId)
+                        } else this.row.buttonRandom || (this.row.buttonType && this.activated.includes(this.row.buttonId) ? this.activated.splice(this.activated.indexOf(this.row.buttonId), 1) : this.activated.push(this.row.buttonId))
                     },
                     checkIfDeselect: function(e) {
                         var t = this.$store.getters.checkRequireds(e);
@@ -48791,7 +50298,7 @@
 											}
 											if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 												if ("undefined" !== typeof bgmPlayer.unMute) {
-													e.$set(e.app, "isMute", !1);
+													this.$set(this.app, "isMute", !1);
 													bgmPlayer.unMute();
 												}
 											}
@@ -49119,7 +50626,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.mute) {
-												e.$set(e.app, "isMute", !0);
+												this.$set(this.app, "isMute", !0);
 												bgmPlayer.mute();
 											}
 										}
@@ -49141,6 +50648,16 @@
 													}
 												}
 											}
+										}
+										if (e.isFadeTransition) {
+											"undefined" === typeof e.fadeTransitionColor || "" === e.fadeTransitionColor ? this.$set(this.app, "fadeTransitionColor", "000000FF") : this.$set(this.app, "fadeTransitionColor", e.fadeTransitionColor);
+											"undefined" === typeof e.fadeTransitionTime || "" === e.fadeTransitionTime ? this.$set(this.app, "fadeTransitionTime", 0.25) : this.$set(this.app, "fadeTransitionTime", (e.fadeTransitionTime / 1000));
+											this.$set(this.app, "fadeTransitionIsOn", !0);
+											this.$nextTick(() => {
+												setTimeout(() => {
+													this.$set(this.app, "fadeTransitionIsOn", !1);
+												}, this.app.fadeTransitionTime * 1000);
+											});
 										}
 										e.isActive = !e.isActive, this.updateActivated();
 										if (e.cleanACtivatedOnSelect) this.cleanActivated();
@@ -49426,7 +50943,7 @@
 										}
 										if (e.muteBgm && "undefined" !== typeof bgmPlayer) {
 											if ("undefined" !== typeof bgmPlayer.unMute) {
-												e.$set(e.app, "isMute", !1);
+												this.$set(this.app, "isMute", !1);
 												bgmPlayer.unMute();
 											}
 										}
@@ -57840,6 +59357,10 @@
 					},
 					globalVariables: function() {
 						return this.$store.state.globalVariables
+					},
+					fadeOverlay: function() {
+						var e = this.app.fadeTransitionIsOn ? 1 : 0;
+						return "opacity: " + e + "; transition: opacity " + this.app.fadeTransitionTime + "s ease-out; background-color: " + this.app.fadeTransitionColor + ";"
 					}
                 },
                 methods: {
@@ -58174,7 +59695,10 @@
 						"padding-bottom": e.paddingNavigation && !e.isTop ? "56px" : ""
                     },
                     style: e.background
-                }, [o("v-navigation-drawer", {
+                }, [o("div", {
+					class: "fadeOverlay",
+					style: e.fadeOverlay
+				}, 1), o("v-navigation-drawer", {
                     attrs: {
                         "data-html2canvas-ignore": "",
                         app: "",
@@ -58777,7 +60301,11 @@
 							}
 						}
                         return e
-                    }
+                    },
+					fadeOverlay: function() {
+						var e = this.app.fadeTransitionIsOn ? 1 : 0;
+						return "opacity: " + e + "; transition: opacity " + this.app.fadeTransitionTime + "s ease-out; background-color: " + this.app.fadeTransitionColor + ";"
+					}
                 },
                 beforeCreate: function() {
                     var e = this,
@@ -60273,7 +61801,7 @@
 							}
 							if (coO.muteBgm && "undefined" !== typeof bgmPlayer) {
 								if ("undefined" !== typeof bgmPlayer.mute) {
-									e.$set(e.app, "isMute", !0);
+									this.$set(this.app, "isMute", !0);
 									bgmPlayer.mute();
 								}
 							}
@@ -61068,7 +62596,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("18.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("25.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 25.01.2025")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" New Features: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Added a feature to use group IDs to the 'Forces Active' function. "), o("br"), o("br"), e._v(" Added a feature to scroll to the corresponding item in the Open Row List. "), o("br"), o("br"), e._v(" Added a feature to set the Choice ID instead of Row ID in the scroll function. ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v(" Fixed an issue where the feature to save a project with separate images was not working properly. "), o("br"), o("br"), e._v(" Fixed an issue where Styling data was being inserted into each row even when Private Styling wasn't used. ")])], 1)], 1)], 1)], 1)], 1)], 1), o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("18.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -62377,7 +63945,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.17.7")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.18.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
@@ -62627,7 +64195,7 @@
                         isViewerVersion: !1,
 						isFadingOut: !1,
 						isPointerCursor: !1,
-                        backpack: [],
+						importedChoicesIsOpen: !0,
 						bgmPlayInterval: 0,
 						bgmTitleInterval: 0,
 						bgmFadeInterval: 0,
@@ -62640,6 +64208,8 @@
 						isMute: !1,
 						lastFadeTime: 0,
 						showMusicPlayer: !1,
+						fadeTransitionColor: "#000000FF",
+						fadeTransitionTime: 0.25,
 						comp: {},
 						compR: {},
 						compG: {},
@@ -62686,6 +64256,32 @@
 						defaultOrReq: "of",
 						orderSelReqText: "0",
 						defaultSelReq: "choice from",
+						backpack: [{
+							id: "default_backpack_row",
+                            title: "Result",
+                            titleText: "",
+                            objectWidth: "col-md-3",
+                            image: "",
+                            template: 1,
+                            isButtonRow: !1,
+                            buttonType: !0,
+                            buttonId: "",
+                            buttonText: "Click",
+                            buttonRandom: !1,
+                            buttonRandomNumber: 1,
+                            isResultRow: !0,
+                            resultGroupId: "",
+                            isInfoRow: !0,
+                            defaultAspectWidth: 1,
+                            defaultAspectHeight: 1,
+                            allowedChoices: 0,
+                            currentChoices: 0,
+                            requireds: [],
+                            isEditModeOn: !1,
+                            isRequirementOpen: !1,
+                            objects: [],
+							rowDesignGroups: []
+						}],
                         styling: {
                             rowTitle: "Times New Roman",
                             rowText: "Times New Roman",
