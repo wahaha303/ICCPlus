@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.18.0 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.18.1 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -831,7 +831,7 @@
 						min: 0,
 						color: e.$vuetify.theme.isDark ? "white" : "black",
 						"track-color": "gray",
-						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
+						disabled: "undefined" === typeof bgmPlayer || "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
 					},
 					model: {
 						value: e.app.curBgmTime,
@@ -36349,7 +36349,7 @@
                         },
                         expression: "app.defaultAfterPoint"
                     }
-                }), o("br"), e._v("Clicking this will change the id of all of the choices and rows where the title is longer than 2 letters, or the default title, into the title, which can make it easier to manage on larger projects with large amounts of requirements being used. "), o("v-btn", {
+                }), o("br"), e._v("Clicking this will change the id of all of the choices and rows where the title is longer than 2 letters, or the default title, into the title, which can make it easier to manage on larger projects with large amounts of requirements being used. Spaces will be replaced with underscores(_). "), o("v-btn", {
                     staticStyle: {
                         color: e.$vuetify.theme.isDark ? "white" : "black"
                     },
@@ -36421,8 +36421,20 @@
                     },
                     idToTitle: function() {
                         for (var e = 0; e < this.app.rows.length; e++) {
-                            this.app.rows[e].id.length > 2 && this.app.rows[e].title != this.app.defaultRowTitle && (this.app.rows[e].id = this.app.rows[e].title);
-                            for (var t = 0; t < this.app.rows[e].objects.length; t++) this.app.rows[e].objects[t].id.length > 2 && this.app.rows[e].objects[t].title != this.app.defaultChoiceTitle && (this.app.rows[e].objects[t].id = this.app.rows[e].objects[t].title)
+                            if (this.app.rows[e].id.length > 2 && this.app.rows[e].title != this.app.defaultRowTitle) {
+								var rowTitle = this.app.rows[e].title.replaceAll(" ", "_");
+								this.app.compR[rowTitle] = this.app.compR[this.app.rows[e].id];
+								this.$delete(this.app.compR, this.app.rows[e].id);
+								this.app.rows[e].id = rowTitle;
+							}
+                            for (var t = 0; t < this.app.rows[e].objects.length; t++) {
+								if (this.app.rows[e].objects[t].id.length > 2 && this.app.rows[e].objects[t].title != this.app.defaultChoiceTitle) {
+									var objectTitle = this.app.rows[e].objects[t].title.replaceAll(" ", "_");
+									this.app.comp[objectTitle] = this.app.comp[this.app.rows[e].objects[t].id];
+									this.$delete(this.app.comp, this.app.rows[e].objects[t].id);
+									this.app.rows[e].objects[t].id = objectTitle;
+								}
+							}
                         }
                     }
                 }
@@ -60139,7 +60151,7 @@
 						min: 0,
 						color: e.$vuetify.theme.isDark ? "white" : "black",
 						"track-color": "gray",
-						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
+						disabled: "undefined" === typeof bgmPlayer || "undefined" === typeof bgmPlayer.playerInfo.videoData || e.app.curBgmLength === 0 || !e.app.bgmIsPlaying
 					},
 					model: {
 						value: e.app.curBgmTime,
@@ -63945,7 +63957,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.18.0")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.18.1")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"

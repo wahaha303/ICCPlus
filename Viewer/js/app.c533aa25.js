@@ -551,7 +551,7 @@
 						min: 0,
 						color: t.$vuetify.theme.isDark ? "white" : "black",
 						"track-color": "gray",
-						disabled: "undefined" === typeof bgmPlayer.playerInfo.videoData || t.app.curBgmLength === 0 || !t.app.bgmIsPlaying
+						disabled: "undefined" === typeof bgmPlayer || "undefined" === typeof bgmPlayer.playerInfo.videoData || t.app.curBgmLength === 0 || !t.app.bgmIsPlaying
 					},
 					model: {
 						value: t.app.curBgmTime,
