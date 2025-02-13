@@ -3104,8 +3104,8 @@
 						return this.$parent.object
 					},
 					addonStyling: function() {
-						if (this.object.privateAddonIsOn) return this.object.styling;
-						if (this.row.privateAddonIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateAddonIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateAddonIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3143,8 +3143,8 @@
 						return this.$store.state.app.styling
 					},
 					addonImageStyling: function() {
-						if (this.object.privateAddonImageIsOn) return this.object.styling;
-						if (this.row.privateAddonImageIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateAddonImageIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateAddonImageIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3182,8 +3182,8 @@
 						return this.$store.state.app.styling;
 					},
 					backgroundStyling: function() {
-						if (this.object.privateBackgroundIsOn) return this.object.styling;
-						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3221,8 +3221,8 @@
 						return this.$store.state.app.styling;
 					},
 					objectStyling: function() {
-						if (this.object.privateObjectIsOn) return this.object.styling;
-						if (this.row.privateObjectIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateObjectIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3260,8 +3260,8 @@
 						return this.$store.state.app.styling
 					},
 					objectImageStyling: function() {
-						if (this.object.privateObjectImageIsOn) return this.object.styling;
-						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateObjectImageIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3299,8 +3299,8 @@
 						return this.$store.state.app.styling;
 					},
                     textStyling: function() {
-						if (this.object.privateTextIsOn) return this.object.styling;
-						if (this.row.privateTextIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateTextIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3338,8 +3338,8 @@
 						return this.$store.state.app.styling;
 					},
 					filterStyling: function() {
-						if (this.object.privateFilterIsOn) return this.object.styling;
-						if (this.row.privateFilterIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateFilterIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -3586,7 +3586,7 @@
                 }) : t._e()]), i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize((t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : (t.score.discountIsOn && t.score.discountShow ? t.score.discountScore : t.scoreValue))) + " " + t.score.afterText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountAfterText : ""), t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize((t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " " + t.score.afterText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountAfterText : ""), t.sanitizeArg))
                     }
                 })])])], 1) : t.pointType.iconIsOn && t.pointType.imageSidePlacement && t.score.showScore && t.isPointtypeActivated ? i("v-row", {
 					staticClass: "ma-0"
@@ -3596,7 +3596,7 @@
                 }, [i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountBeforeText : "") + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : (t.score.discountIsOn && t.score.discountShow ? t.score.discountScore : t.scoreValue))) + " ", t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize(t.score.beforeText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountBeforeText : "") + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " ", t.sanitizeArg))
                     }
                 })]), i("div", {
                     style: t.pointType.imageOnSide ? "padding-left:1px;padding-right:2px" : "padding-left:3px;padding-right:3px"
@@ -3625,7 +3625,7 @@
                 }, [i("div", [i("p", {
                     staticClass: "pa-0 ma-0",
                     domProps: {
-                        innerHTML: t._s(t.$sanitize(t.score.beforeText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountBeforeText : "") + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : (t.score.discountIsOn && t.score.discountShow ? t.score.discountScore : t.scoreValue))) + " " + t.score.afterText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountAfterText : "") + " ", t.sanitizeArg))
+                        innerHTML: t._s(t.$sanitize(t.score.beforeText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountBeforeText : "") + " " + (t.score.hideValue ? "" : (t.score.isRandom && !t.score.setValue ? (t.score.maxValue < 0 ? (t.scoreMaxValue + " ~ " + t.scoreMinValue) : (t.scoreMinValue + " ~ " + t.scoreMaxValue)) : t.scoreValue)) + " " + t.score.afterText + (t.score.discountIsOn && t.score.discountShow ? t.score.discountAfterText : "") + " ", t.sanitizeArg))
                     }
                 })])])], 1) : t._e()], 1)
             },
@@ -3686,7 +3686,8 @@
                         return "undefined" !== typeof this.pointType && (this.pointType.pointColorsIsOn ? this.posOrNeg ? t += "color: " + this.pointType.positiveColor.hex + ";" : t += "color: " + this.pointType.negativeColor.hex + ";" : t += "color: " + this.styling.scoreTextColor + ";"), t
                     },
                     scoreValue: function() {
-                        var t = this.posOrNeg ? -1 * this.score.value : this.score.value;
+						var s = this.score.discountShow ? this.score.discountScore : this.score.value;
+                        var t = this.posOrNeg ? -1 * s : s;
                         return this.pointType.plussOrMinusAdded && (t = this.posOrNeg && !this.pointType.plussOrMinusInverted || this.pointType.plussOrMinusInverted && !this.posOrNeg ? "+" + t : "-" + t), t
                     },
 					scoreMinValue: function() {
@@ -4284,8 +4285,8 @@
 						return this.$store.state.app.activated
 					},
 					objectStyling: function() {
-						if (this.object.privateObjectIsOn) return this.object.styling;
-						if (this.row.privateObjectIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateObjectIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateObjectIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -4323,8 +4324,8 @@
 						return this.$store.state.app.styling
 					},
 					objectImageStyling: function() {
-						if (this.object.privateObjectImageIsOn) return this.object.styling;
-						if (this.row.privateObjectImageIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateObjectImageIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateObjectImageIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -4362,8 +4363,8 @@
 						return this.$store.state.app.styling;
 					},
 					filterStyling: function() {
-						if (this.object.privateFilterIsOn) return this.object.styling;
-						if (this.row.privateFilterIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateFilterIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateFilterIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -4401,8 +4402,8 @@
 						return this.$store.state.app.styling;
 					},
 					backgroundStyling: function() {
-						if (this.object.privateBackgroundIsOn) return this.object.styling;
-						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateBackgroundIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -4440,8 +4441,8 @@
 						return this.$store.state.app.styling;
 					},
 					textStyling: function() {
-						if (this.object.privateTextIsOn) return this.object.styling;
-						if (this.row.privateTextIsOn) return this.row.styling;
+						if (this.object.isPrivateStyling && this.object.privateTextIsOn) return this.object.styling;
+						if (this.row.isPrivateStyling && this.row.privateTextIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.object.objectDesignGroups) {
 							for (var a = 0; a < this.object.objectDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compODG[this.object.objectDesignGroups[a].id]) {
@@ -4479,7 +4480,7 @@
 						return this.$store.state.app.styling;
 					},
 					rowStyling: function() {
-						if (this.row.privateRowIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateRowIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -4500,7 +4501,7 @@
 						return this.$store.state.app.styling;
 					},
 					rowBodyBgColor: function() {
-						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -4521,7 +4522,7 @@
 						return !1;
 					},
 					rowBodyBgImage: function() {
-						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -5067,31 +5068,29 @@
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
 												if (coS.isChangeDiscount) {
-													if (coS.isChangeDiscount) {
-														for (var m = 0; m < this.app.pointTypes.length; m++) {
-															if (this.app.pointTypes[m].id == coS.id) {
-																if (coO.isMultipleUseVariable) {
-																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
-																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																		}
-																		else {
-																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
-																		}
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																	}
-																	if (coO.forcedActivated && nh > 0) {
-																		if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																		e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 																	}
-																} else {
-																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 																}
-																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
-														coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
-														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
 											}
 										}
@@ -6611,7 +6610,7 @@
 										if (this.checkPointsMD(e)) {
 											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum), e.scores[a].isChangeDiscount && this.$set(e.scores[a], "isChangeDiscount", false));
 											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -6962,7 +6961,7 @@
 										}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum), e.scores[g].isChangeDiscount && this.$set(e.scores[g], "isChangeDiscount", false));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
 										if (e.duplicateRow) {
@@ -7258,7 +7257,7 @@
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
+												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum), e.scores[a].isChangeDiscount && this.$set(e.scores[a], "isChangeDiscount", false));
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -7667,19 +7666,20 @@
 															e.scores[i].isActiveMul[tmpVariable - 1] = !0;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												} else {
 													if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMulMinus[tmpVariable] || e.scores[i].isActiveMulMinus[tmpVariable]) {
 														if (e.scores[i].multiplyByTimes) {
 															this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
 															e.scores[i].isActiveMulMinus[tmpVariable] = !1;
-															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
-
+															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});
 														} else {
 															this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
 															e.scores[i].isActiveMulMinus[tmpVariable] = !1;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												}
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
@@ -7928,6 +7928,7 @@
 															e.scores[i].isActiveMulMinus[tmpVariable - 1] = !0;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												} else {
 													if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[tmpVariable] || e.scores[i].isActiveMul[tmpVariable]) {
@@ -7940,6 +7941,7 @@
 															e.scores[i].isActiveMul[tmpVariable] = !1;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												}
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
@@ -8355,7 +8357,7 @@
                         return this.$store.state.app.styling
                     },
 					rowStyling: function() {
-						if (this.row.privateRowIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateRowIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -8376,7 +8378,7 @@
 						return this.$store.state.app.styling;
 					},
 					textStyling: function() {
-						if (this.row.privateTextIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateTextIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -8397,7 +8399,7 @@
 						return this.$store.state.app.styling;
 					},
 					rowImageStyling: function() {
-						if (this.row.privateRowImageIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateRowImageIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -8418,7 +8420,7 @@
 						return this.$store.state.app.styling;
 					},
 					backgroundStyling: function() {
-						if (this.row.privateBackgroundIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -8439,7 +8441,7 @@
 						return this.$store.state.app.styling;
 					},
 					rowBodyBgColor: function() {
-						if (this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn && this.row.styling.bgColorIsOn) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -8460,7 +8462,7 @@
 						return !1;
 					},
 					rowBodyBgImage: function() {
-						if (this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
+						if (this.row.isPrivateStyling && this.row.privateBackgroundIsOn && this.row.styling.backgroundImage) return this.row.styling;
 						if ("undefined" !== typeof this.row.rowDesignGroups) {
 							for (var a = 0; a < this.row.rowDesignGroups.length; a++) {
 								if ("undefined" !== typeof this.app.compRDG[this.row.rowDesignGroups[a].id]) {
@@ -9001,31 +9003,29 @@
 											var coS = coO.scores[b];
 											if (!coS.isNotRecalculatable) {
 												if (coS.isChangeDiscount) {
-													if (coS.isChangeDiscount) {
-														for (var m = 0; m < this.app.pointTypes.length; m++) {
-															if (this.app.pointTypes[m].id == coS.id) {
-																if (coO.isMultipleUseVariable) {
-																	for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
-																		if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
-																			coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
-																		}
-																		else {
-																			this.app.pointTypes[m].startingSum += coS.tmpDisScore;
-																		}
+													for (var m = 0; m < this.app.pointTypes.length; m++) {
+														if (this.app.pointTypes[m].id == coS.id) {
+															if (coO.isMultipleUseVariable) {
+																for (var X = coO.multipleUseVariable, x = 0; x < X; x++) {
+																	if (this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) {
+																		coO.forcedActivated ? (coO.forcedActivated = !coO.forcedActivated, coO.numMultipleTimesMinus--, this.selectedOneLess(co.objects, co.rows), coO.forcedActivated = !coO.forcedActivated, nh++) : this.selectedOneLess(coO, coR);
 																	}
-																	if (coO.forcedActivated && nh > 0) {
-																		if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
-																		e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																	else {
+																		this.app.pointTypes[m].startingSum += coS.tmpDisScore;
 																	}
-																} else {
-																	(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 																}
-																this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
+																if (coO.forcedActivated && nh > 0) {
+																	if ("undefined" === typeof e.cancelForcedActivated) this.$set(e, "cancelForcedActivated", []);
+																	e.cancelForcedActivated.push(coO.id + "/ON#" + nh);
+																}
+															} else {
+																(this.app.pointTypes[m].belowZeroNotAllowed && this.app.pointTypes[m].startingSum + coS.tmpDisScore < 0) ? ((coO.forcedActivated = coO.forcedActivated ? !coO.forcedActivated : coO.forcedActivated), this.activateObject(coO, coR)) : (this.app.pointTypes[m].startingSum += coS.tmpDisScore);
 															}
+															this.$set(this.app.pointTypeMap, this.app.pointTypes[m].id, this.app.pointTypes[m].startingSum);
 														}
-														coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
-														19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 													}
+													coS.isChangeDiscount = !1, coS.tmpDisScore = 0;
+													19 == this.scoreUpdate.length ? this.scoreUpdate += coO.title : this.scoreUpdate += ", " + coO.title;
 												}
 											}
 										}
@@ -10545,7 +10545,7 @@
 										if (this.checkPointsMD(e)) {
 											for (var a = 0; a < e.scores.length; a++) {
 												if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
+													for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum), e.scores[a].isChangeDiscount && this.$set(e.scores[a], "isChangeDiscount", false));
 											}
 											var ee = 0, EE = 0;
 											if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
@@ -10896,7 +10896,7 @@
 										}
 										for (var g = 0; g < e.scores.length; g++)
 											if (this.checkRequireds(e.scores[g]) && !e.scores[g].isActive)
-												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum));
+												for (var w = 0; w < this.app.pointTypes.length; w++) this.app.pointTypes[w].id == e.scores[g].id && (this.app.pointTypes[w].startingSum -= (e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)), e.scores[g].isActive = !0, tmpScores.push({id: e.scores[g].id, value: e.scores[g].discountIsOn ? e.scores[g].discountScore : parseInt(e.scores[g].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[w].id, this.app.pointTypes[w].startingSum), e.scores[g].isChangeDiscount && this.$set(e.scores[g], "isChangeDiscount", false));
 										this.activated.push(eid), t.currentChoices += 1;
 										var a, f, b, m, v, ee = 0;
 										if (e.duplicateRow) {
@@ -11192,7 +11192,7 @@
 									if (this.checkPointsMD(e)) {
 										for (var a = 0; a < e.scores.length; a++)
 											if (this.checkRequireds(e.scores[a]) && e.scores[a].isActive || e.scores[a].isActive)
-												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum));
+												for (var n = 0; n < this.app.pointTypes.length; n++) this.app.pointTypes[n].id == e.scores[a].id && (this.app.pointTypes[n].startingSum += (e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)), e.scores[a].isActive = !1, e.scores[a].setValue = !1, tmpScores.push({id: e.scores[a].id, value: e.scores[a].discountIsOn ? e.scores[a].discountScore : parseInt(e.scores[a].value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[n].id, this.app.pointTypes[n].startingSum), e.scores[a].isChangeDiscount && this.$set(e.scores[a], "isChangeDiscount", false));
 										if (e.activateOtherChoice && "undefined" !== typeof e.activateThisChoice) {
 											if (e.isActivateRandom && "undefined" !== typeof e.activatedRandom) {
 												for (var v = e.activatedRandom.length - 1; v >= 0; v--) {
@@ -11601,19 +11601,20 @@
 															e.scores[i].isActiveMul[tmpVariable - 1] = !0;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												} else {
 													if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMulMinus[tmpVariable] || e.scores[i].isActiveMulMinus[tmpVariable]) {
 														if (e.scores[i].multiplyByTimes) {
 															this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1));
 															e.scores[i].isActiveMulMinus[tmpVariable] = !1;
-															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});	
-
+															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore * (tmpVariable + 1) : parseInt(e.scores[i].value) * (tmpVariable + 1)});
 														} else {
 															this.app.pointTypes[s].startingSum -= (e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value));
 															e.scores[i].isActiveMulMinus[tmpVariable] = !1;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												}
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
@@ -11862,6 +11863,7 @@
 															e.scores[i].isActiveMulMinus[tmpVariable - 1] = !0;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												} else {
 													if (this.checkRequireds(e.scores[i]) && e.scores[i].isActiveMul[tmpVariable] || e.scores[i].isActiveMul[tmpVariable]) {
@@ -11874,6 +11876,7 @@
 															e.scores[i].isActiveMul[tmpVariable] = !1;
 															tmpScores.push({id: e.scores[i].id, value: e.scores[i].discountIsOn ? e.scores[i].discountScore : parseInt(e.scores[i].value)});	
 														}
+														if (e.scores[i].isChangeDiscount) this.$set(e.scores[i], "isChangeDiscount", false);
 													}
 												}
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[s].id, this.app.pointTypes[s].startingSum);
@@ -13529,7 +13532,7 @@
 								var coS = coO.scores[h];
 								for (var j = 0; j < this.app.pointTypes.length; j++) {
 									if (this.app.pointTypes[j].id == coS.id) {
-										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum));
+										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum), coS.isChangeDiscount && this.$set(coS, "isChangeDiscount", false));
 									}
 								}
 							}
@@ -13806,6 +13809,7 @@
 												coS.isActiveMul[k - 1] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
+												if (coS.isChangeDiscount) this.$set(coS, "isChangeDiscount", false);
 											}
 										}
 									}
@@ -13996,6 +14000,7 @@
 												coS.isActiveMulMinus[k] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
+												if (coS.isChangeDiscount) this.$set(coS, "isChangeDiscount", false);
 											}
 										}
 									}
@@ -16738,7 +16743,7 @@
 								var coS = coO.scores[h];
 								for (var j = 0; j < this.app.pointTypes.length; j++) {
 									if (this.app.pointTypes[j].id == coS.id) {
-										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum));
+										this.checkRequireds(coS) && !coS.isActive && (this.app.pointTypes[j].startingSum -= (coS.discountIsOn ? coS.discountScore : parseInt(coS.value)), coS.isActive = !0, tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore : parseInt(coS.value)}), this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum), coS.isChangeDiscount && this.$set(coS, "isChangeDiscount", false));
 									}
 								}
 							}
@@ -17425,6 +17430,7 @@
 												coS.isActiveMul[k - 1] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
+												if (coS.isChangeDiscount) this.$set(coS, "isChangeDiscount", false);
 											}
 										}
 									}
@@ -17615,6 +17621,7 @@
 												coS.isActiveMulMinus[k] = !0;
 												tmpScores.push({id: coS.id, value: coS.discountIsOn ? coS.discountScore * tmpValue : parseInt(coS.value) * tmpValue});
 												this.$set(this.app.pointTypeMap, this.app.pointTypes[j].id, this.app.pointTypes[j].startingSum);
+												if (coS.isChangeDiscount) this.$set(coS, "isChangeDiscount", false);
 											}
 										}
 									}
