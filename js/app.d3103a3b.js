@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.18.2 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.18.3 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -30910,7 +30910,7 @@
 								if ("undefined" === typeof coR.styling.unselFilterSepia) e.$set(coR.styling, "unselFilterSepia", 0);
 							}
 							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) {
-								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styling.objectImgObjectFillHeight);
 								e.$delete(coR, "styling");
 							}
 							if ("undefined" !== typeof coR.debugTitle && coR.debugTitle === "") e.$delete(coR, "debugTitle");
@@ -31194,7 +31194,7 @@
 								if ("undefined" === typeof coR.styling.unselFilterSepia) e.$set(coR.styling, "unselFilterSepia", 0);
 							}
 							if (!coR.isPrivateStyling && "undefined" !== typeof coR.styling) {
-								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styling.objectImgObjectFillHeight);
 								e.$delete(coR, "styling");
 							}
 							if ("undefined" !== typeof coR.debugTitle && coR.debugTitle === "") e.$delete(coR, "debugTitle");
@@ -63967,7 +63967,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.18.2")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.18.3")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"

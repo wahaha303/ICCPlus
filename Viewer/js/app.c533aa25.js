@@ -15243,7 +15243,7 @@
 								}
 							}
 							if ("undefined" !== typeof coR.styling) {
-								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styling.objectImgObjectFillHeight);
 							}
 							if ("undefined" === typeof e.app.rowDesignGroups) e.$set(e.app, "rowDesignGroups", []);
 							if ("undefined" === typeof e.app.objectDesignGroups) e.$set(e.app, "objectDesignGroups", []);
@@ -15483,7 +15483,7 @@
 								}
 							}
 							if ("undefined" !== typeof coR.styling) {
-								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styilng.objectImgObjectFillHeight);
+								if ("undefined" !== typeof coR.styling.objectImgObjectFillHeight) e.$set(coR, "objectImgObjectFillHeight", coR.styling.objectImgObjectFillHeight);
 							}
 							if ("undefined" !== typeof coR.image && coR.image.length > 0 && !this.isDataURL(coR.image)) this.externalImages.add(coR.image);
 							for (var c = 0; c < coR.objects.length; c++) {
