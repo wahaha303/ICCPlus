@@ -1007,7 +1007,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 0 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1062,7 +1062,7 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 1 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1124,7 +1124,7 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 2 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1173,7 +1173,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 3 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1270,9 +1270,10 @@
                             }
                         }
                     })
-                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 4 ? i("v-row", {
 					staticStyle: {
-						"flex-grow": 0
+						"flex-grow": 0,
+						width: "100%"
 					}
 				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
@@ -1333,7 +1334,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 0 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1388,7 +1389,7 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 1 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1450,7 +1451,7 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 2 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1537,7 +1538,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 3 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1596,9 +1597,10 @@
                             }
                         }
                     })
-                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 4 ? i("v-row", {
 					staticStyle: {
-						"flex-grow": 0
+						"flex-grow": 0,
+						width: "100%"
 					}
 				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
@@ -1697,7 +1699,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 0 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1752,7 +1754,7 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 1 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1814,7 +1816,7 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 2 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1863,7 +1865,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 3 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -1922,9 +1924,10 @@
                             }
                         }
                     })
-                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 4 ? i("v-row", {
 					staticStyle: {
-						"flex-grow": 0
+						"flex-grow": 0,
+						width: "100%"
 					}
 				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
@@ -2024,7 +2027,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 0 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2078,7 +2081,7 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 1 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2140,7 +2143,7 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 2 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2188,7 +2191,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 3 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2247,9 +2250,10 @@
                             }
                         }
                     })
-                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 4 ? i("v-row", {
 					staticStyle: {
-						"flex-grow": 0
+						"flex-grow": 0,
+						width: "100%"
 					}
 				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
@@ -2306,7 +2310,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectTitleText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 0 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 0 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2360,7 +2364,7 @@
                             }
                         }
                     }) : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 1 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 1 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2422,7 +2426,7 @@
                             innerHTML: t._s(t.$sanitize(t.getChoiceTitle(e), t.sanitizeArg))
                         }
                     })] : t._e()], 1)
-                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 2 ? i("v-row", {
+                })), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 2 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2470,7 +2474,7 @@
                     domProps: {
                         innerHTML: t._s(t.$sanitize(t.replaceObjectText, t.sanitizeArg))
                     }
-                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 3 ? i("v-row", {
+                }) : t._e(), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 3 ? i("v-row", {
 					staticStyle: {
 						"flex-grow": 0
 					}
@@ -2529,9 +2533,10 @@
                             }
                         }
                     })
-                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.app.styling.multiChoiceCounterPosition === 4 ? i("v-row", {
+                }))], 1), t.object.isSelectableMultiple && t.multiChoiceCounter && t.multiChoiceStyling.multiChoiceCounterPosition === 4 ? i("v-row", {
 					staticStyle: {
-						"flex-grow": 0
+						"flex-grow": 0,
+						width: "100%"
 					}
 				}, [i("v-spacer"), i("v-btn", {
                     attrs: {
