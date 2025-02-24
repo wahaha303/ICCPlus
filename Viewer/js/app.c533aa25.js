@@ -12687,20 +12687,24 @@
                     app: function() {
                         return this.$store.state.app
                     },
-                    sactivated: function() {
-                        return this.$store.state.app.activated
-                    },
                     rows: function() {
                         return this.$store.state.app.rows
                     },
                     getSelectedObjectName: function() {
-						for (var e = [], t = 0; t < this.app.activated.length; t++) {
-							if ("undefined" !== typeof this.app.comp[this.app.activated[t].split("/ON#")[0]]) {
-								var co = this.app.comp[this.app.activated[t].split("/ON#")[0]],
-									coR = this.app.rows[co.rows],
-									coO = coR.objects[co.objects];
-								e.push((e.length > 0 ? " " : "") + coO.title + (coO.isSelectableMultiple && coO.isMultipleUseVariable ? "(Taken " + coO.multipleUseVariable + " Times)": "" ));
+						var o = [].concat(this.app.activated);
+						o.sort((a, b) => {
+							if ("undefined" !== typeof this.app.comp[a.split("/ON#")[0]] && "undefined" !== typeof this.app.comp[b.split("/ON#")[0]]) {
+								var aco = this.app.comp[a.split("/ON#")[0]],
+									bco = this.app.comp[b.split("/ON#")[0]];
+								if (aco.rows !== bco.rows) return aco.rows - bco.rows
+								return aco.objects - bco.objects
 							}
+						});
+						for (var e = [], a = 0; a < o.length; a++) {
+							var co = this.app.comp[o[a].split("/ON#")[0]],
+								coR = this.app.rows[co.rows],
+								coO = coR.objects[co.objects];
+							e.push((e.length > 0 ? " " : "") + coO.title + (coO.isSelectableMultiple && coO.isMultipleUseVariable ? "(Taken " + coO.multipleUseVariable + " Times)": "" ));
 						}
                         return e
                     }
