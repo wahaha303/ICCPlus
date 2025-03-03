@@ -3387,7 +3387,6 @@
 							o = this.checkRequireds(this.object);
 						if (this.addonStyling.useAddonDesign) {
 							e += (this.addonStyling.addonBorderImage ? 'border-image: url("' + this.addonStyling.addonBorderImage + '") ' + this.addonStyling.addonBorderImageSliceTop + ' ' + this.addonStyling.addonBorderImageSliceRight + ' ' + this.addonStyling.addonBorderImageSliceBottom + ' ' + this.addonStyling.addonBorderImageSliceLeft + ' / ' + this.addonStyling.addonBorderImageWidth + 'px ' + this.addonStyling.addonBorderImageRepeat + '; border-style: solid; padding: ' + this.addonStyling.addonBorderImageWidth + 'px; ' : "padding: 0px; ") + ((this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBackgroundImage && !(this.object.isActive && this.filterStyling.selBgColorIsOn && !this.filterStyling.selOverlayOnImage)) ? 'background-image: url("' + this.addonStyling.addonBackgroundImage + '");' + (this.addonStyling.isAddonBackgroundRepeat ? "background-repeat: repeat;" : (this.addonStyling.isAddonBackgroundFitIn ? "background-size: 100% 100%;" : "background-size: cover;")) : "") + (this.object.isActive ? (this.filterStyling.selBgColorIsOn ? "background-color: " + this.filterStyling.selFilterBgColor + "; " : "") : (!this.addonStyling.useAddonBackgroundImage && this.addonStyling.addonBgColorIsOn ? "background-color: " + this.addonStyling.addonBgColor + "; " : "")) + "margin:" + this.addonStyling.addonMargin + "px;";
-							console.log(e);
 							1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + "; " : 2 == this.addon.template ? e += "border-radius: " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonStyling.addonBorderRadiusBottomLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopLeft + 0 + t + " " + this.addonStyling.addonBorderRadiusTopRight + 0 + t + " " + this.addonStyling.addonBorderRadiusBottomRight + 0 + t + "; ", this.addonStyling.addonOverflowIsOn && (e += "overflow:hidden;"), (this.addonStyling.addonBorderIsOn && ((this.object.isActive && this.filterStyling.selBorderColorIsOn) || (!o && this.filterStyling.reqBorderColorIsOn))) && (e += "border: " + this.addonStyling.addonBorderWidth + "px " + this.addonStyling.addonBorderStyle + " " + (!o && this.filterStyling.reqBorderColorIsOn ? this.filterStyling.reqFilterBorderColor : (this.object.isActive && this.filterStyling.selBorderColorIsOn ? this.filterStyling.selFilterBorderColor : this.addonStyling.addonBorderColor)) + ";"), e += "filter: ", this.addonStyling.addonDropShadowIsOn && (e += "drop-shadow(" + this.addonStyling.addonDropShadowH + "px " + this.addonStyling.addonDropShadowV + "px " + this.addonStyling.addonDropShadowBlur + "px " + this.addonStyling.addonDropShadowColor + ")");
 							if (!this.object.isActive && o) e += this.filterStyling.unselFilterBlurIsOn ? "blur(" + this.filterStyling.unselFilterBlur + "px)" : "", e += this.filterStyling.unselFilterBrightIsOn ? "brightness(" + this.filterStyling.unselFilterBright + "%)" : "", e += this.filterStyling.unselFilterContIsOn ? "contrast(" + this.filterStyling.unselFilterCont + "%)" : "", e += this.filterStyling.unselFilterGrayIsOn ? "grayscale(" + this.filterStyling.unselFilterGray + "%)" : "", e += this.filterStyling.unselFilterHueIsOn ? "hue-rotate(" + this.filterStyling.unselFilterHue + "deg)" : "", e += this.filterStyling.unselFilterInvertIsOn ? "invert(" + this.filterStyling.unselFilterInvert + "%)" : "", e += this.filterStyling.unselFilterOpacIsOn ? "opacity(" + this.filterStyling.unselFilterOpac + "%)" : "", e += this.filterStyling.unselFilterSaturIsOn ? "saturate(" + this.filterStyling.unselFilterSatur + ")" : "", e += this.filterStyling.unselFilterSepiaIsOn ? "sepia(" + this.filterStyling.unselFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradient + ")");
 							else if (this.object.isActive && o) e += this.filterStyling.selFilterBlurIsOn ? "blur(" + this.filterStyling.selFilterBlur + "px)" : "", e += this.filterStyling.selFilterBrightIsOn ? "brightness(" + this.filterStyling.selFilterBright + "%)" : "", e += this.filterStyling.selFilterContIsOn ? "contrast(" + this.filterStyling.selFilterCont + "%)" : "", e += this.filterStyling.selFilterGrayIsOn ? "grayscale(" + this.filterStyling.selFilterGray + "%)" : "", e += this.filterStyling.selFilterHueIsOn ? "hue-rotate(" + this.filterStyling.selFilterHue + "deg)" : "", e += this.filterStyling.selFilterInvertIsOn ? "invert(" + this.filterStyling.selFilterInvert + "%)" : "", e += this.filterStyling.selFilterOpacIsOn ? "opacity(" + this.filterStyling.selFilterOpac + "%)" : "", e += this.filterStyling.selFilterSaturIsOn ? "saturate(" + this.filterStyling.selFilterSatur + ")" : "", e += this.filterStyling.selFilterSepiaIsOn ? "sepia(" + this.filterStyling.selFilterSepia + "%)" : "", this.addonStyling.addonGradientIsOn && (e += ";background-image: linear-gradient(" + this.addonStyling.addonGradientOnSelect + ")");
@@ -3680,6 +3679,10 @@
                     this.posOrNeg = this.score.value < 0
                 },
                 computed: {
+					checkPosOrNeg: function() {
+						var e = this.score.discountShow ? this.score.discountScore : this.score.value;
+						return e < 0
+					},
                     pointTypes: function() {
                         return this.$store.state.app.pointTypes
                     },
@@ -3688,12 +3691,12 @@
                     },
                     scoreText: function() {
                         var t = 'font-family: "' + this.styling.scoreText + '";font-size: ' + this.styling.scoreTextSize + "%;text-align: " + this.styling.scoreTextAlign + ";display: flex; align-items: " + this.styling.scoreTextAlign + "; justify-content:" + this.styling.scoreTextAlign + ";";
-                        return "undefined" !== typeof this.pointType && (this.pointType.pointColorsIsOn ? this.posOrNeg ? t += "color: " + this.pointType.positiveColor.hex + ";" : t += "color: " + this.pointType.negativeColor.hex + ";" : t += "color: " + this.styling.scoreTextColor + ";"), t
+                        return "undefined" !== typeof this.pointType && (this.pointType.pointColorsIsOn ? this.checkPosOrNeg ? t += "color: " + this.pointType.positiveColor.hex + ";" : t += "color: " + this.pointType.negativeColor.hex + ";" : t += "color: " + this.styling.scoreTextColor + ";"), t
                     },
                     scoreValue: function() {
 						var s = this.score.discountShow ? this.score.discountScore : this.score.value;
-                        var t = this.posOrNeg ? -1 * s : s;
-                        return this.pointType.plussOrMinusAdded && (t = this.posOrNeg && !this.pointType.plussOrMinusInverted || this.pointType.plussOrMinusInverted && !this.posOrNeg ? "+" + t : "-" + t), t
+                        var t = this.checkPosOrNeg ? -1 * s : s;
+                        return this.pointType.plussOrMinusAdded && (t = this.checkPosOrNeg && !this.pointType.plussOrMinusInverted || this.pointType.plussOrMinusInverted && !this.checkPosOrNeg ? "+" + t : "-" + t), t
                     },
 					scoreMinValue: function() {
 						var minPosOrNeg = this.score.minValue < 0,
@@ -12659,7 +12662,7 @@
 						for (var e = [], t = 0; t < this.app.activated.length; t++) {
 							if ("undefined" !== typeof this.app.comp[this.app.activated[t].split("/ON#")[0]]) {
 								var co = this.app.comp[this.app.activated[t].split("/ON#")[0]],
-									coR = this.app.rows[co.rows],
+									coR = co.type === "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									a = coO.id;
 								if (!coO.isSelectableMultiple) {
@@ -12702,7 +12705,7 @@
 						});
 						for (var e = [], a = 0; a < o.length; a++) {
 							var co = this.app.comp[o[a].split("/ON#")[0]],
-								coR = this.app.rows[co.rows],
+								coR = co.type === "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 								coO = coR.objects[co.objects];
 							e.push((e.length > 0 ? " " : "") + coO.title + (coO.isSelectableMultiple && coO.isMultipleUseVariable ? "(Taken " + coO.multipleUseVariable + " Times)": "" ));
 						}
@@ -14847,7 +14850,7 @@
 						for (var e = [], t = 0; t < this.app.activated.length; t++) {
 							if ("undefined" !== typeof this.app.comp[this.app.activated[t].split("/ON#")[0]]) {
 								var co = this.app.comp[this.app.activated[t].split("/ON#")[0]],
-									coR = this.app.rows[co.rows],
+									coR = co.type === "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 									coO = coR.objects[co.objects],
 									a = coO.id;
 								if (!coO.isSelectableMultiple) {
