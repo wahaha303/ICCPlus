@@ -18161,7 +18161,7 @@
 												if ("undefined" !== typeof o.requireds[i].selGroups) {
 													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
 													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[o.requireds[i].selGroups[f]]) {
+														if ("undefined" !== typeof e.app.compG[o.requireds[i].selGroups[f]]) {
 															var co = e.app.compG[o.requireds[i].selGroups[f]],
 																coG = e.app.groups[co.groups],
 																z = coG.elements;
@@ -18310,7 +18310,7 @@
 												if ("undefined" !== typeof t.requireds[i].selGroups) {
 													t.requireds[i].selFromOperators = "undefined" === typeof t.requireds[i].selFromOperators ? "1" : t.requireds[i].selFromOperators;
 													for (var x = 0, f = 0; f < t.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[t.requireds[i].selGroups[f]]) {
+														if ("undefined" !== typeof e.app.compG[t.requireds[i].selGroups[f]]) {
 															var co = e.app.compG[t.requireds[i].selGroups[f]],
 																coG = e.app.groups[ct.groups],
 																z = coG.elements;

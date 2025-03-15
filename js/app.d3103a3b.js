@@ -33680,7 +33680,7 @@
 													break
 												}
 											}
-											if ("undefined" !== e.app.compR[newElement]) {
+											if ("undefined" !== typeof e.app.compR[newElement]) {
 												var co = e.app.compR[newElement],
 													coR = e.app.rows[co.rows];
 												for (var a = 0; a < coR.groups.length; a++) {
@@ -33810,7 +33810,7 @@
 													break
 												}
 											}
-											if ("undefined" !== e.app.comp[newElement]) {
+											if ("undefined" !== typeof e.app.comp[newElement]) {
 												var co = e.app.comp[newElement],
 													coR = e.app.rows[co.rows],
 													coO = coR.objects[co.objects];
@@ -37029,7 +37029,7 @@
 												break
 											}
 										}
-										if ("undefined" !== e.app.compR[newElement]) {
+										if ("undefined" !== typeof e.app.compR[newElement]) {
 											var co = e.app.compR[newElement],
 												coR = e.app.rows[co.rows];
 											for (var a = 0; a < coR.rowDesignGroups.length; a++) {
@@ -37106,7 +37106,7 @@
 												break
 											}
 										}
-										if ("undefined" !== e.app.compR[newElement]) {
+										if ("undefined" !== typeof e.app.compR[newElement]) {
 											var co = e.app.compR[newElement],
 												coR = e.app.backpack[co.rows];
 											for (var a = 0; a < coR.rowDesignGroups.length; a++) {
@@ -37359,7 +37359,7 @@
 												break
 											}
 										}
-										if ("undefined" !== e.app.comp[newElement]) {
+										if ("undefined" !== typeof e.app.comp[newElement]) {
 											var co = e.app.comp[newElement],
 												coR = e.app.rows[co.rows],
 												coO = coR.objects[co.objects];
@@ -37438,7 +37438,7 @@
 												break
 											}
 										}
-										if ("undefined" !== e.app.comp[newElement]) {
+										if ("undefined" !== typeof e.app.comp[newElement]) {
 											var co = e.app.comp[newElement],
 												coR = e.app.backpack[co.rows],
 												coO = coR.objects[co.objects];
@@ -46375,13 +46375,15 @@
 													if("undefined" !== typeof e.discountGroups) {
 														for (var a = 0; a < this.app.groups.length; a++) {
 															if (e.discountGroups.includes(this.app.groups[a].id)) {
-																for (var b = 0; b < this.app.groups[a].elements.length; b++)
+																console.log(this.app.groups[a]);
+																for (var b = 0; b < this.app.groups[a].elements.length; b++) {
 																	if ("undefined" !== typeof this.app.comp[this.app.groups[a].elements[b].id]) {
 																		var co = this.app.comp[this.app.groups[a].elements[b].id],
 																			coR = co.type == "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
 																			coO = coR.objects[co.objects];
 																		for (var c = 0; c < coO.scores.length; c++) {
 																			var coS = coO.scores[c];
+																			console.log(coO.title, coS);
 																			if (e.discountPointTypes.length === 0 || e.discountPointTypes.includes(coS.id)) {
 																				if (!coS.isNotDiscountable) {
 																					this.discountS(e, coS);
@@ -46389,6 +46391,7 @@
 																			}
 																		}
 																	}
+																}
 															}
 														}
 													}
@@ -64997,7 +65000,7 @@
 												if ("undefined" !== typeof o.requireds[i].selGroups) {
 													o.requireds[i].selFromOperators = "undefined" === typeof o.requireds[i].selFromOperators ? "1" : o.requireds[i].selFromOperators;
 													for (var x = 0, f = 0; f < o.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[o.requireds[i].selGroups[f]]) {
+														if ("undefined" !== typeof e.app.compG[o.requireds[i].selGroups[f]]) {
 															var co = e.app.compG[o.requireds[i].selGroups[f]],
 																coG = e.app.groups[co.groups],
 																z = coG.elements;
@@ -65146,7 +65149,7 @@
 												if ("undefined" !== typeof t.requireds[i].selGroups) {
 													t.requireds[i].selFromOperators = "undefined" === typeof t.requireds[i].selFromOperators ? "1" : t.requireds[i].selFromOperators;
 													for (var x = 0, f = 0; f < t.requireds[i].selGroups.length; f++)
-														if ("undefined" !== e.app.compG[t.requireds[i].selGroups[f]]) {
+														if ("undefined" !== typeof e.app.compG[t.requireds[i].selGroups[f]]) {
 															var co = e.app.compG[t.requireds[i].selGroups[f]],
 																coG = e.app.groups[ct.groups],
 																z = coG.elements;
