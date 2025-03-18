@@ -228,7 +228,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v(" Ver 1.18.6 ")])]), o("v-col", {
+                }, [e._v(" Ver 1.18.8 ")])]), o("v-col", {
                     staticClass: "pb-0",
                     staticStyle: {
                         color: "green"
@@ -8385,12 +8385,12 @@
 					objectImage: function() {
 						if (this.addonImageStyling.useAddonImage) {
 							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
-							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
 						} else {
 							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
 						}
@@ -20032,7 +20032,7 @@
                     },
                     objectImage: function() {
                         var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
                         var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
                         return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
@@ -30778,7 +30778,7 @@
 							l.href = url;
 							l.crossOrigin = "anonymous";
 							document.head.appendChild(l);
-						}						
+						}
 						if ("undefined" === typeof e.app.fadeTransitionColor) e.$set(e.app, "fadeTransitionColor", "#000000FF");
 						if ("undefined" === typeof e.app.fadeTransitionTime) e.$set(e.app, "isMute", 0.25);
 						for (var b = 0; b < e.app.rows.length; b++) {
@@ -38913,10 +38913,12 @@
 							}
 						});
 						for (var e = [], a = 0; a < o.length; a++) {
-							var co = this.app.comp[o[a].split("/ON#")[0]],
-								coR = co.type === "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
-								coO = coR.objects[co.objects];
-							e.push((e.length > 0 ? " " : "") + coO.title + (coO.isSelectableMultiple && coO.isMultipleUseVariable ? "(Taken " + coO.multipleUseVariable + " Times)": "" ));
+							if ("undefined" !== typeof this.app.comp[o[a].split("/ON#")[0]]) {
+								var co = this.app.comp[o[a].split("/ON#")[0]],
+									coR = co.type === "app" ? this.app.rows[co.rows] : this.app.backpack[co.rows],
+									coO = coR.objects[co.objects];
+								e.push((e.length > 0 ? " " : "") + coO.title + (coO.isSelectableMultiple && coO.isMultipleUseVariable ? "(Taken " + coO.multipleUseVariable + " Times)": "" ));
+							}
 						}
                         return e
                     }
@@ -42897,12 +42899,12 @@
                     objectImage: function() {
 						if (this.addonImageStyling.useAddonImage) {
 							var e = "width:" + this.addonImageStyling.addonImageWidth + "%;margin-top:" + this.addonImageStyling.addonImageMarginTop + "%;margin-bottom:" + this.addonImageStyling.addonImageMarginBottom + "%;";
-							this.addonImageStyling.addonImgObjectFillIsOn && (e += "px;object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+							this.addonImageStyling.addonImgObjectFillIsOn && (e += "object-fit:" + this.addonImageStyling.addonImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.addonImageStyling.addonImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.addonImageStyling.addonImgBorderRadiusBottomLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopLeft + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusTopRight + 0 + t + " " + this.addonImageStyling.addonImgBorderRadiusBottomRight + 0 + t + "; ", this.addonImageStyling.addonImgOverflowIsOn && (e += "overflow:hidden;"), this.addonImageStyling.addonImgBorderIsOn && (e += "border: " + this.addonImageStyling.addonImgBorderWidth + "px " + this.addonImageStyling.addonImgBorderStyle + " " + this.addonImageStyling.addonImgBorderColor + ";"), e
 						} else {
 							var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-							this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+							this.objectImageStyling.objectImgObjectFillIsOn && (e += "object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
 							var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
 							return 1 == this.addon.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.addon.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
 						}
@@ -44071,7 +44073,7 @@
                     },
                     objectImage: function() {
                         var e = "width:" + this.objectImageStyling.objectImageWidth + "%;margin-top:" + this.objectImageStyling.objectImageMarginTop + "%;margin-bottom:" + this.objectImageStyling.objectImageMarginBottom + "%;";
-                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "px;object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
+                        this.objectImageStyling.objectImgObjectFillIsOn && (e += "object-fit:" + this.objectImageStyling.objectImgObjectFillStyle + ";height:" + this.row.objectImgObjectFillHeight + "px;");
                         var t = this.objectImageStyling.objectImgBorderRadiusIsPixels ? "px" : "%";
                         return 1 == this.object.template || this.row.choicesShareTemplate ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + ";" : 2 == this.object.template ? e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + "; " : e += "border-radius: " + this.objectImageStyling.objectImgBorderRadiusBottomLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopLeft + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusTopRight + 0 + t + " " + this.objectImageStyling.objectImgBorderRadiusBottomRight + 0 + t + "; ", this.objectImageStyling.objectImgOverflowIsOn && (e += "overflow:hidden;"), this.objectImageStyling.objectImgBorderIsOn && (e += "border: " + this.objectImageStyling.objectImgBorderWidth + "px " + this.objectImageStyling.objectImgBorderStyle + " " + this.objectImageStyling.objectImgBorderColor + ";"), e
                     },
@@ -63993,7 +63995,7 @@
                         href: "https://github.com/wahaha303/ICCPlus/releases/latest",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.18.6")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.18.8")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
