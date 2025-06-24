@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1">
+    <script src="/favi/favi.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+    <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
+        integrity=sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm crossorigin=anonymous>
+    <script src=https://unpkg.com/vue-select@latest></script>
+    <link rel=stylesheet href=https://unpkg.com/vue-select@latest/dist/vue-select.css crossorigin=anonymous>
+    <title>ICC Plus</title>
+    <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" crossorigin="anonymous">
+    <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css crossorigin=anonymous>
+    <link href=js/chunk-2d0e6102.09695d49.js rel=prefetch>
+    <link href=css/app.e7eb167a.css rel=preload as=style>
+    <link href=css/chunk-vendors.ebaa52b5.css rel=preload as=style>
+    <link href=js/app.d3103a3b.js rel=preload as=script>
+    <link href=js/chunk-vendors.ae283b72.js rel=preload as=script>
+    <link href=css/chunk-vendors.ebaa52b5.css rel=stylesheet>
+    <link href=css/app.e7eb167a.css rel=stylesheet>
+  </head>
+  <body>
+    <noscript><strong>We're sorry but the Interactive CYOA Creator doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
+	<script>
+        var bgmPlayer;var retryCount = 0;function onYouTubeIframeAPI() {bgmPlayer = new YT.Player("bgm", {height: "0",width: "0",videoId: ""}), console.log("Youtube Iframe API loaded.")}
+		function loadYouTubeIframeAPI() {(window.YT && YT.Player) ? onYouTubeIframeAPI() : (retryCount++ < 5 ? (setTimeout(loadYouTubeIframeAPI, 1000), console.log("Retrying to load YouTube Iframe API...")) : console.error("Failed to load YouTube Iframe API after multiple attempts."))}
+		document.addEventListener("DOMContentLoaded", function() {(window.YT && YT.Player) ? onYouTubeIframeAPI() : setTimeout(loadYouTubeIframeAPI, 1000)});
+		window.onbeforeunload = function() {return ''};
+    </script>
+	<div style="display:none" id="bgm"></div>
+    <div id=app></div>
+    <script src=js/html-to-image.min.js></script>
+    <script src=js/chunk-vendors.ae283b72.js></script>    
+    <script src=js/app.d3103a3b.js></script>
+  </body>
+</html>
