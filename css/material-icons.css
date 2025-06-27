@@ -171,3 +171,6 @@
 .mdi-folder-arrow-down::before {
   content: "\F19E8";
 }
+.mdi-folder-arrow-up::before {
+  content: "\F19F0";
+}
