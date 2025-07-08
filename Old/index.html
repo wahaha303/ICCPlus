@@ -31,6 +31,12 @@
 		function loadYouTubeIframeAPI() {(window.YT && YT.Player) ? onYouTubeIframeAPI() : (retryCount++ < 5 ? (setTimeout(loadYouTubeIframeAPI, 1000), console.log("Retrying to load YouTube Iframe API...")) : console.error("Failed to load YouTube Iframe API after multiple attempts."))}
 		document.addEventListener("DOMContentLoaded", function() {(window.YT && YT.Player) ? onYouTubeIframeAPI() : setTimeout(loadYouTubeIframeAPI, 1000)});
 		window.onbeforeunload = function() {return ''};
+		window.onload = function() {
+		  const userConfirmed = confirm("This version is no longer maintained.\nClick OK to be redirected to the new version.");
+		  if (userConfirmed) {
+			window.location.href = "https://hikawasisters.neocities.org/ICCPlus2";
+		  }
+		};
     </script>
 	<div style="display:none" id="bgm"></div>
     <div id=app></div>

@@ -199,7 +199,7 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [o("span", [o("h1", [e._v("[Mod] Interactive CYOA Creator Plus")]), o("h6", [e._v("Created by MeanDelay / Modified by Wahaha303")])])]), e._l(e.menuComponentButtons, (function(t) {
+                }, [o("span", [o("h1", [e._v("[Legacy] Interactive CYOA Creator Plus")]), o("h6", [e._v("Created by MeanDelay / Modified by Wahaha303")])])]), e._l(e.menuComponentButtons, (function(t) {
                     return o("v-col", {
                         key: t.index,
                         attrs: {
@@ -223,47 +223,31 @@
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" Download Latest Viewer : "), o("a", {
+                }, [e._v(" Download Legacy Viewer : "), o("a", {
                     attrs: {
-                        href: "https://github.com/wahaha303/ICCPlus/releases/latest",
+                        href: "https://github.com/wahaha303/ICCPlus/releases/tag/v1.18.9-release",
 						target: "_blank"
                     }
                 }, [e._v(" Ver 1.18.9 ")])]), o("v-col", {
-                    staticClass: "pb-0",
-                    staticStyle: {
-                        color: "green"
-                    },
-                    attrs: {
-                        cols: "12"
-                    }
-                }, [e._v("Update: 09.02.2025")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
+                    staticClass: "pt-2 pb-0",
 					staticStyle: {
-						color: "blue"
+						color: "green"
 					},
                     attrs: {
                         cols: "12"
                     }
-                }, [e._v(" New Feature: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0 text-left",
+                }, [e._v(" New Version Available ")]), o("v-col", {
+                    staticClass: "pt-0 pb-0 text-center",
                     attrs: {
-                        cols: "10",
+                        cols: "12",
 						margin: "0 auto"
                     }
-                }, [e._v(" The build load feature and backpack will be automatically enabled when creating a new project. "), o("br"), e._v(" Added a feature to set a custom requirement description. "), o("br"), e._v(" Added a feature to display the addon's requirements. "), o("br"), e._v(" Added a feature to display the addon even if the requirements are not met. "), o("br"), e._v(" Added a feature to fade transition in the choice function. ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0",
-					staticStyle: {
-						color: "red"
-					},
+                }, [o("a", {
                     attrs: {
-                        cols: "12"
+                        href: "https://hikawasisters.neocities.org/ICCPlus2",
+						target: "_blank"
                     }
-                }, [e._v(" Fixed: ")]), o("v-col", {
-                    staticClass: "pt-0 pb-0 text-left",
-                    attrs: {
-                        cols: "10"
-                    }
-                }, [e._v(" Fixed an issue where the random select feature of the row button was not working properly. "), o("br"), e._v(" Fixed an issue where the BGM mute feature was not working properly. "), o("br"), e._v(" Fixed an issue where the number in the multi-select choice was not vertically centered. ")]), o("v-col", {
+                }, [e._v(" https://hikawasisters.neocities.org/ICCPlus2 ")])]), o("v-col", {
                     attrs: {
                         cols: "12"
                     }
@@ -62649,7 +62633,47 @@
                         multiple: "",
                         accordion: ""
                     }
-                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("25.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
+                }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("CHANGELOG")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("09.02.2025")]), o("v-expansion-panel-content", [o("v-list", {
+                    attrs: {
+                        dense: ""
+                    }
+                }, [o("v-list-item", {
+                    staticClass: "pa-0"
+                }, [o("v-list-item-content", [o("v-col", {
+                    staticClass: "pb-0",
+                    staticStyle: {
+                        color: "green"
+                    },
+                    attrs: {
+                        cols: "12"
+                    }
+                }, [e._v("Update: 09.02.2025")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "blue"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" New Feature: ")]), o("v-col", {
+                    staticClass: "pb-0",
+					staticStyle: {
+                        color: "red"
+                    },
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed: ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" The build load feature and backpack will be automatically enabled when creating a new project. "), o("br"), o("br"), e._v(" Added a feature to set a custom requirement description. "), o("br"), o("br"), e._v(" Added a feature to display the addon's requirements. "), o("br"), o("br"), e._v(" Added a feature to display the addon even if the requirements are not met. "), o("br"), o("br"), e._v(" Added a feature to fade transition in the choice function. ")]), o("v-col", {
+                    staticClass: "pb-0",
+                    attrs: {
+                        cols: "6"
+                    }
+                }, [e._v(" Fixed an issue where the random select feature of the row button was not working properly. "), o("br"), o("br"), e._v(" Fixed an issue where the BGM mute feature was not working properly. "), o("br"), o("br"), e._v(" Fixed an issue where the number in the multi-select choice was not vertically centered. ")])], 1)], 1)], 1)], 1)], 1)], 1)], 1), o("v-row", [o("v-col", [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("25.01.2025")]), o("v-expansion-panel-content", [o("v-list", {
                     attrs: {
                         dense: ""
                     }
@@ -63995,10 +64019,10 @@
                     }
                 }, [o("v-expansion-panel", [o("v-expansion-panel-header", [e._v("How do I show off my CYOA?")]), o("v-expansion-panel-content", [o("v-row", [o("v-col", [o("p", [e._v("1. Host it yourself on a free hosting service.")]), o("p", [e._v("Either")]), o("p", [e._v(" A. Download the Viewer from the link below, open the JSON file of the project and the app.XXXXXXX.js file in notepad. Then copy all from your project and place it in the gap between "), o("b", [e._v("{state:{app:")]), e._v(" and "), o("b", [e._v("},getters:")]), e._v(" near the bottom of the smallest .js file in the js folder. ")]), o("p", [e._v("OR")]), o("p", [e._v(" B. Download the Viewer from the link below, get your project file, make sure the project file is named 'project', place it next to the index.html file in the Viewer. If you do it this way then it will not work unless it's uploaded onto a hosting service, but when its there all you need is to replace the project file to update your project, it's the better solution. ")]), o("p", [e._v("Then")]), o("p", [e._v(" Create a user on Neocities or another free hosting service, move to the 'Edit your page' part of the site and upload the Viewer, anyone that enters the page will now see the Cyoa. ")]), o("p", [o("a", {
                     attrs: {
-                        href: "https://github.com/wahaha303/ICCPlus/releases/latest",
+                        href: "https://github.com/wahaha303/ICCPlus/releases/tag/v1.18.9-releaset",
 						target: "_blank"
                     }
-                }, [e._v("New Viewer 1.18.9")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/latest ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
+                }, [e._v("New Viewer 1.18.9")]), o("br"), e._v(" https://github.com/wahaha303/ICCPlus/releases/tag/v1.18.9-release ")])]), o("v-col", [o("p", [e._v("2. Share the project file.")]), o("p", [e._v(" Upload it to Mega or some other site, and let people download it and open it in the creator themselves. ")])])], 1)], 1)], 1)], 1)], 1), o("v-col", {
                     staticClass: "px-7",
                     attrs: {
                         cols: "12"
