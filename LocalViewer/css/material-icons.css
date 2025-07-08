@@ -1,0 +1,176 @@
+@font-face {
+  font-family: "Material Design Icons";
+  src: url("../fonts/mdi-subset.eot");
+  src: url("../fonts/mdi-subset.woff2") format("woff2"), url("../fonts/mdi-subset.woff?") format("woff"), url("../fonts/mdi-subset.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.mdi:before,
+.mdi-set {
+  display: inline-block;
+  font: normal normal normal 24px/1 "Material Design Icons";
+  font-size: inherit;
+  text-rendering: auto;
+  line-height: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.mdi-arrow-left::before {
+  content: "\F004D";
+}
+.mdi-checkbox-blank-outline::before {
+  content: "\F0131";
+}
+.mdi-checkbox-marked-circle-outline::before {
+  content: "\F0134";
+}
+.mdi-chevron-down::before {
+  content: "\F0140";
+}
+.mdi-chevron-left::before {
+  content: "\F0141";
+}
+.mdi-chevron-right::before {
+  content: "\F0142";
+}
+.mdi-chevron-up::before {
+  content: "\F0143";
+}
+.mdi-clipboard-outline::before {
+  content: "\F014C";
+}
+.mdi-close-circle::before {
+  content: "\F0159";
+}
+.mdi-content-copy::before {
+  content: "\F018F";
+}
+.mdi-content-save::before {
+  content: "\F0193";
+}
+.mdi-download::before {
+  content: "\F01DA";
+}
+.mdi-file-image::before {
+  content: "\F021F";
+}
+.mdi-file-multiple::before {
+  content: "\F0222";
+}
+.mdi-folder-plus::before {
+  content: "\F0257";
+}
+.mdi-format-list-bulleted::before {
+  content: "\F0279";
+}
+.mdi-github::before {
+  content: "\F02A4";
+}
+.mdi-group::before {
+  content: "\F02C3";
+}
+.mdi-heart-box::before {
+  content: "\F02D2";
+}
+.mdi-key-plus::before {
+  content: "\F0309";
+}
+.mdi-menu-left::before {
+  content: "\F035E";
+}
+.mdi-menu-right::before {
+  content: "\F035F";
+}
+.mdi-minus::before {
+  content: "\F0374";
+}
+.mdi-minus-circle-outline::before {
+  content: "\F0377";
+}
+.mdi-numeric::before {
+  content: "\F03A0";
+}
+.mdi-numeric-9-plus-box::before {
+  content: "\F03BF";
+}
+.mdi-pause::before {
+  content: "\F03E4";
+}
+.mdi-pencil::before {
+  content: "\F03EB";
+}
+.mdi-play::before {
+  content: "\F040A";
+}
+.mdi-plus::before {
+  content: "\F0415";
+}
+.mdi-select-off::before {
+  content: "\F0488";
+}
+.mdi-cog::before {
+  content: "\F0493";
+}
+.mdi-stop::before {
+  content: "\F04DB";
+}
+.mdi-swap-vertical::before {
+  content: "\F04E2";
+}
+.mdi-target::before {
+  content: "\F04FE";
+}
+.mdi-theme-light-dark::before {
+  content: "\F050E";
+}
+.mdi-upload::before {
+  content: "\F0552";
+}
+.mdi-volume-high::before {
+  content: "\F057E";
+}
+.mdi-volume-off::before {
+  content: "\F0581";
+}
+.mdi-wrench::before {
+  content: "\F05B7";
+}
+.mdi-delete-forever::before {
+  content: "\F05E8";
+}
+.mdi-file-plus::before {
+  content: "\F0752";
+}
+.mdi-format-list-checks::before {
+  content: "\F0756";
+}
+.mdi-comment-plus::before {
+  content: "\F09E5";
+}
+.mdi-trash-can::before {
+  content: "\F0A79";
+}
+.mdi-alpha-a-box-outline::before {
+  content: "\F0BEB";
+}
+.mdi-checkbox-outline::before {
+  content: "\F0C52";
+}
+.mdi-alphabetical-variant::before {
+  content: "\F100D";
+}
+.mdi-tools::before {
+  content: "\F1064";
+}
+.mdi-clipboard-list::before {
+  content: "\F10D4";
+}
+.mdi-plus-thick::before {
+  content: "\F11EC";
+}
+.mdi-folder-arrow-down::before {
+  content: "\F19E8";
+}
+.mdi-folder-arrow-up::before {
+  content: "\F19F0";
+}
