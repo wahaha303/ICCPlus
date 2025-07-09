@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Material Design Icons";
   src: url("../fonts/mdi-subset.eot");
-  src: url("../fonts/mdi-subset.woff2") format("woff2"), url("../fonts/mdi-subset.woff?") format("woff"), url("../fonts/mdi-subset.ttf") format("truetype");
+  src: url("../fonts/mdi-subset.woff2") format("woff2"), url("../fonts/mdi-subset.woff") format("woff"), url("../fonts/mdi-subset.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
