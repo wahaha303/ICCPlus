@@ -4,10 +4,16 @@
 ![Edge](https://custom-icon-badges.demolab.com/badge/Edge-85%2B-green?logo=edge-white&logoColor=white)
 ![Safari](https://img.shields.io/badge/Safari-13.1%2B-lightgrey?logo=safari&logoColor=white)
 
-Stable Version: [ICC Plus 2](https://hikawasisters.neocities.org/ICCPlus2/)<br><br>
+#### Stable Version: [ICC Plus 2](https://hikawasisters.neocities.org/ICCPlus2/)<br><br>
 
-Legacy Version: [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)<br>
+#### Legacy Version: [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)<br>
 <i>This version is no longer maintained.</i><br>
+
+#### Source Code Repository: [ICC-Plus-Svelte](https://github.com/wahaha303/ICC-Plus-Svelte/)
+
+Q. Why is there a separate GitHub repository for the source code?
+
+A. ICC Plus v1.x.x was developed by directly modifying the built code by MeanDelay, so there was no separate original source code available. However, ICC Plus v2.x.x is a newly developed version using Svelte, and now the original source code is available.
 
 ## Framework Migration
 - Rebuilt the entire codebase and migrated from Vue 2.6.11 to Svelte 5.
