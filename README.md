@@ -13,7 +13,7 @@
 
 Q. Why is there a separate GitHub repository for the source code?
 
-A. ICC Plus v1.x.x was developed by directly modifying the built code by MeanDelay, so there was no separate original source code available. However, ICC Plus v2.x.x is a newly developed version using Svelte, and now the original source code is available.
+A. ICC Plus v1.x.x was developed by directly modifying the built code that was originally created by MeanDelay, so there was no separate original source code available. However, ICC Plus v2.x.x is a newly developed version using Svelte, and now the original source code is available.
 
 ## Framework Migration
 - Rebuilt the entire codebase and migrated from Vue 2.6.11 to Svelte 5.
