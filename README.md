@@ -1,8 +1,8 @@
 # Interactive CYOA Creator Plus
-![Chrome](https://img.shields.io/badge/Chrome-85%2B-blue?logo=google-chrome&logoColor=white)
-![Firefox](https://img.shields.io/badge/Firefox-77%2B-orange?logo=firefox-browser&logoColor=white)
-![Edge](https://custom-icon-badges.demolab.com/badge/Edge-85%2B-green?logo=edge-white&logoColor=white)
-![Safari](https://img.shields.io/badge/Safari-13.1%2B-lightgrey?logo=safari&logoColor=white)
+![Chrome](https://img.shields.io/badge/Chrome-49%2B-blue?logo=google-chrome&logoColor=white)
+![Firefox](https://img.shields.io/badge/Firefox-45%2B-orange?logo=firefox-browser&logoColor=white)
+![Edge](https://custom-icon-badges.demolab.com/badge/Edge-15%2B-green?logo=edge-white&logoColor=white)
+![Safari](https://img.shields.io/badge/Safari-10%2B-lightgrey?logo=safari&logoColor=white)
 
 #### Stable Version: [ICC Plus 2](https://hikawasisters.neocities.org/ICCPlus2/)<br><br>
 
