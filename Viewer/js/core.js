@@ -17,8 +17,8 @@ add('link', { rel: 'stylesheet', href: basePath + 'css/bootstrap.min.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/material-icons.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/chunk-vendors.D62pGNex.css', crossorigin: '' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/app.sXTPp2tn.css', crossorigin: '' });
-add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.DQVhQrH4.js', crossorigin: '' });
-add('script', { type: 'module', src: basePath + 'js/app.BoHO89vm.js', crossorigin: '' });
+add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.Bb3l2J9c.js', crossorigin: '' });
+add('script', { type: 'module', src: basePath + 'js/app.Db3V17DG.js', crossorigin: '' });
 add('script', {
 type: 'module',
 text: `
@@ -70,7 +70,7 @@ addEventListener('DOMContentLoaded', () => {
     polyfillScript.id = 'vite-legacy-polyfill';
     polyfillScript.src = basePath + 'js/app-legacy.CfPAqF-Y.js';
     polyfillScript.onload = function(){
-        var entrySrc = basePath + 'js/app-legacy.C003FpUk.js';
+        var entrySrc = basePath + 'js/app-legacy.mx8eSFmx.js';
         function tryImport(retries) {
             if (window.System && typeof window.System.import === 'function') {
                 window.System.import(entrySrc);
@@ -88,6 +88,6 @@ addEventListener('DOMContentLoaded', () => {
     legacyEntry.setAttribute('nomodule', '');
     legacyEntry.setAttribute('crossorigin', '');
     legacyEntry.id = 'vite-legacy-entry';
-    legacyEntry.setAttribute('data-src', basePath + 'js/app-legacy.C003FpUk.js');
+    legacyEntry.setAttribute('data-src', basePath + 'js/app-legacy.mx8eSFmx.js');
     document.body.appendChild(legacyEntry);
 });
