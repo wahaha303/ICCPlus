@@ -6,6 +6,8 @@
 
 #### Stable Version: [ICC Plus 2](https://hikawasisters.neocities.org/ICCPlus2/)<br><br>
 
+#### Desktop Version: [ICC Plus 2](https://github.com/wahaha303/ICCPlus-Desktop/releases/latest)<br><br>
+
 #### Legacy Version: [ICC Plus](https://hikawasisters.neocities.org/ICCPlus/)<br>
 <i>This version is no longer maintained.</i><br>
 
