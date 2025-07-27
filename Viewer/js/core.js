@@ -17,8 +17,8 @@ add('link', { rel: 'stylesheet', href: basePath + 'css/bootstrap.min.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/material-icons.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/chunk-vendors.D62pGNex.css', crossorigin: '' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/app.sXTPp2tn.css', crossorigin: '' });
-add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.BKjclXJX.js', crossorigin: '' });
-add('script', { type: 'module', src: basePath + 'js/app.BLI0qweg.js', crossorigin: '' });
+add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.DVV9MEyN.js', crossorigin: '' });
+add('script', { type: 'module', src: basePath + 'js/app.JWVdBa3N.js', crossorigin: '' });
 add('script', {
 type: 'module',
 text: `
@@ -68,9 +68,9 @@ addEventListener('DOMContentLoaded', () => {
     polyfillScript.setAttribute('nomodule', '');
     polyfillScript.setAttribute('crossorigin', '');
     polyfillScript.id = 'vite-legacy-polyfill';
-    polyfillScript.src = basePath + 'js/app-legacy.D1ZoHnDe.js';
+    polyfillScript.src = basePath + 'js/app-legacy.CfPAqF-Y.js';
     polyfillScript.onload = function(){
-        var entrySrc = basePath + 'js/app-legacy.MFY7HZ7C.js';
+        var entrySrc = basePath + 'js/app-legacy.HJHJCS_T.js';
         function tryImport(retries) {
             if (window.System && typeof window.System.import === 'function') {
                 window.System.import(entrySrc);
@@ -88,6 +88,6 @@ addEventListener('DOMContentLoaded', () => {
     legacyEntry.setAttribute('nomodule', '');
     legacyEntry.setAttribute('crossorigin', '');
     legacyEntry.id = 'vite-legacy-entry';
-    legacyEntry.setAttribute('data-src', basePath + 'js/app-legacy.MFY7HZ7C.js');
+    legacyEntry.setAttribute('data-src', basePath + 'js/app-legacy.HJHJCS_T.js');
     document.body.appendChild(legacyEntry);
 });
