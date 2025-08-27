@@ -42,6 +42,9 @@
 .mdi-close-circle::before {
   content: "\F0159";
 }
+.mdi-code-tags::before {
+  content: "\F0174";
+}
 .mdi-content-copy::before {
   content: "\F018F";
 }
@@ -60,8 +63,44 @@
 .mdi-folder-plus::before {
   content: "\F0257";
 }
+.mdi-format-align-center::before {
+  content: "\F0260";
+}
+.mdi-format-align-justify::before {
+  content: "\F0261";
+}
+.mdi-format-align-left::before {
+  content: "\F0262";
+}
+.mdi-format-align-right::before {
+  content: "\F0263";
+}
+.mdi-format-bold::before {
+  content: "\F0264";
+}
+.mdi-format-clear::before {
+  content: "\F0265";
+}
+.mdi-format-color-fill::before {
+  content: "\F0266";
+}
+.mdi-format-italic::before {
+  content: "\F0277";
+}
+.mdi-format-line-spacing::before {
+  content: "\F0278";
+}
 .mdi-format-list-bulleted::before {
   content: "\F0279";
+}
+.mdi-format-size::before {
+  content: "\F027F";
+}
+.mdi-format-strikethrough-variant::before {
+  content: "\F0281";
+}
+.mdi-format-underline::before {
+  content: "\F0287";
 }
 .mdi-github::before {
   content: "\F02A4";
@@ -74,6 +113,9 @@
 }
 .mdi-key-plus::before {
   content: "\F0309";
+}
+.mdi-link::before {
+  content: "\F0337";
 }
 .mdi-menu-left::before {
   content: "\F035E";
@@ -137,6 +179,12 @@
 }
 .mdi-delete-forever::before {
   content: "\F05E8";
+}
+.mdi-format-pilcrow::before {
+  content: "\F06D8";
+}
+.mdi-format-color-text::before {
+  content: "\F069E";
 }
 .mdi-file-plus::before {
   content: "\F0752";
