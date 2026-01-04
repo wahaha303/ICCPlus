@@ -195,6 +195,9 @@
 .mdi-format-list-checks::before {
   content: "\F0756";
 }
+.mdi-square-edit-outline::before {
+  content: "\F090C";
+}
 .mdi-comment-plus::before {
   content: "\F09E5";
 }
