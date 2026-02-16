@@ -117,6 +117,9 @@
 .mdi-link::before {
   content: "\F0337";
 }
+.mdi-magnify::before {
+  content: "\F0349";
+}
 .mdi-menu-left::before {
   content: "\F035E";
 }
