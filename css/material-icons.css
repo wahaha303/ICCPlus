@@ -177,6 +177,9 @@
 .mdi-volume-off::before {
   content: "\F0581";
 }
+.mdi-web::before {
+  content: "\F059F";
+}
 .mdi-microsoft-windows::before {
   content: "\F05B3";
 }
