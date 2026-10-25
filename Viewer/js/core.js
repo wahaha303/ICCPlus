@@ -23,10 +23,10 @@ add('link', { rel: 'stylesheet', href: basePath + 'css/roboto.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/bootstrap.min.css' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/material-icons.css' });
 add('script', { src: basePath + 'js/polyfills.js' });
-add('link', { rel: 'stylesheet', href: basePath + 'css/chunk-vendors.D62pGNex.css', crossorigin: '' });
-add('link', { rel: 'stylesheet', href: basePath + 'css/app.DyMUVLdS.css', crossorigin: '' });
-add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.2f0fdy6i.js', crossorigin: '' });
-add('script', { type: 'module', src: basePath + 'js/app.Dg3RTrcT.js', crossorigin: '' });
+add('link', { rel: 'stylesheet', href: basePath + 'css/chunk-vendors.B3opANa1.css', crossorigin: '' });
+add('link', { rel: 'stylesheet', href: basePath + 'css/app.B2lpN2Ax.css', crossorigin: '' });
+add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.Bj6Bmdry.js', crossorigin: '' });
+add('script', { type: 'module', src: basePath + 'js/app.tdZdkTnn.js', crossorigin: '' });
 add('script', { type: 'module', text: 'import.meta.url;import("_").catch(() => 1);(async function*(){})().next();window.__vite_is_modern_browser = true;' });
 add('script', { type: 'module', text: '!function(){if(window.__vite_is_modern_browser) return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e = document.getElementById("vite-legacy-polyfill");var n = document.createElement("script");n.src = e.src;n.onload = function(){System.import(document.getElementById("vite-legacy-entry").getAttribute("data-src"));};document.body.appendChild(n);}();' });
 addEventListener('DOMContentLoaded', () => {
@@ -39,9 +39,9 @@ addEventListener('DOMContentLoaded', () => {
     polyfillScript.setAttribute('nomodule', '');
     polyfillScript.setAttribute('crossorigin', '');
     polyfillScript.id = 'vite-legacy-polyfill';
-    polyfillScript.src = basePath + 'js/app-legacy.D5yyI6pR.js';
+    polyfillScript.src = basePath + 'js/app-legacy.C5BEOpZ_.js';
     polyfillScript.onload = function(){
-        var entrySrc = basePath + 'js/app-legacy.CEYBObUk.js';
+        var entrySrc = basePath + 'js/app-legacy.chitZ_3v.js';
         function tryImport(retries) {
             if (window.System && typeof window.System.import === 'function') {
                 window.System.import(entrySrc);
