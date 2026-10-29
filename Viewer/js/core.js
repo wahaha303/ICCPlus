@@ -14,6 +14,7 @@ function add(tag, attrs = {}) {
         if (key === 'text') el.textContent = attrs[key];
         else el.setAttribute(key, attrs[key]);
     }
+    if (tag === 'script' && el.type === 'module') el.async = false;
     document.head.appendChild(el);
 }
 
@@ -26,10 +27,10 @@ add('script', { src: basePath + 'js/polyfills.js' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/chunk-vendors.CVq6UsEI.css', crossorigin: '' });
 add('link', { rel: 'stylesheet', href: basePath + 'css/app.B2lpN2Ax.css', crossorigin: '' });
 add('link', { rel: 'modulepreload', href: basePath + 'js/rolldown-runtime.DcNxTHDL.js', crossorigin: '' });
-add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.CL4FXb2S.js', crossorigin: '' });
-add('script', { type: 'module', src: basePath + 'js/app.B7_p7_7Z.js', crossorigin: '' });
-add('script', { type: 'module', text: 'import.meta.url;import("_").catch(() => 1);(async function*(){})().next();window.__vite_is_modern_browser = true;' });
-add('script', { type: 'module', text: '!function(){if(window.__vite_is_modern_browser) return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e = document.getElementById("vite-legacy-polyfill");var n = document.createElement("script");n.src = e.src;n.onload = function(){System.import(document.getElementById("vite-legacy-entry").getAttribute("data-src"));};document.body.appendChild(n);}();' });
+add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.CYG15cv0.js', crossorigin: '' });
+add('script', { type: 'module', text: "import './js/legacy_resolve_check.js?detector';import.meta.url;import(\"_\").catch(() => 1);(async function*(){})().next();window.__vite_is_modern_browser = true;" });
+add('script', { type: 'module', text: "!function(){if (window.__vite_is_modern_browser) return;console.warn('vite: loading legacy chunks, syntax error above and the same error below should be ignored');var n = document.createElement('script');n.src = basePath + \"js/app-legacy.DE6ph58Q.js\";n.onload = function() {var entrySrc = basePath + \"js/app-legacy.B7Z7tZwa.js\";function tryImport(retries) {if (window.System && typeof window.System.import === 'function') {window.System.import(entrySrc);} else if (retries > 0) {setTimeout(function() {tryImport(retries - 1);}, 100);} else {console.error('SystemJS failed to load.');}}tryImport(100);};document.body.appendChild(n);}();" });
+add('script', { type: 'module', src: basePath + "js/app.9LjA4Kz3.js", crossorigin: '' });
 addEventListener('DOMContentLoaded', () => {
     var safariFix = document.createElement('script');
     safariFix.setAttribute('nomodule', '');
@@ -42,7 +43,7 @@ addEventListener('DOMContentLoaded', () => {
     polyfillScript.id = 'vite-legacy-polyfill';
     polyfillScript.src = basePath + 'js/app-legacy.DE6ph58Q.js';
     polyfillScript.onload = function(){
-        var entrySrc = basePath + 'js/app-legacy.DW4vWfWp.js';
+        var entrySrc = basePath + 'js/app-legacy.B7Z7tZwa.js';
         function tryImport(retries) {
             if (window.System && typeof window.System.import === 'function') {
                 window.System.import(entrySrc);
