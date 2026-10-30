@@ -29,8 +29,8 @@ add('link', { rel: 'stylesheet', href: basePath + 'css/app.B2lpN2Ax.css', crosso
 add('link', { rel: 'modulepreload', href: basePath + 'js/rolldown-runtime.DcNxTHDL.js', crossorigin: '' });
 add('link', { rel: 'modulepreload', href: basePath + 'js/chunk-vendors.CYG15cv0.js', crossorigin: '' });
 add('script', { type: 'module', text: "import './js/legacy_resolve_check.js?detector';import.meta.url;import(\"_\").catch(() => 1);(async function*(){})().next();window.__vite_is_modern_browser = true;" });
-add('script', { type: 'module', text: "!function(){if (window.__vite_is_modern_browser) return;console.warn('vite: loading legacy chunks, syntax error above and the same error below should be ignored');var n = document.createElement('script');n.src = basePath + \"js/app-legacy.DE6ph58Q.js\";n.onload = function() {var entrySrc = basePath + \"js/app-legacy.B7Z7tZwa.js\";function tryImport(retries) {if (window.System && typeof window.System.import === 'function') {window.System.import(entrySrc);} else if (retries > 0) {setTimeout(function() {tryImport(retries - 1);}, 100);} else {console.error('SystemJS failed to load.');}}tryImport(100);};document.body.appendChild(n);}();" });
-add('script', { type: 'module', src: basePath + "js/app.9LjA4Kz3.js", crossorigin: '' });
+add('script', { type: 'module', text: "!function(){if (window.__vite_is_modern_browser) return;console.warn('vite: loading legacy chunks, syntax error above and the same error below should be ignored');var n = document.createElement('script');n.src = basePath + \"js/app-legacy.DE6ph58Q.js\";n.onload = function() {var entrySrc = basePath + \"js/app-legacy.CQb3gcgS.js\";function tryImport(retries) {if (window.System && typeof window.System.import === 'function') {window.System.import(entrySrc);} else if (retries > 0) {setTimeout(function() {tryImport(retries - 1);}, 100);} else {console.error('SystemJS failed to load.');}}tryImport(100);};document.body.appendChild(n);}();" });
+add('script', { type: 'module', src: basePath + "js/app.B4ACLWLM.js", crossorigin: '' });
 addEventListener('DOMContentLoaded', () => {
     var safariFix = document.createElement('script');
     safariFix.setAttribute('nomodule', '');
@@ -43,7 +43,7 @@ addEventListener('DOMContentLoaded', () => {
     polyfillScript.id = 'vite-legacy-polyfill';
     polyfillScript.src = basePath + 'js/app-legacy.DE6ph58Q.js';
     polyfillScript.onload = function(){
-        var entrySrc = basePath + 'js/app-legacy.B7Z7tZwa.js';
+        var entrySrc = basePath + 'js/app-legacy.CQb3gcgS.js';
         function tryImport(retries) {
             if (window.System && typeof window.System.import === 'function') {
                 window.System.import(entrySrc);
